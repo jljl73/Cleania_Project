@@ -63,8 +63,8 @@ public class EquipmentSlot
         for(int i = options.Length-1; i >= 0; --i )
             options[i] = 0;
 
-        atk = 0;
-        atkPerSecond = 1.0f;
+        _atk = 0;
+        _atkPerSecond = 1.0f;
         def = 0;
         strength = 0;
 
@@ -73,8 +73,8 @@ public class EquipmentSlot
         {
             if(equipments[i] != null)
             {
-                atk += equipments[i].atk;
-                atkPerSecond += equipments[i].atkPerSecond;
+                _atk += equipments[i].atk;
+                _atkPerSecond += equipments[i].atkPerSecond;
                 def += equipments[i].def;
                 strength += equipments[i].strength;
 

@@ -61,7 +61,7 @@ public class VulnerableStatus : MonoBehaviour
 
     void RefreshDef()
     {
-        _def = (equipmentSlot.def + strength) * /*(1 + (equipmentSlot[(int)StatusOption.Option.D])*/);
+        //_def = (equipmentSlot.def + strength) * /*(1 + (equipmentSlot[(int)StatusOption.Option.D])*/);
     }
 
     public void Inflict(VulnerableStatus other, float skillDamageScale)
