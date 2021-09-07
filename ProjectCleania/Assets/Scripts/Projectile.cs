@@ -19,7 +19,10 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
+        {
+            other.GetComponent<EnemyState>().Damaged();
             Destroy(gameObject);
+        }
     }
 
 

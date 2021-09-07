@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSkillManager : MonoBehaviour
 {
-    public Skill[] skills = new Skill[4];
+    public Skill[] skills = new Skill[5];
     Skill skill;
     
     void Update()
@@ -25,6 +25,8 @@ public class PlayerSkillManager : MonoBehaviour
             return skills[2];
         if (Input.GetKeyDown(KeyCode.Alpha4))
             return skills[3];
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            return skills[4];
 
         return null;
     }
