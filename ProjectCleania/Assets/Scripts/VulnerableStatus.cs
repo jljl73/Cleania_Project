@@ -2,8 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// stat atk
+//      weapon atk
+//      subweapon atk
+//      buff atk
+//      strength
+//      option atk
+//      extra atk
+
+// crit atk
+//      
+
 public class VulnerableStatus
 {
+
     public int level = 1;
 
     float _strength = 1;
@@ -44,7 +56,7 @@ public class VulnerableStatus
         _def = strength;
     }
 
-    public void Atack(VulnerableStatus other)
+    public void Attack(VulnerableStatus other)
     {
         other._currentHP -= 100 / (100 + other._def) * _atk;
     }
