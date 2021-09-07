@@ -18,6 +18,7 @@ public class PlayerSkill1 : Skill
 
     override public void Activate()
     {
+        animator.SetInteger("Skill", 0);
         if (!bSkill)
         {
             StartCoroutine(SpeedUp());

@@ -478,6 +478,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2039690779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2039690780}
+  - component: {fileID: 2039690781}
+  m_Layer: 0
+  m_Name: Skill5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2039690780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039690779}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1169094857818933506}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2039690781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039690779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1ab7c7345fa32489c24f96e41e8ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1169094858495093293}
 --- !u!114 &1169094857050720880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367dfb4120c1e914481c3f32841f0292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1169094858495093293}
   speed: 10
 --- !u!4 &1169094857050720881
 Transform:
@@ -584,6 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b0954b3da9ffd4587766cf2f3633e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1169094858495093293}
 --- !u!136 &1169094857519412963
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -647,6 +693,7 @@ Transform:
   - {fileID: 1169094858941140968}
   - {fileID: 3956963473790031509}
   - {fileID: 1169094857519412966}
+  - {fileID: 2039690780}
   m_Father: {fileID: 1169094858495093292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -733,6 +780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   reduceArmor: 10
+  animator: {fileID: 1169094858495093293}
 --- !u!136 &1169094858941140965
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -893,3 +941,4 @@ MonoBehaviour:
   - {fileID: 1169094858941140964}
   - {fileID: 3301103072695261720}
   - {fileID: 1169094857519412962}
+  - {fileID: 2039690781}

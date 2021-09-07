@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill4 : Skill
 {
+    public Animator animator;
     Ray ray;
     RaycastHit hit;
     Collider attackArea;
@@ -15,6 +16,7 @@ public class PlayerSkill4 : Skill
 
     public override void AnimationActivate()
     {
+        animator.SetInteger("Skill", 4);
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit))
@@ -31,6 +33,7 @@ public class PlayerSkill4 : Skill
 
     override public void Activate()
     {
+        animator.SetInteger("Skill", 0);
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if(Physics.Raycast(ray, out hit))

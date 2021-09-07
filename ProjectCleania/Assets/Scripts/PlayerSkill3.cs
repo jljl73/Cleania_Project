@@ -19,6 +19,8 @@ public class PlayerSkill3 : Skill
 
     override public void Activate()
     {
+        animator.SetInteger("Skill", 0);
+
         Quaternion left = transform.rotation;
         Quaternion right = transform.rotation;
 

@@ -6,6 +6,7 @@ public class PlayerSkill2 : Skill
 {
     public int damage = 10;
     public int reduceArmor = 10;
+    public Animator animator;
 
     Collider col;
 
@@ -16,12 +17,16 @@ public class PlayerSkill2 : Skill
 
     public override void AnimationActivate()
     {
+        animator.SetInteger("Skill", 2);
         col.enabled = true;
         Invoke("OffSkill", 1.0f);
+
     }
 
     override public void Activate()
     {
+        animator.SetInteger("Skill", 0);
+
         col.enabled = true;
         Invoke("OffSkill", 1.0f);
     }
