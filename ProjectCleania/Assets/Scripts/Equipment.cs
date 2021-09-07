@@ -12,7 +12,7 @@ public class Equipment
         Top,
         Pants,
         Gloves,
-        Shotes,
+        Shoes,
         EnumTotal
     }
 

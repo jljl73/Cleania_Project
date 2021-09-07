@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EquipmentSlot
 {
-    public float atk = 0;
-    public float atkPerSecond = 1.0f;
+    float _atk = 0;
+    public float atk { get => _atk; }
+    float _atkPerSecond = 1.0f;
+    public float atkPerSecond { get => _atkPerSecond; }
     public float def = 0;
     public float strength = 0;
 
@@ -14,8 +16,8 @@ public class EquipmentSlot
 
     public EquipmentSlot()
     {
-        options = new float[(int)StatusOption.Option.EnumTotal];
         equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+        options = new float[(int)StatusOption.Option.EnumTotal];
     }
 
 
