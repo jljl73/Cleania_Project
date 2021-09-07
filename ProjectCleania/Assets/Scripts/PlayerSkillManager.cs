@@ -12,7 +12,7 @@ public class PlayerSkillManager : MonoBehaviour
         skill = InputHandler();
 
         if (skill)
-            skill.Activate();
+            skill.AnimationActivate();
     }
 
     Skill InputHandler()
@@ -27,6 +27,11 @@ public class PlayerSkillManager : MonoBehaviour
             return skills[3];
 
         return null;
+    }
+
+    public void ActivateSkill(int type)
+    {
+        skills[type].Activate();
     }
 
 }

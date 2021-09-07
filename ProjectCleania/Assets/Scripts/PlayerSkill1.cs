@@ -10,6 +10,14 @@ public class PlayerSkill1 : Skill
     bool bSkill = false;
     int nDeadEnemy = 0;
 
+    public override void AnimationActivate()
+    {
+        if (!bSkill)
+        {
+            StartCoroutine(SpeedUp());
+        }
+    }
+
     override public void Activate()
     {
         if (!bSkill)
