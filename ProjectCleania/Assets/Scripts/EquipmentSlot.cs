@@ -76,6 +76,7 @@ public class EquipmentSlot
                 def += equipments[i].def;
                 strength += equipments[i].strength;
 
+                // add or multiply option value if it exists
             }
         }
     }

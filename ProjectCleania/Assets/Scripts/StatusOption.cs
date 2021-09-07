@@ -10,7 +10,7 @@ public class StatusOption
         HeroMonsterDamage_Percent,
         RareMonsterDamage_Percent,
         BossMonsterDamage_Percent,
-        CriticalRate_Percent,
+        CriticalChance_Percent,
         CriticalScale_Percent,
         IncreaseGivingDamage_Percent,
 
