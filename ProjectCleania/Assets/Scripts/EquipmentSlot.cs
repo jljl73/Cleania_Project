@@ -4,23 +4,79 @@ using UnityEngine;
 
 public class EquipmentSlot
 {
-    Equipment mainWeapon = null;
-    Equipment subWeapon = null;
-    Equipment hat = null;
-    Equipment top = null;
-    Equipment pants = null;
-    Equipment gloves = null;
-    Equipment shotes = null;
+    public float atk = 0;
+    public float atkPerSecond = 1.0f;
+    public float def = 0;
+    public float strength = 0;
 
-    Equipment Equip(Equipment newEquipment)
+    Equipment[] equipments;
+    public float[] options;
+
+    public EquipmentSlot()
     {
-
-        return null; 
+        options = new float[(int)StatusOption.Option.EnumTotal];
+        equipments = new Equipment[(int)Equipment.Type.EnumTotal];
     }
 
-    Equipment Unequip()
-    {
 
-        return null;
+    public Equipment Equip(Equipment newEquipment)
+    {
+        int inType = (int)newEquipment.equipmentType;
+
+        if(equipments[inType] != null)
+        {
+            Equipment oldEquipment = equipments[inType];
+            equipments[inType] = newEquipment;
+
+            Refresh();
+
+            return oldEquipment;
+        }
+        else
+        {
+            equipments[inType] = newEquipment;
+
+            Refresh();
+
+            return null;
+        }
+    }
+
+    public Equipment Unequip(Equipment.Type offType)
+    {
+        int type = (int)offType;
+
+        Equipment oldEquipment = equipments[type];
+
+        equipments[type] = null;
+
+        Refresh();
+
+        return oldEquipment;
+    }
+
+    void Refresh()
+    {
+        // reset
+        for(int i = options.Length-1; i >= 0; --i )
+            options[i] = 0;
+
+        atk = 0;
+        atkPerSecond = 1.0f;
+        def = 0;
+        strength = 0;
+
+        // equipment status get
+        for(int i = equipments.Length-1; i >= 0; --i )
+        {
+            if(equipments[i] != null)
+            {
+                atk += equipments[i].atk;
+                atkPerSecond += equipments[i].atkPerSecond;
+                def += equipments[i].def;
+                strength += equipments[i].strength;
+
+            }
+        }
     }
 }

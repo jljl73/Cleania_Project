@@ -12,9 +12,9 @@ public class Equipment
         Top,
         Pants,
         Gloves,
-        Shotes
+        Shotes,
+        EnumTotal
     }
-
 
     public Type equipmentType = Type.MainWeapon;
     public float atk = 0;
@@ -22,5 +22,5 @@ public class Equipment
     public float def = 0;
     public float strength = 0;
 
-    public List<StatusOption.Option> options;
+    public Dictionary<StatusOption.Option, float> options;
 }

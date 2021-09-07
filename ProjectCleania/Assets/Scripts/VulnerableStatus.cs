@@ -13,8 +13,10 @@ using UnityEngine;
 // crit atk
 //      
 
-public class VulnerableStatus
+public class VulnerableStatus : MonoBehaviour
 {
+    EquipmentSlot equipmentSlot;
+
 
     public int level = 1;
 
@@ -40,20 +42,18 @@ public class VulnerableStatus
     float _atk = 0;
     float _def = 0;
 
-    void RefreshStatus()
+    private void Awake()
     {
-        // need more details
-        // beware of recursion of getter
+        equipmentSlot = GetComponent<EquipmentSlot>();
+    }
 
-        // considerables
-        //      equipments
-        //      buffs (contains debuff)
-        //      level
-
-        _maxHP = 100 + vitality * 100;
-        _maxMP = 100;
-        _atk = strength;
-        _def = strength;
+    void RefreshAtk()
+    {
+        _atk = (equipmentSlot.atk /*+ abs atk buff*/) * 
+            (1 + (strength * 0.01f)) * 
+            (1 + (equipmentSlot.options[(int)StatusOption.Option.Attack_Percent])) *
+            (1 + (/* buff atk * */ 0.01f))
+            /* + additional atk*/;
     }
 
     public void Attack(VulnerableStatus other)

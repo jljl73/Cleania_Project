@@ -14,7 +14,7 @@ public class StatusOption
         CriticalScale_Percent,
         IncreaseGivingDamage_Percent,
 
-        Accuracy_Percent, //
+        Accuracy_Percent,
         Dodge_Percent,
         Toughness_Percent,
         ReduceGettingDamage_Percent,
@@ -31,6 +31,8 @@ public class StatusOption
         MaxMP_Abs,
         
         EXP_Percent,
-        Gold_Percent
+        Gold_Percent,
+
+        EnumTotal
     }
 }
