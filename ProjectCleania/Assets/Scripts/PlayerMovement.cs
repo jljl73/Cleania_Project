@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float distanceBetweenTargetObj = 1f;   // 공격 시, 목표 위치 얼마 앞에서 멈출 것인가
 
+    private bool isAttackPlaying;
+
     private void Awake()
     {
         // 컴포넌트 불러오기
@@ -35,16 +37,21 @@ public class PlayerMovement : MonoBehaviour
         // 설정 초기화
         attackBoxCollider.enabled = false;  // 공격 콜라이더 Off
         targetPose = transform.position;    // 목표 위치는 현재 위치
-
-        path = new NavMeshPath();           // path 할당
+        isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
     }
 
     void Update()
     {
-        // 마우스 클릭에 따른 목표 위치 및 path 계산
+        // 공격 중이면 업데이트 x
+        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && !playerAnimator.IsInTransition(0))
+            isAttackPlaying = false;
+        if (isAttackPlaying)
+            return;
+
+        // 마우스 클릭에 따른 네비게이션 실행
         ActivateNavigation();
 
-        // path 기반하여 Move
+        // 회전 가속
         AccelerateRotation();
 
         // 공격 모션 판정
@@ -56,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ActivateNavigation()
     {
-
         // 마우스 클릭시, 해당 위치로 이동
         if (Input.GetMouseButtonDown(0))
         {
@@ -82,16 +88,19 @@ public class PlayerMovement : MonoBehaviour
         // 타겟 있으면, 타겟 따라서 목표 위치 설정
         if (targetObj != null)
         {
+            // 적이 바로 앞이면 움직일 필요x
+            if (distanceBetweenTargetObj > Vector3.Distance(targetObj.transform.position, transform.position))
+            {
+                targetPose = transform.position;
+                return;
+            }
+
             // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
             targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
         }
 
-        // path 계산
+        // 네이게이션 실행
         playerNavMeshAgent.SetDestination(targetPose);
-        if(!playerNavMeshAgent.CalculatePath(targetPose, path))
-        {
-            print("path 찾기 실패");
-        }
     }
 
     private void AccelerateRotation()
@@ -106,11 +115,9 @@ public class PlayerMovement : MonoBehaviour
 
         // 목표 회전 벡터 결정
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
-        rotateForward = Vector3.Slerp(transform.forward,
-                                      rotateForward,
-                                      rotateCoef / Vector3.Angle(transform.forward, rotateForward));
 
         // 회전
+
         transform.LookAt(this.transform.position + rotateForward);
     }
 
@@ -121,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // 1회 공격 실시
             playerAnimator.SetTrigger("Attack");
+            isAttackPlaying = true;
 
             // 한번 공격 후 타겟 = null, 반복 실행 방지
             targetObj = null;
