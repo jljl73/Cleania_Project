@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerSkill3 : Skill
 {
+    public Animator animator;
     public GameObject hurricanePrefabs;
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public override void AnimationActivate()
+    {
+        animator.SetTrigger("Skill3");
     }
 
     override public void Activate()
