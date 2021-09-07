@@ -35,7 +35,7 @@ public class VulnerableStatus
 
         // considerables
         //      equipments
-        //      buffs
+        //      buffs (contains debuff)
         //      level
 
         _maxHp = 100 + vitality * 100;
