@@ -14,7 +14,7 @@ public class StatusOption
         CriticalScale_Percent,
         IncreaseGivingDamage_Percent,
 
-        Accuracy_Percent,
+        Accuracy_Percent, //
         Dodge_Percent,
         Toughness_Percent,
         ReduceGettingDamage_Percent,
