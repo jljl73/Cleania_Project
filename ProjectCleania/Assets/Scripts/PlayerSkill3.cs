@@ -14,7 +14,7 @@ public class PlayerSkill3 : Skill
 
     public override void AnimationActivate()
     {
-        animator.SetTrigger("Skill3");
+        animator.SetInteger("Skill", 3);
     }
 
     override public void Activate()

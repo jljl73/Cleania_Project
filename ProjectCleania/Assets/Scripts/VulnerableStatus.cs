@@ -38,7 +38,7 @@ public class VulnerableStatus
         //      buffs (contains debuff)
         //      level
 
-        _maxHp = 100 + vitality * 100;
+        _maxHP = 100 + vitality * 100;
         _maxMP = 100;
         _atk = strength;
         _def = strength;

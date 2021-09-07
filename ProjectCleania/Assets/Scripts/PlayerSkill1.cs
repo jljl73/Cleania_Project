@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSkill1 : Skill
 {
     //public GameObject status;
+    public Animator animator;
     public float speed = 10.0f;
     float duration = 0f;
     bool bSkill = false;
@@ -12,10 +13,7 @@ public class PlayerSkill1 : Skill
 
     public override void AnimationActivate()
     {
-        if (!bSkill)
-        {
-            StartCoroutine(SpeedUp());
-        }
+        animator.SetInteger("Skill", 1);
     }
 
     override public void Activate()
