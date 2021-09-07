@@ -6,27 +6,29 @@ public class Status : MonoBehaviour
 {
     public int level = 1;
 
-    float _strength = 24;
+    public float level1Strength = 24;
+    public float levelUpStrength = 4;
     public float strength
     {
-        get => _strength + level * 4;
+        get => level1Strength + level * levelUpStrength;
     }
-    float _vitality = 50;
+    public float level1Vitality = 50;
+    public float levelUpVitality = 10;
     public float vitality
     {
-        get => _vitality + level * 10;
+        get => level1Vitality + level * levelUpVitality;
     }
 
-    float _atk = 0;
-    public float atk { get => _atk; }
-    float _def = 0;
-    public float def { get => _def; }
+    public float level1Atk = 0;
+    public float atk { get => level1Atk; }
+    public float level1Def = 0;
+    public float def { get => level1Def; }
 
-    float _criticalChance = 0.1f;
-    public float criticalChance { get => _criticalChance; }
-    float _criticalScale = 2.0f;
-    public float criticalScale { get => _criticalScale; }
-    float _moveSpeed = 1.0f;
-    public float moveSpeed { get => _moveSpeed; }
+    public float level1CriticalChance = 10;
+    public float criticalChance { get => level1CriticalChance/100; }
+    public float level1CriticalScale = 200;
+    public float criticalScale { get => level1CriticalScale/100; }
+    public float level1MoveSpeed = 1.0f;
+    public float moveSpeed { get => level1MoveSpeed; }
 
 }

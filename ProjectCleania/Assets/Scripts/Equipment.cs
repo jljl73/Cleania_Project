@@ -16,11 +16,17 @@ public class Equipment
         EnumTotal
     }
 
+    public float this[int index]        // indexer
+    {
+        get => _options[(StatusOption.Option)index];
+    }
+
     public Type equipmentType = Type.MainWeapon;
     public float atk = 0;
     public float atkPerSecond = 1.0f;
     public float def = 0;
     public float strength = 0;
 
-    public Dictionary<StatusOption.Option, float> options;
+    Dictionary<StatusOption.Option, float> _options;
+
 }
