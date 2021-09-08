@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkillManager : MonoBehaviour
 {
+
     public Skill[] skills = new Skill[5];
     Skill skill;
     
