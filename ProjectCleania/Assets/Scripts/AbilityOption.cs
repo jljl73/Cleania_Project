@@ -6,7 +6,7 @@ public class AbilityOption
 {
     public enum Name
     {
-        Attack_Percent = 0,                 // 공격력 +n%
+        Attack_Percent = 0,             // 공격력 +n%
         HeroMonsterDamage_Percent,      // 영웅 등급 이하 몬스터에게 주는 피해 +n%
         RareMonsterDamage_Percent,      // 희귀 등급 이하 몬스터에게 주는 피해 +n%
         BossMonsterDamage_Percent,      // 보스 등급 이하 몬스터에게 주는 피해 +n%
