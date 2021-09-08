@@ -36,12 +36,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // 공격 중이면 업데이트 x
-        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Marry_Attack_01_h") && !playerAnimator.IsInTransition(0))
+        // 공격 애니메이션이 작동하고 있지 않으면 네비게이션 작동
+        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Marry_Attack_01_h") &&
+            !playerAnimator.IsInTransition(0))
         {
             isAttackPlaying = false;
             playerNavMeshAgent.isStopped = false;
         }
+        // 공격 애니메이션이 작동중이면 네비게이션 stop
         if (isAttackPlaying)
         {
             playerNavMeshAgent.isStopped = true;
