@@ -6,29 +6,41 @@ public class Status : MonoBehaviour
 {
     public int level = 1;
 
-    public float level1Strength = 24;
+    public float this[AbilityOption.Stat index]
+    {
+        get
+        {
+            switch(index)
+            {
+                case AbilityOption.Stat.Strength:
+                    return Strength + level * levelUpStrength;
+                case AbilityOption.Stat.Vitality:
+                    return Vitality + level * levelUpVitality;
+                case AbilityOption.Stat.Attack:
+                    return Atk;
+                case AbilityOption.Stat.Defense:
+                    return Def;
+                case AbilityOption.Stat.CriticalChance:
+                    return CriticalChance / 100;
+                case AbilityOption.Stat.CriticalScale:
+                    return CriticalScale / 100;
+                case AbilityOption.Stat.MoveSpeed:
+                    return MoveSpeed;
+
+                default:
+                    return 0;
+            }
+        }
+    }
+
+    public float Strength = 24;
     public float levelUpStrength = 4;
-    public float strength
-    {
-        get => level1Strength + level * levelUpStrength;
-    }
-    public float level1Vitality = 50;
+    public float Vitality = 50;
     public float levelUpVitality = 10;
-    public float vitality
-    {
-        get => level1Vitality + level * levelUpVitality;
-    }
-
-    public float level1Atk = 0;
-    public float atk { get => level1Atk; }
-    public float level1Def = 0;
-    public float def { get => level1Def; }
-
-    public float level1CriticalChance = 10;
-    public float criticalChance { get => level1CriticalChance/100; }
-    public float level1CriticalScale = 200;
-    public float criticalScale { get => level1CriticalScale/100; }
-    public float level1MoveSpeed = 1.0f;
-    public float moveSpeed { get => level1MoveSpeed; }
+    public float Atk = 0;
+    public float Def = 0;
+    public float CriticalChance = 10;
+    public float CriticalScale = 200;
+    public float MoveSpeed = 1.0f;
 
 }

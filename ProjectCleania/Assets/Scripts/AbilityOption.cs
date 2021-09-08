@@ -30,13 +30,37 @@ public class AbilityOption
 
     public enum Enhance
     {
+        //(stat + absolute) * percent * percent * percent + addition
         Absolute,
-        Addition,
         PosMulti_Percent,
         NegMulti_Percent,
         Addition_Percent,
+        Addition,
 
         EnumTotal
+    }
+
+    public struct Enchant //: IEnumerable, IEnumerator
+    {
+        public AbilityOption.Stat stat;
+        public AbilityOption.Enhance how;
+
+        //public IEnumerator GetEnumerator()
+        //{
+        //    return (IEnumerator)this;
+        //}
+
+        //public object Current { get; }
+
+        //public bool MoveNext()
+        //{
+        //    return false;
+
+        //}
+        //public void Reset()
+        //{
+        //    return;
+        //}
     }
 
     public enum Equipment

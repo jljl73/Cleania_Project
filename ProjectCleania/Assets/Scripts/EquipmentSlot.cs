@@ -4,30 +4,34 @@ using UnityEngine;
 
 public class EquipmentSlot : MonoBehaviour
 {
-    float _atk = 0;
-    public float atk { get => _atk; }
-    float _atkPerSecond = 1.0f;
-    public float atkPerSecond { get => _atkPerSecond; }
-    public float def = 0;
-    public float strength = 0;
-
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
-    float[] _options = new float[(int)AbilityOption.Equipment.EnumTotal];
 
-    public float this[AbilityOption.Equipment index]            // indexer
+    Dictionary<AbilityOption.Stat, float> _stats
+    = new Dictionary<AbilityOption.Stat, float>();
+
+    Dictionary<KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>, float> _options
+    = new Dictionary<KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>, float>();
+
+    public float this[AbilityOption.Stat stat, AbilityOption.Enhance enhance]            // indexer
     {
         get
         {
-            switch (index)
-            {
-                default:
-                    return _options[(int)index] / 100;  // percentage
+            KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance> key 
+                = new KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>(stat, enhance);
 
-                case AbilityOption.Equipment.Defense_Abs:
-                case AbilityOption.Equipment.MaxMP_Abs:
-                case AbilityOption.Equipment.Vitality_Abs:
-                    return _options[(int)index];        // absolute
-            }
+            _options.TryGetValue(key, out float value);
+
+            return value;
+        }
+    }
+
+    public float this[AbilityOption.Stat stat]            // indexer
+    {
+        get
+        {
+            _stats.TryGetValue(stat, out float value);
+
+            return value;
         }
     }
 
@@ -71,25 +75,35 @@ public class EquipmentSlot : MonoBehaviour
     void Refresh()
     {
         // reset
-        for (int i = _options.Length - 1; i >= 0; --i)
-            _options[i] = 0;
+        //foreach (var key_value in _options)
+        //    _options[key_value.Key] = 0;
+        _options.Clear();
 
-        _atk = 0;
-        _atkPerSecond = 1.0f;
-        def = 0;
-        strength = 0;
+        foreach (var key_value in _stats)
+            _stats[key_value.Key] = 0;
+
 
         // equipment status get
         for (int i = _equipments.Length - 1; i >= 0; --i)
         {
             if (_equipments[i] != null)
             {
-                _atk += _equipments[i].atk;
-                _atkPerSecond += _equipments[i].atkPerSecond;
-                def += _equipments[i].def;
-                strength += _equipments[i].strength;
+                _stats[AbilityOption.Stat.Attack] += _equipments[i].atk;
+                _stats[AbilityOption.Stat.AttackSpeed] += _equipments[i].atkPerSecond;
+                _stats[AbilityOption.Stat.Defense] += _equipments[i].def;
+                _stats[AbilityOption.Stat.Strength] += _equipments[i].strength;
 
-                // add or multiply option value if it exists
+                foreach (var key_value in _equipments[i].options)
+                {
+                    switch (key_value.Key.Value)
+                    {
+                        case AbilityOption.Enhance.Absolute:
+                            if (_options.ContainsKey(key_value.Key))
+                                _options[key_value.Key] = 0;
+                            _options[key_value.Key] += key_value.Value;
+                            break;
+                        }
+                }
             }
         }
     }
