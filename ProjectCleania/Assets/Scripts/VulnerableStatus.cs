@@ -54,14 +54,14 @@ public class VulnerableStatus : MonoBehaviour
     {
         _atk = (equipmentSlot.atk /*+ abs atk buff*/) *
             (1 + (strength * 0.01f)) *
-            (1 + (equipmentSlot.options[(int)StatusOption.Option.Attack_Percent])) *
+            (1 + (equipmentSlot[(int)AbilityOption.Name.Attack_Percent])) *
             (1 + (/* buff atk * */ 0.01f))
             /* + additional atk*/;
     }
 
     void RefreshDef()
     {
-        //_def = (equipmentSlot.def + strength) * /*(1 + (equipmentSlot[(int)StatusOption.Option.D])*/);
+        //_def = (equipmentSlot.def + strength) * /*(1 + (equipmentSlot[(int)AbilityOption.Name.D])*/);
     }
 
     public void Inflict(VulnerableStatus other, float skillDamageScale)

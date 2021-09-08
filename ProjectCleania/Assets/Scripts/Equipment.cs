@@ -18,7 +18,7 @@ public class Equipment
 
     public float this[int index]        // indexer
     {
-        get => _options[(StatusOption.Option)index];
+        get => _options[(AbilityOption.Name)index];
     }
 
     public Type equipmentType = Type.MainWeapon;
@@ -27,6 +27,6 @@ public class Equipment
     public float def = 0;
     public float strength = 0;
 
-    Dictionary<StatusOption.Option, float> _options;
+    Dictionary<AbilityOption.Name, float> _options;
 
 }

@@ -65,7 +65,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)
         {
-            _vitality += equipments[StatusOption.Option.Vitality_Abs];
+            _vitality += equipments[AbilityOption.Name.Vitality_Abs];
         }
 
         //if(buffs != null)
@@ -83,7 +83,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)
         {
-            _atk *= (1 + equipments[StatusOption.Option.Attack_Percent]);
+            _atk *= (1 + equipments[AbilityOption.Name.Attack_Percent]);
         }
 
         //if(buffs != null)
