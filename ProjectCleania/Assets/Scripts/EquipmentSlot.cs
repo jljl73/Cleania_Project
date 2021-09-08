@@ -11,28 +11,28 @@ public class EquipmentSlot
     public float def = 0;
     public float strength = 0;
 
-    Equipment[] equipments;
-    float[] options;
+    Equipment[] _equipments;
+    float[] _options;
 
     public EquipmentSlot()      // constructor
     {
-        equipments = new Equipment[(int)Equipment.Type.EnumTotal];
-        options = new float[(int)StatusOption.Option.EnumTotal];
+        _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+        _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
     }
     
-    public float this[StatusOption.Option index]            // indexer
+    public float this[AbilityOption.Name index]            // indexer
     {
-        get => options[(int)index];
+        get => _options[(int)index];
     }
 
     public Equipment Equip(Equipment newEquipment)
     {
         int inType = (int)newEquipment.equipmentType;
 
-        if(equipments[inType] != null)
+        if(_equipments[inType] != null)
         {
-            Equipment oldEquipment = equipments[inType];
-            equipments[inType] = newEquipment;
+            Equipment oldEquipment = _equipments[inType];
+            _equipments[inType] = newEquipment;
 
             Refresh();
 
@@ -40,7 +40,7 @@ public class EquipmentSlot
         }
         else
         {
-            equipments[inType] = newEquipment;
+            _equipments[inType] = newEquipment;
 
             Refresh();
 
@@ -52,9 +52,9 @@ public class EquipmentSlot
     {
         int type = (int)offType;
 
-        Equipment oldEquipment = equipments[type];
+        Equipment oldEquipment = _equipments[type];
 
-        equipments[type] = null;
+        _equipments[type] = null;
 
         Refresh();
 
@@ -64,8 +64,8 @@ public class EquipmentSlot
     void Refresh()
     {
         // reset
-        for(int i = options.Length-1; i >= 0; --i )
-            options[i] = 0;
+        for(int i = _options.Length-1; i >= 0; --i )
+            _options[i] = 0;
 
         _atk = 0;
         _atkPerSecond = 1.0f;
@@ -73,14 +73,14 @@ public class EquipmentSlot
         strength = 0;
 
         // equipment status get
-        for(int i = equipments.Length-1; i >= 0; --i )
+        for(int i = _equipments.Length-1; i >= 0; --i )
         {
-            if(equipments[i] != null)
+            if(_equipments[i] != null)
             {
-                _atk += equipments[i].atk;
-                _atkPerSecond += equipments[i].atkPerSecond;
-                def += equipments[i].def;
-                strength += equipments[i].strength;
+                _atk += _equipments[i].atk;
+                _atkPerSecond += _equipments[i].atkPerSecond;
+                def += _equipments[i].def;
+                strength += _equipments[i].strength;
 
                 // add or multiply option value if it exists
             }
