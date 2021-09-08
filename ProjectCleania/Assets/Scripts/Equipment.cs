@@ -16,9 +16,9 @@ public class Equipment
         EnumTotal
     }
 
-    public float this[int index]        // indexer
+    public float this[AbilityOption.Name index]        // indexer
     {
-        get => _options[(AbilityOption.Name)index];
+        get => _options[(int)index];
     }
 
     public Type equipmentType = Type.MainWeapon;
@@ -27,6 +27,6 @@ public class Equipment
     public float def = 0;
     public float strength = 0;
 
-    Dictionary<AbilityOption.Name, float> _options;
+    float[] _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
 
 }
