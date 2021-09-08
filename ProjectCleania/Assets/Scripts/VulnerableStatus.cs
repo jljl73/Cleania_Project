@@ -13,51 +13,67 @@ using UnityEngine;
 // crit atk
 //      
 
-public class VulnerableStatus
+public class VulnerableStatus : MonoBehaviour
 {
+    EquipmentSlot equipmentSlot;
 
     public int level = 1;
 
     float _strength = 1;
-    public float strength { get { return _strength; } }
-
+    public float strength { get => _strength; }
     float _vitality = 1;
-    public float vitality { get { return _vitality; } }
-
+    public float vitality { get => _vitality; }
 
     float _currentHP = 100;
-    public float currentHP { get { return _currentHP; } }
-
+    public float currentHP { get => _currentHP; }
     float _currentMP = 100;
-    public float currentMP { get { return _currentMP; } }
-
+    public float currentMP { get => _currentMP; }
     float _maxHP = 100;
-    public float maxHP { get { return _maxHP; } }
-
+    public float maxHP { get => _maxHP; }
     float _maxMP = 100;
-    public float maxMP { get { return _maxMP; } }
+    public float maxMP { get => _maxMP; }
 
-    float _atk = 0;
-    float _def = 0;
+    float _atk;
+    float _criticalChance = 10; // %
+    float _criticalScale = 200; // %
+    float _accuracy = 100;      // %
+    float _givingDamage = 1.0f;
 
-    void RefreshStatus()
+    float _def;
+    float _gettingDamage = 1.0f;
+    float _dodge = 1;           // %
+
+    float _cooldown = 1.0f;
+
+    private void Awake()
     {
-        // need more details
-        // beware of recursion of getter
-
-        // considerables
-        //      equipments
-        //      buffs (contains debuff)
-        //      level
-
-        _maxHP = 100 + vitality * 100;
-        _maxMP = 100;
-        _atk = strength;
-        _def = strength;
+        equipmentSlot = GetComponent<EquipmentSlot>();
     }
 
-    public void Attack(VulnerableStatus other)
+    void RefreshAtk()
     {
-        other._currentHP -= 100 / (100 + other._def) * _atk;
+        _atk = (equipmentSlot.atk /*+ abs atk buff*/) *
+            (1 + (strength * 0.01f)) *
+            (1 + (equipmentSlot.options[(int)StatusOption.Option.Attack_Percent])) *
+            (1 + (/* buff atk * */ 0.01f))
+            /* + additional atk*/;
+    }
+
+    void RefreshDef()
+    {
+        //_def = (equipmentSlot.def + strength) * /*(1 + (equipmentSlot[(int)StatusOption.Option.D])*/);
+    }
+
+    public void Inflict(VulnerableStatus other, float skillDamageScale)
+    {
+        float totalDamage = _atk * skillDamageScale * _givingDamage * (1 - (other._def / (other._def + 300))) * (1 - other._gettingDamage);
+
+        if(Random.Range(0, 100) < (_accuracy - other._dodge))
+        {
+            if (Random.Range(0, 100) < _criticalChance)
+                totalDamage *= _criticalScale * 0.01f;
+
+            other._currentHP -= totalDamage;
+        }
     }
 }

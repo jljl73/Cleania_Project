@@ -4,23 +4,86 @@ using UnityEngine;
 
 public class EquipmentSlot
 {
-    Equipment mainWeapon = null;
-    Equipment subWeapon = null;
-    Equipment hat = null;
-    Equipment top = null;
-    Equipment pants = null;
-    Equipment gloves = null;
-    Equipment shotes = null;
+    float _atk = 0;
+    public float atk { get => _atk; }
+    float _atkPerSecond = 1.0f;
+    public float atkPerSecond { get => _atkPerSecond; }
+    public float def = 0;
+    public float strength = 0;
 
-    Equipment Equip(Equipment newEquipment)
+    Equipment[] equipments;
+    float[] options;
+
+    public EquipmentSlot()      // constructor
     {
-
-        return null; 
+        equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+        options = new float[(int)StatusOption.Option.EnumTotal];
+    }
+    
+    public float this[StatusOption.Option index]            // indexer
+    {
+        get => options[(int)index];
     }
 
-    Equipment Unequip()
+    public Equipment Equip(Equipment newEquipment)
     {
+        int inType = (int)newEquipment.equipmentType;
 
-        return null;
+        if(equipments[inType] != null)
+        {
+            Equipment oldEquipment = equipments[inType];
+            equipments[inType] = newEquipment;
+
+            Refresh();
+
+            return oldEquipment;
+        }
+        else
+        {
+            equipments[inType] = newEquipment;
+
+            Refresh();
+
+            return null;
+        }
+    }
+
+    public Equipment Unequip(Equipment.Type offType)
+    {
+        int type = (int)offType;
+
+        Equipment oldEquipment = equipments[type];
+
+        equipments[type] = null;
+
+        Refresh();
+
+        return oldEquipment;
+    }
+
+    void Refresh()
+    {
+        // reset
+        for(int i = options.Length-1; i >= 0; --i )
+            options[i] = 0;
+
+        _atk = 0;
+        _atkPerSecond = 1.0f;
+        def = 0;
+        strength = 0;
+
+        // equipment status get
+        for(int i = equipments.Length-1; i >= 0; --i )
+        {
+            if(equipments[i] != null)
+            {
+                _atk += equipments[i].atk;
+                _atkPerSecond += equipments[i].atkPerSecond;
+                def += equipments[i].def;
+                strength += equipments[i].strength;
+
+                // add or multiply option value if it exists
+            }
+        }
     }
 }
