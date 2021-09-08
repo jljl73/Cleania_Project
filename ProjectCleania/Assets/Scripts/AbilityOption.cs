@@ -36,14 +36,15 @@ public class AbilityOption
 
 
         // Buff
-        MoveSpeed_Buff,                 // 버프 - 이동속도
+        MoveSpeed_Buff = 0,                 // 버프 - 이동속도
         AttackSpeed_Buff,               // 버프 - 공격속도
         Attack_Buff,                    // 버프 - 공격력
         Defense_Buff,                   // 버프 - 방어력
 
-        AllOptionTotal,
 
+        // totals
         EquipmentOptionTotal = Gold_Percent - Attack_Percent + 1,       // equip begin - equip end + 1
-        BuffOptionTotal = Defense_Buff - MoveSpeed_Buff + 1             // buff begin - buff end + 1
+        BuffOptionTotal = Defense_Buff - MoveSpeed_Buff + 1,             // buff begin - buff end + 1
+        AllOptionTotal = EquipmentOptionTotal + BuffOptionTotal,
     }
 }
