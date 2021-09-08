@@ -11,25 +11,20 @@ public class EquipmentSlot
     public float def = 0;
     public float strength = 0;
 
-    Equipment[] _equipments;
-    float[] _options;
+    Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+    float[] _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
 
-    public EquipmentSlot()      // constructor
-    {
-        _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
-        _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
-    }
-    
     public float this[AbilityOption.Name index]            // indexer
     {
         get => _options[(int)index];
     }
 
+
     public Equipment Equip(Equipment newEquipment)
     {
         int inType = (int)newEquipment.equipmentType;
 
-        if(_equipments[inType] != null)
+        if (_equipments[inType] != null)
         {
             Equipment oldEquipment = _equipments[inType];
             _equipments[inType] = newEquipment;
@@ -64,7 +59,7 @@ public class EquipmentSlot
     void Refresh()
     {
         // reset
-        for(int i = _options.Length-1; i >= 0; --i )
+        for (int i = _options.Length - 1; i >= 0; --i)
             _options[i] = 0;
 
         _atk = 0;
@@ -73,9 +68,9 @@ public class EquipmentSlot
         strength = 0;
 
         // equipment status get
-        for(int i = _equipments.Length-1; i >= 0; --i )
+        for (int i = _equipments.Length - 1; i >= 0; --i)
         {
-            if(_equipments[i] != null)
+            if (_equipments[i] != null)
             {
                 _atk += _equipments[i].atk;
                 _atkPerSecond += _equipments[i].atkPerSecond;
