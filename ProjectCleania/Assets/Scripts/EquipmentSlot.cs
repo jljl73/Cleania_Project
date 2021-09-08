@@ -11,14 +11,19 @@ public class EquipmentSlot
     public float def = 0;
     public float strength = 0;
 
-    Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
-    float[] _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
+    Equipment[] _equipments;
+    float[] _options;
+
+    public EquipmentSlot()      // constructor
+    {
+        _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+        _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
+    }
     
     public float this[AbilityOption.Name index]            // indexer
     {
         get => _options[(int)index];
     }
-
 
     public Equipment Equip(Equipment newEquipment)
     {
