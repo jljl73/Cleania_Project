@@ -8,6 +8,8 @@ public class AbilityStatus : MonoBehaviour
     EquipmentSlot equipments;
     BuffManager buffs;
 
+    //Dictionary<AbilityOption.Stat, float> _stats = new Dictionary<AbilityOption.Stat, float>();
+
     float _strength;
     public float strenght { get => RefreshStrength(); }
     float _vitality;
@@ -76,7 +78,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (buffs != null)
         {
-            _strength += buffs[AbilityOption.Name.Attack_Buff];
+            _strength += buffs[AbilityOption.Buff.Attack_Buff];
         }
 
         return _strength;
@@ -91,7 +93,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)
         {
-            _vitality += equipments[AbilityOption.Name.Vitality_Abs];
+            _vitality += equipments[AbilityOption.Equipment.Vitality_Abs];
         }
 
         if(buffs != null)
@@ -112,12 +114,12 @@ public class AbilityStatus : MonoBehaviour
         if (equipments != null)
         {
             _atk += equipments.atk;
-            _atk *= (1 + equipments[AbilityOption.Name.Attack_Percent]);
+            _atk *= (1 + equipments[AbilityOption.Equipment.Attack_Percent]);
         }
 
         if(buffs != null)
         {
-            _atk *= (1 + buffs[AbilityOption.Name.Attack_Buff]);
+            _atk *= (1 + buffs[AbilityOption.Buff.Attack_Buff]);
         }
 
         return _atk;
@@ -133,12 +135,12 @@ public class AbilityStatus : MonoBehaviour
         if (equipments != null)
         {
             _def += equipments.def;
-            _def += equipments[AbilityOption.Name.Defense_Abs];
+            _def += equipments[AbilityOption.Equipment.Defense_Abs];
         }
 
         if (buffs != null)
         {
-            _def *= (1 + buffs[AbilityOption.Name.Defense_Buff]);
+            _def *= (1 + buffs[AbilityOption.Buff.Defense_Buff]);
         }
         
         return _def;
@@ -153,7 +155,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)
         {
-            _criticalChance *= (1 + equipments[AbilityOption.Name.CriticalChance_Percent]);
+            _criticalChance *= (1 + equipments[AbilityOption.Equipment.CriticalChance_Percent]);
         }
 
         if (buffs != null)
@@ -173,7 +175,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)
         {
-            _criticalScale *= (1 + equipments[AbilityOption.Name.CriticalScale_Percent]);
+            _criticalScale += equipments[AbilityOption.Equipment.CriticalScale_Percent];
         }
 
         if (buffs != null)
@@ -198,7 +200,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (buffs != null)
         {
-            _moveSpeed *= (1 + buffs[AbilityOption.Name.MoveSpeed_Buff]);
+            _moveSpeed *= (1 + buffs[AbilityOption.Buff.MoveSpeed_Buff]);
         }
 
         return _moveSpeed;
@@ -218,7 +220,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (buffs != null)
         {
-            _attackSpeed *= (1 + buffs[AbilityOption.Name.AttackSpeed_Buff]);
+            _attackSpeed *= (1 + buffs[AbilityOption.Buff.AttackSpeed_Buff]);
         }
 
         return _attackSpeed;
@@ -235,7 +237,7 @@ public class AbilityStatus : MonoBehaviour
 
         if(equipments != null)
         {
-            _maxHP *= (1 + equipments[AbilityOption.Name.HP_Percent]);
+            _maxHP *= (1 + equipments[AbilityOption.Equipment.HP_Percent]);
         }
 
         if(buffs != null)
@@ -255,7 +257,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)
         {
-            _maxMP += equipments[AbilityOption.Name.MaxMP_Abs];
+            _maxMP += equipments[AbilityOption.Equipment.MaxMP_Abs];
         }
 
         if(buffs != null)
@@ -267,14 +269,30 @@ public class AbilityStatus : MonoBehaviour
     }
 
 
+    //float RefreshStat(AbilityOption.Stat stat)
+    //{
+    //    if (status == null)
+    //        return -1;
+
+    //    if(status[stat] == null)
+    //    _stats[stat] = 0;
+
+    //}
+
     public float TotalDamage()
     {
-        return atk * (1 + strenght * 0.01f);
+        float value = atk * (1 + strenght * 0.01f);
+
+        if (Random.Range(0, 1) < criticalChance)
+            value *= criticalScale;
+
+        return value;
     }
 
     public float AttackedBy(AbilityStatus other, float skillScale)
     {
-        float value = other.TotalDamage() * skillScale; 
+        float value = other.TotalDamage() * skillScale;
+
 
         //_HP -= (other.TotalDamage() )
 
@@ -285,4 +303,10 @@ public class AbilityStatus : MonoBehaviour
     {
         _MP -= usedMP;
     }
+
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //        Debug.Log(TotalDamage());
+    //}
 }

@@ -31,7 +31,7 @@ public class PlayerSkill1 : Skill
         duration = 5.0f;
         nDeadEnemy = 0;
 
-        buffManager.AddBuff(0.4f, AbilityOption.Name.MoveSpeed_Buff, 5.0f);
+        buffManager.AddBuff(0.4f, AbilityOption.Buff.MoveSpeed_Buff, 5.0f);
         
         yield return new WaitForSeconds(duration);
 

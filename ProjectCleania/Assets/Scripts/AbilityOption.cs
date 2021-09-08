@@ -4,9 +4,43 @@ using UnityEngine;
 
 public class AbilityOption
 {
-    public enum Name
+    public enum Stat
     {
-        // Equipment
+        Strength,      
+        Attack,        
+        CriticalChance,
+        CriticalScale, 
+        AttackSpeed,
+        Accuracy,
+        IncreaseDamage,
+
+        Vitality,
+        MaxHP,   
+        Dodge,
+        Toughness,
+        Defense, 
+        ReduceDamage,
+        
+        SkillCooldown,
+        MoveSpeed,
+        MaxMP,   
+
+        EnumTotal
+    }
+
+    public enum Enhance
+    {
+        Absolute,
+        Addition,
+        PosMulti_Percent,
+        NegMulti_Percent,
+        Addition_Percent,
+
+        EnumTotal
+    }
+
+    public enum Equipment
+    {
         Attack_Percent = 0,                 // 공격력 +n%
         //HeroMonsterDamage_Percent,      // 영웅 등급 이하 몬스터에게 주는 피해 +n%
         //RareMonsterDamage_Percent,      // 희귀 등급 이하 몬스터에게 주는 피해 +n%
@@ -34,17 +68,16 @@ public class AbilityOption
         EXP_Percent,                    // 적에게서 얻는 경험치
         Gold_Percent,                   // 적에게서 얻는 재화
 
+        EnumTotal
+    }
 
-        // Buff
+    public enum Buff
+    {
         MoveSpeed_Buff = 0,                 // 버프 - 이동속도
         AttackSpeed_Buff,               // 버프 - 공격속도
         Attack_Buff,                    // 버프 - 공격력
         Defense_Buff,                   // 버프 - 방어력
 
-
-        // totals
-        EquipmentOptionTotal = Gold_Percent - Attack_Percent + 1,       // equip begin - equip end + 1
-        BuffOptionTotal = Defense_Buff - MoveSpeed_Buff + 1,             // buff begin - buff end + 1
-        AllOptionTotal = EquipmentOptionTotal + BuffOptionTotal,
+        EnumTotal
     }
 }
