@@ -5,41 +5,23 @@ using UnityEngine;
 public class AbilityStatus : MonoBehaviour
 {
     Status status;          // status is essential unlike equips or buffs
-    EquipmentSlot equipments;
-    BuffManager buffs;
+    EquipmentSlot equipments;   
+    // buffs
 
     float _strength;
-    public float strenght { get => RefreshStrength();}
     float _vitality;
-    public float vitality { get => RefreshVitality();}
     float _atk;
-    public float atk { get => RefreshAtk();}
     float _def;
-    public float def { get => RefreshDef();}
     float _criticalChance;
-    public float criticalChance { get => RefreshCriticalChance();}
     float _criticalScale;
-    public float criticalScale { get => RefreshCriticalScale();}
     float _moveSpeed;
-    public float moveSpeed { get => RefreshMoveSpeed();}
     float _attackSpeed;
-    public float attackSpeed { get => RefreshAttackSpeed();}
-
-    float _HP;
-    public float HP { get => _HP; }
-    float _MP;
-    public float MP { get => _MP; }
-    float _maxHP;
-    public float maxHP { get => RefreshMaxHP(); }
-    float _maxMP;
-    public float maxMP { get => RefreshMaxMP(); }
-
 
     private void Awake()
     {
         status = GetComponent<Status>();
         equipments = GetComponent<EquipmentSlot>();
-        buffs = GetComponent<BuffManager>();
+        // buffs = GetComponent<>();
 
         RefreshAll();
     }
@@ -56,10 +38,10 @@ public class AbilityStatus : MonoBehaviour
         RefreshAttackSpeed();
     }
 
-    float RefreshStrength()
+    void RefreshStrength()
     {
         if(status == null)
-            return -1;
+            return;
 
         _strength = status.strength;
 
@@ -68,18 +50,16 @@ public class AbilityStatus : MonoBehaviour
             _strength += equipments.strength;
         }
 
-        if(buffs != null)
-        {
-            //_strength += buffs[BuffManager.Option.Attack];
-        }
-
-        return _strength;
+        //if(buffs != null)
+        //{
+        //
+        //}
     }
 
-    float RefreshVitality()
+    void RefreshVitality()
     {
         if (status == null)
-            return -1;
+            return;
 
         _vitality = status.vitality;
 
@@ -92,14 +72,12 @@ public class AbilityStatus : MonoBehaviour
         //{
         //
         //}
-
-        return _vitality;
     }
 
-    float RefreshAtk()
+    void RefreshAtk()
     {
         if (status == null)
-            return -1;
+            return;
 
         _atk = status.atk;
 
@@ -112,54 +90,31 @@ public class AbilityStatus : MonoBehaviour
         //{
         //
         //}
-
-        return _atk;
     }
 
-    float RefreshDef()
+    void RefreshDef()
     {
 
-        return _def;
     }
 
-    float RefreshCriticalChance()
+    void RefreshCriticalChance()
     {
 
-        return _criticalChance;
     }
 
-    float RefreshCriticalScale()
+    void RefreshCriticalScale()
     {
 
-        return _criticalScale;
     }
 
-    float RefreshMoveSpeed ()
+    void RefreshMoveSpeed ()
     {
 
-        return _moveSpeed;
     }
 
-    float RefreshAttackSpeed ()
+    void RefreshAttackSpeed ()
     {
-        return _attackSpeed;
+
     }
 
-
-
-    float RefreshMaxHP()
-    {
-        return _maxHP;
-    }
-
-    float RefreshMaxMP ()
-    {
-        return _maxMP ;
-    }
-
-
-    public float TotalDamage()
-    {
-        return 0;
-    }
 }
