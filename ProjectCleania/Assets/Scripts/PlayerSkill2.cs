@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill2 : Skill
 {
+    public StateMachine playerStateMachine;
     public int damage = 10;
     public int reduceArmor = 10;
     public Animator animator;
@@ -17,16 +18,15 @@ public class PlayerSkill2 : Skill
 
     public override void AnimationActivate()
     {
+        animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 2);
-        col.enabled = true;
-        Invoke("OffSkill", 1.0f);
+        playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
+        col.enabled = true;
     }
 
     override public void Activate()
     {
-        animator.SetInteger("Skill", 0);
-
         col.enabled = true;
         Invoke("OffSkill", 1.0f);
     }
@@ -35,6 +35,7 @@ public class PlayerSkill2 : Skill
     {
         if(other.tag == "Enemy")
         {
+            Debug.Log("2 Hit");
             //other.GetComponent<Status>().Damaged(damage);
             // n√ ∞£
             //other.GetComponent<Status>().ReduceArmor(damage, n);
@@ -44,6 +45,13 @@ public class PlayerSkill2 : Skill
     void OffSkill()
     {
         col.enabled = false;
+    }
+
+    public override void AnimationDeactivate()
+    {
+        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        animator.SetBool("OnSkill", false);
+        OffSkill();
     }
 
 }

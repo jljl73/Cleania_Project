@@ -43,7 +43,9 @@ public class AbilityOption
 
         AllOptionTotal,
 
-        EquipmentOptionTotal = Gold_Percent - Attack_Percent + 1,       // equip begin - equip end + 1
-        BuffOptionTotal = Defense_Buff - MoveSpeed_Buff + 1             // buff begin - buff end + 1
+        EquipmentOptionTotal = Gold_Percent - Attack_Percent + 1,       
+        // equip begin - equip end + 1
+        BuffOptionTotal = Defense_Buff - MoveSpeed_Buff + 1             
+            // buff begin - buff end + 1
     }
 }

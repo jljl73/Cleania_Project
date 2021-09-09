@@ -70,7 +70,7 @@ public class AbilityStatus : MonoBehaviour
 
         if (buffs != null)
         {
-            //_strength += buffs[BuffManager.Option.Attack];
+            //_strength += buffs[AbilityOption.Name.stren];
         }
 
         return _strength;
@@ -88,10 +88,10 @@ public class AbilityStatus : MonoBehaviour
             _vitality += equipments[AbilityOption.Name.Vitality_Abs];
         }
 
-        //if(buffs != null)
-        //{
-        //
-        //}
+        if (buffs != null)
+        {
+            _vitality += buffs[AbilityOption.Name.Vitality_Abs];
+        }
 
         return _vitality;
     }
@@ -108,10 +108,10 @@ public class AbilityStatus : MonoBehaviour
             _atk *= (1 + equipments[AbilityOption.Name.Attack_Percent]);
         }
 
-        //if(buffs != null)
-        //{
-        //
-        //}
+        if (buffs != null)
+        {
+            //_atk *= (1 + buffs[AbilityOption.Name.Attack_Percent]);
+        }
 
         return _atk;
     }
