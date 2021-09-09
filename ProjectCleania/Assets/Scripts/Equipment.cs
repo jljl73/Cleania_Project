@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipment : IEnumerable, IEnumerator
+public class Equipment //: IEnumerable, IEnumerator
 {
     public enum Type
     {
@@ -16,32 +16,46 @@ public class Equipment : IEnumerable, IEnumerator
         EnumTotal
     }
 
-    public float this[AbilityOption.Stat stat, AbilityOption.Enhance enhance]        // indexer
+    public Type equipmentType = Type.MainWeapon;
+    public float strength = 0;
+    public float atk = 0;
+    public float atkPerSecond = 1.0f;
+    public float def = 0;
+
+    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _enchants
+        = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
+
+    public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> enchant    // enchants getter (used for foreach only)
+    {
+        get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_enchants); }
+    }
+
+    public float this[Ability.Stat stat, Ability.Enhance enhance]                    // enchant indexer
     {
         get
         {
-            KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance> key
-                = new KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>(stat, enhance);
+            KeyValuePair<Ability.Stat, Ability.Enhance> key
+                = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            _options.TryGetValue(key, out float value);
+            _enchants.TryGetValue(key, out float value);
 
             return value;
         }
     }
 
-    public float this[AbilityOption.Stat stat]        // indexer
+    public float this[Ability.Stat stat]                                                   // stat indexer
     {
         get
         {
             switch (stat)
             {
-                case AbilityOption.Stat.Strength:
+                case Ability.Stat.Strength:
                     return strength;
-                case AbilityOption.Stat.Attack:
+                case Ability.Stat.Attack:
                     return atk;
-                case AbilityOption.Stat.AttackSpeed:
+                case Ability.Stat.AttackSpeed:
                     return atkPerSecond;
-                case AbilityOption.Stat.Defense:
+                case Ability.Stat.Defense:
                     return def;
 
                 default:
@@ -49,46 +63,34 @@ public class Equipment : IEnumerable, IEnumerator
             }
         }
     }
-
-    public Type equipmentType = Type.MainWeapon;
-    public float strength = 0;
-    public float atk = 0;
-    public float atkPerSecond = 1.0f;
-    public float def = 0;
-
-    Dictionary<KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>, float> _options
-        = new Dictionary<KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>, float>();
-
-    public Dictionary<KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>, float> options
-    {
-        get { return new Dictionary<KeyValuePair<AbilityOption.Stat, AbilityOption.Enhance>, float>(_options); }
-    }
     
-    public IEnumerator GetEnumerator()
-    {
-        return (IEnumerator)this;
-    }
 
-    //public IEnumerator<AbilityOption.Enchant> GetEnumerator()
+
+    //public IEnumerator GetEnumerator()
     //{
-    //    return (IEnumerator<AbilityOption.Enchant>)this;
+    //    return (IEnumerator)this;
     //}
 
-    public bool MoveNext()
-    {
-        return true;
-    }
+    ////public IEnumerator<Ability.Enchant> GetEnumerator()
+    ////{
+    ////    return (IEnumerator<Ability.Enchant>)this;
+    ////}
 
-    public void Reset()
-    {
+    //public bool MoveNext()
+    //{
+    //    return true;
+    //}
 
-    }
+    //public void Reset()
+    //{
 
-    public object Current
-        { get
-        {
-            return 0;
-        }
-        }
+    //}
+
+    //public object Current
+    //    { get
+    //    {
+    //        return 0;
+    //    }
+    //    }
 
 }
