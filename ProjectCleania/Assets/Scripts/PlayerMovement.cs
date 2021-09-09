@@ -16,59 +16,79 @@ public class PlayerMovement : MonoBehaviour
     private GameObject targetObj;               // 공격 대상
     private Vector3 targetPose;                 // 목표 위치
 
-    private RaycastHit[] rayCastHits;
+    private NavMeshPath path;                   // 목표까지 path
+    private int currentPathIdx;                 // path 내 현재 목표 지점
 
     private float distanceBetweenTargetObj = 1f;   // 공격 시, 목표 위치 얼마 앞에서 멈출 것인가
 
-    private bool isAttackPlaying;
+    //private bool isAttackPlaying;
+    //bool isAttacking;
+
+    public PlayerSkillL skillL;
+    public bool bAttacking = false;
+    bool bChasing = false;
+    public StateMachine playerStateMachine;
+
 
     private void Awake()
     {
         // 컴포넌트 불러오기
         playerAnimator = GetComponent<Animator>();
         playerNavMeshAgent = GetComponent<NavMeshAgent>();
-        attackBoxCollider = GetComponent<BoxCollider>();
-        playerRigidbody = GetComponent<Rigidbody>();
+        //attackBoxCollider = GetComponent<BoxCollider>();
+        //playerRigidbody = GetComponent<Rigidbody>();
     }
 
     void Start()
     {
         // 설정 초기화
-        attackBoxCollider.enabled = false;  // 공격 콜라이더 Off
+        //attackBoxCollider.enabled = false;  // 공격 콜라이더 Off
         targetPose = transform.position;    // 목표 위치는 현재 위치
-        isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
+        //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
     }
 
     void Update()
     {
         // 공격 중이면 업데이트 x
-        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && !playerAnimator.IsInTransition(0))
-            isAttackPlaying = false;
-        if (isAttackPlaying)
-            return;
+        //if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && !playerAnimator.IsInTransition(0))
+        //    isAttackPlaying = false;
+        //if (isAttackPlaying)
+        //    return;
 
         // 마우스 클릭에 따른 네비게이션 실행
         ActivateNavigation();
 
         // 회전 가속
-        AccelerateRotation();
+        //AccelerateRotation();
 
         // 공격 모션 판정
-        Attack();
+        //Attack();
 
         // 애니메이션 업데이트
         playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
-
-        //playerRigidbody.velocity = Vector3.zero;
     }
 
     private void ActivateNavigation()
     {
-        // 마우스 클릭시, 해당 위치로 이동
-        if (Input.GetMouseButtonDown(0))
+        if (playerStateMachine.State == StateMachine.enumState.Attacking)
         {
-            RaycastHit mouseHit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            targetPose = transform.position;
+        }
+
+        // 마우스 클릭시, 해당 위치로 이동
+        //if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButton(0))// 누르고 있어도
+        {
+            if (playerStateMachine.State == StateMachine.enumState.Idle)
+            {
+                MoveToPosition();
+                Targetting();
+            }
+
+            #region
+            //RaycastHit mouseHit;
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             // 클릭한 곳에 적이 있으면, 적 위치로 이동 후 공격
             //if (Physics.Raycast(ray, out mouseHit) && mouseHit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -83,51 +103,37 @@ public class PlayerMovement : MonoBehaviour
             //    targetPose = mouseHit.point;
             //    targetObj = null;
             //}
-
-            rayCastHits = Physics.RaycastAll(ray);
-
-            if (rayCastHits.Length > 0)
-            {
-                print("rayCastHits.Length: " + rayCastHits.Length);
-
-                RaycastHit closeHit = rayCastHits[0];
-                float closetDist = float.MaxValue;
-                foreach (RaycastHit rayCastHit in rayCastHits)
-                {
-                    // 플레이어와 비교할 때 가장 가까운 곳
-                    if (Vector3.Distance(transform.position, rayCastHit.point) < closetDist)
-                    {
-                        closeHit = rayCastHit;
-                    }
-                }
-
-                //// 일반 지형이면, 타겟 없음, 목표 위치 설정
-                //targetPose = mouseHit.point;
-                //targetObj = null;
-
-                // 일반 지형이면, 타겟 없음, 목표 위치 설정
-                targetPose = closeHit.point;
-                targetObj = null;
-            }
-
+            #endregion
         }
-
-        // 타겟 있으면, 타겟 따라서 목표 위치 설정
-        if (targetObj != null)
+        if (Input.GetMouseButton(1))
         {
-            // 적이 바로 앞이면 움직일 필요x
-            if (distanceBetweenTargetObj > Vector3.Distance(targetObj.transform.position, transform.position))
+            if (playerStateMachine.State == StateMachine.enumState.MoveAttack)
             {
-                targetPose = transform.position;
-                return;
+                MoveToPosition();
             }
-
-            // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
-            targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
         }
 
-        // 네이게이션 실행
-        playerNavMeshAgent.SetDestination(targetPose);
+            #region
+            //// 타겟 있으면, 타겟 따라서 목표 위치 설정
+            //if (targetObj != null)
+            //{
+            //    // 적이 바로 앞이면 움직일 필요x
+            //    if (distanceBetweenTargetObj > Vector3.Distance(targetObj.transform.position, transform.position))
+            //    {
+            //        targetPose = transform.position;
+            //        return;
+            //    }
+
+            //    // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
+            //    targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
+            //}
+            #endregion
+            // 네이게이션 실행
+
+        if(playerStateMachine.State != StateMachine.enumState.Chasing)
+            playerNavMeshAgent.SetDestination(targetPose);
+        else
+            playerNavMeshAgent.SetDestination(targetObj.transform.position);
     }
 
     private void AccelerateRotation()
@@ -148,34 +154,36 @@ public class PlayerMovement : MonoBehaviour
         transform.LookAt(this.transform.position + rotateForward);
     }
 
-    private void Attack()
-    {
-        // 타겟이 있고, 타겟 근처에 왔으면 공격 1회 실행
-        if (targetObj != null && Vector3.Distance(transform.position, targetPose) < 0.01f)
-        {
-            // 1회 공격 실시
-            playerAnimator.SetTrigger("Attack");
-            isAttackPlaying = true;
+    #region
+    //private void Attack()
+    //{
+    //    // 타겟이 있고, 타겟 근처에 왔으면 공격 1회 실행
+    //    if (targetObj != null && Vector3.Distance(transform.position, targetPose) < 0.01f)
+    //    {
+    //        // 1회 공격 실시
+    //        playerAnimator.SetTrigger("Attack");
+    //        isAttackPlaying = true;
 
-            // 한번 공격 후 타겟 = null, 반복 실행 방지
-            targetObj = null;
-        }
-    }
+    //        // 한번 공격 후 타겟 = null, 반복 실행 방지
+    //        targetObj = null;
+    //    }
+    //}
 
-    private void SetNormalAttack(GameObject _target, bool _isAttackColliderActivate)
-    {
-        // 타겟 업데이트
-        targetObj = _target;
+    //private void SetNormalAttack(GameObject _target, bool _isAttackColliderActivate)
+    //{
+    //    // 타겟 업데이트
+    //    targetObj = _target;
 
-        // 일반 공격 콜라이더 업데이트
-        attackBoxCollider.enabled = _isAttackColliderActivate;
-    }
+    //    // 일반 공격 콜라이더 업데이트
+    //    attackBoxCollider.enabled = _isAttackColliderActivate;
+    //}
+    #endregion
 
-    // 공격 애니메이션에서 호출하는 함수
-    void ActivateEventAboutCollider(float _t)
-    {
-        StartCoroutine("ActivateAttakCollider", _t);
-    }
+    //// 공격 애니메이션에서 호출하는 함수
+    //void ActivateEventAboutCollider(float _t)
+    //{
+    //    StartCoroutine("ActivateAttakCollider", _t);
+    //}
 
     IEnumerator ActivateAttakCollider(float _t)
     {
@@ -189,9 +197,54 @@ public class PlayerMovement : MonoBehaviour
         attackBoxCollider.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void MoveToPosition()
     {
-        // 데미지 주기, 공격 콜라이더만 trigger 설정됨.
-        print(other.name + "damaged");
+        RaycastHit[] raycastHits;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        raycastHits = Physics.RaycastAll(ray);
+        targetPose = transform.position;
+
+        for (int i = 0; i < raycastHits.Length; ++i)
+        {
+            if (raycastHits[i].transform.CompareTag("Ground"))
+            {
+                targetPose = raycastHits[i].point;
+            }
+        }
     }
+
+    void Targetting()
+    {
+        RaycastHit raycastHit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        bChasing = false;
+        if (Physics.Raycast(ray, out raycastHit))
+        {
+            Debug.Log(raycastHit.transform.tag);
+            if (raycastHit.transform.CompareTag("Enemy"))
+            {
+                targetObj = raycastHit.transform.gameObject;
+                bChasing = true;
+
+                playerStateMachine.Transition(StateMachine.enumState.Chasing);
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (playerStateMachine.State == StateMachine.enumState.Chasing)
+        // 데미지 주기, 공격 콜라이더만 trigger 설정됨.
+        {
+            AccelerateRotation();
+
+            //print(other.transform.name + "Collision");
+            //transform.LookAt(targetObj.transform);
+            targetPose = transform.position;
+            skillL.AnimationActivate();
+        }
+    }
+
 }
