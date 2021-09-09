@@ -16,7 +16,7 @@ public class Equipment
         EnumTotal
     }
 
-    public float this[AbilityOption.Name index]        // indexer
+    public float this[AbilityOption.Equipment index]        // indexer
     {
         get => _options[(int)index];
     }
@@ -27,6 +27,6 @@ public class Equipment
     public float def = 0;
     public float strength = 0;
 
-    float[] _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
+    float[] _options = new float[(int)AbilityOption.Equipment.EnumTotal];
 
 }

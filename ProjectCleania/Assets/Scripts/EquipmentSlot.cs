@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentSlot
+public class EquipmentSlot : MonoBehaviour
 {
     float _atk = 0;
     public float atk { get => _atk; }
@@ -12,11 +12,23 @@ public class EquipmentSlot
     public float strength = 0;
 
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
-    float[] _options = new float[(int)AbilityOption.Name.EquipmentOptionTotal];
+    float[] _options = new float[(int)AbilityOption.Equipment.EnumTotal];
 
-    public float this[AbilityOption.Name index]            // indexer
+    public float this[AbilityOption.Equipment index]            // indexer
     {
-        get => _options[(int)index];
+        get
+        {
+            switch (index)
+            {
+                default:
+                    return _options[(int)index] / 100;  // percentage
+
+                case AbilityOption.Equipment.Defense_Abs:
+                case AbilityOption.Equipment.MaxMP_Abs:
+                case AbilityOption.Equipment.Vitality_Abs:
+                    return _options[(int)index];        // absolute
+            }
+        }
     }
 
 
