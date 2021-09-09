@@ -4,32 +4,42 @@ using UnityEngine;
 
 public class EquipmentSlot : MonoBehaviour
 {
-    float _atk = 0;
-    public float atk { get => _atk; }
-    float _atkPerSecond = 1.0f;
-    public float atkPerSecond { get => _atkPerSecond; }
-    public float def = 0;
-    public float strength = 0;
-
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
-    float[] _options = new float[(int)AbilityOption.Equipment.EnumTotal];
 
-    public float this[AbilityOption.Equipment index]            // indexer
+    Dictionary<Ability.Stat, float> _stats
+        = new Dictionary<Ability.Stat, float>();
+
+    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _enchants
+        = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
+
+    public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> enchants   // enchants getter (used for foreach only)
+    {
+        get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_enchants); }
+    }   
+
+    public float this[Ability.Stat stat, Ability.Enhance enhance]                   // enchant indexer
     {
         get
         {
-            switch (index)
-            {
-                default:
-                    return _options[(int)index] / 100;  // percentage
+            KeyValuePair<Ability.Stat, Ability.Enhance> key
+                = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-                case AbilityOption.Equipment.Defense_Abs:
-                case AbilityOption.Equipment.MaxMP_Abs:
-                case AbilityOption.Equipment.Vitality_Abs:
-                    return _options[(int)index];        // absolute
-            }
+            _enchants.TryGetValue(key, out float value);
+
+            return value;
         }
     }
+
+    public float this[Ability.Stat stat]                                                  // stat indexer
+    {
+        get
+        {
+            _stats.TryGetValue(stat, out float value);
+
+            return value;
+        }
+    }
+
 
 
     public Equipment Equip(Equipment newEquipment)
@@ -71,25 +81,67 @@ public class EquipmentSlot : MonoBehaviour
     void Refresh()
     {
         // reset
-        for (int i = _options.Length - 1; i >= 0; --i)
-            _options[i] = 0;
 
-        _atk = 0;
-        _atkPerSecond = 1.0f;
-        def = 0;
-        strength = 0;
+        //foreach (var key_value in _options)
+        //    _options[key_value.Key] = 0;
+        _enchants.Clear();
+
+        foreach (var key_value in _stats)
+            _stats[key_value.Key] = 0;
+
 
         // equipment status get
         for (int i = _equipments.Length - 1; i >= 0; --i)
         {
             if (_equipments[i] != null)
             {
-                _atk += _equipments[i].atk;
-                _atkPerSecond += _equipments[i].atkPerSecond;
-                def += _equipments[i].def;
-                strength += _equipments[i].strength;
+                _stats[Ability.Stat.Attack] += _equipments[i].atk;
+                _stats[Ability.Stat.AttackSpeed] += _equipments[i].atkPerSecond;
+                _stats[Ability.Stat.Defense] += _equipments[i].def;
+                _stats[Ability.Stat.Strength] += _equipments[i].strength;
 
-                // add or multiply option value if it exists
+                foreach (var key_value in _equipments[i].enchant)
+                {
+                    switch (key_value.Key.Value)
+                    {
+                        case Ability.Enhance.Addition:
+                        case Ability.Enhance.Absolute:
+                            {
+                                if (!_enchants.ContainsKey(key_value.Key))
+                                    _enchants[key_value.Key] = 0;
+
+                                _enchants[key_value.Key] += key_value.Value;
+                            }
+                            break;
+
+
+                        case Ability.Enhance.NegMulti_Percent:
+                        case Ability.Enhance.PosMulti_Percent:
+                        case Ability.Enhance.Addition_Percent:
+                            {
+                                if (!_enchants.ContainsKey(key_value.Key))
+                                    _enchants[key_value.Key] = 1;
+
+                                switch (key_value.Key.Value)
+                                {
+                                    case Ability.Enhance.NegMulti_Percent:
+                                        _enchants[key_value.Key] *= (1 - key_value.Value);
+                                        break;
+                                    case Ability.Enhance.PosMulti_Percent:
+                                        _enchants[key_value.Key] *= (1 + key_value.Value);
+                                        break;
+                                    case Ability.Enhance.Addition_Percent:
+                                        _enchants[key_value.Key] += key_value.Value;
+                                        break;
+                                }
+                            }
+                            break;
+
+                        default:
+                            // error code
+                            break;
+                    }
+                }
             }
         }
     }

@@ -6,37 +6,62 @@ public class AbilityOption
 {
     public enum Stat
     {
-        Strength,      
-        Attack,        
-        CriticalChance,
-        CriticalScale, 
-        AttackSpeed,
-        Accuracy,
-        IncreaseDamage,
-
-        Vitality,
-        MaxHP,   
-        Dodge,
-        Toughness,
-        Defense, 
-        ReduceDamage,
-        
-        SkillCooldown,
-        MoveSpeed,
-        MaxMP,   
+        Strength,       // 
+        Attack,         // 
+        CriticalChance, // 
+        CriticalScale,  // 
+        AttackSpeed,    // 
+        Accuracy,       // 
+        IncreaseDamage, // 
+                        
+        Vitality,       // 
+        MaxHP,          // 
+        Dodge,          // 
+        Toughness,      // 
+        Defense,        // 
+        ReduceDamage,   // 
+                        
+        SkillCooldown,  // 
+        MoveSpeed,      // 
+        MaxMP,          // 
 
         EnumTotal
     }
 
-    public enum Enhance
+    public enum Enhance // ��ȭ ���
     {
-        Absolute,
-        Addition,
-        PosMulti_Percent,
-        NegMulti_Percent,
-        Addition_Percent,
+        //(stat + absolute) * percent * percent * percent + addition
+        // order of this enum is IMPORTANT! do not change order
+        Absolute,                   // ���� �߰�
+        PosMulti_Percent,           // Ȯ��, ��� �߰�
+        NegMulti_Percent,           // Ȯ��, ��� ����
+        Addition_Percent,           // Ȯ��, ��� �߰� (�߰���� : �տ���)
+        Addition,                   // �߰� ���� �߰� (��� �� ���)
 
         EnumTotal
+    }
+
+    public struct Enchant //: IEnumerable, IEnumerator
+    {
+        public AbilityOption.Stat stat;
+        public AbilityOption.Enhance how;
+
+        //public IEnumerator GetEnumerator()
+        //{
+        //    return (IEnumerator)this;
+        //}
+
+        //public object Current { get; }
+
+        //public bool MoveNext()
+        //{
+        //    return false;
+
+        //}
+        //public void Reset()
+        //{
+        //    return;
+        //}
     }
 
     public enum Equipment
@@ -73,10 +98,10 @@ public class AbilityOption
 
     public enum Buff
     {
-        MoveSpeed_Buff = 0,                 // 버프 - 이동속도
-        AttackSpeed_Buff,               // 버프 - 공격속도
-        Attack_Buff,                    // 버프 - 공격력
-        Defense_Buff,                   // 버프 - 방어력
+        MoveSpeed_Buff,                 // ���� - �̵��ӵ�
+        AttackSpeed_Buff,               // ���� - ��ݼӵ�
+        Attack_Buff,                    // ���� - ��ݷ�
+        Defense_Buff,                   // ���� - ����
 
         EnumTotal
     }

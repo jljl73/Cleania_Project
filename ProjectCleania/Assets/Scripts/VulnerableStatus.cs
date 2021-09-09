@@ -50,14 +50,14 @@ public class VulnerableStatus : MonoBehaviour
         equipmentSlot = GetComponent<EquipmentSlot>();
     }
 
-    void RefreshAtk()
-    {
-        _atk = (equipmentSlot.atk /*+ abs atk buff*/) *
-            (1 + (strength * 0.01f)) *
-            (1 + (equipmentSlot[(int)AbilityOption.Equipment.Attack_Percent])) *
-            (1 + (/* buff atk * */ 0.01f))
-            /* + additional atk*/;
-    }
+    //void RefreshAtk()
+    //{
+    //    _atk = (equipmentSlot.atk /*+ abs atk buff*/) *
+    //        (1 + (strength * 0.01f)) *
+    //        (1 + (equipmentSlot[(int)AbilityOption.Equipment.Attack_Percent])) *
+    //        (1 + (/* buff atk * */ 0.01f))
+    //        /* + additional atk*/;
+    //}
 
     void RefreshDef()
     {
