@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerSkill4 : Skill
 {
+    public NavMeshAgent navMeshAgent;
     public StateMachine playerStateMachine;
     public Animator animator;
     Ray ray;
@@ -36,7 +38,6 @@ public class PlayerSkill4 : Skill
         //        0.0f,
         //        hit.point.z);
         //}
-
         attackArea.enabled = true;
         Invoke("OffSkill", 3.0f);
     }
