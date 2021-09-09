@@ -4,35 +4,32 @@ using UnityEngine;
 
 public class BuffManager : MonoBehaviour
 {
-    public enum Option
+    float[] _options = { 1, 1, 1, 1 };
+
+    public float this[Ability.Buff index]
     {
-        MoveSpeed, AttackSpeed, Attack, Defense
+        get => _options[(int)index];
     }
 
-    float[] _options = { 0, 0, 0, 0 };
-
-    public float this[int index]
-    {
-        get => _options[index];
-    }
-
-    public void AddBuff(float value, Option option, float duration)
+    public void AddBuff(float value, Ability.Buff option, float duration)
     {
         _options[(int)option] += value;
         StartCoroutine(OffBuff(value, option, duration));
+        Debug.Log("add buff : " + option.ToString() + " : " + _options[(int)option]);
     }
 
-    IEnumerator OffBuff(float value, Option option, float duration)
+    IEnumerator OffBuff(float value, Ability.Buff option, float duration)
     {
         yield return new WaitForSeconds(duration);
         _options[(int)option] -= value;
+        Debug.Log("off buff : " + option.ToString() + " : " + _options[(int)option]);
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log(_options[(int)Option.MoveSpeed]);
+            Debug.Log(_options[(int)Ability.Buff.Attack_Buff]);
         }
     }
 

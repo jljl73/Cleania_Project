@@ -4,46 +4,105 @@ using UnityEngine;
 
 public class AbilityOption
 {
-    public enum Name
+    public enum Stat
     {
-        // Equipment
-        Attack_Percent = 0,                 // °ø°İ·Â +n%
-        //HeroMonsterDamage_Percent,      // ¿µ¿õ µî±Ş ÀÌÇÏ ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ÇÇÇØ +n%
-        //RareMonsterDamage_Percent,      // Èñ±Í µî±Ş ÀÌÇÏ ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ÇÇÇØ +n%
-        //BossMonsterDamage_Percent,      // º¸½º µî±Ş ÀÌÇÏ ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ÇÇÇØ +n%
-        CriticalChance_Percent,         // Ä¡¸íÅ¸ È®·ü +n%
-        CriticalScale_Percent,          // Ä¡¸íÅ¸ ÇÇÇØ +n%
-        //IncreaseGivingDamage_Percent,   // ÁÖ´Â ÇÇÇØ +n%
+        Strength,       // 
+        Attack,         // 
+        CriticalChance, // 
+        CriticalScale,  // 
+        AttackSpeed,    // 
+        Accuracy,       // 
+        IncreaseDamage, // 
+                        
+        Vitality,       // 
+        MaxHP,          // 
+        Dodge,          // 
+        Toughness,      // 
+        Defense,        // 
+        ReduceDamage,   // 
+                        
+        SkillCooldown,  // 
+        MoveSpeed,      // 
+        MaxMP,          // 
 
-        Accuracy_Percent,               // ÀûÁß·ü +n%
-        Dodge_Percent,                  // È¸ÇÇÀ² n%
-        Toughness_Percent,              // °­ÀÎÇÔ +n%
-        //ReduceGettingDamage_Percent,    // ¹Ş´ÂÇÇÇØ -n%
+        EnumTotal
+    }
 
-        Defense_Abs,                    // ¹æ¾î·Â +n
-        Vitality_Abs,                   // Ã¼·Â +n
-        HP_Percent,                     // »ı¸í·Â + n%
-        //HPperSecond_Abs,                // ÃÊ´ç »ı¸í È¸º¹ +n
-        //HPperHit_Abs,                   // Å¸°İ´ç »ı¸í È¸º¹ +n
-        //HPperKill_Abs,                  // Ã³Ä¡½Ã »ı¸í È¸º¹ +n
+    public enum Enhance // ï¿½ï¿½È­ ï¿½ï¿½ï¿½
+    {
+        //(stat + absolute) * percent * percent * percent + addition
+        // order of this enum is IMPORTANT! do not change order
+        Absolute,                   // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        PosMulti_Percent,           // È®ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        NegMulti_Percent,           // È®ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Addition_Percent,           // È®ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ (ï¿½ß°ï¿½ï¿½ï¿½ï¿½ : ï¿½Õ¿ï¿½ï¿½ï¿½)
+        Addition,                   // ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ (ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½)
 
-        Cooldown_Percent,               // Àç»ç¿ë´ë±â½Ã°£ -n%
-        MPconsumeReduce_Percent,        // °íÀ¯ÀÚ¿ø ¼Ò¸ğ·® -n%
-        MaxMP_Abs,                      // ÃÖ´ë °íÀ¯ÀÚ¿ø +n
+        EnumTotal
+    }
 
-        EXP_Percent,                    // Àû¿¡°Ô¼­ ¾ò´Â °æÇèÄ¡
-        Gold_Percent,                   // Àû¿¡°Ô¼­ ¾ò´Â ÀçÈ­
+    public struct Enchant //: IEnumerable, IEnumerator
+    {
+        public AbilityOption.Stat stat;
+        public AbilityOption.Enhance how;
 
+        //public IEnumerator GetEnumerator()
+        //{
+        //    return (IEnumerator)this;
+        //}
 
-        // Buff
-        MoveSpeed_Buff,                 // ¹öÇÁ - ÀÌµ¿¼Óµµ
-        AttackSpeed_Buff,               // ¹öÇÁ - °ø°İ¼Óµµ
-        Attack_Buff,                    // ¹öÇÁ - °ø°İ·Â
-        Defense_Buff,                   // ¹öÇÁ - ¹æ¾î·Â
+        //public object Current { get; }
 
-        AllOptionTotal,
+        //public bool MoveNext()
+        //{
+        //    return false;
 
-        EquipmentOptionTotal = Gold_Percent - Attack_Percent + 1,       // equip begin - equip end + 1
-        BuffOptionTotal = Defense_Buff - MoveSpeed_Buff + 1             // buff begin - buff end + 1
+        //}
+        //public void Reset()
+        //{
+        //    return;
+        //}
+    }
+
+    public enum Equipment
+    {
+        Attack_Percent = 0,                 // ê³µê²©ë ¥ +n%
+        //HeroMonsterDamage_Percent,      // ì˜ì›… ë“±ê¸‰ ì´í•˜ ëª¬ìŠ¤í„°ì—ê²Œ ì£¼ëŠ” í”¼í•´ +n%
+        //RareMonsterDamage_Percent,      // í¬ê·€ ë“±ê¸‰ ì´í•˜ ëª¬ìŠ¤í„°ì—ê²Œ ì£¼ëŠ” í”¼í•´ +n%
+        //BossMonsterDamage_Percent,      // ë³´ìŠ¤ ë“±ê¸‰ ì´í•˜ ëª¬ìŠ¤í„°ì—ê²Œ ì£¼ëŠ” í”¼í•´ +n%
+        CriticalChance_Percent,         // ì¹˜ëª…íƒ€ í™•ë¥  +n%
+        CriticalScale_Percent,          // ì¹˜ëª…íƒ€ í”¼í•´ +n%
+        //IncreaseGivingDamage_Percent,   // ì£¼ëŠ” í”¼í•´ +n%
+
+        Accuracy_Percent,               // ì ì¤‘ë¥  +n%
+        Dodge_Percent,                  // íšŒí”¼ìœ¨ n%
+        Toughness_Percent,              // ê°•ì¸í•¨ +n%
+        //ReduceGettingDamage_Percent,    // ë°›ëŠ”í”¼í•´ -n%
+
+        Defense_Abs,                    // ë°©ì–´ë ¥ +n
+        Vitality_Abs,                   // ì²´ë ¥ +n
+        HP_Percent,                     // ìƒëª…ë ¥ + n%
+        //HPperSecond_Abs,                // ì´ˆë‹¹ ìƒëª… íšŒë³µ +n
+        //HPperHit_Abs,                   // íƒ€ê²©ë‹¹ ìƒëª… íšŒë³µ +n
+        //HPperKill_Abs,                  // ì²˜ì¹˜ì‹œ ìƒëª… íšŒë³µ +n
+
+        Cooldown_Percent,               // ì¬ì‚¬ìš©ëŒ€ê¸°ì‹œê°„ -n%
+        MPconsumeReduce_Percent,        // ê³ ìœ ìì› ì†Œëª¨ëŸ‰ -n%
+        MaxMP_Abs,                      // ìµœëŒ€ ê³ ìœ ìì› +n
+
+        EXP_Percent,                    // ì ì—ê²Œì„œ ì–»ëŠ” ê²½í—˜ì¹˜
+        Gold_Percent,                   // ì ì—ê²Œì„œ ì–»ëŠ” ì¬í™”
+
+        EnumTotal
+    }
+
+    public enum Buff
+    {
+        MoveSpeed_Buff,                 // ï¿½ï¿½ï¿½ï¿½ - ï¿½Ìµï¿½ï¿½Óµï¿½
+        AttackSpeed_Buff,               // ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½İ¼Óµï¿½
+        Attack_Buff,                    // ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½İ·ï¿½
+        Defense_Buff,                   // ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½
+
+        EnumTotal
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillManager : MonoBehaviour
 {
-
-    public Skill[] skills = new Skill[5];
+    public StateMachine playerStateMachine;
+    public Skill[] skills = new Skill[6];
     Skill skill;
     
     void Update()
@@ -18,16 +18,23 @@ public class PlayerSkillManager : MonoBehaviour
 
     Skill InputHandler()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        
+        // 키보드
+        if (Input.GetKeyDown(KeyCode.Alpha1) && isSkillAvailable())
             return skills[0];
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && isSkillAvailable())
             return skills[1];
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && isSkillAvailable())
             return skills[2];
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Alpha4) && isSkillAvailable())
             return skills[3];
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+
+        // 마우스
+        if(Input.GetKeyDown(KeyCode.C) && isSkillAvailable())
             return skills[4];
+        if (Input.GetMouseButton(1) && (isSkillAvailable() || 
+            playerStateMachine.State == StateMachine.enumState.MoveAttack))
+            return skills[5];
 
         return null;
     }
@@ -37,4 +44,19 @@ public class PlayerSkillManager : MonoBehaviour
         skills[type].Activate();
     }
 
+    public void AnimationDeactivate(int type)
+    {
+        Debug.Log(type);
+        skills[type].AnimationDeactivate();
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
+    }
+
+    bool isSkillAvailable()
+    {
+        if (playerStateMachine.State == StateMachine.enumState.Idle ||
+            playerStateMachine.State == StateMachine.enumState.Chasing)
+            return true;
+        else
+            return false;
+    }
 }

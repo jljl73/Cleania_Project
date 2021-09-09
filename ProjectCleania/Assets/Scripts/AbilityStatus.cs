@@ -8,32 +8,21 @@ public class AbilityStatus : MonoBehaviour
     EquipmentSlot equipments;
     BuffManager buffs;
 
-    float _strength;
-    public float strenght { get => RefreshStrength(); }
-    float _vitality;
-    public float vitality { get => RefreshVitality(); }
-    float _atk;
-    public float atk { get => RefreshAtk(); }
-    float _def;
-    public float def { get => RefreshDef(); }
-    float _criticalChance;
-    public float criticalChance { get => RefreshCriticalChance(); }
-    float _criticalScale;
-    public float criticalScale { get => RefreshCriticalScale(); }
-    float _moveSpeed;
-    public float moveSpeed { get => RefreshMoveSpeed(); }
-    float _attackSpeed;
-    public float attackSpeed { get => RefreshAttackSpeed(); }
+    float[] _stats = new float[(int)Ability.Stat.EnumTotal];
+    public float this[Ability.Stat stat]
+    {
+        get
+        {
+            return RefreshStat(stat);
+        }
+    }
 
-    float _HP;
-    public float HP { get => _HP; }
-    float _MP;
-    public float MP { get => _MP; }
-    float _maxHP;
-    public float maxHP { get => RefreshMaxHP(); }
-    float _maxMP;
-    public float maxMP { get => RefreshMaxMP(); }
-
+    float _HP = 100;
+    public float HP
+    { get => _HP; }
+    float _MP = 100;
+    public float MP
+    { get => _MP; }
 
     private void Awake()
     {
@@ -41,125 +30,127 @@ public class AbilityStatus : MonoBehaviour
         equipments = GetComponent<EquipmentSlot>();
         buffs = GetComponent<BuffManager>();
 
-        RefreshAll();
+        //RefreshAll();
+        for(Ability.Stat i = 0; i < Ability.Stat.EnumTotal; ++i)
+        {
+            RefreshStat(i);
+        }
+        FullHP();
+        FullMP();
     }
 
-    void RefreshAll()
-    {
-        RefreshStrength();
-        RefreshVitality();
-        RefreshAtk();
-        RefreshDef();
-        RefreshCriticalChance();
-        RefreshCriticalScale();
-        RefreshMoveSpeed();
-        RefreshAttackSpeed();
-    }
 
-    float RefreshStrength()
+
+    float RefreshStat(Ability.Stat stat)
     {
         if (status == null)
             return -1;
 
-        _strength = status.strength;
+        _stats[(int)stat] = status[stat];       // default status
 
-        if (equipments != null)
+        if(equipments != null)                  // equipments stat & magic adjust
         {
-            _strength += equipments.strength;
+            for(Ability.Enhance i = 0; i < Ability.Enhance.EnumTotal; ++i)
+            {
+                switch(i)
+                {
+                    case Ability.Enhance.Absolute:
+                        _stats[(int)stat] += equipments[stat, i];
+                        break;
+
+                    case Ability.Enhance.NegMulti_Percent:
+                    case Ability.Enhance.PosMulti_Percent:
+                    case Ability.Enhance.Addition_Percent:
+                        if (equipments[stat, i] != 0)
+                            _stats[(int)stat] *= equipments[stat, i];
+                        break;
+
+                    case Ability.Enhance.Addition:
+                        if (buffs != null)
+                        {
+                            switch (stat)
+                            {
+                                case Ability.Stat.MoveSpeed:
+                                    if (buffs[Ability.Buff.MoveSpeed_Buff] != 0)
+                                        _stats[(int)stat] *= buffs[Ability.Buff.MoveSpeed_Buff];
+                                    break;
+                                case Ability.Stat.AttackSpeed:
+                                    if (buffs[Ability.Buff.AttackSpeed_Buff] != 0)
+                                    _stats[(int)stat] *= buffs[Ability.Buff.AttackSpeed_Buff];
+                                    break;
+                                case Ability.Stat.Attack:
+                                    if (buffs[Ability.Buff.Attack_Buff] != 0)
+                                    _stats[(int)stat] *= buffs[Ability.Buff.Attack_Buff];
+                                    break;
+                                case Ability.Stat.Defense:
+                                    if (buffs[Ability.Buff.Defense_Buff] != 0)
+                                    _stats[(int)stat] *= buffs[Ability.Buff.Defense_Buff];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                        _stats[(int)stat] += equipments[stat, i];
+                        break;
+
+                    default:
+                        // error code
+                        break;
+                }
+            }
         }
 
-        if (buffs != null)
-        {
-            //_strength += buffs[BuffManager.Option.Attack];
-        }
-
-        return _strength;
+        return _stats[(int)stat];
     }
 
-    float RefreshVitality()
+    void FullHP()
     {
-        if (status == null)
-            return -1;
-
-        _vitality = status.vitality;
-
-        if (equipments != null)
-        {
-            _vitality += equipments[AbilityOption.Name.Vitality_Abs];
-        }
-
-        //if(buffs != null)
-        //{
-        //
-        //}
-
-        return _vitality;
+        _HP = this[Ability.Stat.MaxHP];
     }
-
-    float RefreshAtk()
+    void FullMP()
     {
-        if (status == null)
-            return -1;
-
-        _atk = status.atk;
-
-        if (equipments != null)
-        {
-            _atk *= (1 + equipments[AbilityOption.Name.Attack_Percent]);
-        }
-
-        //if(buffs != null)
-        //{
-        //
-        //}
-
-        return _atk;
+        _MP = this[Ability.Stat.MaxMP];
     }
-
-    float RefreshDef()
-    {
-
-        return _def;
-    }
-
-    float RefreshCriticalChance()
-    {
-
-        return _criticalChance;
-    }
-
-    float RefreshCriticalScale()
-    {
-
-        return _criticalScale;
-    }
-
-    float RefreshMoveSpeed()
-    {
-
-        return _moveSpeed;
-    }
-
-    float RefreshAttackSpeed()
-    {
-        return _attackSpeed;
-    }
-
-
-
-    float RefreshMaxHP()
-    {
-        return _maxHP;
-    }
-
-    float RefreshMaxMP()
-    {
-        return _maxMP;
-    }
-
 
     public float TotalDamage()
     {
-        return 0;
+        float value = this[Ability.Stat.Attack] * (1 + this[Ability.Stat.Strength] * 0.01f);
+        //Debug.Log(this[Ability.Stat.Attack] + " * (1 + " + this[Ability.Stat.Strength] + " * 0.01f)");
+
+        if (Random.Range(0.0f, 1.0f) < this[Ability.Stat.CriticalChance])
+            value *= this[Ability.Stat.CriticalScale];
+
+        return value;
+    }
+
+    public float AttackedBy(AbilityStatus other, float skillScale)      // returns reduced HP value
+    {
+        float value = other.TotalDamage() * skillScale;
+
+        value *= (1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]));     // defense adjust
+
+        if (other[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0, 1))   // if dodge success, damage == 0
+            return 0;
+
+        _HP -= value;
+
+        return value;
+    }
+
+    public void ConsumeMP(float usedMP)
+    {
+        _MP -= usedMP;
+    }
+
+    public float getStat(Ability.Stat stat)
+    {
+        return this[stat];
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+            TotalDamage();
     }
 }

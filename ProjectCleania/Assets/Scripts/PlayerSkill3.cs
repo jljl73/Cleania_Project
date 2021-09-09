@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill3 : Skill
 {
+    public StateMachine playerStateMachine;
     public Animator animator;
     public GameObject hurricanePrefabs;
     // Start is called before the first frame update
@@ -14,12 +15,19 @@ public class PlayerSkill3 : Skill
 
     public override void AnimationActivate()
     {
+        animator.SetBool("OnSkill", true);
+        playerStateMachine.Transition(StateMachine.enumState.Attacking);
         animator.SetInteger("Skill", 3);
+    }
+
+    public override void AnimationDeactivate()
+    {
+        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        animator.SetBool("OnSkill", false);
     }
 
     override public void Activate()
     {
-        animator.SetInteger("Skill", 0);
 
         Quaternion left = transform.rotation;
         Quaternion right = transform.rotation;
@@ -31,4 +39,5 @@ public class PlayerSkill3 : Skill
         Instantiate(hurricanePrefabs, transform.position, transform.rotation);
         Instantiate(hurricanePrefabs, transform.position, right);
     }
+
 }
