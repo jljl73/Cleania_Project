@@ -41,42 +41,42 @@ public class AbilityOption
 
     public enum Equipment
     {
-        Attack_Percent = 0,                 // °ø°İ·Â +n%
-        //HeroMonsterDamage_Percent,      // ¿µ¿õ µî±Ş ÀÌÇÏ ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ÇÇÇØ +n%
-        //RareMonsterDamage_Percent,      // Èñ±Í µî±Ş ÀÌÇÏ ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ÇÇÇØ +n%
-        //BossMonsterDamage_Percent,      // º¸½º µî±Ş ÀÌÇÏ ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ÇÇÇØ +n%
-        CriticalChance_Percent,         // Ä¡¸íÅ¸ È®·ü +n%
-        CriticalScale_Percent,          // Ä¡¸íÅ¸ ÇÇÇØ +n%
-        //IncreaseGivingDamage_Percent,   // ÁÖ´Â ÇÇÇØ +n%
+        Attack_Percent = 0,                 // ê³µê²©ë ¥ +n%
+        //HeroMonsterDamage_Percent,      // ì˜ì›… ë“±ê¸‰ ì´í•˜ ëª¬ìŠ¤í„°ì—ê²Œ ì£¼ëŠ” í”¼í•´ +n%
+        //RareMonsterDamage_Percent,      // í¬ê·€ ë“±ê¸‰ ì´í•˜ ëª¬ìŠ¤í„°ì—ê²Œ ì£¼ëŠ” í”¼í•´ +n%
+        //BossMonsterDamage_Percent,      // ë³´ìŠ¤ ë“±ê¸‰ ì´í•˜ ëª¬ìŠ¤í„°ì—ê²Œ ì£¼ëŠ” í”¼í•´ +n%
+        CriticalChance_Percent,         // ì¹˜ëª…íƒ€ í™•ë¥  +n%
+        CriticalScale_Percent,          // ì¹˜ëª…íƒ€ í”¼í•´ +n%
+        //IncreaseGivingDamage_Percent,   // ì£¼ëŠ” í”¼í•´ +n%
 
-        Accuracy_Percent,               // ÀûÁß·ü +n%
-        Dodge_Percent,                  // È¸ÇÇÀ² n%
-        Toughness_Percent,              // °­ÀÎÇÔ +n%
-        //ReduceGettingDamage_Percent,    // ¹Ş´ÂÇÇÇØ -n%
+        Accuracy_Percent,               // ì ì¤‘ë¥  +n%
+        Dodge_Percent,                  // íšŒí”¼ìœ¨ n%
+        Toughness_Percent,              // ê°•ì¸í•¨ +n%
+        //ReduceGettingDamage_Percent,    // ë°›ëŠ”í”¼í•´ -n%
 
-        Defense_Abs,                    // ¹æ¾î·Â +n
-        Vitality_Abs,                   // Ã¼·Â +n
-        HP_Percent,                     // »ı¸í·Â + n%
-        //HPperSecond_Abs,                // ÃÊ´ç »ı¸í È¸º¹ +n
-        //HPperHit_Abs,                   // Å¸°İ´ç »ı¸í È¸º¹ +n
-        //HPperKill_Abs,                  // Ã³Ä¡½Ã »ı¸í È¸º¹ +n
+        Defense_Abs,                    // ë°©ì–´ë ¥ +n
+        Vitality_Abs,                   // ì²´ë ¥ +n
+        HP_Percent,                     // ìƒëª…ë ¥ + n%
+        //HPperSecond_Abs,                // ì´ˆë‹¹ ìƒëª… íšŒë³µ +n
+        //HPperHit_Abs,                   // íƒ€ê²©ë‹¹ ìƒëª… íšŒë³µ +n
+        //HPperKill_Abs,                  // ì²˜ì¹˜ì‹œ ìƒëª… íšŒë³µ +n
 
-        Cooldown_Percent,               // Àç»ç¿ë´ë±â½Ã°£ -n%
-        MPconsumeReduce_Percent,        // °íÀ¯ÀÚ¿ø ¼Ò¸ğ·® -n%
-        MaxMP_Abs,                      // ÃÖ´ë °íÀ¯ÀÚ¿ø +n
+        Cooldown_Percent,               // ì¬ì‚¬ìš©ëŒ€ê¸°ì‹œê°„ -n%
+        MPconsumeReduce_Percent,        // ê³ ìœ ìì› ì†Œëª¨ëŸ‰ -n%
+        MaxMP_Abs,                      // ìµœëŒ€ ê³ ìœ ìì› +n
 
-        EXP_Percent,                    // Àû¿¡°Ô¼­ ¾ò´Â °æÇèÄ¡
-        Gold_Percent,                   // Àû¿¡°Ô¼­ ¾ò´Â ÀçÈ­
+        EXP_Percent,                    // ì ì—ê²Œì„œ ì–»ëŠ” ê²½í—˜ì¹˜
+        Gold_Percent,                   // ì ì—ê²Œì„œ ì–»ëŠ” ì¬í™”
 
         EnumTotal
     }
 
     public enum Buff
     {
-        MoveSpeed_Buff = 0,                 // ¹öÇÁ - ÀÌµ¿¼Óµµ
-        AttackSpeed_Buff,               // ¹öÇÁ - °ø°İ¼Óµµ
-        Attack_Buff,                    // ¹öÇÁ - °ø°İ·Â
-        Defense_Buff,                   // ¹öÇÁ - ¹æ¾î·Â
+        MoveSpeed_Buff = 0,                 // ë²„í”„ - ì´ë™ì†ë„
+        AttackSpeed_Buff,               // ë²„í”„ - ê³µê²©ì†ë„
+        Attack_Buff,                    // ë²„í”„ - ê³µê²©ë ¥
+        Defense_Buff,                   // ë²„í”„ - ë°©ì–´ë ¥
 
         EnumTotal
     }

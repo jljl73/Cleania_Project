@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillR : Skill
+public class PlayerSkillL : Skill
 {
     public Animator animator;
+    //public GameObject player;
     public PlayerMovement playerMovement;
     public StateMachine playerStateMachine;
     Collider attackArea;
@@ -14,12 +15,10 @@ public class PlayerSkillR : Skill
         attackArea = GetComponent<Collider>();
     }
 
-    public override void AnimationActivate()
+    // Update is called once per frame
+    void Update()
     {
-        animator.SetBool("OnSkill", true);
-        animator.SetInteger("Skill", 6);
-        playerStateMachine.Transition(StateMachine.enumState.MoveAttack);
-
+        
     }
 
     public override void Activate()
@@ -27,17 +26,30 @@ public class PlayerSkillR : Skill
         attackArea.enabled = true;
     }
 
+    public override void AnimationActivate()
+    {
+        playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        animator.SetBool("OnSkill", true);
+
+        animator.SetInteger("Skill", 5);
+    }
+
+    public void OffSkill()
+    {
+        attackArea.enabled = false;
+    }
+
     public override void AnimationDeactivate()
     {
         playerStateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
-        attackArea.enabled = false;
+        OffSkill();
     }
 
-   private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
-            Debug.Log("R Hit");
+            Debug.Log("L Hit");
     }
- 
+
 }

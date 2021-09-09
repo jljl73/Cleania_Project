@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill4 : Skill
 {
+    public StateMachine playerStateMachine;
     public Animator animator;
     Ray ray;
     RaycastHit hit;
@@ -16,33 +17,25 @@ public class PlayerSkill4 : Skill
 
     public override void AnimationActivate()
     {
+        animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 4);
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            transform.position = new Vector3(
-                hit.point.x,
-                0.0f,
-                hit.point.z);
-        }
-
-        attackArea.enabled = true;
-        Invoke("OffSkill", 3.0f);
+        //playerMovement.MoveToPosition();
+        //Invoke("OffSkill", 3.0f);
     }
 
     override public void Activate()
     {
-        animator.SetInteger("Skill", 0);
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
-        if(Physics.Raycast(ray, out hit))
-        {
-            transform.position = new Vector3(
-                hit.point.x,
-                0.0f,
-                hit.point.z);
-        }
+        //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //if(Physics.Raycast(ray, out hit))
+        //{
+        //    transform.position = new Vector3(
+        //        hit.point.x,
+        //        0.0f,
+        //        hit.point.z);
+        //}
 
         attackArea.enabled = true;
         Invoke("OffSkill", 3.0f);
@@ -52,5 +45,18 @@ public class PlayerSkill4 : Skill
     {
         attackArea.enabled = false;
     }
+
+    public override void AnimationDeactivate()
+    {
+        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        animator.SetBool("OnSkill", false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
+            Debug.Log("4 Hit");
+    }
+
 
 }
