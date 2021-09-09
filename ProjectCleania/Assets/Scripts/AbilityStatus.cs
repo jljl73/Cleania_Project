@@ -116,9 +116,9 @@ public class AbilityStatus : MonoBehaviour
     public float TotalDamage()
     {
         float value = this[Ability.Stat.Attack] * (1 + this[Ability.Stat.Strength] * 0.01f);
-        Debug.Log(this[Ability.Stat.Attack] + " * (1 + " + this[Ability.Stat.Strength] + " * 0.01f)");
+        //Debug.Log(this[Ability.Stat.Attack] + " * (1 + " + this[Ability.Stat.Strength] + " * 0.01f)");
 
-        if (Random.Range(0, 1) < this[Ability.Stat.CriticalChance])
+        if (Random.Range(0.0f, 1.0f) < this[Ability.Stat.CriticalChance])
             value *= this[Ability.Stat.CriticalScale];
 
         return value;
