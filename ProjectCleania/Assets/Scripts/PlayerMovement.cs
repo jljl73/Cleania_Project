@@ -222,7 +222,6 @@ public class PlayerMovement : MonoBehaviour
         bChasing = false;
         if (Physics.Raycast(ray, out raycastHit))
         {
-            Debug.Log(raycastHit.transform.tag);
             if (raycastHit.transform.CompareTag("Enemy"))
             {
                 targetObj = raycastHit.transform.gameObject;
