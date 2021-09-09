@@ -13,9 +13,9 @@ public class Status : MonoBehaviour
             switch(index)
             {
                 case Ability.Stat.Strength:
-                    return Strength + level * levelUpStrength;
+                    return Strength + (level - 1) * levelUpStrength;
                 case Ability.Stat.Vitality:
-                    return Vitality + level * levelUpVitality;
+                    return Vitality + (level - 1) * levelUpVitality;
                 case Ability.Stat.Attack:
                     return Atk;
                 case Ability.Stat.Defense:

@@ -18,9 +18,11 @@ public class AbilityStatus : MonoBehaviour
     }
 
     float _HP = 100;
-    public float HP;
+    public float HP
+    { get => _HP; }
     float _MP = 100;
-    public float MP;
+    public float MP
+    { get => _MP; }
 
     private void Awake()
     {
@@ -33,6 +35,8 @@ public class AbilityStatus : MonoBehaviour
         {
             RefreshStat(i);
         }
+        FullHP();
+        FullMP();
     }
 
 
@@ -67,15 +71,19 @@ public class AbilityStatus : MonoBehaviour
                             switch (stat)
                             {
                                 case Ability.Stat.MoveSpeed:
-                                    _stats[(int)stat] *= buffs[Ability.Buff.MoveSpeed_Buff];
+                                    if (buffs[Ability.Buff.MoveSpeed_Buff] != 0)
+                                        _stats[(int)stat] *= buffs[Ability.Buff.MoveSpeed_Buff];
                                     break;
                                 case Ability.Stat.AttackSpeed:
+                                    if (buffs[Ability.Buff.AttackSpeed_Buff] != 0)
                                     _stats[(int)stat] *= buffs[Ability.Buff.AttackSpeed_Buff];
                                     break;
                                 case Ability.Stat.Attack:
+                                    if (buffs[Ability.Buff.Attack_Buff] != 0)
                                     _stats[(int)stat] *= buffs[Ability.Buff.Attack_Buff];
                                     break;
                                 case Ability.Stat.Defense:
+                                    if (buffs[Ability.Buff.Defense_Buff] != 0)
                                     _stats[(int)stat] *= buffs[Ability.Buff.Defense_Buff];
                                     break;
 
@@ -96,9 +104,19 @@ public class AbilityStatus : MonoBehaviour
         return _stats[(int)stat];
     }
 
+    void FullHP()
+    {
+        _HP = this[Ability.Stat.MaxHP];
+    }
+    void FullMP()
+    {
+        _MP = this[Ability.Stat.MaxMP];
+    }
+
     public float TotalDamage()
     {
         float value = this[Ability.Stat.Attack] * (1 + this[Ability.Stat.Strength] * 0.01f);
+        Debug.Log(this[Ability.Stat.Attack] + " * (1 + " + this[Ability.Stat.Strength] + " * 0.01f)");
 
         if (Random.Range(0, 1) < this[Ability.Stat.CriticalChance])
             value *= this[Ability.Stat.CriticalScale];
@@ -130,9 +148,9 @@ public class AbilityStatus : MonoBehaviour
         return this[stat];
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //        Debug.Log(TotalDamage());
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+            TotalDamage();
+    }
 }
