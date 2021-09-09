@@ -30,13 +30,13 @@ public class Ability
 
     public enum Enhance // 강화 방식
     {
-        //(stat + absolute) * percent * percent * percent + addition
+        // (stat + absolute) * percent * percent * percent + addition
         // order of this enum is IMPORTANT! do not change order
-        Absolute,                   // 스텟 추가
-        PosMulti_Percent,           // 확률, 비율 추가
-        NegMulti_Percent,           // 확률, 비율 감소
-        Addition_Percent,           // 확률, 비율 추가 (추가방식 : 합연산)
-        Addition,                   // 추가 스텟 추가 (곱연산 후 적용)
+        Absolute,                   // 절대값 스텟 (추가방식 : 합)
+        PosMulti_Percent,           // 확률, 비율 추가 (추가방식 : 곱)
+        NegMulti_Percent,           // 확률, 비율 감소 (추가방식 : 곱)
+        Addition_Percent,           // 확률, 비율 추가 (추가방식 : 합)
+        Addition,                   // 추가 스텟 (추가방식 : 합)
 
         EnumTotal
     }
