@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityOption
+public class Ability
 {
     public enum Stat
     {
@@ -13,14 +13,14 @@ public class AbilityOption
         AttackSpeed,    // 
         Accuracy,       // 
         IncreaseDamage, // 
-                        
+
         Vitality,       // 
         MaxHP,          // 
         Dodge,          // 
         Toughness,      // 
         Defense,        // 
         ReduceDamage,   // 
-                        
+
         SkillCooldown,  // 
         MoveSpeed,      // 
         MaxMP,          // 
