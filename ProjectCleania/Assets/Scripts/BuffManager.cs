@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuffManager : MonoBehaviour
 {
-    float[] _options = { 1, 1, 1, 1 };
+    float[] _options = { 0, 0, 0, 0 };
 
     public float this[Ability.Buff index]
     {
