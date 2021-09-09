@@ -5,26 +5,20 @@ using UnityEngine;
 public class BuffManager : MonoBehaviour
 {
 
-    float[] _options = new float[30];
+    float[] _options = { 0, 0, 0, 0 };
 
-    private void Start()
-    {
-        for (int i = 0; i < _options.Length; ++i)
-            _options[i] = 0.0f;
-    }
-
-    public float this[AbilityOption.Name index]
+    public float this[AbilityOption.Buff index]
     {
         get => _options[(int)index];
     }
 
-    public void AddBuff(float value, AbilityOption.Name option, float duration)
+    public void AddBuff(float value, AbilityOption.Buff option, float duration)
     {
         _options[(int)option] += value;
         StartCoroutine(OffBuff(value, option, duration));
     }
 
-    IEnumerator OffBuff(float value, AbilityOption.Name option, float duration)
+    IEnumerator OffBuff(float value, AbilityOption.Buff option, float duration)
     {
         yield return new WaitForSeconds(duration);
         _options[(int)option] -= value;
@@ -34,7 +28,7 @@ public class BuffManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log(_options[(int)AbilityOption.Name.MoveSpeed_Buff]);
+            Debug.Log(_options[(int)AbilityOption.Buff.MoveSpeed_Buff]);
         }
     }
 
