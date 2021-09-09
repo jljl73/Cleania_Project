@@ -16,8 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject targetObj;               // 공격 대상
     private Vector3 targetPose;                 // 목표 위치
 
-    private NavMeshPath path;                   // 목표까지 path
-    private int currentPathIdx;                 // path 내 현재 목표 지점
+    private RaycastHit[] rayCastHits;
 
     private float distanceBetweenTargetObj = 1f;   // 공격 시, 목표 위치 얼마 앞에서 멈출 것인가
 
@@ -59,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
         // 애니메이션 업데이트
         playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
+
+        //playerRigidbody.velocity = Vector3.zero;
     }
 
     private void ActivateNavigation()
@@ -70,16 +71,42 @@ public class PlayerMovement : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             // 클릭한 곳에 적이 있으면, 적 위치로 이동 후 공격
-            if (Physics.Raycast(ray, out mouseHit) && mouseHit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                // 타겟: 마우스 클릭된 적
-                targetObj = mouseHit.transform.gameObject;
-            }
+            //if (Physics.Raycast(ray, out mouseHit) && mouseHit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            //{
+            //    // 타겟: 마우스 클릭된 적
+            //    targetObj = mouseHit.transform.gameObject;
+            //}
 
-            else if (Physics.Raycast(ray, out mouseHit))
+            //else if (Physics.Raycast(ray, out mouseHit))
+            //{
+            //    // 일반 지형이면, 타겟 없음, 목표 위치 설정
+            //    targetPose = mouseHit.point;
+            //    targetObj = null;
+            //}
+
+            rayCastHits = Physics.RaycastAll(ray);
+
+            if (rayCastHits.Length > 0)
             {
+                print("rayCastHits.Length: " + rayCastHits.Length);
+
+                RaycastHit closeHit = rayCastHits[0];
+                float closetDist = float.MaxValue;
+                foreach (RaycastHit rayCastHit in rayCastHits)
+                {
+                    // 플레이어와 비교할 때 가장 가까운 곳
+                    if (Vector3.Distance(transform.position, rayCastHit.point) < closetDist)
+                    {
+                        closeHit = rayCastHit;
+                    }
+                }
+
+                //// 일반 지형이면, 타겟 없음, 목표 위치 설정
+                //targetPose = mouseHit.point;
+                //targetObj = null;
+
                 // 일반 지형이면, 타겟 없음, 목표 위치 설정
-                targetPose = mouseHit.point;
+                targetPose = closeHit.point;
                 targetObj = null;
             }
 
