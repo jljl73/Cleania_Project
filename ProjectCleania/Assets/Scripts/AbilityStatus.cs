@@ -152,7 +152,7 @@ public class AbilityStatus : MonoBehaviour
     // deprecated function. use AttackedBy() or this[Ability.Stat.Attack].
     public float TotalDamage()
     {
-        if (this[Ability.Stat.Accuracy] < Random.Range(0, 1))
+        if (this[Ability.Stat.Accuracy] < Random.Range(0.0f, 1.0f))
             return 0;
 
         float tot = this[Ability.Stat.Attack];
@@ -167,7 +167,7 @@ public class AbilityStatus : MonoBehaviour
 
     public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
     {
-        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0, 1))   // if dodge success, damage == 0
+        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))   // if dodge success, damage == 0
             return 0;
 
         float finalDamage = attacker[Ability.Stat.Attack] * skillScale;
