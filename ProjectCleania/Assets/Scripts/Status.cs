@@ -28,14 +28,19 @@ public class Status : MonoBehaviour
                     return MoveSpeed;
 
                 case Ability.Stat.Accuracy:
-                    return 0;
+                    return Accuracy / 100;
                 case Ability.Stat.Dodge:
-                    return 0;
-                case Ability.Stat.Toughness:
-                    return 0;
+                    return Dodge / 100;
+                case Ability.Stat.Tenacity:
+                    return Tenacity / 100;
+
+                case Ability.Stat.MaxHP:
+                    return BasicHP;
+                case Ability.Stat.MaxMP:
+                    return BasicMP;
 
                 default:
-                    return 0;
+                    return 1;
             }
         }
     }
@@ -52,4 +57,10 @@ public class Status : MonoBehaviour
     public float CriticalScale = 200;
     public float MoveSpeed = 1.0f;
 
+    public float Accuracy = 100;
+    public float Dodge = 10;
+    public float Tenacity = 100;
+
+    public float BasicHP = 0;
+    public float BasicMP = 100;
 }

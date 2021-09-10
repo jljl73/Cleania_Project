@@ -29,7 +29,7 @@ public class BuffManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log(_options[(int)Ability.Buff.Attack_Buff]);
+            AddBuff(0.5f, Ability.Buff.Attack_Buff, 1.0f);
         }
     }
 
