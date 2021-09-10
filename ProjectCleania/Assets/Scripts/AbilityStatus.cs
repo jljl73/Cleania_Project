@@ -149,12 +149,18 @@ public class AbilityStatus : MonoBehaviour
         _MP = this[Ability.Stat.MaxMP];
     }
 
+    // deprecated function. use AttackedBy() or this[Ability.Stat.Attack].
     public float TotalDamage()
     {
+        if (this[Ability.Stat.Accuracy] < Random.Range(0, 1))
+            return 0;
+
         float tot = this[Ability.Stat.Attack];
 
         if (Random.Range(0.0f, 1.0f) < this[Ability.Stat.CriticalChance])
             tot *= this[Ability.Stat.CriticalScale];
+
+        tot *= this[Ability.Stat.IncreaseDamage];
 
         return tot;
     }
