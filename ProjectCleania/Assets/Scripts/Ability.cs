@@ -17,7 +17,7 @@ public class Ability
         Vitality,       // 
         MaxHP,          // 
         Dodge,          // 
-        Toughness,      // 
+        Tenacity,      // 
         Defense,        // 
         ReduceDamage,   // 
 

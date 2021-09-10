@@ -46,15 +46,23 @@ public class AbilityStatus : MonoBehaviour
         if (status == null)
             return -1;
 
-        _stats[(int)stat] = status[stat];       // default status
-        switch(stat)
+        if (stat == Ability.Stat.Accuracy || stat == Ability.Stat.Dodge)
+            _stats[(int)stat] = 1;
+        else
+            _stats[(int)stat] = status[stat];       // default status
+
+        switch(stat)                            // special values
         {
             case Ability.Stat.Attack:
-                //_stats[(int)Ability.Stat.Attack] *= 1 + this[Ability.Stat.Strength] * 0.01f;
+                _stats[(int)Ability.Stat.Attack] *= 1 + this[Ability.Stat.Strength] * 0.01f;
                 break;
 
             case Ability.Stat.MaxHP:
-                //_stats[(int)Ability.Stat.MaxHP] += 
+                _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
+                break;
+
+            case Ability.Stat.Defense:
+                _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
                 break;
 
             default:
@@ -66,8 +74,10 @@ public class AbilityStatus : MonoBehaviour
         {
             _stats[(int)stat] += equipments[stat];  // equipments stat
 
-            for (Ability.Enhance i = 0; i < Ability.Enhance.EnumTotal; ++i) // enchant adjust
+            foreach (var key_value in equipments.enchants) // enchant adjust
             {
+                Ability.Enhance i = key_value.Key.Value;
+
                 switch (i)
                 {
                     case Ability.Enhance.Absolute:
@@ -82,7 +92,7 @@ public class AbilityStatus : MonoBehaviour
                         break;
 
                     //case Ability.Enhance.Addition:
-                    //    _stats[(int)stat] += equipments[stat, i];
+                    //    _stats[(int)stat] += equipments[stat, i];         // additional enchant will be adjusted after buff
                     //    break;
 
                     default:
@@ -98,19 +108,19 @@ public class AbilityStatus : MonoBehaviour
             {
                 case Ability.Stat.MoveSpeed:
                     //if (buffs[Ability.Buff.MoveSpeed_Buff] != 0)
-                        _stats[(int)stat] *= 1 + buffs[Ability.Buff.MoveSpeed_Buff];
+                        _stats[(int)stat] *= buffs[Ability.Buff.MoveSpeed_Buff];
                     break;
                 case Ability.Stat.AttackSpeed:
                     //if (buffs[Ability.Buff.AttackSpeed_Buff] != 0)
-                        _stats[(int)stat] *= 1 + buffs[Ability.Buff.AttackSpeed_Buff];
+                        _stats[(int)stat] *= buffs[Ability.Buff.AttackSpeed_Buff];
                     break;
                 case Ability.Stat.Attack:
                     //if (buffs[Ability.Buff.Attack_Buff] != 0)
-                        _stats[(int)stat] *= 1 + buffs[Ability.Buff.Attack_Buff];
+                        _stats[(int)stat] *= buffs[Ability.Buff.Attack_Buff];
                     break;
                 case Ability.Stat.Defense:
                     //if (buffs[Ability.Buff.Defense_Buff] != 0)
-                        _stats[(int)stat] *= 1 + buffs[Ability.Buff.Defense_Buff];
+                        _stats[(int)stat] *= buffs[Ability.Buff.Defense_Buff];
                     break;
 
                 default:
@@ -118,28 +128,35 @@ public class AbilityStatus : MonoBehaviour
             }
         }
 
-        
+
+        if (equipments != null)
+            _stats[(int)stat] += equipments[stat, Ability.Enhance.Addition];
+
+
+        if (stat == Ability.Stat.Accuracy || stat == Ability.Stat.Dodge)
+            _stats[(int)stat] += (status[stat] - 1);
+
 
         return _stats[(int)stat];
     }
 
-    void FullHP()
+    public void FullHP()
     {
         _HP = this[Ability.Stat.MaxHP];
     }
-    void FullMP()
+    public void FullMP()
     {
         _MP = this[Ability.Stat.MaxMP];
     }
 
     public float TotalDamage()
     {
-        //float value = this[Ability.Stat.Attack] * this[Ability.Stat.Strength] * 0.01f;
-        float value = this[Ability.Stat.Attack];
-        //Debug.Log(this[Ability.Stat.Attack] + " * (1 + " + this[Ability.Stat.Strength] + " * 0.01f)");
+        float tot = this[Ability.Stat.Attack];
 
+        if (Random.Range(0.0f, 1.0f) < this[Ability.Stat.CriticalChance])
+            tot *= this[Ability.Stat.CriticalScale];
 
-        return value;
+        return tot;
     }
 
     public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
@@ -147,7 +164,7 @@ public class AbilityStatus : MonoBehaviour
         if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0, 1))   // if dodge success, damage == 0
             return 0;
 
-        float finalDamage = attacker.TotalDamage() * skillScale;
+        float finalDamage = attacker[Ability.Stat.Attack] * skillScale;
 
         if (Random.Range(0.0f, 1.0f) < attacker[Ability.Stat.CriticalChance])
             finalDamage *= attacker[Ability.Stat.CriticalScale];
@@ -156,15 +173,32 @@ public class AbilityStatus : MonoBehaviour
 
         finalDamage *= (1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]));     // defense adjust
 
-
-        _HP -= finalDamage;
+        if (_HP > finalDamage)
+            _HP -= finalDamage;
+        else
+            _HP = 0;
 
         return finalDamage;
     }
 
-    public void ConsumeMP(float usedMP)
+    public bool ConsumeMP(float usedMP)
     {
-        _MP -= usedMP;
+        if (_MP >= usedMP)
+        {
+            _MP -= usedMP;
+            return true;
+        }
+        else return false;
+    }
+
+    public bool ConsumeHP(float usedHP)
+    {
+        if(_HP >= usedHP)
+        {
+            _HP -= usedHP;
+            return true;
+        }
+        else return false;
     }
 
     public float getStat(Ability.Stat stat)
