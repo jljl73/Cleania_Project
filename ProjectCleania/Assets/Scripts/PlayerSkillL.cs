@@ -49,7 +49,15 @@ public class PlayerSkillL : Skill
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
+        {
             Debug.Log("L Hit");
+
+            EnemyAI enemyAI = other.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                enemyAI.Die();
+            }
+        }
     }
 
 }

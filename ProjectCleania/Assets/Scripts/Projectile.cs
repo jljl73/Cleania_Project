@@ -20,7 +20,11 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<EnemyState>().Damaged();
+            //other.GetComponent<EnemyState>().Damaged();
+            EnemyAI enemyAI = other.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+                enemyAI.Die();
+
             Destroy(gameObject);
         }
     }
