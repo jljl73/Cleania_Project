@@ -187,21 +187,21 @@ public class AbilityStatus : MonoBehaviour
         return finalDamage;
     }
 
-    public bool ConsumeMP(float usedMP)
+    public bool ConsumeMP(float usingHP)
     {
-        if (_MP >= usedMP)
+        if (_MP >= usingHP)
         {
-            _MP -= usedMP;
+            _MP -= usingHP;
             return true;
         }
         else return false;
     }
 
-    public bool ConsumeHP(float usedHP)
+    public bool ConsumeHP(float usingMP)
     {
-        if(_HP >= usedHP)
+        if(_HP > usingMP)
         {
-            _HP -= usedHP;
+            _HP -= usingMP;
             return true;
         }
         else return false;
