@@ -28,16 +28,20 @@ public class PlayerSkill3 : Skill
 
     override public void Activate()
     {
-
         Quaternion left = transform.rotation;
         Quaternion right = transform.rotation;
 
         left *= Quaternion.Euler(0, 30.0f, 0.0f);
         right *= Quaternion.Euler(0, -30.0f, 0.0f);
 
-        Instantiate(hurricanePrefabs, transform.position, left);
-        Instantiate(hurricanePrefabs, transform.position, transform.rotation);
-        Instantiate(hurricanePrefabs, transform.position, right);
-    }
+        //Instantiate(hurricanePrefabs, transform.position, left);
+        //Instantiate(hurricanePrefabs, transform.position, transform.rotation);
+        //Instantiate(hurricanePrefabs, transform.position, right);
 
+        // ¼öÁ¤ //
+        Instantiate(hurricanePrefabs, transform.position, left, transform);
+        Instantiate(hurricanePrefabs, transform.position, transform.rotation, transform);
+        Instantiate(hurricanePrefabs, transform.position, right, transform);
+        // --- //
+    }
 }

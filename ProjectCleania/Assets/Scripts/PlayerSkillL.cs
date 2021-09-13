@@ -46,18 +46,33 @@ public class PlayerSkillL : Skill
         OffSkill();
     }
 
+    void GiveDamage(Collider other)
+    {
+        // 부딛힌 콜라이더에게 
+        AbilityStatus hitObjStatus = other.GetComponent<AbilityStatus>();
+        if (hitObjStatus == null)
+        {
+            Debug.Log("No AbilityStatus on hitObj");
+            return;
+        }
+        // 적에게 데미지 입히기
+        AbilityStatus parentStatus = GetComponentInParent<AbilityStatus>();
+        if (parentStatus == null)
+        {
+            Debug.Log("No AbilityStatus on parent");
+            return;
+        }
+
+        hitObjStatus.AttackedBy(parentStatus, 1f);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
         {
             Debug.Log("L Hit");
-
-            EnemyAI enemyAI = other.GetComponent<EnemyAI>();
-            if (enemyAI != null)
-            {
-                enemyAI.Die();
-            }
+            
+            GiveDamage(other);
         }
     }
-
 }
