@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         ActivateNavigation();
 
         // 회전 가속
-        //AccelerateRotation();
+        AccelerateRotation();
 
         // 공격 모션 판정
         //Attack();
@@ -113,25 +113,28 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-            #region
-            //// 타겟 있으면, 타겟 따라서 목표 위치 설정
-            //if (targetObj != null)
-            //{
-            //    // 적이 바로 앞이면 움직일 필요x
-            //    if (distanceBetweenTargetObj > Vector3.Distance(targetObj.transform.position, transform.position))
-            //    {
-            //        targetPose = transform.position;
-            //        return;
-            //    }
+        #region
+        //// 타겟 있으면, 타겟 따라서 목표 위치 설정
+        //if (targetObj != null)
+        //{
+        //    // 적이 바로 앞이면 움직일 필요x
+        //    if (distanceBetweenTargetObj > Vector3.Distance(targetObj.transform.position, transform.position))
+        //    {
+        //        targetPose = transform.position;
+        //        return;
+        //    }
 
-            //    // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
-            //    targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
-            //}
-            #endregion
-            // 네이게이션 실행
+        //    // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
+        //    targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
+        //}
+        #endregion
+        // 네이게이션 실행
 
-        if(playerStateMachine.State != StateMachine.enumState.Chasing)
+        if (playerStateMachine.State != StateMachine.enumState.Chasing)
+        {
             playerNavMeshAgent.SetDestination(targetPose);
+            transform.LookAt(targetPose);
+        }
         else
             playerNavMeshAgent.SetDestination(targetObj.transform.position);
     }
@@ -142,16 +145,23 @@ public class PlayerMovement : MonoBehaviour
 
         // 타겟 유무에 따른 회전 벡터 결정
         if (targetObj != null)
+        {
             rotateForward = Vector3.Normalize(targetObj.transform.position - transform.position);
+            //rotateForward = targetObj.transform.position - transform.position;
+        }
         else
+        {
             rotateForward = Vector3.Normalize(targetPose - transform.position);
+            //rotateForward = new Vector3(targetPose.x, transform.position.y, targetPose.z);
+        }
 
         // 목표 회전 벡터 결정
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
 
         // 회전
-
         transform.LookAt(this.transform.position + rotateForward);
+
+        //transform.LookAt(rotateForward);
     }
 
     #region
