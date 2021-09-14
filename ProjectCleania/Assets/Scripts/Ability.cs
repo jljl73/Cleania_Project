@@ -33,8 +33,8 @@ public class Ability
         // (stat + absolute) * percent * percent * percent + addition
         // order of this enum is IMPORTANT! do not change order
         Absolute,                   // 절대값 스텟 (추가방식 : 합)
-        PosMulti_Percent,           // 확률, 비율 추가 (추가방식 : 곱)
-        NegMulti_Percent,           // 확률, 비율 감소 (추가방식 : 곱)
+        PosMul_Percent,           // 확률, 비율 추가 (추가방식 : 곱)
+        NegMul_Percent,           // 확률, 비율 감소 (추가방식 : 곱)
         Addition_Percent,           // 확률, 비율 추가 (추가방식 : 합)
         Addition,                   // 추가 스텟 (추가방식 : 합)
 
