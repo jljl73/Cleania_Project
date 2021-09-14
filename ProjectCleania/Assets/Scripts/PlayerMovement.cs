@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float distanceBetweenTargetObj = 1f;   // 공격 시, 목표 위치 얼마 앞에서 멈출 것인가
 
+    public float skill4JumpDist = 4f;
+
     //private bool isAttackPlaying;
     //bool isAttacking;
 
@@ -44,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         // 설정 초기화
         //attackBoxCollider.enabled = false;  // 공격 콜라이더 Off
         targetPose = transform.position;    // 목표 위치는 현재 위치
-        //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
+                                            //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
     }
 
     void Update()
@@ -75,12 +77,18 @@ public class PlayerMovement : MonoBehaviour
             targetPose = transform.position;
         }
 
+        // 4번 스킬 제자리 점프
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    targetPose = transform.position + transform.forward * skill4JumpDist;
+        //}
+
         // 마우스 클릭시, 해당 위치로 이동
         //if (Input.GetMouseButtonDown(0))
 
         if (Input.GetMouseButton(0))// 누르고 있어도
         {
-            if (playerStateMachine.State == StateMachine.enumState.Idle)
+            if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
             {
                 MoveToPosition();
                 Targetting();
@@ -133,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerStateMachine.State != StateMachine.enumState.Chasing)
         {
             playerNavMeshAgent.SetDestination(targetPose);
-            transform.LookAt(targetPose);
+            // transform.LookAt(targetPose);
         }
         else
             playerNavMeshAgent.SetDestination(targetObj.transform.position);
@@ -224,12 +232,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // 수정 //
+    // --- //
+
+    void JumpForward(float dist)
+    {
+        targetPose = transform.position + transform.forward * dist;
+    }
+
     void Targetting()
     {
         RaycastHit raycastHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         bChasing = false;
+        // 수정 //
+        targetObj = null;
+
+        // --- //
         if (Physics.Raycast(ray, out raycastHit))
         {
             Debug.Log(raycastHit.transform.tag);
@@ -237,10 +257,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 targetObj = raycastHit.transform.gameObject;
                 bChasing = true;
-
-                playerStateMachine.Transition(StateMachine.enumState.Chasing);
+                // 수정 //
+                // playerStateMachine.Transition(StateMachine.enumState.Chasing);
+                // --- //
             }
         }
+
+        // 수정 //
+        if (bChasing)
+            playerStateMachine.Transition(StateMachine.enumState.Chasing);
+        else
+            playerStateMachine.Transition(StateMachine.enumState.Idle);
+        // --- //
     }
 
     private void OnTriggerStay(Collider other)
