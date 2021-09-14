@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void AccelerateRotation()
     {
-        Vector3 rotateForward = Vector3.zero;
+        Vector3 rotateForward; //= Vector3.zero;
 
         // 타겟 유무에 따른 회전 벡터 결정
         if (targetObj != null)
@@ -156,8 +156,11 @@ public class PlayerMovement : MonoBehaviour
         // 목표 회전 벡터 결정
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
 
+        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward,
+            rotateCoef * 180.0f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
+
         // 회전
-        transform.LookAt(this.transform.position + rotateForward);
+        transform.LookAt(this.transform.position + limit);
 
         //transform.LookAt(rotateForward);
     }
