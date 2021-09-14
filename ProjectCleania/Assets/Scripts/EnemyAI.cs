@@ -69,7 +69,7 @@ public class EnemyAI : MonoBehaviour
     {
         print("OnEnable called");
         enemyNavMeshAgent.enabled = true;       // 네비게이션 활성화
-        enemyNavMeshAgent.isStopped = false;    
+        enemyNavMeshAgent.isStopped = false;
         initialPosition = transform.position;   // 초기 위치 설정
         initialDirection = transform.forward;   // 초기 방향 설정
         lastAttackTime = 0f;                    // 마지막 공격 시점 초기화
@@ -99,7 +99,8 @@ public class EnemyAI : MonoBehaviour
         FindObj();
 
         // 네비게이션 실행
-        enemyNavMeshAgent.SetDestination(targetPosition);
+        if (enemyNavMeshAgent.enabled == true)
+            enemyNavMeshAgent.SetDestination(targetPosition);
     }
 
     void FindObj()
@@ -136,7 +137,7 @@ public class EnemyAI : MonoBehaviour
             else
                 targetPosition = initialPosition;
         }
-        
+
     }
 
     public void Die()

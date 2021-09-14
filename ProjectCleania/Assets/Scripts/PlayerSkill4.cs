@@ -8,6 +8,14 @@ public class PlayerSkill4 : Skill
     public NavMeshAgent navMeshAgent;
     public StateMachine playerStateMachine;
     public Animator animator;
+    public PlayerMovement playerMovement;
+    public float jumpDistance = 7f;
+
+    private float initialNavAgentR;
+    private float smallNaveAgentR = 0.01f;
+
+    public bool passAvailable = false;
+
     Ray ray;
     RaycastHit hit;
     Collider attackArea;
@@ -15,12 +23,17 @@ public class PlayerSkill4 : Skill
     void Start()
     {   
         attackArea = GetComponent<Collider>();
+        initialNavAgentR = navMeshAgent.radius;
     }
 
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 4);
+        playerMovement.JumpForward(jumpDistance);
+
+        if (passAvailable)
+            navMeshAgent.radius = smallNaveAgentR;
         //playerMovement.MoveToPosition();
         //Invoke("OffSkill", 3.0f);
     }
@@ -51,6 +64,9 @@ public class PlayerSkill4 : Skill
     {
         playerStateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
+
+        if (passAvailable)
+            navMeshAgent.radius = initialNavAgentR;
     }
 
     private void OnTriggerEnter(Collider other)

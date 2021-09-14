@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         // 설정 초기화
         //attackBoxCollider.enabled = false;  // 공격 콜라이더 Off
         targetPose = transform.position;    // 목표 위치는 현재 위치
-        //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
+                                            //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
     }
 
     void Update()
@@ -76,11 +76,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 마우스 클릭시, 해당 위치로 이동
-        //if (Input.GetMouseButtonDown(0))
-
         if (Input.GetMouseButton(0))// 누르고 있어도
         {
-            if (playerStateMachine.State == StateMachine.enumState.Idle)
+            if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
             {
                 MoveToPosition();
                 Targetting();
@@ -133,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerStateMachine.State != StateMachine.enumState.Chasing)
         {
             playerNavMeshAgent.SetDestination(targetPose);
-            transform.LookAt(targetPose);
+            // transform.LookAt(targetPose);
         }
         else
             playerNavMeshAgent.SetDestination(targetObj.transform.position);
@@ -189,24 +187,6 @@ public class PlayerMovement : MonoBehaviour
     //}
     #endregion
 
-    //// 공격 애니메이션에서 호출하는 함수
-    //void ActivateEventAboutCollider(float _t)
-    //{
-    //    StartCoroutine("ActivateAttakCollider", _t);
-    //}
-
-    IEnumerator ActivateAttakCollider(float _t)
-    {
-        // 일반 공격 콜라이더 On
-        attackBoxCollider.enabled = true;
-
-        yield return new WaitForSeconds(_t);
-
-        // 한번 공격 후,
-        // 일반 공격 콜라이더: Off
-        attackBoxCollider.enabled = false;
-    }
-
     public void MoveToPosition()
     {
         RaycastHit[] raycastHits;
@@ -224,12 +204,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // 수정 //
+    // --- //
+
+    public void JumpForward(float dist)
+    {
+        targetPose = transform.position + transform.forward * dist;
+    }
+
     void Targetting()
     {
         RaycastHit raycastHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         bChasing = false;
+        // 수정 //
+        targetObj = null;
+
+        // --- //
         if (Physics.Raycast(ray, out raycastHit))
         {
             Debug.Log(raycastHit.transform.tag);
@@ -237,10 +229,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 targetObj = raycastHit.transform.gameObject;
                 bChasing = true;
-
-                playerStateMachine.Transition(StateMachine.enumState.Chasing);
+                // 수정 //
+                // playerStateMachine.Transition(StateMachine.enumState.Chasing);
+                // --- //
             }
         }
+
+        // 수정 //
+        if (bChasing)
+            playerStateMachine.Transition(StateMachine.enumState.Chasing);
+        else
+            playerStateMachine.Transition(StateMachine.enumState.Idle);
+        // --- //
     }
 
     private void OnTriggerStay(Collider other)
