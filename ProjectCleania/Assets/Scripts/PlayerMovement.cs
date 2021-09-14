@@ -77,15 +77,7 @@ public class PlayerMovement : MonoBehaviour
             targetPose = transform.position;
         }
 
-        // 4번 스킬 제자리 점프
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-        //    targetPose = transform.position + transform.forward * skill4JumpDist;
-        //}
-
         // 마우스 클릭시, 해당 위치로 이동
-        //if (Input.GetMouseButtonDown(0))
-
         if (Input.GetMouseButton(0))// 누르고 있어도
         {
             if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
@@ -197,24 +189,6 @@ public class PlayerMovement : MonoBehaviour
     //}
     #endregion
 
-    //// 공격 애니메이션에서 호출하는 함수
-    //void ActivateEventAboutCollider(float _t)
-    //{
-    //    StartCoroutine("ActivateAttakCollider", _t);
-    //}
-
-    IEnumerator ActivateAttakCollider(float _t)
-    {
-        // 일반 공격 콜라이더 On
-        attackBoxCollider.enabled = true;
-
-        yield return new WaitForSeconds(_t);
-
-        // 한번 공격 후,
-        // 일반 공격 콜라이더: Off
-        attackBoxCollider.enabled = false;
-    }
-
     public void MoveToPosition()
     {
         RaycastHit[] raycastHits;
@@ -235,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
     // 수정 //
     // --- //
 
-    void JumpForward(float dist)
+    public void JumpForward(float dist)
     {
         targetPose = transform.position + transform.forward * dist;
     }
