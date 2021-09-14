@@ -21,8 +21,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float distanceBetweenTargetObj = 1f;   // 공격 시, 목표 위치 얼마 앞에서 멈출 것인가
 
-    public float skill4JumpDist = 4f;
-
     //private bool isAttackPlaying;
     //bool isAttacking;
 
