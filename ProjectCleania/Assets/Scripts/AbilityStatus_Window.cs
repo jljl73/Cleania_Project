@@ -8,17 +8,47 @@ public class AbilityStatus_Window : MonoBehaviour
     public GameObject vulnerable;
     AbilityStatus ability;
 
+    bool visible = true;
+
     Text[] texts;
+    Image image;
 
     // Start is called before the first frame update
     void Start()
     {
         texts = GetComponentsInChildren<Text>();
+        image = GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+            if (visible == true)
+            {
+                image.enabled = false;
+                foreach(var text in texts)
+                {
+                    text.enabled = false;
+                }
+
+                visible = false;
+            }
+            else
+            {
+                image.enabled = true;
+                foreach(var text in texts)
+                {
+                    text.enabled = true;
+                }
+
+                visible = true;
+
+            }
+
+        if (visible == false)
+            return;
+
         if (vulnerable != null)
             ability = vulnerable.GetComponent<AbilityStatus>();
         else
