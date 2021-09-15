@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Equipment //: IEnumerable, IEnumerator
 {
+    Equipment(float itemCode, int level)
+    {
+        //EquipmentPropertyProcessor.Gene
+
+        //return ();
+    }
+
     public enum Type
     {
         MainWeapon,
         SubWeapon,
-        Hat,
-        Top,
-        Pants,
-        Gloves,
-        Shoes,
+        Head,
+        Chest,
+        Legs,
+        Hands,
+        Feet,
         EnumTotal
     }
 
@@ -113,11 +120,14 @@ public class Equipment //: IEnumerable, IEnumerator
                 case Ability.Enhance.Absolute:
                     string_list.Add($"{ key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{key_value.Value}");
                     break;
+                case Ability.Enhance.Chance_Percent:
+                    string_list.Add($"More Chance of { key_value.Key.Key.ToString()} {key_value.Value*100}%");
+                    break;
                 case Ability.Enhance.NegMul_Percent:
                     string_list.Add($"Reduce { key_value.Key.Key.ToString()} by {key_value.Value*100}%");
                     break;
                 case Ability.Enhance.PosMul_Percent:
-                    string_list.Add($"Increase { key_value.Key.Key.ToString()} into {key_value.Value*100 + 100}%");
+                    string_list.Add($"Increase { key_value.Key.Key.ToString()} by {key_value.Value*100 + 100}%");
                     break;
                 case Ability.Enhance.Addition_Percent:
                     string_list.Add($"{ key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{key_value.Value*100}%");
