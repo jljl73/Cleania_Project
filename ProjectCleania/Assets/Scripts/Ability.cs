@@ -56,21 +56,7 @@ public class Ability
         }
     }
 
-    public struct EnchantCase
-    {
-        public float Min;
-        public float Max;
-        public Ability.Stat Stat;
-        public Ability.Enhance Enhance;
 
-        public EnchantCase(float min, float max, Ability.Stat stat, Ability.Enhance how = Ability.Enhance.Absolute)
-        {
-            Min = min;
-            Max = max;
-            Stat = stat;
-            Enhance = how;
-        }
-    }
 
     public enum Equipment
     {
