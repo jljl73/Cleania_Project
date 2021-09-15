@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AbilityStatus : MonoBehaviour
 {
+
     Status status;          // status is essential unlike equips or buffs
     EquipmentSlot equipments;
     BuffManager buffs;
