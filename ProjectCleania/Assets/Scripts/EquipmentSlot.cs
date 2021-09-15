@@ -115,6 +115,7 @@ public class EquipmentSlot : MonoBehaviour
                             break;
 
 
+                        case Ability.Enhance.Chance_Percent:
                         case Ability.Enhance.NegMul_Percent:
                         case Ability.Enhance.PosMul_Percent:
                         case Ability.Enhance.Addition_Percent:
@@ -124,11 +125,12 @@ public class EquipmentSlot : MonoBehaviour
 
                                 switch (key_value.Key.Value)
                                 {
+                                    case Ability.Enhance.Chance_Percent:
                                     case Ability.Enhance.NegMul_Percent:
-                                        _enchants[key_value.Key] *= (1 - key_value.Value);
+                                        _enchants[key_value.Key] *= 1-key_value.Value;
                                         break;
                                     case Ability.Enhance.PosMul_Percent:
-                                        _enchants[key_value.Key] *= (1 + key_value.Value);
+                                        _enchants[key_value.Key] *= 1+key_value.Value;
                                         break;
                                     case Ability.Enhance.Addition_Percent:
                                         _enchants[key_value.Key] += key_value.Value;

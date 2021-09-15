@@ -33,35 +33,29 @@ public class Ability
         // (stat + absolute) * percent * percent * percent + addition
         // order of this enum is IMPORTANT! do not change order
         Absolute,                   // 절대값 스텟 (추가방식 : 합)
-        PosMul_Percent,           // 확률, 비율 추가 (추가방식 : 곱)
-        NegMul_Percent,           // 확률, 비율 감소 (추가방식 : 곱)
+        Chance_Percent,             // 발생 확률 연산용 (회피명중 가감, 옵션이 높고 많을수록 1에 수렴)
+        PosMul_Percent,             // 확률, 비율 추가 (추가방식 : 곱)
+        NegMul_Percent,             // 확률, 비율 감소 (추가방식 : 곱)
         Addition_Percent,           // 확률, 비율 추가 (추가방식 : 합)
         Addition,                   // 추가 스텟 (추가방식 : 합)
 
         EnumTotal
     }
 
-    public struct Enchant //: IEnumerable, IEnumerator
+    public struct Enchant
     {
-        public AbilityOption.Stat stat;
-        public AbilityOption.Enhance how;
+        public float Min;
+        public float Max;
+        public Ability.Stat Stat;
+        public Ability.Enhance Enhance;
 
-        //public IEnumerator GetEnumerator()
-        //{
-        //    return (IEnumerator)this;
-        //}
-
-        //public object Current { get; }
-
-        //public bool MoveNext()
-        //{
-        //    return false;
-
-        //}
-        //public void Reset()
-        //{
-        //    return;
-        //}
+        public Enchant(float min, float max, Ability.Stat stat, Ability.Enhance how = Ability.Enhance.Absolute)
+        {
+            Min = min;
+            Max = max;
+            Stat = stat;
+            Enhance = how;
+        }
     }
 
     public enum Equipment

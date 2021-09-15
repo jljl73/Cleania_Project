@@ -46,10 +46,7 @@ public class AbilityStatus : MonoBehaviour
         if (status == null)
             return -1;
 
-        if (stat == Ability.Stat.Accuracy || stat == Ability.Stat.Dodge)
-            _stats[(int)stat] = 1;
-        else
-            _stats[(int)stat] = status[stat];       // default status
+        _stats[(int)stat] = status[stat];       // default status
 
         switch(stat)                            // special values
         {
@@ -74,12 +71,16 @@ public class AbilityStatus : MonoBehaviour
         {
             _stats[(int)stat] += equipments[stat];  // equipments stat
 
-            for(Ability.Enhance opt = Ability.Enhance.Absolute; opt < Ability.Enhance.EnumTotal; ++opt)
+            for(Ability.Enhance opt = (Ability.Enhance)0; opt < Ability.Enhance.EnumTotal; ++opt)
             {
                 switch (opt)
                 {
                     case Ability.Enhance.Absolute:
                         _stats[(int)stat] += equipments[stat, opt];
+                        break;
+
+                    case Ability.Enhance.Chance_Percent:
+                        _stats[(int)stat] += 1-equipments[stat, opt];
                         break;
 
                     case Ability.Enhance.NegMul_Percent:
@@ -130,9 +131,6 @@ public class AbilityStatus : MonoBehaviour
         if (equipments != null)
             _stats[(int)stat] += equipments[stat, Ability.Enhance.Addition];
 
-
-        if (stat == Ability.Stat.Accuracy || stat == Ability.Stat.Dodge)
-            _stats[(int)stat] += status[stat] - 1;
 
 
         return _stats[(int)stat];
