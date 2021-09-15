@@ -4,73 +4,69 @@ using UnityEngine;
 
 public class ItemInventory : MonoBehaviour
 {
-    int ct = 0;
-    public Item[] items;
-    public int[,] blocks = new int[5,5];
+    public enum Size { Height = 8, Width = 10, Area = 70 };
 
-    public bool Acquire(Item item)
+    GameObject[] slots;
+    public GameObject ThrowPanel;
+    public GameObject DividePanel;
+
+    ItemController currentItem;
+
+    private void Awake()
     {
-        int w, h;
-        if(FindPosition(item.width, item.height, out w, out h))
+        slots = new GameObject[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++)
         {
-            SetItem(h, w, item.height, item.width, ++ct);
-        }
-
-        return true;
-    }
-
-    bool FindPosition(int width, int height, out int _w, out int _h)
-    {
-        _w = 0;
-        _h = 0;
-        
-        for(int i = 0; i < blocks.GetLength(0) - height; ++i)
-        {
-            for(int j = 0; j < blocks.GetLength(1) - width; ++j)
-            {
-                if (isEmpty(i, j, width, height))
-                {
-                    _h = i;
-                    _w = j;
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    bool isEmpty(int _i, int _j, int _w, int _h)
-    {
-        for (int h = 0; h < _h; ++h)
-        {
-            for (int w = 0; w < _w; ++w)
-            {
-                if (blocks[_i + h, _j + w] > 0)
-                    return false;
-            }
-        }
-        return false;
-    }
-
-    void SetItem(int _i, int _j, int _w, int _h, int index)
-    {
-        for (int h = 0; h < _h; ++h)
-        {
-            for (int w = 0; w < _w; ++w)
-            {
-                blocks[h, w] = index;
-            }
+            slots[i] = transform.GetChild(i).gameObject;
         }
     }
 
-    private void Update()
+    public GameObject getSlotPosition(int index)
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.Log("Blocks");
-            Debug.Log(blocks);
+        if (index >= slots.Length)
+            return null;
+        return slots[index];
+    }
 
-        }
+    public void ShowThrowPanel(ItemController item)
+    {
+        currentItem = item;
+        //Debug.Log(currentItem.name);
+        ThrowPanel.SetActive(true);
+    }
+
+    public void ShowDividePanel(ItemController item)
+    {
+        currentItem = item;
+        //Debug.Log(currentItem.name);
+        DividePanel.GetComponent<ItemDividePanel>().SetMaxValue(item.count);
+        DividePanel.SetActive(true);
+    }
+
+    void Clone(GameObject originalObject, int count)
+    {
+        GameObject temp = Instantiate(originalObject);
+        currentItem.count -= count;
+
+        if (currentItem.count == 0)
+            currentItem.DestroyItem();
+
+        temp.GetComponent<ItemController>().count = count;
+    }
+
+    public void OnThrowOK()
+    {
+        //Debug.Log(currentItem.name);
+        if(currentItem)
+            currentItem.BackToField();
+        currentItem = null;
+    }
+
+    public void OnDivideOK(int value)
+    {
+        //Debug.Log(currentItem.name);
+        if (currentItem)
+            Clone(currentItem.gameObject, value);
+        currentItem = null;
     }
 }
