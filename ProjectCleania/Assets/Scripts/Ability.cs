@@ -44,12 +44,26 @@ public class Ability
 
     public struct Enchant
     {
+        public float Value;
+        public Ability.Stat Stat;
+        public Ability.Enhance Enhance;
+
+        public Enchant(float val, Ability.Stat stat, Ability.Enhance how = Ability.Enhance.Absolute)
+        {
+            Value = val;
+            Stat = stat;
+            Enhance = how;
+        }
+    }
+
+    public struct EnchantCase
+    {
         public float Min;
         public float Max;
         public Ability.Stat Stat;
         public Ability.Enhance Enhance;
 
-        public Enchant(float min, float max, Ability.Stat stat, Ability.Enhance how = Ability.Enhance.Absolute)
+        public EnchantCase(float min, float max, Ability.Stat stat, Ability.Enhance how = Ability.Enhance.Absolute)
         {
             Min = min;
             Max = max;
