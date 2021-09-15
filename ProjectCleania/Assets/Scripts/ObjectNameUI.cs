@@ -24,8 +24,11 @@ public class ObjectNameUI : MonoBehaviour
 
     private void Awake()
     {
+        // 이름 UI만든 후 셋팅 설정
         nameUIObjInst = Instantiate(NameUIObject, FindObjectOfType<Canvas>().transform);
+        nameUIObjInst.GetComponent<ObjectOwnerInfo>().OwnerObject = NameUIObject;
 
+        // 조작 필요 컴포넌트 설정
         backgroundImg = nameUIObjInst.GetComponentInChildren<Image>();
         nameText = nameUIObjInst.GetComponentInChildren<Text>();
     }
