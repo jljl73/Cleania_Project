@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class ObjectNameUI : MonoBehaviour
 {
+    public enum ItemRank { Normal, Rare, Legend, Quest };
+
+    public ItemRank ItemRankType = ItemRank.Normal;
+
     public GameObject NameUIObject;
     private GameObject nameUIObjInst;
     public string ObjectName;
@@ -15,9 +19,12 @@ public class ObjectNameUI : MonoBehaviour
     public float UIyPos = 1f;
     public float UIxPos = 0f;
 
+    public bool ShowByMouseOn = false;
+    public float UIShowBorderPercent = 0.8f;
+
     private void Awake()
     {
-        nameUIObjInst = Instantiate(NameUIObject, GetComponentInChildren<Canvas>().transform);
+        nameUIObjInst = Instantiate(NameUIObject, FindObjectOfType<Canvas>().transform);
 
         backgroundImg = nameUIObjInst.GetComponentInChildren<Image>();
         nameText = nameUIObjInst.GetComponentInChildren<Text>();
@@ -27,6 +34,11 @@ public class ObjectNameUI : MonoBehaviour
     {
         backgroundImg.enabled = false;
         nameText.enabled = false;
+
+        SetTextColor();
+
+        if (!ShowByMouseOn)
+            ActiveUI(true);
     }
 
     private void OnEnable()
@@ -36,16 +48,66 @@ public class ObjectNameUI : MonoBehaviour
 
     void Update()
     {
+        SetByUserSetting();
+
         UpdateUIPosition();
 
-        if (IsMouseCollide())
+        SetActiveByRule();
+    }
+
+    void SetByUserSetting()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            ActiveUI(true);
+            ShowByMouseOn = ShowByMouseOn == true ? false : true;
         }
-        else
+    }
+
+    void SetActiveByRule()
+    {
+        if (!IsInUIBorder(Camera.main.WorldToScreenPoint(this.transform.position)))
         {
             ActiveUI(false);
+            return;
         }
+
+        if (!ShowByMouseOn)
+        {
+            ActiveUI(true);
+            return;
+        }
+
+        if (IsMouseCollide())
+            ActiveUI(true);
+        else
+            ActiveUI(false);
+    }
+
+    bool IsInUIBorder(Vector3 point)
+    {
+        return (Screen.width * UIShowBorderPercent) > point.x &&
+               (Screen.width * (1 - UIShowBorderPercent)) < point.x &&
+               (Screen.height * UIShowBorderPercent) > point.y &&
+               (Screen.height * (1 - UIShowBorderPercent)) < point.y;
+    }
+
+    void SetTextColor()
+    {
+        Color color = Color.white;
+        switch (ItemRankType)
+        {
+            case ItemRank.Rare:
+                color = new Color32(65, 105, 255, 255); // 로얄 블루
+                break;
+            case ItemRank.Legend:
+                color = new Color32(255, 217, 0, 255); // 골드
+                break;
+            case ItemRank.Quest:
+                color = new Color32(153, 50, 204, 255); // 다크 오치드
+                break;
+        }
+
+        nameText.color = color;
     }
 
     void ActiveUI(bool value)
