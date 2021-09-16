@@ -624,6 +624,9 @@ GameObject:
   - component: {fileID: 552407168}
   - component: {fileID: 552407169}
   - component: {fileID: 552407172}
+  - component: {fileID: 362098090}
+  - component: {fileID: 362098091}
+  - component: {fileID: 362098092}
   m_Layer: 0
   m_Name: Grim Reaper
   m_TagString: Enemy
@@ -785,6 +788,63 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &362098090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8689480311849083149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f2f345768609b24698be8d1c1ae92ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayName: "\uD63C\uC744 \uBE7C\uC557\uAE34 \uADF8\uB9AC\uD37C"
+  StateName: "\uC5B8\uB370\uB4DC"
+  MouseObject: {fileID: 0}
+  UIObject: {fileID: 3586633317960597320, guid: 1889a78717d8141478c56b1f8ad1ad0a, type: 3}
+  WorldCoordinate: 0
+  UIShowPosition: {x: 0, y: 0}
+--- !u!114 &362098091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8689480311849083149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6b4be465483834793c24a6c8aeeafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  Strength: 24
+  levelUpStrength: 4
+  Vitality: 50
+  levelUpVitality: 10
+  Atk: 0
+  Def: 0
+  CriticalChance: 10
+  CriticalScale: 200
+  MoveSpeed: 1
+  Accuracy: 100
+  Dodge: 10
+  Tenacity: 100
+  BasicHP: 100
+  BasicMP: 100
+--- !u!114 &362098092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8689480311849083149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ab21f52fa2ce548b5ee42dfa4f74f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8842949335943828853
 GameObject:
   m_ObjectHideFlags: 0
