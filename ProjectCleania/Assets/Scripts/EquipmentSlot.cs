@@ -24,9 +24,10 @@ public class EquipmentSlot : MonoBehaviour
             KeyValuePair<Ability.Stat, Ability.Enhance> key
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            _enchants.TryGetValue(key, out float value);
-
-            return value;
+            if (_enchants.TryGetValue(key, out float value))
+                return value;
+            else
+                return float.NaN;
         }
     }
 
@@ -34,9 +35,10 @@ public class EquipmentSlot : MonoBehaviour
     {
         get
         {
-            _stats.TryGetValue(stat, out float value);
-
-            return value;
+            if (_stats.TryGetValue(stat, out float value))
+                return value;
+            else
+                return float.NaN;
         }
     }
 
@@ -77,6 +79,7 @@ public class EquipmentSlot : MonoBehaviour
 
         return oldEquipment;
     }
+
 
     void Refresh()
     {
