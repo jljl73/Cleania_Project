@@ -49,7 +49,7 @@ public class AbilityStatus : MonoBehaviour
 
         _stats[(int)stat] = status[stat];       // default status
 
-        switch(stat)                            // special values
+        switch (stat)                            // special values
         {
             case Ability.Stat.Attack:
                 _stats[(int)Ability.Stat.Attack] *= 1 + this[Ability.Stat.Strength] * 0.01f;
@@ -70,35 +70,41 @@ public class AbilityStatus : MonoBehaviour
 
         if (equipments != null)                  // equipments stat & enchant adjust
         {
-            _stats[(int)stat] += equipments[stat];  // equipments stat
+            float equipmentsStat = equipments[stat];
 
-            for(Ability.Enhance opt = (Ability.Enhance)0; opt < Ability.Enhance.EnumTotal; ++opt)
+            if (!float.IsNaN(equipmentsStat))
+                _stats[(int)stat] += equipmentsStat;  // equipments stat
+
+            for (Ability.Enhance opt = (Ability.Enhance)0; opt < Ability.Enhance.EnumTotal; ++opt)
             {
-                switch (opt)
-                {
-                    case Ability.Enhance.Absolute:
-                        _stats[(int)stat] += equipments[stat, opt];
-                        break;
+                float equipmentsEnchant = equipments[stat, opt];
+                if (!float.IsNaN(equipmentsEnchant))
+                    switch (opt)
+                    {
+                        case Ability.Enhance.Absolute:
+                            _stats[(int)stat] += equipmentsEnchant;
+                            break;
 
-                    case Ability.Enhance.Chance_Percent:
-                        _stats[(int)stat] += 1-equipments[stat, opt];
-                        break;
+                        case Ability.Enhance.Chance_Percent:
+                            if (equipmentsEnchant > 0.0f && equipmentsEnchant < 1.0f)
+                                _stats[(int)stat] += 1 - equipmentsEnchant;
+                            break;
 
-                    case Ability.Enhance.NegMul_Percent:
-                    case Ability.Enhance.PosMul_Percent:
-                    case Ability.Enhance.Addition_Percent:
-                        if (equipments[stat, opt] != 0)
-                            _stats[(int)stat] *= equipments[stat, opt];
-                        break;
+                        case Ability.Enhance.NegMul_Percent:
+                        case Ability.Enhance.PosMul_Percent:
+                        case Ability.Enhance.Addition_Percent:
+                            if (equipmentsEnchant > 0)
+                                _stats[(int)stat] *= equipmentsEnchant;
+                            break;
 
-                    //case Ability.Enhance.Addition:
-                    //    _stats[(int)stat] += equipments[stat, i];         // additional enchant will be adjusted after buff
-                    //    break;
+                        //case Ability.Enhance.Addition:
+                        //    _stats[(int)stat] += equipments[stat, i];         // additional enchant will be adjusted after buff
+                        //    break;
 
-                    default:
-                        // error code
-                        break;
-                }
+                        default:
+                            // error code
+                            break;
+                    }
             }
         }
 
@@ -108,19 +114,19 @@ public class AbilityStatus : MonoBehaviour
             {
                 case Ability.Stat.MoveSpeed:
                     //if (buffs[Ability.Buff.MoveSpeed_Buff] != 0)
-                        _stats[(int)stat] *= buffs[Ability.Buff.MoveSpeed_Buff];
+                    _stats[(int)stat] *= buffs[Ability.Buff.MoveSpeed_Buff];
                     break;
                 case Ability.Stat.AttackSpeed:
                     //if (buffs[Ability.Buff.AttackSpeed_Buff] != 0)
-                        _stats[(int)stat] *= buffs[Ability.Buff.AttackSpeed_Buff];
+                    _stats[(int)stat] *= buffs[Ability.Buff.AttackSpeed_Buff];
                     break;
                 case Ability.Stat.Attack:
                     //if (buffs[Ability.Buff.Attack_Buff] != 0)
-                        _stats[(int)stat] *= buffs[Ability.Buff.Attack_Buff];
+                    _stats[(int)stat] *= buffs[Ability.Buff.Attack_Buff];
                     break;
                 case Ability.Stat.Defense:
                     //if (buffs[Ability.Buff.Defense_Buff] != 0)
-                        _stats[(int)stat] *= buffs[Ability.Buff.Defense_Buff];
+                    _stats[(int)stat] *= buffs[Ability.Buff.Defense_Buff];
                     break;
 
                 default:
@@ -128,11 +134,12 @@ public class AbilityStatus : MonoBehaviour
             }
         }
 
-
         if (equipments != null)
-            _stats[(int)stat] += equipments[stat, Ability.Enhance.Addition];
-
-
+        {
+            float equipmentsAddition = equipments[stat, Ability.Enhance.Addition];
+            if (!float.IsNaN(equipmentsAddition))
+                _stats[(int)stat] += equipmentsAddition;
+        }
 
         return _stats[(int)stat];
     }

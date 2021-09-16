@@ -54,19 +54,18 @@ public class Equipment //: IEnumerable, IEnumerator
     {
         get
         {
-            _stats.TryGetValue(stat, out float value);
-
-            return value;
+            if (_stats.TryGetValue(stat, out float value))
+                return value;
+            else
+                return float.NaN;
         }
         set
         {
-            if (value == 0)                         // set value 0 to remove property
+            if (float.IsNaN(value))                         // set value NaN to remove property
                 if (_stats.ContainsKey(stat))
                     _stats.Remove(stat);
                 else
-                {
                     _stats[stat] = value;
-                }
         }
     }
 
@@ -77,22 +76,21 @@ public class Equipment //: IEnumerable, IEnumerator
             KeyValuePair<Ability.Stat, Ability.Enhance> key
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            _enchants.TryGetValue(key, out float value);
-
-            return value;
+            if (_enchants.TryGetValue(key, out float value))
+                return value;
+            else
+                return float.NaN;
         }
         set
         {
             KeyValuePair<Ability.Stat, Ability.Enhance> key
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            if (value == 0)                         // set value 0 to remove property
+            if (float.IsNaN(value))                         // set value NaN to remove property
                 if (_enchants.ContainsKey(key))
                     _enchants.Remove(key);
                 else
-                {
                     _enchants[key] = value;
-                }
         }
     }
 
