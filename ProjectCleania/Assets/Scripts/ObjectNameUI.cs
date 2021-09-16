@@ -3,127 +3,118 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 기능 : 마우스를 오브젝트 위에 올리면, 객체 종류에 따라 '이름 표시 & 마우스 모양 변경'이 실행된다.
+// 주요 변수 : 객체 종류, 이름, 마우스 모양, UI 종류, UI 표시 위치
 public class ObjectNameUI : MonoBehaviour
 {
-    public enum ItemRank { Normal, Rare, Legend, Quest };
+    public string DisplayName;                      // 이름
+    public string StateName;                        // 상태 이름
+    public GameObject MouseObject;                  // 마우스 모양
+    public GameObject UIObject;                     // UI 종류
+    public bool WorldCoordinate = false;            // UI 표시 공간
+    public Vector2 UIShowPosition = Vector2.zero;   // UI 표시 위치
 
-    public ItemRank ItemRankType = ItemRank.Normal;
-
-    public GameObject NameUIObject;
-    private GameObject nameUIObjInst;
-    public string ObjectName;
-
-    private Image backgroundImg;
+    private Image[] hpBars;
+    private Text[] infoTexts;
     private Text nameText;
-
-    public float UIyPos = 1f;
-    public float UIxPos = 0f;
-
-    public bool ShowByMouseOn = false;
-    public float UIShowBorderPercent = 0.8f;
+    private Text stateText;
+    private GameObject UIObjectInst = null;
+    private bool UIObjectInstExist
+    {
+        get
+        {
+            if (UIObjectInst == null)
+                return false;
+            else
+                return true;
+        }
+    }
+    private BoxCollider ObjectMainCollider;
 
     private void Awake()
     {
-        // 이름 UI만든 후 셋팅 설정
-        nameUIObjInst = Instantiate(NameUIObject, FindObjectOfType<Canvas>().transform);
-        nameUIObjInst.GetComponent<ObjectOwnerInfo>().OwnerObject = NameUIObject;
-
-        // 조작 필요 컴포넌트 설정
-        backgroundImg = nameUIObjInst.GetComponentInChildren<Image>();
-        nameText = nameUIObjInst.GetComponentInChildren<Text>();
+        ObjectMainCollider = GetComponent<BoxCollider>();
     }
 
     private void Start()
     {
-        backgroundImg.enabled = false;
-        nameText.enabled = false;
-
-        SetTextColor();
-
-        if (!ShowByMouseOn)
-            ActiveUI(true);
+        ActiveUI(false);
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        nameText.text = ObjectName;
+        JudgeCreateDestroy();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        SetByUserSetting();
-
-        UpdateUIPosition();
-
-        SetActiveByRule();
-    }
-
-    void SetByUserSetting()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ShowByMouseOn = ShowByMouseOn == true ? false : true;
-        }
-    }
-
-    void SetActiveByRule()
-    {
-        if (!IsInUIBorder(Camera.main.WorldToScreenPoint(this.transform.position)))
-        {
-            ActiveUI(false);
-            return;
-        }
-
-        if (!ShowByMouseOn)
-        {
-            ActiveUI(true);
-            return;
-        }
-
         if (IsMouseCollide())
+        {
             ActiveUI(true);
+
+            if (WorldCoordinate)
+                UpdateUIPosition();
+        }
         else
             ActiveUI(false);
     }
 
-    bool IsInUIBorder(Vector3 point)
+    void JudgeCreateDestroy()
     {
-        return (Screen.width * UIShowBorderPercent) > point.x &&
-               (Screen.width * (1 - UIShowBorderPercent)) < point.x &&
-               (Screen.height * UIShowBorderPercent) > point.y &&
-               (Screen.height * (1 - UIShowBorderPercent)) < point.y;
+        if (IsInUIBorder(Camera.main.WorldToScreenPoint(this.transform.position)))
+        {
+            if (!UIObjectInstExist)
+                InstantiateUIObject();
+        }
+        else
+        {
+            DestroyUI();
+        }
     }
 
-    void SetTextColor()
+    bool IsInUIBorder(Vector3 point)
     {
-        Color color = Color.white;
-        switch (ItemRankType)
-        {
-            case ItemRank.Rare:
-                color = new Color32(65, 105, 255, 255); // 로얄 블루
-                break;
-            case ItemRank.Legend:
-                color = new Color32(255, 217, 0, 255); // 골드
-                break;
-            case ItemRank.Quest:
-                color = new Color32(153, 50, 204, 255); // 다크 오치드
-                break;
-        }
+        return (Screen.width * 0.8f) > point.x &&
+               (Screen.width * (1 - 0.8f)) < point.x &&
+               (Screen.height * 0.8f) > point.y &&
+               (Screen.height * (1 - 0.8f)) < point.y;
+    }
 
-        nameText.color = color;
+    void InstantiateUIObject()
+    {
+        UIObjectInst = Instantiate(UIObject, FindObjectOfType<Canvas>().transform);
+
+        hpBars = UIObjectInst.GetComponentsInChildren<Image>();
+        infoTexts = UIObjectInst.GetComponentsInChildren<Text>();
+
+        foreach (Text infoText in infoTexts)
+        {
+            if (infoText.name == "Name")
+                infoText.text = DisplayName;
+            if (infoText.name == "State")
+                infoText.text = StateName;
+        }
     }
 
     void ActiveUI(bool value)
     {
-        backgroundImg.enabled = value;
-        nameText.enabled = value;
+        if (!UIObjectInstExist) return;
+
+        foreach (Image bar in hpBars)
+            bar.enabled = value;
+
+        foreach (Text infoText in infoTexts)
+            infoText.enabled = value;
     }
 
     void UpdateUIPosition()
     {
-        Vector3 dy = Vector3.up * UIyPos;
-        Vector3 dx = Vector3.right * UIxPos;
-        nameUIObjInst.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + dy - dx);
+        if (!UIObjectInstExist) return;
+
+        Vector3 dy = Vector3.up * UIShowPosition.y;
+        dy.y += (ObjectMainCollider.size.y * 0.5f); 
+        Vector3 dx = Vector3.right * UIShowPosition.x;
+        UIObjectInst.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + ObjectMainCollider.center + dy - dx);
     }
 
     bool IsMouseCollide()
@@ -135,10 +126,17 @@ public class ObjectNameUI : MonoBehaviour
 
         if (Physics.Raycast(ray, out raycastHit))
         {
-            if (raycastHit.transform.gameObject == this.gameObject)
+            if (raycastHit.transform.gameObject == this.transform.gameObject)
                 isCollide = true;
         }
 
         return isCollide;
+    }
+
+    public void DestroyUI()
+    {
+        if (UIObjectInstExist)
+            Destroy(UIObjectInst);
+        UIObjectInst = null;
     }
 }
