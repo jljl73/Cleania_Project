@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnEnable()
     {
-        print("OnEnable called");
+        //print("OnEnable called");
         enemyNavMeshAgent.enabled = true;       // 네비게이션 활성화
         enemyNavMeshAgent.isStopped = false;
         initialPosition = transform.position;   // 초기 위치 설정
