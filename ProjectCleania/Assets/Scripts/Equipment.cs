@@ -15,11 +15,11 @@ public class Equipment //: IEnumerable, IEnumerator
     {
         MainWeapon,
         SubWeapon,
-        Head,
-        Chest,
-        Legs,
-        Hands,
-        Feet,
+        Hat,
+        Top,
+        Pants,
+        Gloves,
+        Shoes,
         EnumTotal
     }
 
