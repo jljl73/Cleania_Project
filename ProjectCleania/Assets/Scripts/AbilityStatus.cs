@@ -47,10 +47,7 @@ public class AbilityStatus : MonoBehaviour
         if (status == null)
             return -1;
 
-        if (stat == Ability.Stat.Accuracy || stat == Ability.Stat.Dodge)
-            _stats[(int)stat] = 1;
-        else
-            _stats[(int)stat] = status[stat];       // default status
+        _stats[(int)stat] = status[stat];       // default status
 
         switch(stat)                            // special values
         {
@@ -75,21 +72,23 @@ public class AbilityStatus : MonoBehaviour
         {
             _stats[(int)stat] += equipments[stat];  // equipments stat
 
-            foreach (var key_value in equipments.enchants) // enchant adjust
+            for(Ability.Enhance opt = (Ability.Enhance)0; opt < Ability.Enhance.EnumTotal; ++opt)
             {
-                Ability.Enhance i = key_value.Key.Value;
-
-                switch (i)
+                switch (opt)
                 {
                     case Ability.Enhance.Absolute:
-                        _stats[(int)stat] += equipments[stat, i];
+                        _stats[(int)stat] += equipments[stat, opt];
                         break;
 
-                    case Ability.Enhance.NegMulti_Percent:
-                    case Ability.Enhance.PosMulti_Percent:
+                    case Ability.Enhance.Chance_Percent:
+                        _stats[(int)stat] += 1-equipments[stat, opt];
+                        break;
+
+                    case Ability.Enhance.NegMul_Percent:
+                    case Ability.Enhance.PosMul_Percent:
                     case Ability.Enhance.Addition_Percent:
-                        if (equipments[stat, i] != 0)
-                            _stats[(int)stat] *= equipments[stat, i];
+                        if (equipments[stat, opt] != 0)
+                            _stats[(int)stat] *= equipments[stat, opt];
                         break;
 
                     //case Ability.Enhance.Addition:
@@ -134,9 +133,6 @@ public class AbilityStatus : MonoBehaviour
             _stats[(int)stat] += equipments[stat, Ability.Enhance.Addition];
 
 
-        if (stat == Ability.Stat.Accuracy || stat == Ability.Stat.Dodge)
-            _stats[(int)stat] += (status[stat] - 1);
-
 
         return _stats[(int)stat];
     }
@@ -176,9 +172,9 @@ public class AbilityStatus : MonoBehaviour
         if (Random.Range(0.0f, 1.0f) < attacker[Ability.Stat.CriticalChance])
             finalDamage *= attacker[Ability.Stat.CriticalScale];
 
-        finalDamage *= (1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]));
+        finalDamage *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
 
-        finalDamage *= (1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]));     // defense adjust
+        finalDamage *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
 
         if (_HP > finalDamage)
             _HP -= finalDamage;
