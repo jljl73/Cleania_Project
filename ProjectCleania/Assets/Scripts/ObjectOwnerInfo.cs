@@ -13,15 +13,15 @@ public class ObjectOwnerInfo : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit raycastHit;
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit raycastHit;
 
-        if (Physics.Raycast(ray, out raycastHit))
-        {
-            if (raycastHit.transform.gameObject == this.gameObject)
-            {
-                print(this.gameObject.tag + " clicked!");
-            }
-        }
+        //if (Physics.Raycast(ray, out raycastHit))
+        //{
+        //    if (raycastHit.transform.gameObject == this.gameObject)
+        //    {
+        //        print(OwnerObject.tag + " clicked!");
+        //    }
+        //}
     }
 }
