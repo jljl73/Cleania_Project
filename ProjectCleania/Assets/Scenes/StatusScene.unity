@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 4fa0d332fcfa69b48b61f6511e313c94, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1199,9 +1199,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  navMeshAgent: {fileID: 0}
+  navMeshAgent: {fileID: 429285946}
   playerStateMachine: {fileID: 429285941}
   animator: {fileID: 429285947}
+  playerMovement: {fileID: 429285944}
+  jumpDistance: 7
+  passAvailable: 0
 --- !u!136 &1628161038
 CapsuleCollider:
   m_ObjectHideFlags: 0
