@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class ItemInventory : MonoBehaviour
 {
-    public enum Size { Height = 8, Width = 10, Area = 70 };
+    public enum Size { Height = 8, Width = 10, Area = 80 };
 
-    GameObject[] slots;
+    public GameObject[] slots;
     public GameObject ThrowPanel;
     public GameObject DividePanel;
+    public Transform SlotsParent;
 
     ItemController currentItem;
 
     private void Awake()
     {
-        slots = new GameObject[transform.childCount];
-        for (int i = 0; i < transform.childCount; i++)
+        slots = new GameObject[SlotsParent.childCount];
+        for (int i = 0; i < SlotsParent.childCount; i++)
         {
-            slots[i] = transform.GetChild(i).gameObject;
+            slots[i] = SlotsParent.GetChild(i).gameObject;
         }
     }
+
 
     public GameObject getSlotPosition(int index)
     {

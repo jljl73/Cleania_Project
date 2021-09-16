@@ -9,7 +9,7 @@ public class ItemSlot : MonoBehaviour
 
     public ItemController itemController { get; private set; }
 
-    void Start()
+    void Awake()
     {
         IsActive = false;
         Index = transform.GetSiblingIndex();
