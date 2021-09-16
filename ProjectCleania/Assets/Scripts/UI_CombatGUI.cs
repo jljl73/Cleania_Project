@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_CombatUI : MonoBehaviour
+public class UI_CombatGUI : MonoBehaviour
 {
     public Image HP_Ball;
     public Image MP_Ball;
@@ -27,6 +27,7 @@ public class UI_CombatUI : MonoBehaviour
     void Update()
     {
         HP_Ball.fillAmount = HP_BallPercent;
+        P1Portrait.fillAmount = HP_BallPercent;
         MP_Ball.fillAmount = MP_BallPercent;
         XP_Bar.fillAmount = XP_BarPercent;
     }
