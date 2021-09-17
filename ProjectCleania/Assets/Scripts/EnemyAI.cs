@@ -3,48 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// ±â´É : ÇöÀç »óÈ²¿¡ µû¶ó ÀÚ½ÅÀÇ »óÅÂ¸¦ ¼±ÅÃÇÏ°í ±×¿¡ µû¶ó Çàµ¿ÇÔ
+// ê¸°ëŠ¥ : í˜„ì¬ ìƒí™©ì— ë”°ë¼ ìì‹ ì˜ ìƒíƒœë¥¼ ì„ íƒí•˜ê³  ê·¸ì— ë”°ë¼ í–‰ë™í•¨
 public class EnemyAI : MonoBehaviour
 {
-    // »óÅÂ : Idle, Chase, Attack, Hurt, Die
-    // Idle : Idle ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ½ÇÇàÇÏ¸ç ¿òÁ÷ÀÌÁö ¾Ê´Â´Ù. 
-    //      - ÀÏÁ¤ °Å¸® ÁÖº¯À» °¨½ÃÇÏ¸ç ÇÃ·¹ÀÌ¾î°¡ ÀÖ´ÂÁö È®ÀÎÇÑ´Ù. 
-    //      - ÀÏÁ¤ °Å¸® ³»¿¡ ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ¸¸é chase·Î »óÅÂ ÀÌµ¿
-    // Chase : Ã£Àº ÇÃ·¹ÀÌ¾î¸¦ ÃßÀûÇÑ´Ù. 
-    //      - °ø°İÇÒ ¼ö ÀÖ´Â ¹üÀ§ ³»¿¡ ÇÃ·¹ÀÌ¾î°¡ µé¾î¿À¸é AttackÀ¸·Î »óÅÂ ÀÌµ¿(¿ø°Å¸® °ø°İ ¹üÀ§, ±Ù°Å¸® °ø°İ ¹üÀ§(Äİ¶óÀÌ´õ°¡ ÁÁÀ» µí))
-    //      - ½Ã¾ß ³»¿¡¼­ ÇÃ·¹ÀÌ¾î°¡ »ç¶óÁö¸é ´Ù½Ã Idle »óÅÂ·Î µ¹¾Æ°£´Ù
-    //      - (¼±ÅÃ) chase ½Ã, »ç¿ëÇÒ ¼ö ÀÖ´Â Ãß°¡ ÀÌµ¿±â(ºü¸¥ ÃßÀû µî)Àº ÀÌÈÄ È®Àå ±¸ÇöÇÒ ¼ö ÀÖ°Ô °í·Á
-    // Attack : ÇÃ·¹ÀÌ¾î¸¦ ÀÏÁ¤ ÁÖ±â·Î °ø°İÇÑ´Ù
-    //      - ¿ø°Å¸® / ±Ù°Å¸® °ø°İ ÆÇ´Ü ¾Ë°í¸®ÁòÀº ÃßÈÄ º¯°æ
-    //      - ¿ø°Å¸®¿¡ ÇÃ·¹ÀÌ¾î ÀÖÀ» °æ¿ì(¿ø°Å¸® °ø°İ °¡´É ½Ã) ¿ø°Å¸® °ø°İ ½ÇÇà. ±Ù°Å¸®¿¡ ÀÖÀ» °æ¿ì(±Ù°Å¸® °ø°İ °¡´É ½Ã) ±Ù°Å¸® °ø°İ ½ÇÇà
-    // Hurt : °ø°İÀ» ¸ÂÀ¸¸é hurt ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà ÈÄ Idle º¹±Í
-    // Die : Á×À¸¸é, Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà ÈÄ ³×ºñ ¸Å½Ã ¿¡ÀÌÀüÆ® Off
+    // ìƒíƒœ : Idle, Chase, Attack, Hurt, Die
+    // Idle : Idle ì• ë‹ˆë©”ì´ì…˜ì„ ì‹¤í–‰í•˜ë©° ì›€ì§ì´ì§€ ì•ŠëŠ”ë‹¤. 
+    //      - ì¼ì • ê±°ë¦¬ ì£¼ë³€ì„ ê°ì‹œí•˜ë©° í”Œë ˆì´ì–´ê°€ ìˆëŠ”ì§€ í™•ì¸í•œë‹¤. 
+    //      - ì¼ì • ê±°ë¦¬ ë‚´ì— í”Œë ˆì´ì–´ê°€ ìˆìœ¼ë©´ chaseë¡œ ìƒíƒœ ì´ë™
+    // Chase : ì°¾ì€ í”Œë ˆì´ì–´ë¥¼ ì¶”ì í•œë‹¤. 
+    //      - ê³µê²©í•  ìˆ˜ ìˆëŠ” ë²”ìœ„ ë‚´ì— í”Œë ˆì´ì–´ê°€ ë“¤ì–´ì˜¤ë©´ Attackìœ¼ë¡œ ìƒíƒœ ì´ë™(ì›ê±°ë¦¬ ê³µê²© ë²”ìœ„, ê·¼ê±°ë¦¬ ê³µê²© ë²”ìœ„(ì½œë¼ì´ë”ê°€ ì¢‹ì„ ë“¯))
+    //      - ì‹œì•¼ ë‚´ì—ì„œ í”Œë ˆì´ì–´ê°€ ì‚¬ë¼ì§€ë©´ ë‹¤ì‹œ Idle ìƒíƒœë¡œ ëŒì•„ê°„ë‹¤
+    //      - (ì„ íƒ) chase ì‹œ, ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” ì¶”ê°€ ì´ë™ê¸°(ë¹ ë¥¸ ì¶”ì  ë“±)ì€ ì´í›„ í™•ì¥ êµ¬í˜„í•  ìˆ˜ ìˆê²Œ ê³ ë ¤
+    // Attack : í”Œë ˆì´ì–´ë¥¼ ì¼ì • ì£¼ê¸°ë¡œ ê³µê²©í•œë‹¤
+    //      - ì›ê±°ë¦¬ / ê·¼ê±°ë¦¬ ê³µê²© íŒë‹¨ ì•Œê³ ë¦¬ì¦˜ì€ ì¶”í›„ ë³€ê²½
+    //      - ì›ê±°ë¦¬ì— í”Œë ˆì´ì–´ ìˆì„ ê²½ìš°(ì›ê±°ë¦¬ ê³µê²© ê°€ëŠ¥ ì‹œ) ì›ê±°ë¦¬ ê³µê²© ì‹¤í–‰. ê·¼ê±°ë¦¬ì— ìˆì„ ê²½ìš°(ê·¼ê±°ë¦¬ ê³µê²© ê°€ëŠ¥ ì‹œ) ê·¼ê±°ë¦¬ ê³µê²© ì‹¤í–‰
+    // Hurt : ê³µê²©ì„ ë§ìœ¼ë©´ hurt ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰ í›„ Idle ë³µê·€
+    // Die : ì£½ìœ¼ë©´, ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰ í›„ ë„¤ë¹„ ë§¤ì‹œ ì—ì´ì „íŠ¸ Off
 
 
     // Additional idea
-    // - ±Ù°Å¸®¿¡ ÀÖÀ» ¶§ bIsPlayerNear = true ÇØ¼­, ¿ø°Å¸® °ø°İ ¾ÈÇÏ°Ô °¡´É
-    // - ¿ø°Å¸® °ø°İ °¡´É ¹üÀ§ÀÏ ¶§, ÃßÀû À§Ä¡´Â ÇöÀç À§Ä¡·Î °íÁ¤
+    // - ê·¼ê±°ë¦¬ì— ìˆì„ ë•Œ bIsPlayerNear = true í•´ì„œ, ì›ê±°ë¦¬ ê³µê²© ì•ˆí•˜ê²Œ ê°€ëŠ¥
+    // - ì›ê±°ë¦¬ ê³µê²© ê°€ëŠ¥ ë²”ìœ„ì¼ ë•Œ, ì¶”ì  ìœ„ì¹˜ëŠ” í˜„ì¬ ìœ„ì¹˜ë¡œ ê³ ì •
 
-    // ±¸Çö ¼ø¼­
-    // 1. ÀÏÁ¤ ¹üÀ§ ³»¿¡ ¿À¸é Idle -> chase, ´Ü¼ø ÃßÀû ÈÄ, ±Ù°Å¸® °ø°İ ¹üÀ§ ³»¿¡ ¿À¸é Attack, °ø°İ ¸ÂÀ¸¸é hurt, Á×À¸¸é Die  // 9¿ù 10ÀÏ ±İ
-    // 2. AbilityStatus Àû¿ëÇÏ¿© °£´ÜÇÏ°Ô Hurt -> Die ±¸Çö                                                              // 9¿ù 11ÀÏ ÀÏ
-    // 3. ¿ø°Å¸® °ø°İ ¹üÀ§ ¼³Á¤ & ¿ø°Å¸®, ±Ù°Å¸® °ø°İ ¾Ë°í¸®Áò ¼³Á¤                                                       // 9¿ù 11, 12ÀÏ ÀÏ ¿ù
+    // êµ¬í˜„ ìˆœì„œ
+    // 1. ì¼ì • ë²”ìœ„ ë‚´ì— ì˜¤ë©´ Idle -> chase, ë‹¨ìˆœ ì¶”ì  í›„, ê·¼ê±°ë¦¬ ê³µê²© ë²”ìœ„ ë‚´ì— ì˜¤ë©´ Attack, ê³µê²© ë§ìœ¼ë©´ hurt, ì£½ìœ¼ë©´ Die  // 9ì›” 10ì¼ ê¸ˆ
+    // 2. AbilityStatus ì ìš©í•˜ì—¬ ê°„ë‹¨í•˜ê²Œ Hurt -> Die êµ¬í˜„                                                              // 9ì›” 11ì¼ ì¼
+    // 3. ì›ê±°ë¦¬ ê³µê²© ë²”ìœ„ ì„¤ì • & ì›ê±°ë¦¬, ê·¼ê±°ë¦¬ ê³µê²© ì•Œê³ ë¦¬ì¦˜ ì„¤ì •                                                       // 9ì›” 11, 12ì¼ ì¼ ì›”
 
 
-    private NavMeshAgent enemyNavMeshAgent; // Àû ³×ºñ ¸Ş½Ã ¿¡ÀÌÀüÆ® ÄÄÆ÷³ÍÆ® 
-    private Animator enemyAnimator;         // Àû ¾Ö´Ï¸ŞÀÌÅÍ
+    private NavMeshAgent enemyNavMeshAgent; // ì  ë„¤ë¹„ ë©”ì‹œ ì—ì´ì „íŠ¸ ì»´í¬ë„ŒíŠ¸ 
+    private Animator enemyAnimator;         // ì  ì• ë‹ˆë©”ì´í„°
 
-    public float searchDistance = 3f;               // »çÁÖ °æ°è ¹üÀ§
-    private Transform targetTransform = null;       // ¸ñÇ¥¹Ä transform
+    public float searchDistance = 3f;               // ì‚¬ì£¼ ê²½ê³„ ë²”ìœ„
+    private Transform targetTransform = null;       // ëª©í‘œë®¬ transform
 
-    private Vector3 initialPosition;                // ÃÊ±â À§Ä¡
-    private Vector3 initialDirection;               // ÃÊ±â ¹æÇâ
-    private Vector3 targetPosition;                 // ¸ñÇ¥ À§Ä¡
+    private Vector3 initialPosition;                // ì´ˆê¸° ìœ„ì¹˜
+    private Vector3 initialDirection;               // ì´ˆê¸° ë°©í–¥
+    private Vector3 targetPosition;                 // ëª©í‘œ ìœ„ì¹˜
 
-    public float attackPeriod = 1f;             // °ø°İ ÁÖ±â
-    private float lastAttackTime;               // ¸¶Áö¸· °ø°İ ½ÃÁ¡
+    public float attackPeriod = 1f;             // ê³µê²© ì£¼ê¸°
+    private float lastAttackTime;               // ë§ˆì§€ë§‰ ê³µê²© ì‹œì 
 
-    private bool bIsAttaking = false;           // °ø°İ »óÅÂ
+    private bool bIsAttaking = false;           // ê³µê²© ìƒíƒœ
     private bool bIsDead = true;
 
     private bool hasTarget
@@ -60,26 +60,25 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        // ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
         enemyNavMeshAgent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
-        //print("OnEnable called");
-        enemyNavMeshAgent.enabled = true;       // ³×ºñ°ÔÀÌ¼Ç È°¼ºÈ­
+        enemyNavMeshAgent.enabled = true;       // ë„¤ë¹„ê²Œì´ì…˜ í™œì„±í™”
         enemyNavMeshAgent.isStopped = false;
-        initialPosition = transform.position;   // ÃÊ±â À§Ä¡ ¼³Á¤
-        initialDirection = transform.forward;   // ÃÊ±â ¹æÇâ ¼³Á¤
-        lastAttackTime = 0f;                    // ¸¶Áö¸· °ø°İ ½ÃÁ¡ ÃÊ±âÈ­
-        bIsAttaking = false;                    // °ø°İ »óÅÂ ÃÊ±âÈ­
-        bIsDead = false;                        // »ıÁ¸ »óÅÂ ÃÊ±âÈ­
+        initialPosition = transform.position;   // ì´ˆê¸° ìœ„ì¹˜ ì„¤ì •
+        initialDirection = transform.forward;   // ì´ˆê¸° ë°©í–¥ ì„¤ì •
+        lastAttackTime = 0f;                    // ë§ˆì§€ë§‰ ê³µê²© ì‹œì  ì´ˆê¸°í™”
+        bIsAttaking = false;                    // ê³µê²© ìƒíƒœ ì´ˆê¸°í™”
+        bIsDead = false;                        // ìƒì¡´ ìƒíƒœ ì´ˆê¸°í™”
 
         Collider[] colliders = GetComponents<Collider>();
         foreach (Collider collider in colliders)
         {
-            collider.enabled = true;    // Äİ¶óÀÌ´õ È°¼ºÈ­
+            collider.enabled = true;    // ì½œë¼ì´ë” í™œì„±í™”
         }
     }
 
@@ -87,7 +86,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (bIsDead) return;
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        // ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         enemyAnimator.SetFloat("Speed", enemyNavMeshAgent.velocity.magnitude);
     }
 
@@ -95,10 +94,10 @@ public class EnemyAI : MonoBehaviour
     {
         if (bIsDead) return;
 
-        // ¿ÀºêÁ§Æ® Ã£±â
+        // ì˜¤ë¸Œì íŠ¸ ì°¾ê¸°
         FindObj();
 
-        // ³×ºñ°ÔÀÌ¼Ç ½ÇÇà
+        // ë„¤ë¹„ê²Œì´ì…˜ ì‹¤í–‰
         if (enemyNavMeshAgent.enabled == true)
             enemyNavMeshAgent.SetDestination(targetPosition);
     }
@@ -107,7 +106,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (hasTarget)
         {
-            // Å¸°ÙÀÌ °úÀÇ °Å¸®¿¡ µû¶ó ÃßÀû ÆÇ´Ü
+            // íƒ€ê²Ÿì´ ê³¼ì˜ ê±°ë¦¬ì— ë”°ë¼ ì¶”ì  íŒë‹¨
             if (Vector3.Distance(transform.position, targetTransform.position) > searchDistance)
                 targetTransform = null;
             else
@@ -118,7 +117,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            // Àû À§Ä¡¿¡¼­ searchDistance Å©±âÀÇ ±¸ ¾È¿¡ Player°¡ ÀÖ´ÂÁö È®ÀÎ
+            // ì  ìœ„ì¹˜ì—ì„œ searchDistance í¬ê¸°ì˜ êµ¬ ì•ˆì— Playerê°€ ìˆëŠ”ì§€ í™•ì¸
             Collider[] colliders = Physics.OverlapSphere(transform.position, searchDistance);
             bool targetFound = false;
             foreach (Collider collider in colliders)
@@ -131,7 +130,7 @@ public class EnemyAI : MonoBehaviour
                 }
             }
 
-            // ±¸ ¾È¿¡ Àû ¾øÀ¸¸é, ÇöÀç À§Ä¡°¡ ¸ñÇ¥ À§Ä¡
+            // êµ¬ ì•ˆì— ì  ì—†ìœ¼ë©´, í˜„ì¬ ìœ„ì¹˜ê°€ ëª©í‘œ ìœ„ì¹˜
             if (targetFound)
                 return;
             else
@@ -144,10 +143,10 @@ public class EnemyAI : MonoBehaviour
     {
         bIsDead = true;
 
-        // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç È°¼ºÈ­
+        // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ í™œì„±í™”
         enemyAnimator.SetTrigger("Die");
 
-        // ³×ºñ°ÔÀÌ¼Ç ºñÈ°¼ºÈ­
+        // ë„¤ë¹„ê²Œì´ì…˜ ë¹„í™œì„±í™”
         enemyNavMeshAgent.isStopped = true;
         enemyNavMeshAgent.enabled = false;
         Collider[] colliders = GetComponents<Collider>();
@@ -156,7 +155,7 @@ public class EnemyAI : MonoBehaviour
             collider.enabled = false;
         }
 
-        // ºÎÈ° ±â´É. Á×Àº °÷¿¡¼­ 5ÃÊ ÈÄ ºÎÈ°. ¾ø¾Öµµ µË´Ï´Ù:)
+        // ë¶€í™œ ê¸°ëŠ¥. ì£½ì€ ê³³ì—ì„œ 5ì´ˆ í›„ ë¶€í™œ. ì—†ì• ë„ ë©ë‹ˆë‹¤:)
         StartCoroutine("Revival");
     }
 
@@ -171,16 +170,16 @@ public class EnemyAI : MonoBehaviour
     {
         Vector3 rotateForward = Vector3.zero;
 
-        // Å¸°Ù À¯¹«¿¡ µû¸¥ È¸Àü º¤ÅÍ °áÁ¤
+        // íƒ€ê²Ÿ ìœ ë¬´ì— ë”°ë¥¸ íšŒì „ ë²¡í„° ê²°ì •
         if (targetTransform != null)
             rotateForward = Vector3.Normalize(targetTransform.position - transform.position);
         else
             rotateForward = Vector3.Normalize(targetPosition - transform.position);
 
-        // ¸ñÇ¥ È¸Àü º¤ÅÍ °áÁ¤
+        // ëª©í‘œ íšŒì „ ë²¡í„° ê²°ì •
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
 
-        // È¸Àü
+        // íšŒì „
 
         transform.LookAt(this.transform.position + rotateForward);
     }
@@ -191,13 +190,13 @@ public class EnemyAI : MonoBehaviour
         {
             bIsAttaking = true;
 
-            // Äİ¶óÀÌ´õ°¡ ÇÃ·¹ÀÌ¾î¶û ºÎµóÈ÷¸é ¸ØÃã
+            // ì½œë¼ì´ë”ê°€ í”Œë ˆì´ì–´ë‘ ë¶€ë”›íˆë©´ ë©ˆì¶¤
             targetPosition = transform.position;
 
-            // È¸Àü °¡¼Ó
+            // íšŒì „ ê°€ì†
             AccelerateRotation();
 
-            // °ø°İ ÁÖ±â°¡ Áö³µÀ» ½Ã °ø°İ
+            // ê³µê²© ì£¼ê¸°ê°€ ì§€ë‚¬ì„ ì‹œ ê³µê²©
             if (Time.time > lastAttackTime + attackPeriod)
             {
                 enemyAnimator.SetTrigger("SlashUp2DownAttack");

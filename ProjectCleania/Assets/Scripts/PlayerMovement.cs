@@ -200,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < raycastHits.Length; ++i)
         {
+
             if (raycastHits[i].transform.CompareTag("Ground"))
             {
                 targetPose = raycastHits[i].point;
