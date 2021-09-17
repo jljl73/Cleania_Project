@@ -19,15 +19,12 @@ public class MouseUI : MonoBehaviour
         {
             case "Enemy":
                 currentCursorTexture = cursorTexture[1];
-                print("Enemy!");
                 break;
             case "NPC":
                 currentCursorTexture = cursorTexture[6];
-                print("NPC!");
                 break;
             default:
                 currentCursorTexture = cursorTexture[0];
-                print("default!");
                 break;
         }
 
