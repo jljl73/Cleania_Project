@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemNameUI : ObjectUI
+public class AutoNameUI : ObjectUI
 {
     public enum ItemRank { Normal, Rare, Legend, Quest };
     public ItemRank ItemRankType = ItemRank.Normal;
@@ -21,6 +21,8 @@ public class ItemNameUI : ObjectUI
 
     void Update()
     {
+        base.JudgeCreateDestroy();
+
         SetItemNameShowSetting();
 
         SetActiveByRule();
@@ -35,27 +37,12 @@ public class ItemNameUI : ObjectUI
         SetTextColor();
 
         // Set Name
-        foreach (Text text in textComponents)
-        {
-            if (text.name == "Name")
-                text.text = ObjectName;
-        }
+        if (GetTextComponent("Name") != null)
+            GetTextComponent("Name").text = ObjectName;
     }
 
     void SetActiveByRule()
     {
-        if (IsInUIBorder(Camera.main.WorldToScreenPoint(this.transform.position)))
-        {
-            if (!uiObjectInstExist)
-                InstantiateUIObject();
-        }
-        else
-        {
-            ActiveUI(false);
-            DestroyUI();
-            return;
-        }
-
         if (AlwaysShowByKeyToggle)
         {
             if (IsAlwaysShow)
@@ -145,11 +132,8 @@ public class ItemNameUI : ObjectUI
         }
 
         // Set color
-        foreach (Text text in textComponents)
-        {
-            if (text.name == "Name")
-                text.color = color;
-        }
+        if (GetTextComponent("Name") != null)
+            GetTextComponent("Name").color = color;
     }
 
     void UpdateUIPosition()
@@ -161,6 +145,7 @@ public class ItemNameUI : ObjectUI
         uiObjectInst.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + dy - dx);
     }
 }
+
 
 // 상속 전 코드
 #region
