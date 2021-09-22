@@ -200,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < raycastHits.Length; ++i)
         {
+
             if (raycastHits[i].transform.CompareTag("Ground"))
             {
                 targetPose = raycastHits[i].point;
@@ -227,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         // --- //
         if (Physics.Raycast(ray, out raycastHit))
         {
-            Debug.Log(raycastHit.transform.tag);
+            //Debug.Log(raycastHit.transform.tag);
             if (raycastHit.transform.CompareTag("Enemy"))
             {
                 targetObj = raycastHit.transform.gameObject;

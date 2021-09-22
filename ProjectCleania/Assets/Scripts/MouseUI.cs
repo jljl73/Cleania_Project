@@ -7,37 +7,43 @@ public class MouseUI : MonoBehaviour
     enum MouseCursorTarget { Default, Enemy, Entrance, Loot, Merchant, Storage, Talk, BlackSmith };
 
     public List<Texture2D> cursorTexture;
+    private Texture2D currentCursorTexture;
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
 
-    
-
-    private void Start()
-    {
-        Cursor.SetCursor(cursorTexture[0], hotSpot, cursorMode);
-    }
-
     private void Update()
     {
-        
+        string hitTag = GetMouseCollide();
+
+        switch (hitTag)
+        {
+            case "Enemy":
+                currentCursorTexture = cursorTexture[1];
+                break;
+            case "NPC":
+                currentCursorTexture = cursorTexture[6];
+                break;
+            default:
+                currentCursorTexture = cursorTexture[0];
+                break;
+        }
+
+        Cursor.SetCursor(currentCursorTexture, hotSpot, cursorMode);
     }
 
-    bool IsMouseCollide()
+    string GetMouseCollide()
     {
-        bool isCollide = false;
+        string result = "";
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit raycastHit;
 
         if (Physics.Raycast(ray, out raycastHit))
         {
-            if (raycastHit.transform.CompareTag("Enemy"))
-            {
-                Cursor.SetCursor(cursorTexture[0], hotSpot, cursorMode);
-            }
+            result = raycastHit.collider.tag;
         }
 
-        return isCollide;
+        return result;
     }
 
     //void OnMouseEnter()

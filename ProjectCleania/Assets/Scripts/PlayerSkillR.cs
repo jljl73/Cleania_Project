@@ -36,8 +36,8 @@ public class PlayerSkillR : Skill
 
    private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
-            Debug.Log("R Hit");
+        //if (other.tag == "Enemy")
+        //    Debug.Log("R Hit");
     }
  
 }
