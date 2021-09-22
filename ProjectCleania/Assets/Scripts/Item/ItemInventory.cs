@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ItemInventory : MonoBehaviour
 {
     public enum Size { Height = 8, Width = 10, Area = 80 };
+    public enum EquipmentType { Helmet = 1, Chest, Gloves, Weapon, Pants, Amulet, Boots };
 
     public GameObject[] slots;
+    public GameObject[] EquipmentSlots;
     public GameObject ThrowPanel;
     public GameObject DividePanel;
     public Transform SlotsParent;
@@ -20,14 +23,26 @@ public class ItemInventory : MonoBehaviour
         {
             slots[i] = SlotsParent.GetChild(i).gameObject;
         }
+
+        Transform Equipment = transform.Find("Equipment");
+
+        EquipmentSlots = new GameObject[Equipment.childCount];
+        for (int i = 1; i < EquipmentSlots.Length; i++)
+        {
+            EquipmentSlots[i] = Equipment.GetChild(i).gameObject;
+        }
     }
 
-
-    public GameObject getSlotPosition(int index)
+    public GameObject GetSlotPosition(int index)
     {
         if (index >= slots.Length)
             return null;
         return slots[index];
+    }
+
+    public GameObject GetEquipmentSlot(EquipmentType type)
+    {
+        return EquipmentSlots[(int)type];
     }
 
     public void ShowThrowPanel(ItemController item)
@@ -55,6 +70,16 @@ public class ItemInventory : MonoBehaviour
 
         temp.GetComponent<ItemController>().count = count;
     }
+
+    //public void GenerateItem(string objectName, Item item)
+    //{
+    //    GameObject newItem = Instantiate(Resources.Load("Prefabs/" + objectName, typeof(GameObject)) as GameObject, transform.position, transform.rotation);
+
+    //    //GameObject newItem = Instantiate(prefab);
+    //    newItem.GetComponent<ItemController>().Initialize(this, transform.parent.GetComponent<Canvas>(), );
+    //    newItem.SetActive(true);
+    //}
+
 
     public void OnThrowOK()
     {

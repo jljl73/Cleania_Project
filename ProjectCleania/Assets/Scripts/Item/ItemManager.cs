@@ -28,8 +28,7 @@ public class ItemManager : MonoBehaviour
 
     void Loot(GameObject itemObject)
     {
-        Item item = itemObject.GetComponent<Item>();
-        item.PutInventory();
+        itemObject.GetComponent<ItemObject>().PutInventory();
         //GameObject newItem = Instantiate(item.itemController);
         //newItem.GetComponent<ItemController>().PutInventory();
         //items.Add(newItem);
