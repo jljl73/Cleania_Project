@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
+    [Range(1, 50)]
     public int level = 1;
 
     public float this[Ability.Stat index]
