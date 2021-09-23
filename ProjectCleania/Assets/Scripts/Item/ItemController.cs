@@ -6,14 +6,15 @@ using UnityEngine.UI;
 
 public class ItemController : MonoBehaviour
 {
-    public ItemInventory _itemInventory;
-    public GameObject _inventory;
-    public GameObject _clicked;
-    public Canvas _canvas;
-    public GraphicRaycaster _raycaster;
+    ItemInventory _itemInventory;
+    Canvas _canvas;
 
+    GameObject _inventory;
+    GameObject _clicked;
+    GraphicRaycaster _raycaster;
 
     Vector2 screenPoint;
+
     public List<GameObject> slots = new List<GameObject>();
     //public List<GameObject> Slots { get { return slots; } }
 
@@ -22,46 +23,49 @@ public class ItemController : MonoBehaviour
     public bool bCountable = false;
     public int count = 0;
     bool bChasing;
+    bool isEquipped;
 
-    public string KeyString = "";
+    public int PrevIndex { get; private set; }
 
-    public int prevIndex { get; private set; }
     const int width = (int)ItemInventory.Size.Width;
-
     GameObject anotherObject = null;
+    public ItemInventory.EquipmentType _type;
+
+    Item _item;
+
+    public void Initialize(ItemInventory itemInventory, Canvas canvas, Item item)
+    {
+        _itemInventory = itemInventory;
+        // 다른 방법은 나중에
+        _inventory = _itemInventory.transform.Find("Inventory").gameObject;
+        _clicked = _itemInventory.transform.Find("Clicked").gameObject;
+
+        _canvas = canvas;
+        _raycaster = _canvas.GetComponent<GraphicRaycaster>();
+
+        _item = item.DeepCopy();
+    }
 
     private void Awake()
     {
         transform.SetParent(_inventory.transform);
-        bChasing = false;
-        AutoSetting();
-        MoveToSlot();
-        //Debug.Log(gameObject.name + " Awake!");
-        //Debug.Log(prevIndex.ToString() + "index");
-    }
+        OnOffChasing(false);
 
-    void OnEnable()
-    {
-        MoveToSlot();
-        //bChasing = false;
-        //AutoSetting();
+        if (AutoSetting())
+            MoveToSlot();
+        else
+        {
+            _itemInventory.ShowInvenAlarmPanel();
+            BackToField();
+        }
     }
-
+    
     void Update()
     {
         if(bChasing)
             ChaseMouse();
-
     }
 
-    public void PutInventory(ItemInventory itemInventory, GameObject inventory, GameObject clicked, Canvas canvas, GraphicRaycaster raycaster)
-    {
-        _itemInventory = itemInventory;
-        _inventory = inventory;
-        _clicked = clicked;
-        _canvas = canvas;
-        _raycaster = raycaster;
-    }
 
     void ChaseMouse()
     {
@@ -80,10 +84,13 @@ public class ItemController : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         _raycaster.Raycast(ped, results);
 
+
         for(int i = 0; i < results.Count; ++i)
         {
             if (results[i].gameObject.tag == "Slot")
                 return results[i].gameObject.GetComponent<ItemSlot>().Index;
+            else if (results[i].gameObject.tag == "Panel")
+                return PrevIndex;
             //Debug.Log(results[i].gameObject.tag);
         }
 
@@ -104,21 +111,19 @@ public class ItemController : MonoBehaviour
         {
             for (int j = 0; j < h; j++)
             {
-                GameObject slot = _itemInventory.getSlotPosition(
+                GameObject slot = _itemInventory.GetSlotPosition(
                     index + j * width + i);
                 if (slot && slot.GetComponent<ItemSlot>().IsActive == false)
                     tempSlots.Add(slot);
                 else
                 {
-                    Debug.Log(slot.GetComponent<ItemSlot>().itemController.name);
                     anotherObject = slot.GetComponent<ItemSlot>().itemController.gameObject;
                     return false;
                 }
-                    //return false;
             }
         }
 
-        prevIndex = index;
+        PrevIndex = index;
         slots = tempSlots;
         return true;
     }
@@ -169,76 +174,37 @@ public class ItemController : MonoBehaviour
         slots.Clear();
     }
 
+    // 아이템 버리기
     public void BackToField()
     {
-        Debug.Log(gameObject.name);
         DeactiveSlot();
-        gameObject.SetActive(false);
+        GameObject newItem = GameObject.Find("Others").transform.Find("InventoryItemGenerator").gameObject;
+        newItem.GetComponent<InventoryItemGenerator>().DropItem(_item);
+        Destroy(gameObject);
     }
 
-    void Throw()
+    void ShowThrowPanel()
     {
         _itemInventory.ShowThrowPanel(this);
     }
 
-    void Divide()
+    void ShowDividePanel()
     {
         _itemInventory.ShowDividePanel(this);
     }
 
     public void MoveToSlot()
     {
-        if (slots.Count == 0) Debug.Log(gameObject.name);
-
-        Debug.Log(slots[0].transform.position);
+        if (slots.Count == 0) { Debug.Log(gameObject.name); return; }
 
         transform.position = slots[0].transform.position;
     }
-
-    public void OnButtonDown()
-    {
-        if (bCountable && Input.GetKey(KeyCode.LeftShift))
-            Divide();
-        else
-        {
-            DeactiveSlot();
-            OnOffChasing(true);
-        }
-    }
-
-    public void OnButtonUp()
-    {
-        int index = GetClickedBlock();
-
-        if (index == -1)
-        {
-            OnOffChasing(false);
-            SetSlot(prevIndex);
-            ActivateSlot();
-            MoveToSlot();
-            Throw();
-            return;
-        }
-
-        if (SetSlot(index))
-            ActivateSlot();
-        else if(anotherObject)
-        {
-            OnOffChasing(false);
-            SwapSlot(anotherObject.GetComponent<ItemController>());
-        }
-        else 
-        {
-            SetSlot(prevIndex);
-            ActivateSlot();
-            MoveToSlot();
-        }
-    }
     
+    // 서로 위치 바꾸기( 두 인벤토리 )
     void SwapSlot(ItemController other)
     {
-        int otherIndex = other.prevIndex;
-        int thisIndex = this.prevIndex;
+        int otherIndex = other.PrevIndex;
+        int thisIndex = this.PrevIndex;
 
         other.DeactiveSlot();
         this.DeactiveSlot();
@@ -259,5 +225,122 @@ public class ItemController : MonoBehaviour
     {
         DeactiveSlot();
         Destroy(gameObject);
+    }
+
+
+    public void OnButtonDown(BaseEventData data)
+    {
+        PointerEventData pointerEventData = data as PointerEventData;
+        if (pointerEventData.button != PointerEventData.InputButton.Left) return;
+
+        if (bCountable && Input.GetKey(KeyCode.LeftShift))
+            ShowDividePanel();
+        else
+        {
+            DeactiveSlot();
+            OnOffChasing(true);
+        }
+    }
+
+    public void OnButtonUp(BaseEventData data)
+    {
+        PointerEventData pointerEventData = data as PointerEventData;
+        if (pointerEventData.button != PointerEventData.InputButton.Left) return;
+
+        int index = GetClickedBlock();
+        //Debug.Log("index " + index.ToString());
+        OnOffChasing(false);
+
+        if (index < 0)
+        {
+            SetSlot(PrevIndex);
+            ActivateSlot();
+            ShowThrowPanel();
+            return;
+        }
+
+        if (isEquipped)
+        {
+            TakeOff(index);
+            return;
+        }
+
+        if(index - 1000 == (int)_type)
+        {
+            Test();
+            return;
+        }
+
+        if (SetSlot(index))
+            ActivateSlot();
+        else if (anotherObject)
+            SwapSlot(anotherObject.GetComponent<ItemController>());
+        else
+        {
+            SetSlot(PrevIndex);
+            ActivateSlot();
+        }
+    }
+
+    void Wear(GameObject slot)
+    {
+        slots.Add(slot);
+        ActivateSlot();
+        isEquipped = true;
+    }
+
+    public void TakeOff(int index)
+    {
+        DeactiveSlot();
+        if (index == -1 || index > 1000) AutoSetting();
+        else SetSlot(index);
+        ActivateSlot();
+        isEquipped = false;
+    }
+
+    public void OnButtonClicked(BaseEventData eventData)
+    {
+        PointerEventData pointerEventData = eventData as PointerEventData;
+        // 오른쪽 클릭
+        if (pointerEventData.button != PointerEventData.InputButton.Right) return;
+
+        // 임시로
+        GameObject slot = _itemInventory.GetEquipmentSlot(_type);
+        DeactiveSlot();
+
+        if (isEquipped)
+        {
+            TakeOff(-1);
+        }
+        else
+        {
+            if (slot.GetComponent<ItemSlot>().IsActive)
+            {
+                Debug.Log(PrevIndex);
+                slot.GetComponent<ItemSlot>().itemController.TakeOff(PrevIndex);
+            }
+            Wear(slot);
+        }
+
+    }
+
+    void Test()
+    {
+        GameObject slot = _itemInventory.GetEquipmentSlot(_type);
+        DeactiveSlot();
+
+        if (isEquipped)
+        {
+            TakeOff(-1);
+        }
+        else
+        {
+            if (slot.GetComponent<ItemSlot>().IsActive)
+            {
+                Debug.Log(PrevIndex);
+                slot.GetComponent<ItemSlot>().itemController.TakeOff(PrevIndex);
+            }
+            Wear(slot);
+        }
     }
 }

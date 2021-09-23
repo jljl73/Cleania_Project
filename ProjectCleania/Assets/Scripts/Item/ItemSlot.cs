@@ -5,14 +5,27 @@ using UnityEngine;
 public class ItemSlot : MonoBehaviour
 {
     public bool IsActive;// { get; private set; }
-    public int Index { get; private set; }
+    public int index;
+    public int Index
+    {
+        get
+        {
+            if (isEquipment)
+                return index + 1000;
+            return index;
+        }
+    }
+
 
     public ItemController itemController { get; private set; }
+    public bool isEquipment { get; private set; }
 
     void Awake()
     {
         IsActive = false;
-        Index = transform.GetSiblingIndex();
+        index = transform.GetSiblingIndex();
+        if (transform.parent.gameObject.name == "Equipment")
+            isEquipment = true;
     }
 
     public void Actvivate(ItemController item)
