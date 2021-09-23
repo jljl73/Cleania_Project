@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class PlayerMovement : MonoBehaviour
 {
     public float rotateCoef = 2f;
-
+     
     private Animator playerAnimator;            // 애니메이터 컴포넌트
     private NavMeshAgent playerNavMeshAgent;    // path 계산 컴포턴트
     private Rigidbody playerRigidbody;          // 리지드바디 컴포넌트
