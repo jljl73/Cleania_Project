@@ -46,6 +46,8 @@ public class AbilityStatus : MonoBehaviour
     {
         if (status == null)
             return -1;
+        if ((int)stat >= _stats.Length)
+            return -1;
 
         _stats[(int)stat] = status[stat];       // default status
 
