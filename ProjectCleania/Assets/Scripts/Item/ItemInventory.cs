@@ -12,6 +12,7 @@ public class ItemInventory : MonoBehaviour
     public GameObject[] EquipmentSlots;
     public GameObject ThrowPanel;
     public GameObject DividePanel;
+    public GameObject InvenAlarmPanel;
     public Transform SlotsParent;
 
     ItemController currentItem;
@@ -60,6 +61,11 @@ public class ItemInventory : MonoBehaviour
         DividePanel.SetActive(true);
     }
 
+    public void ShowInvenAlarmPanel()
+    {
+        InvenAlarmPanel.SetActive(true);
+    }
+
     void Clone(GameObject originalObject, int count)
     {
         GameObject temp = Instantiate(originalObject);
@@ -96,4 +102,10 @@ public class ItemInventory : MonoBehaviour
             Clone(currentItem.gameObject, value);
         currentItem = null;
     }
+
+    public void OnAlarmOk()
+    {
+        InvenAlarmPanel.SetActive(false);
+    }
+
 }

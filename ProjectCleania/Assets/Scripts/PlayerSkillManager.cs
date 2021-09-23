@@ -46,7 +46,6 @@ public class PlayerSkillManager : MonoBehaviour
 
     public void AnimationDeactivate(int type)
     {
-        Debug.Log(type);
         skills[type].AnimationDeactivate();
         //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }

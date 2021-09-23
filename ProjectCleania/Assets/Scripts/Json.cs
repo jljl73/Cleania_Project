@@ -48,7 +48,6 @@ public class Json : MonoBehaviour
             string jsonString = File.ReadAllText(Application.dataPath + "/Resources/JsonData/ItemCode.json");
 
             jsonData = JsonMapper.ToObject(jsonString);
-            Debug.Log(jsonData);
         }
     }
 

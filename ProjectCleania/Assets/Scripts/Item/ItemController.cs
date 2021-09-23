@@ -50,8 +50,14 @@ public class ItemController : MonoBehaviour
     {
         transform.SetParent(_inventory.transform);
         OnOffChasing(false);
-        AutoSetting();
-        MoveToSlot();
+
+        if (AutoSetting())
+            MoveToSlot();
+        else
+        {
+            _itemInventory.ShowInvenAlarmPanel();
+            BackToField();
+        }
     }
     
     void Update()
@@ -168,6 +174,7 @@ public class ItemController : MonoBehaviour
         slots.Clear();
     }
 
+    // 아이템 버리기
     public void BackToField()
     {
         DeactiveSlot();
@@ -176,12 +183,12 @@ public class ItemController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Throw()
+    void ShowThrowPanel()
     {
         _itemInventory.ShowThrowPanel(this);
     }
 
-    void Divide()
+    void ShowDividePanel()
     {
         _itemInventory.ShowDividePanel(this);
     }
@@ -193,7 +200,7 @@ public class ItemController : MonoBehaviour
         transform.position = slots[0].transform.position;
     }
     
-    // 서로 위치 바꾸기
+    // 서로 위치 바꾸기( 두 인벤토리 )
     void SwapSlot(ItemController other)
     {
         int otherIndex = other.PrevIndex;
@@ -227,7 +234,7 @@ public class ItemController : MonoBehaviour
         if (pointerEventData.button != PointerEventData.InputButton.Left) return;
 
         if (bCountable && Input.GetKey(KeyCode.LeftShift))
-            Divide();
+            ShowDividePanel();
         else
         {
             DeactiveSlot();
@@ -241,16 +248,26 @@ public class ItemController : MonoBehaviour
         if (pointerEventData.button != PointerEventData.InputButton.Left) return;
 
         int index = GetClickedBlock();
+        //Debug.Log("index " + index.ToString());
         OnOffChasing(false);
 
         if (index < 0)
         {
             SetSlot(PrevIndex);
             ActivateSlot();
-            MoveToSlot();
+            ShowThrowPanel();
+            return;
+        }
 
-            if(index == -1)
-                Throw();
+        if (isEquipped)
+        {
+            TakeOff(index);
+            return;
+        }
+
+        if(index - 1000 == (int)_type)
+        {
+            Test();
             return;
         }
 
@@ -262,7 +279,6 @@ public class ItemController : MonoBehaviour
         {
             SetSlot(PrevIndex);
             ActivateSlot();
-            MoveToSlot();
         }
     }
 
@@ -276,9 +292,8 @@ public class ItemController : MonoBehaviour
     public void TakeOff(int index)
     {
         DeactiveSlot();
-        if (index == -1) AutoSetting();
+        if (index == -1 || index > 1000) AutoSetting();
         else SetSlot(index);
-        Debug.Log("Slots size = " + slots.Count);
         ActivateSlot();
         isEquipped = false;
     }
@@ -296,10 +311,6 @@ public class ItemController : MonoBehaviour
         if (isEquipped)
         {
             TakeOff(-1);
-            //DeactiveSlot();
-            //AutoSetting();
-            //isEquipped = false;
-            //SwapSlot(slot.GetComponent<ItemSlot>().itemController);
         }
         else
         {
@@ -309,12 +320,27 @@ public class ItemController : MonoBehaviour
                 slot.GetComponent<ItemSlot>().itemController.TakeOff(PrevIndex);
             }
             Wear(slot);
-            //DeactiveSlot();
-            //slots.Clear();
-            //slots.Add(slot);
-            //ActivateSlot();
-            //isEquipped = true;
         }
 
+    }
+
+    void Test()
+    {
+        GameObject slot = _itemInventory.GetEquipmentSlot(_type);
+        DeactiveSlot();
+
+        if (isEquipped)
+        {
+            TakeOff(-1);
+        }
+        else
+        {
+            if (slot.GetComponent<ItemSlot>().IsActive)
+            {
+                Debug.Log(PrevIndex);
+                slot.GetComponent<ItemSlot>().itemController.TakeOff(PrevIndex);
+            }
+            Wear(slot);
+        }
     }
 }
