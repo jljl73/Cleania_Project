@@ -7,6 +7,7 @@ public class PlayerSkill3 : Skill
     public StateMachine playerStateMachine;
     public Animator animator;
     public GameObject hurricanePrefabs;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Skill : MonoBehaviour
 {
     public bool isAttacking;
+    public float CoolTime;  // 추후 private 처리
+    public float GetCoolTime { get { return CoolTime; } }
 
     // Start is called before the first frame update
     void Start()

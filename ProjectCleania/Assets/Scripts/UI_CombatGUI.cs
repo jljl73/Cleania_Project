@@ -17,6 +17,7 @@ public class UI_CombatGUI : MonoBehaviour
 
     [Range(0.0f, 1.0f)]
     public float XP_BarPercent = 1.0f;
+    public PlayerSkillManager SkillManager;
     [Range(0.0f, 1.0f)]
     public float[] Skills_CoolPercent;
 
@@ -30,6 +31,11 @@ public class UI_CombatGUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerStatus.AttackedBy(playerStatus, 1.0f);
+        }
+
         if (playerStatus != null)
         {
             HP_Ball.fillAmount = playerStatus.HP / playerStatus[Ability.Stat.MaxHP];
@@ -39,8 +45,8 @@ public class UI_CombatGUI : MonoBehaviour
         XP_Bar.fillAmount = XP_BarPercent;
         for(int i = 0; i < Skills.Length; ++i)
         {
-            Skills[i].fillAmount = Skills_CoolPercent[i];
-
+            Skills[i].fillAmount = SkillManager.CoolTimePassedRatio[i]; // Skills_CoolPercent[i];
+            print("ratio" + i + " : " + SkillManager.CoolTimePassedRatio[i]);
             if (Skills[i].fillAmount < 1.0f)
                 Skills[i].color = Color.gray;
             else
