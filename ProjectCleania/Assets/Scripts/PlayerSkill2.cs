@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerSkill2 : Skill
 {
-    public StateMachine playerStateMachine;
     public int damage = 10;
     public int reduceArmor = 10;
-    public Animator animator;
 
     Collider col;
 

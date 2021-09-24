@@ -19,6 +19,16 @@ public class PlayerSkillUltimate : Skill
         
     }
 
+    public override void AnimationActivate()
+    {
+
+    }
+
+    public override void AnimationDeactivate()
+    {
+
+    }
+
     public override void Activate()
     {
         if (bSkill)

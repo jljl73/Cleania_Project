@@ -33,7 +33,7 @@ public class UI_CombatGUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerStatus.AttackedBy(playerStatus, 1.0f);
+            playerStatus.AttackedBy(playerStatus, 5.0f);
         }
 
         if (playerStatus != null)
@@ -46,7 +46,6 @@ public class UI_CombatGUI : MonoBehaviour
         for(int i = 0; i < Skills.Length; ++i)
         {
             Skills[i].fillAmount = SkillManager.CoolTimePassedRatio[i]; // Skills_CoolPercent[i];
-            print("ratio" + i + " : " + SkillManager.CoolTimePassedRatio[i]);
             if (Skills[i].fillAmount < 1.0f)
                 Skills[i].color = Color.gray;
             else

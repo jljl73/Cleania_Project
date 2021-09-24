@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerSkillR : Skill
 {
-    public Animator animator;
     public PlayerMovement playerMovement;
-    public StateMachine playerStateMachine;
     Collider attackArea;
 
     void Start()

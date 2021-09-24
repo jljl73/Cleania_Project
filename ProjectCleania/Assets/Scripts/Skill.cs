@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+public abstract class Skill : MonoBehaviour
 {
+    public StateMachine playerStateMachine;
+    public Animator animator;
+
     public bool isAttacking;
     public float CoolTime;  // 추후 private 처리
     public float GetCoolTime { get { return CoolTime; } }
+    public float ConsumMP = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -14,14 +18,10 @@ public class Skill : MonoBehaviour
         isAttacking = false;
     }
 
+    public abstract void Activate();
 
+    public abstract void AnimationActivate();
 
-    virtual public void Activate()
-    {
-    }
-
-    virtual public void AnimationActivate() { }
-
-    virtual public void AnimationDeactivate() { }
+    public abstract void AnimationDeactivate();
 
 }
