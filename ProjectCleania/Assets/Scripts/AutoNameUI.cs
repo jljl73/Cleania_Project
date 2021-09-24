@@ -144,6 +144,11 @@ public class AutoNameUI : ObjectUI
         Vector3 dx = Vector3.right * UIxPos;
         uiObjectInst.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + dy - dx);
     }
+
+    private void OnDestroy()
+    {
+        base.DestroyUI(); ;
+    }
 }
 
 

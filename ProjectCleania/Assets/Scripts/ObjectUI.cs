@@ -7,6 +7,8 @@ public class ObjectUI : MonoBehaviour
 {
     public float BorderPercent = 0.8f;
     public GameObject UIObject;
+    public Canvas CanvasToDraw;
+
     protected GameObject uiObjectInst;
     protected bool uiObjectInstExist
     {
@@ -42,7 +44,7 @@ public class ObjectUI : MonoBehaviour
 
     protected virtual void InstantiateUIObject()
     {
-        uiObjectInst = Instantiate(UIObject, FindObjectOfType<Canvas>().transform);
+        uiObjectInst = Instantiate(UIObject, CanvasToDraw.transform);
 
         imageComponents = uiObjectInst.GetComponentsInChildren<Image>();
         textComponents = uiObjectInst.GetComponentsInChildren<Text>();
