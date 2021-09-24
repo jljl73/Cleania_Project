@@ -459,10 +459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 960, y: 540}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1118,6 +1118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6772193168857397613, guid: 7d37264b7654b654f8295daf03a828fd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d37264b7654b654f8295daf03a828fd, type: 3}
 --- !u!1001 &662769774
@@ -1625,24 +1629,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8689480311849083149, guid: 57291e0f4de835749a0705d7c4a04c34, type: 3}
   m_PrefabInstance: {fileID: 1905876380}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &886501788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886501787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47be1102770d709459a6b14e8e9f14a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BorderPercent: 0.8
-  UIObject: {fileID: 3586633317960597320, guid: 1889a78717d8141478c56b1f8ad1ad0a, type: 3}
-  IsWorldCoordinate: 0
-  UIShowPosition: {x: 0, y: 0}
-  DisplayName: "\uAC78\uC52C\uB4E4\uB9B0 \uADF8\uB9AC\uD37C"
-  StateName: "\uBA3C\uC9C0"
 --- !u!1001 &966673490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2272,10 +2258,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 362098091, guid: 57291e0f4de835749a0705d7c4a04c34, type: 3}
-      propertyPath: Atk
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 8348808267265457079, guid: 57291e0f4de835749a0705d7c4a04c34, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2324,8 +2306,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grim Reaper
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 362098090, guid: 57291e0f4de835749a0705d7c4a04c34, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57291e0f4de835749a0705d7c4a04c34, type: 3}
 --- !u!1 &2035658865
 GameObject:
