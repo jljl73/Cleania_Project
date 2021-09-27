@@ -48,6 +48,7 @@ public class ObjectUI : MonoBehaviour
 
         imageComponents = uiObjectInst.GetComponentsInChildren<Image>();
         textComponents = uiObjectInst.GetComponentsInChildren<Text>();
+        ActiveUI(false);
     }
 
     protected virtual bool IsInUIBorder(Vector3 point)
