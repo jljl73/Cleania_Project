@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill1 : Skill
 {
-    public StateMachine playerStateMachine;
     public BuffManager buffManager;
-    public Animator animator;
     public float speed = 10.0f;
     float duration = 0f;
     bool bSkill = false;

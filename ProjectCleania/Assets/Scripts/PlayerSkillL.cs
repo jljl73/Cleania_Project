@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillL : Skill
 {
-    public Animator animator;
     //public GameObject player;
     public PlayerMovement playerMovement;
-    public StateMachine playerStateMachine;
     Collider attackArea;
 
     void Start()
@@ -16,10 +14,6 @@ public class PlayerSkillL : Skill
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void Activate()
     {

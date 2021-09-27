@@ -6,8 +6,6 @@ using UnityEngine.AI;
 public class PlayerSkill4 : Skill
 {
     public NavMeshAgent navMeshAgent;
-    public StateMachine playerStateMachine;
-    public Animator animator;
     public PlayerMovement playerMovement;
     public float jumpDistance = 7f;
 

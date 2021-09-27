@@ -6,8 +6,8 @@ using UnityEngine.UI
 
 public class MouseOverNameUI : ObjectUI
 {
-    public bool IsWorldCoordinate = false;            // UI 표시 공간
-    public Vector2 UIShowPosition = Vector2.zero;   // UI 표시 위치
+    public bool IsWorldCoordinate = false;              // UI 표시 공간
+    public Vector2 UIShowPosition = Vector2.zero;       // UI 표시 위치
 
     public string DisplayName;                      // 이름
     public string StateName;                        // 상태 이름
@@ -34,6 +34,22 @@ public class MouseOverNameUI : ObjectUI
             ShowUI();
         else
             base.DestroyUI();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit raycastHit;
+
+        if (Physics.Raycast(ray, out raycastHit))
+        {
+            if (raycastHit.transform.gameObject == this.transform.gameObject)
+            {
+                float mag = Vector3.Distance(ray.origin, this.transform.position);
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(ray.origin, ray.direction * mag);
+            }
+        }
     }
 
     void ShowUI()
@@ -107,5 +123,10 @@ public class MouseOverNameUI : ObjectUI
 
         if (GetTextComponent("State") != null)
             GetTextComponent("State").text = StateName;
+    }
+
+    private void OnDestroy()
+    {
+        base.DestroyUI(); ;
     }
 }
