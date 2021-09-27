@@ -17,10 +17,10 @@ public class ItemObject : MonoBehaviour
     {
         _item.CodeParsing(ItemCode, ItemName);
         equipmentOption = new EquipmentOption(_item.ItemSmallCategory, _item.ItemRank, _item.ItemID, 1);
+        equipmentOption.RandomInitialize();
+        
 
         GameObject.Find("Others").transform.Find("ItemList").GetComponent<ItemList>().AddOption(equipmentOption);
-
-
     }
 
     public void CopyItem(Item item)

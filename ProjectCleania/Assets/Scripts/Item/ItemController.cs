@@ -11,6 +11,8 @@ public class ItemController : MonoBehaviour
 
     GameObject _inventory;
     GameObject _clicked;
+    EquipmentManager _equipmentManager;
+    ItemList _itemList;
     GraphicRaycaster _raycaster;
 
     Vector2 screenPoint;
@@ -33,6 +35,7 @@ public class ItemController : MonoBehaviour
     bool isEquipped;
     Item _item;
     public Item GetItem { get { return _item; } }
+    EquipmentOption _option;
 
     public void Initialize(Item item)
     {
@@ -42,9 +45,13 @@ public class ItemController : MonoBehaviour
         // 다른 방법은 나중에
         _inventory = _itemInventory.transform.Find("Inventory").gameObject;
         _clicked = _itemInventory.transform.Find("Clicked").gameObject;
+        _equipmentManager = _itemInventory.transform.Find("Equipment").GetComponent<EquipmentManager>();
         _canvas = uiManager.GetCanvas;
         _raycaster = _canvas.GetComponent<GraphicRaycaster>();
         _item = item.DeepCopy();
+
+        _option = GameObject.Find("Others").transform.Find("ItemList").GetComponent<ItemList>().FindItemOption(_item.ItemID);
+
 
         //그리드 배치 초기화
         transform.SetParent(_inventory.transform);
@@ -284,6 +291,7 @@ public class ItemController : MonoBehaviour
         slots.Add(slot);
         ActivateSlot();
         isEquipped = true;
+        _equipmentManager.WearEquipment(_type, _option);
     }
 
     public void TakeOff(int index)
@@ -293,6 +301,7 @@ public class ItemController : MonoBehaviour
         else SetSlot(index);
         ActivateSlot();
         isEquipped = false;
+        _equipmentManager.TakeOffEquipment(_type);
     }
 
     public void OnButtonClicked(BaseEventData eventData)

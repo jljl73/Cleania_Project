@@ -96,9 +96,15 @@ public class ItemList : MonoBehaviour
         }
     }
 
-    void LoadItemOption(int ItemID, out EquipmentOption option)
+    EquipmentOption LoadItemOption(Item.ITEMSMALLCATEGORY type, Item.ITEMRANK rank, int ItemID, int level)
     {
-        option = null;
+        EquipmentOption newOption = new EquipmentOption(type, rank, ItemID, level);
+
+        List<EquipmentOption.Option> StaticOptionKeys = new List<EquipmentOption.Option>();
+        List<int> StaticOptionValues = new List<int>();
+        List<EquipmentOption.Option> VariableOptionKeys = new List<EquipmentOption.Option>();
+        List<int> VariableOptionValues = new List<int>();
+
         if (File.Exists(Application.dataPath + "/Resources/JsonData/qqq.json"))
         {
             string jsonString = File.ReadAllText(Application.dataPath + "/Resources/JsonData/qqq.json");
@@ -110,11 +116,41 @@ public class ItemList : MonoBehaviour
                 int itemID = int.Parse(jsonData[i]["ItemID"].ToString());
                 if (itemID != ItemID) continue;
 
+                foreach (var value in jsonData[i]["StaticOptionKeys"])
+                {
+                    StaticOptionKeys.Add((EquipmentOption.Option)(int.Parse(value.ToString())));
+                }
+                foreach (var value in jsonData[i]["StaticOptionValues"])
+                {
+                    StaticOptionValues.Add((int.Parse(value.ToString())));
+                }
+                foreach (var value in jsonData[i]["VariableOptionKeys"])
+                {
+                    VariableOptionKeys.Add((EquipmentOption.Option)(int.Parse(value.ToString())));
+                }
+                foreach (var value in jsonData[i]["VariableOptionValues"])
+                {
+                    VariableOptionValues.Add((int.Parse(value.ToString())));
+                }
 
+                newOption.Load(StaticOptionKeys, StaticOptionValues, VariableOptionKeys, VariableOptionValues);
 
+                break;
             }
         }
+        equipments.Add(newOption);
+        return newOption;
+    }
 
+    public EquipmentOption FindItemOption(int ItemID)
+    {
+        foreach(EquipmentOption e in equipments)
+        {
+            if (e.ItemID == ItemID)
+                return e;
+        }
+
+        return null;
     }
 
 }

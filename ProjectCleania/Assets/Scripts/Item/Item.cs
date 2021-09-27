@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
+    static int NextID = 0;
+
     public enum ITEMRANK { Normal, Rare, Legendary };
     public enum ITEMBIGCATEGORY { Equipment = 1, Material, Etc };
     public enum ITEMSMALLCATEGORY
@@ -36,6 +38,7 @@ public class Item
         n = int.Parse(itemCode.Substring(5));
         ItemNumber = n;
 
+        ItemID = NextID++;
         ItemCode = int.Parse(itemCode);
         ItemName = string.Copy(itemName);
     }
