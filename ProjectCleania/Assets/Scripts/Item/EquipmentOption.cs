@@ -68,10 +68,9 @@ public class EquipmentOption
         this.type = type;
         this.Level = level;
         this.Rank = rank;
-        Initialize();
     }
 
-    public void Initialize()
+    public void RandomInitialize()
     {
         int iRank = (int)this.Rank;
         System.Array EnumList = System.Enum.GetValues(typeof(EquipmentOption.Option));
@@ -254,5 +253,13 @@ public class EquipmentOption
         newOption.VariableOptionValues = this.VariableOptionValues.ToList();
 
         return newOption;
+    }
+
+    public void Load(List<Option> StaticOptionKeys, List<int> StaticOptionValues, List<Option> VariableOptionKeys, List<int> VariableOptionValues)
+    {
+        this.StaticOptionKeys = StaticOptionKeys.ToList();
+        this.StaticOptionValues = StaticOptionValues.ToList();
+        this.VariableOptionKeys = VariableOptionKeys.ToList();
+        this.VariableOptionValues = VariableOptionValues.ToList();
     }
 }
