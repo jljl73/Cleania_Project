@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI
-    ;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class MouseOverNameUI : ObjectUI
+public class MouseOverNameUI : ObjectUI, IPointerEnterHandler, IPointerExitHandler
 {
     public bool IsWorldCoordinate = false;              // UI 표시 공간
     public Vector2 UIShowPosition = Vector2.zero;       // UI 표시 위치
@@ -17,8 +17,9 @@ public class MouseOverNameUI : ObjectUI
     private void Awake()
     {
         objAbilityStatus = GetComponent<AbilityStatus>();
+        // haha
     }
-
+     
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Alpha6))
@@ -31,9 +32,32 @@ public class MouseOverNameUI : ObjectUI
         //}
 
         if (IsInUIBorder(Camera.main.WorldToScreenPoint(transform.position)))
-            ShowUI();
+            InstantiateUI();
         else
             base.DestroyUI();
+
+        UpdateUIInfo();
+    }
+
+    void UpdateUIInfo()
+    {
+        if (uiObjectInstExist)
+        {
+            switch (transform.tag)
+            {
+                case "Item":
+                    break;
+
+                case "Enemy":
+                    UpdateHPState();
+                    break;
+
+                default:
+                    if (IsWorldCoordinate)
+                        UpdateUIPosition();
+                    break;
+            }
+        }
     }
 
     private void OnDrawGizmos()
@@ -52,36 +76,36 @@ public class MouseOverNameUI : ObjectUI
         }
     }
 
-    void ShowUI()
+    void InstantiateUI()
     {
         base.JudgeCreateDestroy();
 
-        switch (transform.tag)
-        {
-            case "Item":
-                break;
+        //switch (transform.tag)
+        //{
+        //    case "Item":
+        //        break;
 
-            case "Enemy":
-                if (IsMouseCollide())
-                {
-                    UpdateHPState();
-                    base.ActiveUI(true);
-                }
-                else
-                    base.ActiveUI(false);
-                break;
+        //    case "Enemy":
+        //        if (IsMouseCollide())
+        //        {
+        //            UpdateHPState();
+        //            base.ActiveUI(true);
+        //        }
+        //        else
+        //            base.ActiveUI(false);
+        //        break;
 
-            default:
-                if (IsMouseCollide())
-                {
-                    base.ActiveUI(true);
-                    if (IsWorldCoordinate)
-                        UpdateUIPosition();
-                }
-                else
-                    base.ActiveUI(false);
-                break;
-        }
+        //    default:
+        //        if (IsMouseCollide())
+        //        {
+        //            base.ActiveUI(true);
+        //            if (IsWorldCoordinate)
+        //                UpdateUIPosition();
+        //        }
+        //        else
+        //            base.ActiveUI(false);
+        //        break;
+        //}
     }
     void UpdateHPState()
     {
@@ -128,5 +152,30 @@ public class MouseOverNameUI : ObjectUI
     private void OnDestroy()
     {
         base.DestroyUI(); ;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        print("OnPointerExit");
+        base.ActiveUI(false);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        print("OnPointerEnter");
+        base.ActiveUI(true);
+        //switch (transform.tag)
+        //{
+        //    case "Item":
+        //        break;
+
+        //    case "Enemy":
+        //        base.ActiveUI(true);
+        //        break;
+
+        //    default:
+        //        base.ActiveUI(true);
+        //        break;
+        //}
     }
 }
