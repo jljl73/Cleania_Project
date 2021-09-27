@@ -22,8 +22,6 @@ public class ItemController : MonoBehaviour
     public int w = 0;
     public bool bCountable = false;
     public int count = 0;
-    bool bChasing;
-    bool isEquipped;
 
     public int PrevIndex { get; private set; }
 
@@ -31,35 +29,33 @@ public class ItemController : MonoBehaviour
     GameObject anotherObject = null;
     public ItemInventory.EquipmentType _type;
 
+    bool bChasing;
+    bool isEquipped;
     Item _item;
+    public Item GetItem { get { return _item; } }
 
-    public void Initialize(ItemInventory itemInventory, Canvas canvas, Item item)
+    public void Initialize(Item item)
     {
-        _itemInventory = itemInventory;
+        UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        // 변수 초기화
+        _itemInventory = uiManager.ItemPanel.GetComponent<ItemInventory>(); 
         // 다른 방법은 나중에
         _inventory = _itemInventory.transform.Find("Inventory").gameObject;
         _clicked = _itemInventory.transform.Find("Clicked").gameObject;
-
-        _canvas = canvas;
+        _canvas = uiManager.GetCanvas;
         _raycaster = _canvas.GetComponent<GraphicRaycaster>();
-
         _item = item.DeepCopy();
-    }
 
-    private void Awake()
-    {
+        //그리드 배치 초기화
         transform.SetParent(_inventory.transform);
         OnOffChasing(false);
-
-        if (AutoSetting())
-            MoveToSlot();
-        else
-        {
+        if (!AutoSetting())
+        { 
             _itemInventory.ShowInvenAlarmPanel();
             BackToField();
         }
     }
-    
+
     void Update()
     {
         if(bChasing)
@@ -147,7 +143,8 @@ public class ItemController : MonoBehaviour
     void OnOffChasing(bool bchasing)
     {
         bChasing = bchasing;
-        transform.SetParent(_clicked.transform);
+        if(bChasing)
+            transform.SetParent(_clicked.transform);
     }
 
     // 슬롯 활성화

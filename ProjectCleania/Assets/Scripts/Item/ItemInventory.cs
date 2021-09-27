@@ -69,6 +69,7 @@ public class ItemInventory : MonoBehaviour
     void Clone(GameObject originalObject, int count)
     {
         GameObject temp = Instantiate(originalObject);
+        temp.GetComponent<ItemController>().Initialize(originalObject.GetComponent<ItemController>().GetItem);
         currentItem.count -= count;
 
         if (currentItem.count == 0)

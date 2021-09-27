@@ -13,6 +13,7 @@ public class Item
         Boots = 305, Etc = 999
     };
 
+
     public int ItemID;
     public ITEMBIGCATEGORY ItemBigCategory;
     public ITEMSMALLCATEGORY ItemSmallCategory;

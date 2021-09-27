@@ -5,7 +5,15 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     bool isActiveItemPanel = true;
-    public GameObject ItemPanel;
+    public GameObject itemPanel;
+    public GameObject ItemPanel { get { return itemPanel; } }
+
+    public ItemInventory itemInventory_;
+    public ItemInventory GetItemInventory { get { return itemInventory_; } }
+
+    public Canvas canvas_;
+    public Canvas GetCanvas { get { return canvas_; } }
+
     
     private void Start()
     {
@@ -23,10 +31,11 @@ public class UIManager : MonoBehaviour
     void OnOffItemPanel()
     {
         if (isActiveItemPanel)
-            ItemPanel.transform.Translate(new Vector3(2000, 0, 0));
+            itemPanel.transform.Translate(new Vector3(2000, 0, 0));
         else
-            ItemPanel.transform.Translate(new Vector3(-2000, 0, 0));
+            itemPanel.transform.Translate(new Vector3(-2000, 0, 0));
 
         isActiveItemPanel = !isActiveItemPanel;
     }
+
 }

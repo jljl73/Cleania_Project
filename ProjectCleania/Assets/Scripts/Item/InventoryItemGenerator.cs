@@ -50,8 +50,7 @@ public class InventoryItemGenerator : MonoBehaviour
 
         GameObject newItem = Instantiate(Resources.Load("Prefabs/" + ObjectName, typeof(GameObject)) as GameObject, transform.position, transform.rotation);
 
-        newItem.GetComponent<ItemController>().Initialize(itemInventory, _canvas, item);
+        newItem.GetComponent<ItemController>().Initialize(item);
         newItem.SetActive(true);
     }
-
 }
