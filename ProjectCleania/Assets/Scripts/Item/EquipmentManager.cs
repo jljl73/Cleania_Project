@@ -10,9 +10,24 @@ public class EquipmentManager : MonoBehaviour
     public EquipmentOption[] equipmentOptions = new EquipmentOption[nEquipment];
     public Item[] items = new Item[nEquipment];
 
+
     void Start()
     {
+        for (int i = 0; i < nEquipment; ++i)
+            equipmentOptions[i] = null;
+
         Debug.Log(GetSumOptions(EquipmentOption.Option.Attack));
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            for(int i = 0;i < 20;++i)
+            {
+                Debug.Log(GetSumOptions((EquipmentOption.Option)i));
+            }
+        }
     }
 
     public int GetSumOptions(EquipmentOption.Option option)
@@ -24,5 +39,15 @@ public class EquipmentManager : MonoBehaviour
                 sum += e[option];
         }
         return sum;
+    }
+
+    public void WearEquipment(ItemInventory.EquipmentType type, EquipmentOption eo)
+    {
+        equipmentOptions[((int)type) - 1] = eo;
+    }
+
+    public void TakeOffEquipment(ItemInventory.EquipmentType type)
+    {
+        equipmentOptions[((int)type) - 1] = null;
     }
 }
