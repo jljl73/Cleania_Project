@@ -48,10 +48,10 @@ public class CameraWalk : MonoBehaviour
         terrainVertexes[1] = new Vector3(terrainCenter.x + terrainWidth * 0.5f, terrainCenter.y, terrainCenter.z - terrainHeight * 0.5f);
         terrainVertexes[2] = new Vector3(terrainCenter.x - terrainWidth * 0.5f, terrainCenter.y, terrainCenter.z - terrainHeight * 0.5f);
         terrainVertexes[3] = new Vector3(terrainCenter.x - terrainWidth * 0.5f, terrainCenter.y, terrainCenter.z + terrainHeight * 0.5f);
-        foreach (Vector3 vec in terrainVertexes)
-        {
-            print(vec);
-        }
+        //foreach (Vector3 vec in terrainVertexes)
+        //{
+        //    print(vec);
+        //}
     }
 
     void Update()
