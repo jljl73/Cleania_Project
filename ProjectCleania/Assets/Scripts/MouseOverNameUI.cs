@@ -60,21 +60,21 @@ public class MouseOverNameUI : ObjectUI, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit raycastHit;
+    //private void OnDrawGizmos()
+    //{
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    RaycastHit raycastHit;
 
-        if (Physics.Raycast(ray, out raycastHit))
-        {
-            if (raycastHit.transform.gameObject == this.transform.gameObject)
-            {
-                float mag = Vector3.Distance(ray.origin, this.transform.position);
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(ray.origin, ray.direction * mag);
-            }
-        }
-    }
+    //    if (Physics.Raycast(ray, out raycastHit))
+    //    {
+    //        if (raycastHit.transform.gameObject == this.transform.gameObject)
+    //        {
+    //            float mag = Vector3.Distance(ray.origin, this.transform.position);
+    //            Gizmos.color = Color.red;
+    //            Gizmos.DrawLine(ray.origin, ray.direction * mag);
+    //        }
+    //    }
+    //}
 
     void InstantiateUI()
     {

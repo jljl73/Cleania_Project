@@ -6,7 +6,7 @@ public class TitleManager : MonoBehaviour
 {
     public void OnClickedStart()
     {
-        GameManager.Instance.ChangeScene("ItemScene");
+        GameManager.Instance.ChangeScene("CharacterSelect");
     }
 
     public void OnClickedOption()
