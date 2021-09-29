@@ -14,12 +14,11 @@ public class InventoryItemGenerator : MonoBehaviour
     public GameObject _player;
     public Json json;
 
-
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.L))
         {
-            DropItem("TestWeapon1");
+            DropItem("1101001");
         }
     }
 
@@ -27,15 +26,15 @@ public class InventoryItemGenerator : MonoBehaviour
     public GameObject prefab;
 
     // 오브젝트 생성
-    public void DropItem(string itemName)
+    public void DropItem(string itemID)
     {
-        GameObject newItem = Instantiate(Resources.Load("Prefabs/" + itemName, typeof(GameObject)) as GameObject, _player.transform.position, _player.transform.rotation);
+        GameObject newItem = Instantiate(Resources.Load("Prefabs/" + itemID, typeof(GameObject)) as GameObject, _player.transform.position, _player.transform.rotation);
 
     }
 
     public void DropItem(Item item)
     {
-        string ObjectName = item.ItemName.ToString();
+        string ObjectName = item.ItemID.ToString();
 
         GameObject newItem = Instantiate(Resources.Load("Prefabs/" + ObjectName, typeof(GameObject)) as GameObject, _player.transform.position, _player.transform.rotation);
 
@@ -46,9 +45,9 @@ public class InventoryItemGenerator : MonoBehaviour
     // 컨트롤러 생성
     public void GenerateItem(Item item)
     {
-        string ObjectName = item.ItemName.ToString() + "_inven";
+        string ObjectName = item.ItemCode.ToString() + "_inven";
 
-        GameObject newItem = Instantiate(Resources.Load("Prefabs/" + ObjectName, typeof(GameObject)) as GameObject, transform.position, transform.rotation);
+        GameObject newItem = Instantiate(Resources.Load("Prefabs/Items/" + ObjectName, typeof(GameObject)) as GameObject, transform.position, transform.rotation);
 
         newItem.GetComponent<ItemController>().Initialize(item);
         newItem.SetActive(true);
