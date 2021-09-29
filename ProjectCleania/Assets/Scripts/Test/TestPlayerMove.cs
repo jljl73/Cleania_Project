@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class TestPlayerMove : MonoBehaviour
 {
@@ -120,18 +121,20 @@ public class TestPlayerMove : MonoBehaviour
 
     public void MoveToPosition()
     {
-        RaycastHit[] raycastHits;
+        int layerMask = 0;
+        layerMask = 1 << 5 | 1 << 6 | 1 << 7;
+
+        if (EventSystem.current.IsPointerOverGameObject(-1)) return;
+
+        RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        raycastHits = Physics.RaycastAll(ray);
-        targetPose = transform.position;
-
-        for (int i = 0; i < raycastHits.Length; ++i)
+        if(Physics.Raycast(ray, out hit, 500.0f, layerMask))
         {
-
-            if (raycastHits[i].transform.CompareTag("Ground"))
+            Debug.Log(hit.collider.name + " " + hit.collider.tag);
+            if(hit.collider.tag == "Ground")
             {
-                targetPose = raycastHits[i].point;
+                targetPose = hit.point;
             }
         }
     }
@@ -196,19 +199,14 @@ public class TestPlayerMove : MonoBehaviour
                 MoveToPosition();
                 Targetting();
             }
-
         }
-        //MoveToPosition();
-        //RaycastHit raycastHit;
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        //if (Physics.Raycast(ray, out raycastHit))
-        //{
-        //    if (raycastHit.collider.CompareTag("Ground"))
-        //        targetPose = raycastHit.point;
-        //    else
-        //        return;
-        //}
+        if (Input.GetMouseButton(1))
+        {
+            if (playerStateMachine.State == StateMachine.enumState.MoveAttack)
+                MoveToPosition();
+        }
+
 
         if (Vector3.Distance(targetPose, transform.position) < 0.01f)
         {
