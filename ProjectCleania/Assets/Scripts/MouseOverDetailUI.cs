@@ -9,7 +9,7 @@ public class MouseOverDetailUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public enum DetailUIType { Hp, Mp, GameUIIcon, Skill };
 
     public GameObject DetailGameObject;
-    public GameObject PlayerGameObject;
+    private GameObject PlayerGameObject;
 
     private AbilityStatus playerStatus;
     private ContentSizeFitter[] DetailGameObjectChildrenCSF;
@@ -42,8 +42,7 @@ public class MouseOverDetailUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     void Awake()
     {
-        if(PlayerGameObject != null)
-            playerStatus = PlayerGameObject.GetComponent<AbilityStatus>();
+        playerStatus = FindObjectOfType<PlayerMovement>().gameObject.GetComponent<AbilityStatus>();
 
         textComponents = DetailGameObject.GetComponentsInChildren<Text>();
         imageComponents = DetailGameObject.GetComponentsInChildren<Image>();
