@@ -169,11 +169,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e92f82b11153c74b94e3fb208196e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
   playerStateMachine: {fileID: 429285941}
+  animator: {fileID: 429285947}
+  isAttacking: 0
+  CoolTime: 0
+  ConsumMP: 0
   damage: 10
   reduceArmor: 10
-  animator: {fileID: 429285947}
 --- !u!136 &139979101
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -286,10 +288,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367dfb4120c1e914481c3f32841f0292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
   playerStateMachine: {fileID: 429285941}
-  buffManager: {fileID: 429285943}
   animator: {fileID: 429285947}
+  isAttacking: 0
+  CoolTime: 0
+  ConsumMP: 0
+  buffManager: {fileID: 429285943}
   speed: 10
 --- !u!1 &389231094
 GameObject:
@@ -444,6 +448,13 @@ MonoBehaviour:
   - {fileID: 1628161037}
   - {fileID: 840433621}
   - {fileID: 1619623943}
+  CoolTimePassedRatio:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!195 &429285946
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -690,9 +701,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112c59c2aab3a7149b1eb3b9b343db12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
   playerStateMachine: {fileID: 429285941}
   animator: {fileID: 429285947}
+  isAttacking: 0
+  CoolTime: 0
+  ConsumMP: 0
   hurricanePrefabs: {fileID: 1799595379929035607, guid: dec20f08724486c479e7056d01da9b44, type: 3}
 --- !u!1 &714963649
 GameObject:
@@ -827,10 +840,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063b55561fbd1634c821d9897b86676b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
-  animator: {fileID: 429285947}
-  playerMovement: {fileID: 429285944}
   playerStateMachine: {fileID: 429285941}
+  animator: {fileID: 429285947}
+  isAttacking: 0
+  CoolTime: 0
+  ConsumMP: 0
+  playerMovement: {fileID: 429285944}
 --- !u!65 &840433622
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1051,10 +1066,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1ab7c7345fa32489c24f96e41e8ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
-  animator: {fileID: 429285947}
-  playerMovement: {fileID: 429285944}
   playerStateMachine: {fileID: 429285941}
+  animator: {fileID: 429285947}
+  isAttacking: 0
+  CoolTime: 0
+  ConsumMP: 0
+  playerMovement: {fileID: 429285944}
 --- !u!1 &1628161035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,10 +1118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b0954b3da9ffd4587766cf2f3633e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
-  navMeshAgent: {fileID: 429285946}
   playerStateMachine: {fileID: 429285941}
   animator: {fileID: 429285947}
+  isAttacking: 0
+  CoolTime: 0
+  ConsumMP: 0
+  navMeshAgent: {fileID: 429285946}
   playerMovement: {fileID: 429285944}
   jumpDistance: 7
   passAvailable: 0
@@ -3711,22 +3730,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515648807231322660, guid: aaad9bb171b2b384ca71aa9daae97589, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1515648807231322668, guid: aaad9bb171b2b384ca71aa9daae97589, type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 429285939}
-    - target: {fileID: 6015202032154768269, guid: aaad9bb171b2b384ca71aa9daae97589, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6015202032154768269, guid: aaad9bb171b2b384ca71aa9daae97589, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6015202032154768269, guid: aaad9bb171b2b384ca71aa9daae97589, type: 3}
-      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
