@@ -50,8 +50,8 @@ public class ItemList : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
 
-            foreach (Item i in items_Inventory)
-                Debug.Log(i.ItemID.ToString() + ", " + i.ItemCode);
+            //foreach (Item i in items_Inventory)
+            //    Debug.Log(i.ItemID.ToString() + ", " + i.ItemCode);
 
             jsonData = JsonMapper.ToJson(items_Inventory);
             File.WriteAllText(Application.dataPath + "/Resources/JsonData/PlayerInventory.json",

@@ -30,6 +30,7 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    // >> Start
     public int GetSumOptions(EquipmentOption.Option option)
     {
         int sum = 0;
@@ -40,6 +41,9 @@ public class EquipmentManager : MonoBehaviour
         }
         return sum;
     }
+    // << End
+
+
 
     public void WearEquipment(ItemInventory.EquipmentType type, EquipmentOption eo)
     {
