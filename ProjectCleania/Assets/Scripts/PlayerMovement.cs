@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
                 Targetting();
             }
 
-            #region
+#region
             //RaycastHit mouseHit;
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
             //    targetPose = mouseHit.point;
             //    targetObj = null;
             //}
-            #endregion
+#endregion
         }
         if (Input.GetMouseButton(1))
         {
@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        #region
+#region
         //// 타겟 있으면, 타겟 따라서 목표 위치 설정
         //if (targetObj != null)
         //{
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         //    // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
         //    targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
         //}
-        #endregion
+#endregion
         // 네이게이션 실행
 
         if (playerStateMachine.State != StateMachine.enumState.Chasing)
@@ -171,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         //transform.LookAt(rotateForward);
     }
 
-    #region
+#region
     //private void Attack()
     //{
     //    // 타겟이 있고, 타겟 근처에 왔으면 공격 1회 실행
@@ -194,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
     //    // 일반 공격 콜라이더 업데이트
     //    attackBoxCollider.enabled = _isAttackColliderActivate;
     //}
-    #endregion
+#endregion
 
     public void MoveToPosition()
     {
@@ -266,5 +266,5 @@ public class PlayerMovement : MonoBehaviour
             skillL.AnimationActivate();
         }
     }
-
+        
 }
