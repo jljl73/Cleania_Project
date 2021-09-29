@@ -12,14 +12,14 @@ public class UI_StatusPanel : MonoBehaviour
     public Button detailBtn;
     public Text[] coreTexts;
     GameObject detailScroll;
-    Text[] detailTexts;
+    public Text[] detailTexts;
 
     private void Awake()
     {
         status = Player.GetComponent<Status>();
         abilityStatus = Player.GetComponent<AbilityStatus>();
         detailScroll = transform.Find("Detail Scroll").gameObject;
-        detailTexts = detailScroll.GetComponentsInChildren<Text>();
+        //detailTexts = detailScroll.GetComponentsInChildren<Text>();
     }
 
     // Update is called once per frame
@@ -41,8 +41,8 @@ public class UI_StatusPanel : MonoBehaviour
             {
                 for (int i = detailTexts.Length - 1; i >= 0; i--)
                 {
-                    detailTexts[i--].text = $"{abilityStatus[(Ability.Stat)(i/2)].ToString()}";
-                    detailTexts[i].text = $"{((Ability.Stat)(i/2+1)).ToString()}";
+                    detailTexts[i].text = $"{abilityStatus[(Ability.Stat)(i/2)].ToString()}";
+                    //detailTexts[i].text = $"{((Ability.Stat)(i/2+1)).ToString()}";
                 }
             }
         }

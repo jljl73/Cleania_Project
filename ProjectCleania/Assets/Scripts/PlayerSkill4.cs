@@ -21,7 +21,7 @@ public class PlayerSkill4 : Skill
     void Start()
     {   
         attackArea = GetComponent<Collider>();
-        initialNavAgentR = navMeshAgent.radius;
+        //initialNavAgentR = navMeshAgent.radius;
     }
 
     public override void AnimationActivate()
