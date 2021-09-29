@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         //    return;
 
         // 마우스 클릭에 따른 네비게이션 실행
+        //ActivateNavigation();
+
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
         if (!EventSystem.current.IsPointerOverGameObject())
             ActivateNavigation();
