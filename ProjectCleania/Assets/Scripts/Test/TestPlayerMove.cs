@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
-public class PlayerMovement : MonoBehaviour
+public class TestPlayerMove : MonoBehaviour
 {
     public float rotateCoef = 2f;
 
@@ -50,28 +49,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // 공격 중이면 업데이트 x
-        //if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && !playerAnimator.IsInTransition(0))
         //    isAttackPlaying = false;
         //if (isAttackPlaying)
         //    return;
-
-        // 마우스 클릭에 따른 네비게이션 실행
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
-        if (!EventSystem.current.IsPointerOverGameObject())
-            ActivateNavigation();
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-        if (!EventSystem.current.IsPointerOverGameObject(0))
-            ActivateNavigation();
-#endif
-        // 회전 가속
+        Move();
         AccelerateRotation();
 
-        // 공격 모션 판정
-        //Attack();
-
         // 애니메이션 업데이트
-        playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
+        //playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
     }
 
     private void ActivateNavigation()
@@ -81,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
             targetPose = transform.position;
         }
 
-        // 마우스 클릭시, 해당 위치로 이동
         if (Input.GetMouseButton(0))// 누르고 있어도
         {
             if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
@@ -89,25 +73,7 @@ public class PlayerMovement : MonoBehaviour
                 MoveToPosition();
                 Targetting();
             }
-
-#region
-            //RaycastHit mouseHit;
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            // 클릭한 곳에 적이 있으면, 적 위치로 이동 후 공격
-            //if (Physics.Raycast(ray, out mouseHit) && mouseHit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            //{
-            //    // 타겟: 마우스 클릭된 적
-            //    targetObj = mouseHit.transform.gameObject;
-            //}
-
-            //else if (Physics.Raycast(ray, out mouseHit))
-            //{
-            //    // 일반 지형이면, 타겟 없음, 목표 위치 설정
-            //    targetPose = mouseHit.point;
-            //    targetObj = null;
-            //}
-#endregion
+            
         }
         if (Input.GetMouseButton(1))
         {
@@ -117,27 +83,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-#region
-        //// 타겟 있으면, 타겟 따라서 목표 위치 설정
-        //if (targetObj != null)
-        //{
-        //    // 적이 바로 앞이면 움직일 필요x
-        //    if (distanceBetweenTargetObj > Vector3.Distance(targetObj.transform.position, transform.position))
-        //    {
-        //        targetPose = transform.position;
-        //        return;
-        //    }
-
-        //    // 타겟 위치보다 distanceBetweenTargetObj 뒤에서 멈춘다.
-        //    targetPose = targetObj.transform.position - Vector3.Normalize(targetObj.transform.position - transform.position) * distanceBetweenTargetObj;
-        //}
-#endregion
-        // 네이게이션 실행
-
         if (playerStateMachine.State != StateMachine.enumState.Chasing)
         {
             playerNavMeshAgent.SetDestination(targetPose);
-            // transform.LookAt(targetPose);
         }
         else
             playerNavMeshAgent.SetDestination(targetObj.transform.position);
@@ -167,34 +115,8 @@ public class PlayerMovement : MonoBehaviour
 
         // 회전
         transform.LookAt(this.transform.position + limit);
-
-        //transform.LookAt(rotateForward);
     }
 
-#region
-    //private void Attack()
-    //{
-    //    // 타겟이 있고, 타겟 근처에 왔으면 공격 1회 실행
-    //    if (targetObj != null && Vector3.Distance(transform.position, targetPose) < 0.01f)
-    //    {
-    //        // 1회 공격 실시
-    //        playerAnimator.SetTrigger("Attack");
-    //        isAttackPlaying = true;
-
-    //        // 한번 공격 후 타겟 = null, 반복 실행 방지
-    //        targetObj = null;
-    //    }
-    //}
-
-    //private void SetNormalAttack(GameObject _target, bool _isAttackColliderActivate)
-    //{
-    //    // 타겟 업데이트
-    //    targetObj = _target;
-
-    //    // 일반 공격 콜라이더 업데이트
-    //    attackBoxCollider.enabled = _isAttackColliderActivate;
-    //}
-#endregion
 
     public void MoveToPosition()
     {
@@ -213,10 +135,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
-    // 수정 //
-    // --- //
-
+    
     public void JumpForward(float dist)
     {
         targetPose = transform.position + transform.forward * dist;
@@ -266,5 +185,39 @@ public class PlayerMovement : MonoBehaviour
             skillL.AnimationActivate();
         }
     }
-        
+
+
+    void Move()
+    {
+        if (Input.GetMouseButton(0))// 누르고 있어도
+        {
+            if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
+            {
+                MoveToPosition();
+                Targetting();
+            }
+
+        }
+        //MoveToPosition();
+        //RaycastHit raycastHit;
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //if (Physics.Raycast(ray, out raycastHit))
+        //{
+        //    if (raycastHit.collider.CompareTag("Ground"))
+        //        targetPose = raycastHit.point;
+        //    else
+        //        return;
+        //}
+
+        if (Vector3.Distance(targetPose, transform.position) < 0.01f)
+        {
+            playerAnimator.SetFloat("Speed", 0);
+            return;
+        }
+
+        transform.localPosition = Vector3.MoveTowards(transform.position, targetPose, 5 * Time.deltaTime);
+        playerAnimator.SetFloat("Speed", 10 * Time.deltaTime);
+        //if (playerStateMachine.State != StateMachine.enumState.Chasing)
+    }
 }
