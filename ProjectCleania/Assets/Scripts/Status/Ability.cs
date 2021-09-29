@@ -57,37 +57,123 @@ public class Ability
     }
 
 
-
-    public enum Equipment
+    public static KeyValuePair<Ability.Stat, Ability.Enhance> EquipmentOptionToAbility(EquipmentOption.Option opt)
     {
-        Attack_Percent = 0,                 // 공격력 +n%
-        //HeroMonsterDamage_Percent,      // 영웅 등급 이하 몬스터에게 주는 피해 +n%
-        //RareMonsterDamage_Percent,      // 희귀 등급 이하 몬스터에게 주는 피해 +n%
-        //BossMonsterDamage_Percent,      // 보스 등급 이하 몬스터에게 주는 피해 +n%
-        CriticalChance_Percent,         // 치명타 확률 +n%
-        CriticalScale_Percent,          // 치명타 피해 +n%
-        //IncreaseGivingDamage_Percent,   // 주는 피해 +n%
+        KeyValuePair<Ability.Stat, Ability.Enhance> ret;
 
-        Accuracy_Percent,               // 적중률 +n%
-        Dodge_Percent,                  // 회피율 n%
-        Toughness_Percent,              // 강인함 +n%
-        //ReduceGettingDamage_Percent,    // 받는피해 -n%
+        switch(opt)
+        {
+            case EquipmentOption.Option.Attack:                 // 무기공격력
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Attack, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.AttackSpeed:            // 공격속도
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.AttackSpeed, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.Strength:               // 주스탯(힘)
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Strength, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.IncreaseAttack:         // 공격력 증가
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Attack, Ability.Enhance.Addition_Percent);
+                break;
+            case EquipmentOption.Option.CriticalChance:         // 치명타확률
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.CriticalChance, Ability.Enhance.Addition);
+                break;
+            case EquipmentOption.Option.CriticalScale:          // 치명타피해량
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.CriticalScale, Ability.Enhance.Addition);
+                break;
+            case EquipmentOption.Option.Accuracy:               // 적중률
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Accuracy, Ability.Enhance.Chance_Percent);
+                break;
+            case EquipmentOption.Option.IncreaseDamage:         // 피해 증가
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.IncreaseDamage, Ability.Enhance.Addition_Percent);
+                break;
+            case EquipmentOption.Option.LifePerHit:             // 타격시 생명력회복
+                //
+            case EquipmentOption.Option.LifePerKill:            // 처치시 생명력회복
+                //
+            case EquipmentOption.Option.LifePerSecond:          // 초당 생명력 회복량
+                //
+            case EquipmentOption.Option.Vitality:               // 체력
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Vitality, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.MaxHP:                  // 생명력
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.MaxHP, Ability.Enhance.Addition_Percent);
+                break;
+            case EquipmentOption.Option.MaxMP:                  // 최대 고유자원
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.MaxMP, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.MPRestore:              // 고유자원 획득량 증가 이름 미정
+                //
+            case EquipmentOption.Option.DamageIncreasedNormal:  // 일반대상피해증가
+                //
+            case EquipmentOption.Option.DamageIncreasedElite:   // 엘리트대상피해증가
+                //
+            case EquipmentOption.Option.DamageIncreasedBoss:    // 보스대상피해증가
+                //
+            case EquipmentOption.Option.SkillCoolDown:          // 재사용대기시간감소
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.SkillCooldown, Ability.Enhance.NegMul_Percent);
+                break;
+            case EquipmentOption.Option.ExpIncreased:           // 경험치 획득량 증가
+                //
+            case EquipmentOption.Option.CleanIncreased:         // 클린 획득량 증가
+                //
+            case EquipmentOption.Option.Defense:                // 방어력
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Defense, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.ReduceDamaged:          // 피해 감소
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.ReduceDamage, Ability.Enhance.Addition_Percent);
+                break;
+            case EquipmentOption.Option.Tenacity:               // 강인함
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Tenacity, Ability.Enhance.Absolute);
+                break;
+            case EquipmentOption.Option.Dodge:                  // 회피율
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.Dodge, Ability.Enhance.Chance_Percent);
+                break;
+            case EquipmentOption.Option.MoveSpeed:              // 이동속도
+                ret = new KeyValuePair<Stat, Enhance>(Ability.Stat.MoveSpeed, Ability.Enhance.Addition_Percent);
+                break;
+        }
 
-        Defense_Abs,                    // 방어력 +n
-        Vitality_Abs,                   // 체력 +n
-        HP_Percent,                     // 생명력 + n%
-        //HPperSecond_Abs,                // 초당 생명 회복 +n
-        //HPperHit_Abs,                   // 타격당 생명 회복 +n
-        //HPperKill_Abs,                  // 처치시 생명 회복 +n
+        return ret;
+    }
 
-        Cooldown_Percent,               // 재사용대기시간 -n%
-        MPconsumeReduce_Percent,        // 고유자원 소모량 -n%
-        MaxMP_Abs,                      // 최대 고유자원 +n
-
-        EXP_Percent,                    // 적에게서 얻는 경험치
-        Gold_Percent,                   // 적에게서 얻는 재화
-
-        EnumTotal
+    static public float EquipmentOptionToValue(EquipmentOption.Option opt)
+    {
+        switch(opt)
+        {
+            case EquipmentOption.Option.Attack:                 // 무기공격력
+                return 1;
+            case EquipmentOption.Option.AttackSpeed:            // 공격속도
+                return 1;
+            case EquipmentOption.Option.Strength:               // 주스탯(힘)
+                return 1;
+            case EquipmentOption.Option.IncreaseAttack:         // 공격력 증가
+                return 1;
+            case EquipmentOption.Option.CriticalChance:         // 치명타확률
+            case EquipmentOption.Option.CriticalScale:          // 치명타피해량
+            case EquipmentOption.Option.Accuracy:               // 적중률
+            case EquipmentOption.Option.IncreaseDamage:         // 피해 증가
+            case EquipmentOption.Option.LifePerHit:             // 타격시 생명력회복
+            case EquipmentOption.Option.LifePerKill:            // 처치시 생명력회복
+            case EquipmentOption.Option.LifePerSecond:          // 초당 생명력 회복량
+            case EquipmentOption.Option.Vitality:               // 생명력
+            case EquipmentOption.Option.MaxHP:                  // 체력
+            case EquipmentOption.Option.MaxMP:                  // 최대 고유자원
+            case EquipmentOption.Option.MPRestore:              // 고유자원 획득량 증가 이름 미정
+            case EquipmentOption.Option.DamageIncreasedNormal:  // 일반대상피해증가
+            case EquipmentOption.Option.DamageIncreasedElite:   // 엘리트대상피해증가
+            case EquipmentOption.Option.DamageIncreasedBoss:    // 보스대상피해증가
+            case EquipmentOption.Option.SkillCoolDown:          // 재사용대기시간감소
+            case EquipmentOption.Option.ExpIncreased:           // 경험치 획득량 증가
+            case EquipmentOption.Option.CleanIncreased:         // 클린 획득량 증가
+            case EquipmentOption.Option.Defense:                // 방어력
+            case EquipmentOption.Option.ReduceDamaged:          // 피해 감소
+            case EquipmentOption.Option.Tenacity:               // 강인함
+            case EquipmentOption.Option.Dodge:                  // 회피율
+            case EquipmentOption.Option.MoveSpeed:              // 이동속도
+                return 1;
+        }
+        return 1;
     }
 
     public enum Buff

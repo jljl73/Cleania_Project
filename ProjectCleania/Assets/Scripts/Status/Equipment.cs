@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Equipment //: IEnumerable, IEnumerator
 {
-    Equipment(float itemCode, int level)
-    {
-        //EquipmentPropertyProcessor.Gene
-
-        //return ();
-    }
-
     public enum Type
     {
         MainWeapon,

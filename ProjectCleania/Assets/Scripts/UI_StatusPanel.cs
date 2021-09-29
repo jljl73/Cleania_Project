@@ -35,7 +35,7 @@ public class UI_StatusPanel : MonoBehaviour
             coreTexts[1].text = $"Strength : {abilityStatus[Ability.Stat.Strength].ToString().PadLeft(5)}";
             coreTexts[2].text = $"Vitality : {abilityStatus[Ability.Stat.Vitality].ToString().PadLeft(5)}";
             coreTexts[3].text = $"Armor : {abilityStatus[Ability.Stat.Defense].ToString().PadLeft(8)}";
-            coreTexts[4].text = $"DPS : {abilityStatus.TotalDamage().ToString().PadLeft(10)}";
+            coreTexts[4].text = $"DPS : {abilityStatus.DPS().ToString().PadLeft(10)}";
 
             if (detailScroll.activeSelf)
             {

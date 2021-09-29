@@ -40,6 +40,9 @@ public class Status : MonoBehaviour
                 case Ability.Stat.MaxMP:
                     return BasicMP;
 
+                case Ability.Stat.AttackSpeed:
+                    return 0;
+
                 default:
                     return 1;
             }
