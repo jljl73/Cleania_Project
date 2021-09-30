@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void OnOffItemPanel()
+    public void OnOffItemPanel()
     {
         if (isActiveItemPanel)
             itemPanel.transform.Translate(new Vector3(2000, 0, 0));

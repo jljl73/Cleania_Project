@@ -109,4 +109,8 @@ public class ItemInventory : MonoBehaviour
         InvenAlarmPanel.SetActive(false);
     }
 
+    public void OnCloseOK()
+    {
+        
+    }
 }
