@@ -69,6 +69,7 @@ public class ChatManager : MonoBehaviour
     {
         messages.Add(new MSG(3, "\n[player]" + inputField.text));
         UpdateChat();
+        inputField.text = "";
     }
 
     public void ShowAcquireClean(int n)

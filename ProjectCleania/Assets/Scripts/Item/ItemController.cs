@@ -91,7 +91,10 @@ public class ItemController : MonoBehaviour
         for(int i = 0; i < results.Count; ++i)
         {
             if (results[i].gameObject.tag == "Slot")
+            {
+                Debug.Log(results[i].gameObject.name);
                 return results[i].gameObject.GetComponent<ItemSlot>().Index;
+            }
             else if (results[i].gameObject.tag == "Panel")
                 return PrevIndex;
             //Debug.Log(results[i].gameObject.tag);
@@ -271,7 +274,7 @@ public class ItemController : MonoBehaviour
 
         if(index - 1000 == (int)_type)
         {
-            Test();
+            Equip();
             return;
         }
 
@@ -330,7 +333,7 @@ public class ItemController : MonoBehaviour
 
     }
 
-    void Test()
+    void Equip()
     {
         GameObject slot = _itemInventory.GetEquipmentSlot(_type);
         DeactiveSlot();
