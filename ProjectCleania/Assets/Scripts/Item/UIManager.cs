@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
+    public SkillPanel skillPanel;
+
     
     private void Start()
     {
@@ -25,6 +27,11 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             OnOffItemPanel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            skillPanel.OnOffPanel();
         }
     }
 

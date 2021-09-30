@@ -72,13 +72,13 @@ public class CharacterSelect : MonoBehaviour
         }
     }
 
-    public void OnButtonBack()
+    public void OnClick_ButtonBack()
     {
-        
+        GameManager.Instance.ChangeScene("TitleScene");
     }
 
-    public void OnButtonStart()
+    public void OnClick_ButtonStart()
     {
-
+        GameManager.Instance.ChangeScene("DirtyForest");
     }
 }
