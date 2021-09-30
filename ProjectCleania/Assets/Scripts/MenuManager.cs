@@ -8,7 +8,6 @@ public class MenuManager : MonoBehaviour
     public GameObject UserSettingUI;
 
     List<GameObject> uiList;
-    int currentIndex = -1;
 
     public bool IsActive
     {
@@ -39,7 +38,6 @@ public class MenuManager : MonoBehaviour
         {
             ui.SetActive(false);
         }
-        currentIndex = -1;
     }
 
     void Update()
@@ -54,16 +52,20 @@ public class MenuManager : MonoBehaviour
 
     public void PopDownUI()
     {
-        if (currentIndex == -1) return;
-        uiList[currentIndex].SetActive(false);
-        currentIndex--;
+        if (UserSettingUI.activeSelf)
+            UserSettingUI.SetActive(false);
+        else if (IngameMenuUI.activeSelf)
+            IngameMenuUI.SetActive(false);
     }
 
-    public void PopUpUI()
+    public void PopUpMenuUI()
     {
-        if (currentIndex == (uiList.Count - 1)) return;
-        currentIndex++;
-        uiList[currentIndex].SetActive(true);
+        IngameMenuUI.SetActive(true);
+    }
+
+    public void PopDownMenuUI()
+    {
+        IngameMenuUI.SetActive(false);
     }
 
     public void PopUpUserSettingUI()
@@ -73,10 +75,5 @@ public class MenuManager : MonoBehaviour
     public void PopDownUserSettingUI()
     {
         UserSettingUI.SetActive(false);
-
-        if (currentIndex == (uiList.Count - 1))
-        {
-            currentIndex--;
-        }
     }
 }
