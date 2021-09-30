@@ -79,4 +79,9 @@ public class MenuManager : MonoBehaviour
             currentIndex--;
         }
     }
+
+    public void OnClickedGameQuit()
+    {
+        GameManager.Instance.QuitGame();
+    }
 }
