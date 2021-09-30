@@ -76,4 +76,9 @@ public class MenuManager : MonoBehaviour
     {
         UserSettingUI.SetActive(false);
     }
+
+    public void OnClickedGameQuit()
+    {
+        GameManager.Instance.QuitGame();
+    }
 }
