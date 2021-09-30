@@ -10,22 +10,20 @@ public class ItemSlot : MonoBehaviour
     {
         get
         {
-            if (isEquipment)
-                return index + 1000;
             return index;
         }
     }
 
-
     public ItemController itemController { get; private set; }
-    public bool isEquipment { get; private set; }
+    //public bool isEquipment { get; private set; }
 
     void Awake()
     {
         IsActive = false;
         index = transform.GetSiblingIndex();
+
         if (transform.parent.gameObject.name == "Equipment")
-            isEquipment = true;
+            index += 1000;
     }
 
     public void Actvivate(ItemController item)
