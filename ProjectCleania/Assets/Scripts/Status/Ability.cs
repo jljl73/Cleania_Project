@@ -137,7 +137,7 @@ public class Ability
         return ret;
     }
 
-    static public float EquipmentOptionToValue(EquipmentOption.Option opt)
+    static public float EquipmentOptionToWeight(EquipmentOption.Option opt)
     {
         switch(opt)
         {
@@ -148,32 +148,47 @@ public class Ability
             case EquipmentOption.Option.Strength:               // 주스탯(힘)
                 return 1;
             case EquipmentOption.Option.IncreaseAttack:         // 공격력 증가
-                return 1;
+                return 0.01f;
             case EquipmentOption.Option.CriticalChance:         // 치명타확률
+                return 0.01f;
             case EquipmentOption.Option.CriticalScale:          // 치명타피해량
+                return 0.01f;
             case EquipmentOption.Option.Accuracy:               // 적중률
+                return 0.01f;
             case EquipmentOption.Option.IncreaseDamage:         // 피해 증가
+                return 0.01f;
             case EquipmentOption.Option.LifePerHit:             // 타격시 생명력회복
             case EquipmentOption.Option.LifePerKill:            // 처치시 생명력회복
             case EquipmentOption.Option.LifePerSecond:          // 초당 생명력 회복량
+                break;
             case EquipmentOption.Option.Vitality:               // 생명력
+                return 1;
             case EquipmentOption.Option.MaxHP:                  // 체력
+                return 0.01f;
             case EquipmentOption.Option.MaxMP:                  // 최대 고유자원
+                return 0.01f;
             case EquipmentOption.Option.MPRestore:              // 고유자원 획득량 증가 이름 미정
             case EquipmentOption.Option.DamageIncreasedNormal:  // 일반대상피해증가
             case EquipmentOption.Option.DamageIncreasedElite:   // 엘리트대상피해증가
             case EquipmentOption.Option.DamageIncreasedBoss:    // 보스대상피해증가
+                break;
             case EquipmentOption.Option.SkillCoolDown:          // 재사용대기시간감소
+                return 0.01f;
             case EquipmentOption.Option.ExpIncreased:           // 경험치 획득량 증가
             case EquipmentOption.Option.CleanIncreased:         // 클린 획득량 증가
+                break;
             case EquipmentOption.Option.Defense:                // 방어력
-            case EquipmentOption.Option.ReduceDamaged:          // 피해 감소
-            case EquipmentOption.Option.Tenacity:               // 강인함
-            case EquipmentOption.Option.Dodge:                  // 회피율
-            case EquipmentOption.Option.MoveSpeed:              // 이동속도
                 return 1;
+            case EquipmentOption.Option.ReduceDamaged:          // 피해 감소
+                return 0.01f;
+            case EquipmentOption.Option.Tenacity:               // 강인함
+                return 0.01f;
+            case EquipmentOption.Option.Dodge:                  // 회피율
+                return 0.01f;
+            case EquipmentOption.Option.MoveSpeed:              // 이동속도
+                return 0.01f;
         }
-        return 1;
+        return float.NaN;
     }
 
     public enum Buff

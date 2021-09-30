@@ -59,12 +59,12 @@ public class EquipmentManager : MonoBehaviour
         for(int i = eo.StaticOptionKeys.Count-1; i >= 0; i--)
         {
             var key = Ability.EquipmentOptionToAbility(eo.StaticOptionKeys[i]);
-            equip[key.Key, key.Value] = eo.StaticOptionValues[i];
+            equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.StaticOptionKeys[i]) * eo.StaticOptionValues[i];
         }
         for (int i = eo.VariableOptionKeys.Count-1; i >= 0; i--)
         {
             var key = Ability.EquipmentOptionToAbility(eo.VariableOptionKeys[i]);
-            equip[key.Key, key.Value] = eo.VariableOptionValues[i];
+            equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.VariableOptionKeys[i]) * eo.VariableOptionValues[i];
         }
         if (type == ItemInventory.EquipmentType.Weapon)
             equip[Ability.Stat.AttackSpeed, Ability.Enhance.Absolute] = 1.3f;
