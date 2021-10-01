@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
-
     public static GameManager Instance
     {
         get
@@ -19,6 +18,11 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+
+    public GameObject SinglePlayer;
+    public EquipmentSlot Equipments;
+
+
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
