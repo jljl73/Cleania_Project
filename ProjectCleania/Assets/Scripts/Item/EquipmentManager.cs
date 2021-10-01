@@ -48,9 +48,11 @@ public class EquipmentManager : MonoBehaviour
 
         if (eo == null)
         {
+            print("unequip");
             GameManager.Instance.SinglePlayer.GetComponent<EquipmentSlot>().Unequip((Equipment.Type)part);
             return;
         }
+        print("equip");
 
         Equipment equip = new Equipment();
 
