@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject SinglePlayer;
-    public EquipmentSlot Equipments;
+    public Status PlayerStatus;
+    public EquipmentSlot PlayerEquipments;
 
 
     void Awake()

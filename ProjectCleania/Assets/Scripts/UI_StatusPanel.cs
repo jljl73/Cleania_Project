@@ -7,19 +7,16 @@ public class UI_StatusPanel : MonoBehaviour
 {
      Status status;
      AbilityStatus abilityStatus;
-    public GameObject Player;
 
-    public Button detailBtn;
-    public Text[] coreTexts;
     GameObject detailScroll;
+    public Text[] coreTexts;
     public Text[] detailTexts;
 
     private void Awake()
     {
-        status = Player.GetComponent<Status>();
-        abilityStatus = Player.GetComponent<AbilityStatus>();
+        abilityStatus = GameManager.Instance.PlayerAbility;
+        status = GameManager.Instance.PlayerStatus;
         detailScroll = transform.Find("Detail Scroll").gameObject;
-        //detailTexts = detailScroll.GetComponentsInChildren<Text>();
     }
 
     // Update is called once per frame
