@@ -224,7 +224,7 @@ public class AbilityStatus : MonoBehaviour
         return this[stat];
     }
 
-    public string ToString(Ability.Stat stat)
+    public string StatToString(Ability.Stat stat)
     {
         switch(stat)
         {

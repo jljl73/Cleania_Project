@@ -40,23 +40,23 @@ public class UI_StatusPanel : MonoBehaviour
 
             if (detailScroll.activeSelf)
             {
-                detailTexts[0].text = $"{abilityStatus.ToString(Ability.Stat.Strength)}";
-                detailTexts[1].text = $"{abilityStatus.ToString(Ability.Stat.Attack)}";
-                detailTexts[2].text = $"{abilityStatus.ToString(Ability.Stat.CriticalChance)}";
-                detailTexts[3].text = $"{abilityStatus.ToString(Ability.Stat.CriticalScale)}";
-                detailTexts[4].text = $"{abilityStatus.ToString(Ability.Stat.AttackSpeed)}";
-                detailTexts[5].text = $"{abilityStatus.ToString(Ability.Stat.Accuracy)}";
-                detailTexts[6].text = $"{abilityStatus.ToString(Ability.Stat.IncreaseDamage)}";
+                detailTexts[0].text = $"{abilityStatus.StatToString(Ability.Stat.Strength)}";
+                detailTexts[1].text = $"{abilityStatus.StatToString(Ability.Stat.Attack)}";
+                detailTexts[2].text = $"{abilityStatus.StatToString(Ability.Stat.CriticalChance)}";
+                detailTexts[3].text = $"{abilityStatus.StatToString(Ability.Stat.CriticalScale)}";
+                detailTexts[4].text = $"{abilityStatus.StatToString(Ability.Stat.AttackSpeed)}";
+                detailTexts[5].text = $"{abilityStatus.StatToString(Ability.Stat.Accuracy)}";
+                detailTexts[6].text = $"{abilityStatus.StatToString(Ability.Stat.IncreaseDamage)}";
 
-                detailTexts[7].text = $"{abilityStatus.ToString(Ability.Stat.Vitality)}";
-                detailTexts[8].text = $"{abilityStatus.ToString(Ability.Stat.MaxMP)}";
-                detailTexts[9].text = $"{abilityStatus.ToString(Ability.Stat.Dodge)}";
-                detailTexts[10].text = $"{abilityStatus.ToString(Ability.Stat.Tenacity)}";
-                detailTexts[11].text = $"{abilityStatus.ToString(Ability.Stat.Defense)}";
-                detailTexts[12].text = $"{abilityStatus.ToString(Ability.Stat.ReduceDamage)}";
-                detailTexts[13].text = $"{abilityStatus.ToString(Ability.Stat.SkillCooldown)}";
+                detailTexts[7].text = $"{abilityStatus.StatToString(Ability.Stat.Vitality)}";
+                detailTexts[8].text = $"{abilityStatus.StatToString(Ability.Stat.MaxMP)}";
+                detailTexts[9].text = $"{abilityStatus.StatToString(Ability.Stat.Dodge)}";
+                detailTexts[10].text = $"{abilityStatus.StatToString(Ability.Stat.Tenacity)}";
+                detailTexts[11].text = $"{abilityStatus.StatToString(Ability.Stat.Defense)}";
+                detailTexts[12].text = $"{abilityStatus.StatToString(Ability.Stat.ReduceDamage)}";
+                detailTexts[13].text = $"{abilityStatus.StatToString(Ability.Stat.SkillCooldown)}";
 
-                detailTexts[14].text = $"{abilityStatus.ToString(Ability.Stat.MoveSpeed)}";
+                detailTexts[14].text = $"{abilityStatus.StatToString(Ability.Stat.MoveSpeed)}";
 
                 //for (int i = detailTexts.Length - 1; i >= 0; i--)
                 //{
