@@ -16,7 +16,7 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickedExit()
     {
-        Application.Quit();
+        GameManager.Instance.QuitGame();
     }
     
 }

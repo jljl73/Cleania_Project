@@ -1,68 +1,148 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+// UserSetting 창 괸리
+// 1. 왼쪽 버튼 클릭에 따라 오른쪽 창이 바뀌는 기능
+// 2. 유저 셋팅 상태 저장 및 불러오기
 public class UserSettingUIManager : MonoBehaviour
 {
-	public GameObject IngameMenuUI;
-	public GameObject UserSettingUI;
+    // -------------------------------------------------------------------------//
+    // 1. 왼쪽 버튼 클릭에 따라 오른쪽 창이 바뀌는 기능
+    // -------------------------------------------------------------------------//
+    public List<GameObject> LeftButtons;
+    public List<GameObject> RightContents;
 
-	List<GameObject> uiList;
-	int currentIndex = -1;
+    private Dictionary<GameObject, GameObject> left2Right;
 
-	public bool IsActive
-	{
-		get
-		{
-			foreach (GameObject ui in uiList)
-			{
-				if (ui.activeSelf) return true;
-			}
-			return false;
-		}
-	}
+    // -------------------------------------------------------------------------//
+    // 2. 유저 셋팅 상태 저장 및 불러오기
+    // -------------------------------------------------------------------------//
+    //private bool isFullScreenMode;
+    //public bool IsFullScreenMode { get { return isFullScreenMode; }}
+    private float videoBrightness;
+    public float VideoBrightness { get { return videoBrightness; } }
 
-	void Awake()
-	{
-		DontDestroyOnLoad(this.gameObject);
-	}
+    public Dropdown DropdownScreenMode;
+    public Dropdown DropdownScreenResolution;
+    public Slider SliderVideoBrightness;
+    // public Image VideoBrightnessFillImage;
 
-	void Start()
-	{
-		// UI 생성 후 집어 넣기
-		uiList = new List<GameObject>();
-		uiList.Add(IngameMenuUI);
-		uiList.Add(UserSettingUI);
+    Resolution[] screenResolutions;
 
-		// 초기 상태 active off
-		foreach (GameObject ui in uiList)
-		{
-			ui.SetActive(false);
-		}
-		currentIndex = -1;
-	}
+    private void Awake()
+    {
+        left2Right = new Dictionary<GameObject, GameObject>();
 
-	void Update()
-	{
-		// if (!GameManager.IsIngame) return;
+        for (int i = 0; i < LeftButtons.Count; i++)
+        {
+            left2Right.Add(LeftButtons[i], RightContents[i]);
+        }
+        LoadData();
 
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			PopDownUI();
-		}
-	}
+        DontDestroyOnLoad(this.gameObject);
+    }
 
-	public void PopDownUI()
-	{
-		if (currentIndex == -1) return;
-		uiList[currentIndex].SetActive(false);
-		currentIndex--;
-	}
+    private void Start()
+    {
+        // 기존 리스트 삭제
+        DropdownScreenResolution.ClearOptions();
+        // 가능한 해상도 받아오기
+        screenResolutions = Screen.resolutions;
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < screenResolutions.Length; i++)
+        {
+            options.Add(screenResolutions[i].width.ToString() + " x " + screenResolutions[i].height.ToString());
+            if (screenResolutions[i].width.ToString() == Screen.currentResolution.width.ToString() &&
+                screenResolutions[i].height.ToString() == Screen.currentResolution.height.ToString())
+            {
+                currentResolutionIndex = i;
+            }
+        }
+        // 리스트에 추가
+        DropdownScreenResolution.AddOptions(options);
+        DropdownScreenResolution.value = currentResolutionIndex;
+        DropdownScreenResolution.RefreshShownValue();
+    }
 
-	public void PopUpUI()
-	{
-		if (currentIndex == (uiList.Count - 1)) return;
-		currentIndex++;
-		uiList[currentIndex].SetActive(true);
-	}
+    private void OnEnable()
+    {
+        // 첫번째 칸을 기본 세팅으로 설정
+        LeftButtons[0].GetComponent<Button>().Select();
+        ChangeRightContentReferTo(LeftButtons[0]);
+    }
+
+    void Update()
+    {
+
+    }
+
+    public void LoadData()
+    {
+        // 스크린 모드 업로드
+        if (PlayerPrefs.GetInt("ScreenMode") == 0)
+        {
+            DropdownScreenMode.value = 0;
+            //isFullScreenMode = true;
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            DropdownScreenMode.value = 1;
+            //isFullScreenMode = false;
+            Screen.fullScreen = false;
+        }
+        DropdownScreenMode.RefreshShownValue();
+
+        // 비디오 밝기 업로드
+        //     데이터 업데이트
+        videoBrightness = PlayerPrefs.GetFloat("VideoBrightness");
+        //     이미지 업데이트
+        // VideoBrightnessFillImage.fillAmount = videoBrightness;
+        SliderVideoBrightness.value = videoBrightness;
+    }
+
+    public void ChangeRightContentReferTo(GameObject buttonObj)
+    {
+        for (int i = 0; i < RightContents.Count; i++)
+        {
+            RightContents[i].SetActive(false);
+        }
+        left2Right[buttonObj].SetActive(true);
+    }
+
+    public void ChangeScreenMode(int value)
+    {
+        PlayerPrefs.SetInt("ScreenMode", value);
+
+        if (DropdownScreenMode.value == 0)
+        {
+            //isFullScreenMode = true;
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            //isFullScreenMode = false;
+            Screen.fullScreen = false;
+        }
+    }
+
+    public void ChangeScreenResolution(int index)
+    {
+        Resolution resolution = screenResolutions[index];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void ChangeVideoBrightness(float value)
+    {
+        videoBrightness = value;
+
+        PlayerPrefs.SetFloat("VideoBrightness", videoBrightness);
+        SliderVideoBrightness.value = videoBrightness;
+        //VideoBrightnessFillImage.fillAmount = videoBrightness;
+
+    }
 }
