@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject SinglePlayer;
+    public AbilityStatus PlayerAbility;
     public Status PlayerStatus;
     public EquipmentSlot PlayerEquipments;
 
