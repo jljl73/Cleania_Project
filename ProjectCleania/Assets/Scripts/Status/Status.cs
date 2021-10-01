@@ -25,6 +25,8 @@ public class Status : MonoBehaviour
                     return CriticalChance / 100;
                 case Ability.Stat.CriticalScale:
                     return CriticalScale / 100;
+                case Ability.Stat.AttackSpeed:
+                    return AttackSpeed;
                 case Ability.Stat.MoveSpeed:
                     return MoveSpeed;
 
@@ -40,8 +42,6 @@ public class Status : MonoBehaviour
                 case Ability.Stat.MaxMP:
                     return BasicMP;
 
-                case Ability.Stat.AttackSpeed:
-                    return 0;
 
                 default:
                     return 1;
@@ -59,11 +59,12 @@ public class Status : MonoBehaviour
     public float Def = 0;
     public float CriticalChance = 10;
     public float CriticalScale = 200;
+    public float AttackSpeed = 0.0f;
     public float MoveSpeed = 1.0f;
 
     public float Accuracy = 100;
     public float Dodge = 10;
-    public float Tenacity = 100;
+    public float Tenacity = 0;
 
     public float BasicHP = 0;
     public float BasicMP = 100;

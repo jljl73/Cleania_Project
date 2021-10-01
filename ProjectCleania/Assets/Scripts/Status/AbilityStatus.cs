@@ -224,4 +224,35 @@ public class AbilityStatus : MonoBehaviour
         return this[stat];
     }
 
+    public string StatToString(Ability.Stat stat)
+    {
+        switch(stat)
+        {
+            case Ability.Stat.Attack:
+            case Ability.Stat.AttackSpeed:
+            case Ability.Stat.Defense:
+            case Ability.Stat.MaxHP:
+            case Ability.Stat.MaxMP:
+            case Ability.Stat.Strength:
+            case Ability.Stat.Vitality:
+                return $"{this[stat]}";
+
+            case Ability.Stat.Accuracy:
+            case Ability.Stat.CriticalChance:
+            case Ability.Stat.CriticalScale:
+            case Ability.Stat.Dodge:
+            case Ability.Stat.MoveSpeed:
+            case Ability.Stat.Tenacity:
+                return $"{this[stat] * 100} %";
+
+            case Ability.Stat.ReduceDamage:
+            case Ability.Stat.IncreaseDamage:
+            case Ability.Stat.SkillCooldown:
+                return $"{(1.0f - this[stat]) * 100} %";
+
+            default:
+                return "error";
+        }
+    }
+
 }

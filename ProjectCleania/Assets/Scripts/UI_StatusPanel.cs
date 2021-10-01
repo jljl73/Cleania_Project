@@ -7,19 +7,16 @@ public class UI_StatusPanel : MonoBehaviour
 {
      Status status;
      AbilityStatus abilityStatus;
-    public GameObject Player;
 
-    public Button detailBtn;
-    public Text[] coreTexts;
     GameObject detailScroll;
+    public Text[] coreTexts;
     public Text[] detailTexts;
 
     private void Awake()
     {
-        status = Player.GetComponent<Status>();
-        abilityStatus = Player.GetComponent<AbilityStatus>();
+        abilityStatus = GameManager.Instance.PlayerAbility;
+        status = GameManager.Instance.PlayerStatus;
         detailScroll = transform.Find("Detail Scroll").gameObject;
-        //detailTexts = detailScroll.GetComponentsInChildren<Text>();
     }
 
     // Update is called once per frame
@@ -32,18 +29,37 @@ public class UI_StatusPanel : MonoBehaviour
 
         if (abilityStatus)
         {
-            coreTexts[1].text = $"Strength : {abilityStatus[Ability.Stat.Strength].ToString().PadLeft(5)}";
-            coreTexts[2].text = $"Vitality : {abilityStatus[Ability.Stat.Vitality].ToString().PadLeft(5)}";
-            coreTexts[3].text = $"Armor : {abilityStatus[Ability.Stat.Defense].ToString().PadLeft(8)}";
-            coreTexts[4].text = $"DPS : {abilityStatus.DPS().ToString().PadLeft(10)}";
+            coreTexts[0].text = $"{status.level}";
+            coreTexts[1].text = $"{abilityStatus[Ability.Stat.Strength]}";
+            coreTexts[2].text = $"{abilityStatus.DPS()}";
+            coreTexts[3].text = $"{abilityStatus[Ability.Stat.Vitality]}";
+            coreTexts[4].text = $"{abilityStatus[Ability.Stat.Defense]}";
 
             if (detailScroll.activeSelf)
             {
-                for (int i = detailTexts.Length - 1; i >= 0; i--)
-                {
-                    detailTexts[i].text = $"{abilityStatus[(Ability.Stat)(i/2)].ToString()}";
-                    //detailTexts[i].text = $"{((Ability.Stat)(i/2+1)).ToString()}";
-                }
+                detailTexts[0].text = abilityStatus.StatToString(Ability.Stat.Strength);
+                detailTexts[1].text = abilityStatus.StatToString(Ability.Stat.Attack);
+                detailTexts[2].text = abilityStatus.StatToString(Ability.Stat.CriticalChance);
+                detailTexts[3].text = abilityStatus.StatToString(Ability.Stat.CriticalScale);
+                detailTexts[4].text = abilityStatus.StatToString(Ability.Stat.AttackSpeed);
+                detailTexts[5].text = abilityStatus.StatToString(Ability.Stat.Accuracy);
+                detailTexts[6].text = abilityStatus.StatToString(Ability.Stat.IncreaseDamage);
+
+                detailTexts[7].text = abilityStatus.StatToString(Ability.Stat.Vitality);
+                detailTexts[8].text = abilityStatus.StatToString(Ability.Stat.MaxMP);
+                detailTexts[9].text = abilityStatus.StatToString(Ability.Stat.Dodge);
+                detailTexts[10].text = abilityStatus.StatToString(Ability.Stat.Tenacity);
+                detailTexts[11].text = abilityStatus.StatToString(Ability.Stat.Defense);
+                detailTexts[12].text = abilityStatus.StatToString(Ability.Stat.ReduceDamage);
+                detailTexts[13].text = abilityStatus.StatToString(Ability.Stat.SkillCooldown);
+
+                detailTexts[14].text = abilityStatus.StatToString(Ability.Stat.MoveSpeed);
+
+                //for (int i = detailTexts.Length - 1; i >= 0; i--)
+                //{
+                    
+                //    detailTexts[i].text = $"{abilityStatus[(Ability.Stat)i].ToString()}";
+                //}
             }
         }
 
