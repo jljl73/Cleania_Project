@@ -12,7 +12,7 @@ public class UI_StatusPanel : MonoBehaviour
     public Text[] coreTexts;
     public Text[] detailTexts;
 
-    private void Awake()
+    private void Start()
     {
         abilityStatus = GameManager.Instance.PlayerAbility;
         status = GameManager.Instance.PlayerStatus;

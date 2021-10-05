@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public AbilityStatus PlayerAbility;
     public Status PlayerStatus;
     public EquipmentSlot PlayerEquipments;
+    public BuffManager PlayerBuffs;
 
 
     void Awake()
