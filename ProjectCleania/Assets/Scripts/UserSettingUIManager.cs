@@ -41,8 +41,6 @@ public class UserSettingUIManager : MonoBehaviour
             left2Right.Add(LeftButtons[i], RightContents[i]);
         }
         LoadData();
-
-        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
@@ -73,11 +71,6 @@ public class UserSettingUIManager : MonoBehaviour
         // 첫번째 칸을 기본 세팅으로 설정
         LeftButtons[0].GetComponent<Button>().Select();
         ChangeRightContentReferTo(LeftButtons[0]);
-    }
-
-    void Update()
-    {
-
     }
 
     public void LoadData()
@@ -144,5 +137,9 @@ public class UserSettingUIManager : MonoBehaviour
         SliderVideoBrightness.value = videoBrightness;
         //VideoBrightnessFillImage.fillAmount = videoBrightness;
 
+    }
+
+    public void OnClickExit()
+    {
     }
 }

@@ -11,7 +11,7 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickedOption()
     {
-
+        GameManager.Instance.PopUpUserSetting();
     }
 
     public void OnClickedExit()

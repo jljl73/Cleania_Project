@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject IngameMenuUI;
-    public GameObject UserSettingUI;
+    GameObject IngameMenuUIObj;
+    GameObject UserSettingUIObj;
 
     List<GameObject> uiList;
 
@@ -21,17 +21,18 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        FindMenuUserSetting();
     }
 
     void Start()
     {
         // UI 생성 후 집어 넣기
         uiList = new List<GameObject>();
-        uiList.Add(IngameMenuUI);
-        uiList.Add(UserSettingUI);
+        uiList.Add(IngameMenuUIObj);
+        uiList.Add(UserSettingUIObj);
 
         // 초기 상태 active off
         foreach (GameObject ui in uiList)
@@ -44,37 +45,63 @@ public class MenuManager : MonoBehaviour
     {
         // if (!GameManager.IsIngame) return;
 
+        if (IngameMenuUIObj == null || UserSettingUIObj == null)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if ((!UserSettingUIObj.activeSelf) && (!IngameMenuUIObj.activeSelf))
+            {
+                PopUpMenuUI();
+                return;
+            }
+
             PopDownUI();
         }
     }
 
+    public void FindMenuUserSetting()
+    {
+        IngameMenuUI ingameMenuUI = FindObjectOfType<IngameMenuUI>();
+        if (ingameMenuUI != null)
+            IngameMenuUIObj = ingameMenuUI.gameObject;
+        else
+            IngameMenuUIObj = null;
+
+        UserSettingUIManager userSettingUIManager = FindObjectOfType<UserSettingUIManager>();
+        if (userSettingUIManager != null)
+            UserSettingUIObj = userSettingUIManager.gameObject;
+        else
+            UserSettingUIObj = null;
+    }
+
     public void PopDownUI()
     {
-        if (UserSettingUI.activeSelf)
-            UserSettingUI.SetActive(false);
-        else if (IngameMenuUI.activeSelf)
-            IngameMenuUI.SetActive(false);
+        if (UserSettingUIObj.activeSelf)
+            PopDownUserSettingUI();
+        else if (IngameMenuUIObj.activeSelf)
+            PopDownMenuUI();
     }
 
     public void PopUpMenuUI()
     {
-        IngameMenuUI.SetActive(true);
+        IngameMenuUIObj.SetActive(true);
+        GameManager.Instance.SetTimeScale(0);
     }
 
     public void PopDownMenuUI()
     {
-        IngameMenuUI.SetActive(false);
+        IngameMenuUIObj.SetActive(false);
+        GameManager.Instance.SetTimeScale(1);
     }
 
     public void PopUpUserSettingUI()
     {
-        UserSettingUI.SetActive(true);
+        UserSettingUIObj.SetActive(true);
     }
     public void PopDownUserSettingUI()
     {
-        UserSettingUI.SetActive(false);
+        UserSettingUIObj.SetActive(false);
     }
 
     public void OnClickedGameQuit()
