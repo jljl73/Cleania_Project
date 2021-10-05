@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
-    MenuManager menuManager;
+    public MenuManager menuManager = null;
 
     public static GameManager Instance
     {
@@ -26,25 +26,9 @@ public class GameManager : MonoBehaviour
         menuManager = FindObjectOfType<MenuManager>();
     }
 
-    public void PopUpMenu()
-    {
-        menuManager.PopUpMenuUI();
-    }
-
-    public void PopUpUserSetting()
-    {
-        menuManager.PopUpUserSettingUI();
-    }
-
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-        OnSceneLoad();
-    }
-
-    void OnSceneLoad()
-    {
-        menuManager.FindMenuUserSetting();
     }
 
     public void QuitGame()

@@ -41,6 +41,10 @@ public class UserSettingUIManager : MonoBehaviour
             left2Right.Add(LeftButtons[i], RightContents[i]);
         }
         LoadData();
+        if (GameManager.Instance.menuManager != null)
+            GameManager.Instance.menuManager.SetNewUserSetting(this.gameObject);
+
+        gameObject.SetActive(false);
     }
 
     private void Start()
@@ -139,7 +143,9 @@ public class UserSettingUIManager : MonoBehaviour
 
     }
 
-    public void OnClickExit()
+    public void OnClickCloseUI()
     {
+        if (GameManager.Instance.menuManager != null)
+            GameManager.Instance.menuManager.PopDownUserSettingUI();
     }
 }

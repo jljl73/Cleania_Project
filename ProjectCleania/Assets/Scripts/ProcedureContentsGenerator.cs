@@ -19,17 +19,13 @@ public class ProcedureContentsGenerator : MonoBehaviour
 
     void Start()
     {
-        print("1");
         foreach (GameObject Categories in CategoriesList)
         {
             Categories.SetActive(false);
         }
-        print("2");
         CategoriesList[(int)CurrentCategoriesCount].SetActive(true);
-        print("3");
         enemySpawners = new List<EnemySpawner>();
         enemySpawners.AddRange(CategoriesList[(int)CurrentCategoriesCount].GetComponentsInChildren<EnemySpawner>());
-        print("enemySpawners.count: " + enemySpawners.Count);
         SetWeightPerCategories();
         SetRareMosterCount();
         SpawnStart();

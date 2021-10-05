@@ -668,7 +668,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67038053}
-  m_LocalRotation: {x: 0.1440484, y: 0.8458263, z: -0.285226, w: 0.4271698}
+  m_LocalRotation: {x: 0.1440484, y: 0.8458263, z: -0.28522596, w: 0.4271699}
   m_LocalPosition: {x: 17.738869, y: 15.302, z: 334.7331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4461,8 +4461,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 348214323}
     m_Modifications:
     - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 510156740}
+    - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickMenuButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MinimapUIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2121902455770834672, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4618,6 +4630,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+--- !u!1 &510156739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2488154266723233772, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+  m_PrefabInstance: {fileID: 510156738}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &510156740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510156739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b447303184a7c241aeb2c2e79cb8589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &521032610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9345,7 +9374,11 @@ PrefabInstance:
       objectReference: {fileID: 802180486}
     - target: {fileID: 203571396512101377, guid: e78e75ea3384df94ab4f45da4b068785, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: OnClickCloseUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 203571396512101377, guid: e78e75ea3384df94ab4f45da4b068785, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UserSettingUIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 203571396695451254, guid: e78e75ea3384df94ab4f45da4b068785, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9381,11 +9414,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e78e75ea3384df94ab4f45da4b068785, type: 3}
---- !u!1 &802180486 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 203571395875452717, guid: e78e75ea3384df94ab4f45da4b068785, type: 3}
+--- !u!114 &802180486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 203571395875452719, guid: e78e75ea3384df94ab4f45da4b068785, type: 3}
   m_PrefabInstance: {fileID: 802180485}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409378d66fd2da241bf38294598462fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &822214785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10336,7 +10375,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942752041}
-  m_LocalRotation: {x: 0.1440484, y: 0.8458263, z: -0.285226, w: 0.4271698}
+  m_LocalRotation: {x: 0.1440484, y: 0.8458263, z: -0.28522596, w: 0.4271699}
   m_LocalPosition: {x: 17.738869, y: 15.302, z: 334.7331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -12478,6 +12517,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1240550199}
     m_Modifications:
+    - target: {fileID: 3169892093833427916, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1176614034}
+    - target: {fileID: 3169892093833427916, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickExit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169892093833427916, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: IngameMenuUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3169892095302870482, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
       propertyPath: m_Name
       value: InGameMenuUI
@@ -12570,8 +12621,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3169892095835599466, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1176614034}
+    - target: {fileID: 3169892095835599466, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickCloseUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169892095835599466, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: IngameMenuUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+--- !u!114 &1176614034 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1239506824194102848, guid: 8bf89e4b4ce02724db2e3dd7819281ec, type: 3}
+  m_PrefabInstance: {fileID: 1176614033}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d7017d92df1504191327cf196e3415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1182280404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6719147147835247590, guid: 497f38ccb8912e84387662a6a476ad9d, type: 3}
