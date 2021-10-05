@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    public StateMachine playerStateMachine;
+    public StateMachine stateMachine;
     public Animator animator;
 
     public bool isAttacking;
