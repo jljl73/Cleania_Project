@@ -34,6 +34,10 @@ public class SkillManager : MonoBehaviour
     void Update()
     {
         //skill = InputHandler();
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SkillTry(0);
+        else
+            skill = null;
 
         if (skill)
             skill.AnimationActivate();

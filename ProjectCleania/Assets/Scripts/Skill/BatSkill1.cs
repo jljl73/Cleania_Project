@@ -22,6 +22,8 @@ public class BatSkill1 : Skill
         stateMachine.Transition(StateMachine.enumState.Attacking);
 
         col.enabled = true;
+
+        Invoke("AnimationDeactivate", 1.0f);
     }
 
     override public void Activate()
