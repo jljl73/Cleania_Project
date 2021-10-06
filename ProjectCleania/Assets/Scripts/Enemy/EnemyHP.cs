@@ -6,8 +6,6 @@ public class EnemyHP : MonoBehaviour
 {
     public Animator animator;
     public EnemyAnimationEvent animationEvent;
-    public Skill skill;
-
 
     public int HP = 100;
     // Start is called before the first frame update
@@ -25,7 +23,6 @@ public class EnemyHP : MonoBehaviour
             if (HP <= 30)
             {
                 animator.SetTrigger("Cast");
-                animationEvent.SetSkill(skill);
             }
         }
     }

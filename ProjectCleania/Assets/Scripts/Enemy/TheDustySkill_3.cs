@@ -15,7 +15,6 @@ public class TheDustySkill_3 : Skill
 
     public override void Activate()
     {
-        Debug.Log("Skill is NULL");
         for (int i = nDivision - 1; i >= 0; --i)
         {
             GameObject newObject = Instantiate(theDusty, transform.position, transform.rotation);

@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class EnemyAnimationEvent : MonoBehaviour
 {
-    Skill skill = null;
-
-    public void SetSkill(Skill skill)
+    public EnemySkillManager skillManager;
+    
+    public void ActivateSkill(int type)
     {
-        this.skill = skill;
+        skillManager.ActivateSkill(type);
     }
 
-    public void ActivateSkill()
+    public void AnimationDeactivate(int type)
     {
-        if (skill != null) skill.Activate();
-        Debug.Log(skill.gameObject.name);
-    }
-
-    public void AnimationDeactivate()
-    {
-        if (skill != null) skill.AnimationDeactivate();
+        skillManager.AnimationDeactivate(type);
     }
 }
