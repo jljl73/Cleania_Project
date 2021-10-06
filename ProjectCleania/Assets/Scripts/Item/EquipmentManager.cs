@@ -41,6 +41,38 @@ public class EquipmentManager : MonoBehaviour
         }
         return sum;
     }
+
+    void EquipmentSlotChange(ItemInventory.EquipmentType type, EquipmentOption eo = null)
+    {
+        int part = (int)type - 1;
+
+        if (eo == null)
+        {
+            print("unequip");
+            GameManager.Instance.SinglePlayer.GetComponent<EquipmentSlot>().Unequip((Equipment.Type)part);
+            return;
+        }
+        print("equip");
+
+        Equipment equip = new Equipment();
+
+        equip.EquipmentType = (Equipment.Type)part;
+    
+        for(int i = eo.StaticOptionKeys.Count-1; i >= 0; i--)
+        {
+            var key = Ability.EquipmentOptionToAbility(eo.StaticOptionKeys[i]);
+            equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.StaticOptionKeys[i]) * eo.StaticOptionValues[i];
+        }
+        for (int i = eo.VariableOptionKeys.Count-1; i >= 0; i--)
+        {
+            var key = Ability.EquipmentOptionToAbility(eo.VariableOptionKeys[i]);
+            equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.VariableOptionKeys[i]) * eo.VariableOptionValues[i];
+        }
+        if (type == ItemInventory.EquipmentType.Weapon)
+            equip[Ability.Stat.AttackSpeed, Ability.Enhance.Absolute] = 1.3f;
+
+        GameManager.Instance.SinglePlayer.GetComponent<EquipmentSlot>().Equip(equip);
+    }
     // << End
 
 
@@ -48,10 +80,12 @@ public class EquipmentManager : MonoBehaviour
     public void WearEquipment(ItemInventory.EquipmentType type, EquipmentOption eo)
     {
         equipmentOptions[((int)type) - 1] = eo;
+        EquipmentSlotChange(type, eo);
     }
 
     public void TakeOffEquipment(ItemInventory.EquipmentType type)
     {
         equipmentOptions[((int)type) - 1] = null;
+        EquipmentSlotChange(type);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerSkillManager : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class PlayerSkillManager : MonoBehaviour
 
     Skill InputHandler()
     {
-        
+
         // 키보드
         if (Input.GetKeyDown(KeyCode.Alpha1) && isSkillAvailable(0))
         {
@@ -68,18 +69,30 @@ public class PlayerSkillManager : MonoBehaviour
         }
 
         // 마우스
-        if(Input.GetKeyDown(KeyCode.C) && isSkillAvailable(4))
+        if (Input.GetKeyDown(KeyCode.C) && isSkillAvailable(4))
         {
             initializeSkillSetting(4);
             playerAbilityStatus.ConsumeMP(skills[4].ConsumMP);
             return skills[4];
         }
-        if (Input.GetMouseButtonDown(1) && (isSkillAvailable(5) || 
+        if (Input.GetMouseButtonDown(1) && (isSkillAvailable(5) ||
             playerStateMachine.State == StateMachine.enumState.MoveAttack))
         {
-            initializeSkillSetting(5);
-            playerAbilityStatus.ConsumeMP(skills[5].ConsumMP);
-            return skills[5];
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                initializeSkillSetting(5);
+                playerAbilityStatus.ConsumeMP(skills[5].ConsumMP);
+                return skills[5];
+            }
+#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+            if (!EventSystem.current.IsPointerOverGameObject(0))
+            {
+                initializeSkillSetting(5);
+                playerAbilityStatus.ConsumeMP(skills[5].ConsumMP);
+                return skills[5];
+            }
+#endif
         }
 
         return null;
@@ -115,9 +128,9 @@ public class PlayerSkillManager : MonoBehaviour
                 CoolTimePassedRatio[i] = 1f;
             else
                 CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime;
-            
+
             // 업데이트가 됬으면 스킬 가능 설정
-            if (CoolTimePassedRatio[i] >= 1f) 
+            if (CoolTimePassedRatio[i] >= 1f)
             {
                 CoolTimePassedRatio[i] = 1f;
                 skillAvailable[i] = true;

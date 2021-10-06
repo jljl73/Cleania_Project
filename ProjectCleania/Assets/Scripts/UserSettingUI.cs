@@ -41,6 +41,7 @@ public class UserSettingUI : MonoBehaviour
             left2Right.Add(LeftButtons[i], RightContents[i]);
         }
         LoadData();
+
     }
 
     private void Start()
