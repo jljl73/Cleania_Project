@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
+    public MenuManager menuManager = null;
     public static GameManager Instance
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 GameObject newGameObject = new GameObject("GameManager");
                 _instance = newGameObject.AddComponent<GameManager>();
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        menuManager = FindObjectOfType<MenuManager>();
     }
 
     public void ChangeScene(string sceneName)
@@ -39,6 +41,11 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void SetTimeScale(int value)
+    {
+        Time.timeScale = value;
     }
 
 }
