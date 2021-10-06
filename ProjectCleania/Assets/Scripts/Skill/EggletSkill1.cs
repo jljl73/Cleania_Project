@@ -7,10 +7,12 @@ public class EggletSkill1 : Skill
     public int damage = 10;
 
     Collider col;
+    AbilityStatus myAbility;
 
     private void Start()
     {
         col = GetComponent<Collider>();
+        myAbility = GetComponentInParent<AbilityStatus>();
     }
 
     public override void AnimationActivate()
@@ -36,11 +38,7 @@ public class EggletSkill1 : Skill
         {
             Debug.Log("egglet skill1 Hit");
 
-            //if (Random.Range(0.0f, 1.0f) < 0.3f)
-            {
-                //other.GetComponent<BuffManager>().Blood(bloodTime);
-            }
-
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
         }
     }
 

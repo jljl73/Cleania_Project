@@ -9,10 +9,12 @@ public class BatSkill1 : Skill
     public float bloodTime = 5.0f;
 
     Collider col;
+    AbilityStatus myAbility;
 
     private void Start()
     {
         col = GetComponent<Collider>();
+        myAbility = GetComponentInParent<AbilityStatus>();
     }
 
     public override void AnimationActivate()
@@ -38,6 +40,7 @@ public class BatSkill1 : Skill
         {
             Debug.Log("bat skill1 Hit");
 
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
             //if (Random.Range(0.0f, 1.0f) < 0.3f)
             {
                 //other.GetComponent<BuffManager>().Blood(bloodTime);
