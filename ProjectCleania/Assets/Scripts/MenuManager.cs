@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject IngameMenuUI;
-    public GameObject UserSettingUI;
+    GameObject ingameMenuUIObj;
+    GameObject userSettingUIObj;
 
-    List<GameObject> uiList;
+    List<GameObject> uiList = null;
 
     public bool IsActive
     {
@@ -21,60 +21,124 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+       //  FindMenuUserSetting();
     }
 
     void Start()
     {
         // UI 생성 후 집어 넣기
-        uiList = new List<GameObject>();
-        uiList.Add(IngameMenuUI);
-        uiList.Add(UserSettingUI);
-
-        // 초기 상태 active off
-        foreach (GameObject ui in uiList)
-        {
-            ui.SetActive(false);
-        }
+        // ClearUIList();
+        // UpdateUIList();
     }
 
     void Update()
     {
         // if (!GameManager.IsIngame) return;
 
+        if (ingameMenuUIObj == null || userSettingUIObj == null)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if ((!userSettingUIObj.activeSelf) && (!ingameMenuUIObj.activeSelf))
+            {
+                PopUpMenuUI();
+                return;
+            }
+
             PopDownUI();
         }
     }
 
+    public void SetNewUserSetting(GameObject userSettingUIObj)
+    {
+        if (uiList == null)
+            uiList = new List<GameObject>();
+        else if (uiList.Count == 2)
+        {
+            uiList.Clear();
+            uiList = new List<GameObject>();
+        }
+        
+
+
+        this.userSettingUIObj = userSettingUIObj;
+
+        uiList.Add(userSettingUIObj);
+        userSettingUIObj.SetActive(false);
+    }
+
+    public void SetNewMenuUI(GameObject menuUIObj)
+    {
+        if (uiList.Count == 2)
+        {
+            uiList.Clear();
+            uiList = new List<GameObject>();
+        }
+
+        this.ingameMenuUIObj = menuUIObj;
+
+        uiList.Add(ingameMenuUIObj);
+        ingameMenuUIObj.SetActive(false);
+    }
+
+    void ClearUIList()
+    {
+        if (uiList == null)
+            uiList = new List<GameObject>();
+        else
+        {
+            print("haha");
+            uiList.Clear();
+            uiList = new List<GameObject>();
+        }
+    }
+
+    //public void FindMenuUserSetting()
+    //{
+    //    IngameMenuUI ingameMenuUI = FindObjectOfType<IngameMenuUI>();
+    //    if (ingameMenuUI != null)
+    //        ingameMenuUIObj = ingameMenuUI.gameObject;
+    //    else
+    //        ingameMenuUIObj = null;
+
+    //    UserSettingUIManager userSettingUIManager = FindObjectOfType<UserSettingUIManager>();
+    //    if (userSettingUIManager != null)
+    //        userSettingUIObj = userSettingUIManager.gameObject;
+    //    else
+    //        userSettingUIObj = null;
+    //}
+
     public void PopDownUI()
     {
-        if (UserSettingUI.activeSelf)
-            UserSettingUI.SetActive(false);
-        else if (IngameMenuUI.activeSelf)
-            IngameMenuUI.SetActive(false);
+        if (userSettingUIObj.activeSelf)
+            PopDownUserSettingUI();
+        else if (ingameMenuUIObj.activeSelf)
+            PopDownMenuUI();
     }
 
     public void PopUpMenuUI()
     {
-        IngameMenuUI.SetActive(true);
+        ingameMenuUIObj.SetActive(true);
+        GameManager.Instance.SetTimeScale(0);
     }
 
     public void PopDownMenuUI()
     {
-        IngameMenuUI.SetActive(false);
+        ingameMenuUIObj.SetActive(false);
+        GameManager.Instance.SetTimeScale(1);
     }
 
     public void PopUpUserSettingUI()
     {
-        UserSettingUI.SetActive(true);
+        userSettingUIObj.SetActive(true);
     }
     public void PopDownUserSettingUI()
     {
-        UserSettingUI.SetActive(false);
+        userSettingUIObj.SetActive(false);
     }
 
     public void OnClickedGameQuit()

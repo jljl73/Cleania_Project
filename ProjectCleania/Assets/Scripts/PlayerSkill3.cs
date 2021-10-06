@@ -15,13 +15,13 @@ public class PlayerSkill3 : Skill
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
-        playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        stateMachine.Transition(StateMachine.enumState.Attacking);
         animator.SetInteger("Skill", 3);
     }
 
     public override void AnimationDeactivate()
     {
-        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
     }
 

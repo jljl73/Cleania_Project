@@ -16,7 +16,7 @@ public class PlayerSkillR : Skill
     {
         animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 6);
-        playerStateMachine.Transition(StateMachine.enumState.MoveAttack);
+        stateMachine.Transition(StateMachine.enumState.MoveAttack);
 
     }
 
@@ -27,7 +27,7 @@ public class PlayerSkillR : Skill
 
     public override void AnimationDeactivate()
     {
-        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
         attackArea.enabled = false;
     }
