@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkill2 : Skill
+public class BatSkill1 : Skill
 {
     public int damage = 10;
-    public int reduceArmor = 10;
+    public float bloodChance = 0.3f;
+    public float bloodTime = 5.0f;
 
     Collider col;
+    AbilityStatus myAbility;
 
     private void Start()
     {
         col = GetComponent<Collider>();
+        myAbility = GetComponentInParent<AbilityStatus>();
     }
 
     public override void AnimationActivate()
     {
-        animator.SetBool("OnSkill", true);
-        animator.SetInteger("Skill", 2);
+        animator.SetBool("Attack Bite", true);
+        //animator.SetInteger("Skill", 1);
         stateMachine.Transition(StateMachine.enumState.Attacking);
 
         col.enabled = true;
+
+        Invoke("AnimationDeactivate", 1.0f);
     }
 
     override public void Activate()
@@ -31,15 +36,19 @@ public class PlayerSkill2 : Skill
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.tag == "Player")
         {
-            Debug.Log("2 Hit");
-            //other.GetComponent<Status>().Damaged(damage);
-            // n√ ∞£
-            //other.GetComponent<Status>().ReduceArmor(damage, n);
+            Debug.Log("bat skill1 Hit");
+
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
+            //if (Random.Range(0.0f, 1.0f) < 0.3f)
+            {
+                //other.GetComponent<BuffManager>().Blood(bloodTime);
+            }
+
         }
     }
-    
+
     void OffSkill()
     {
         col.enabled = false;
@@ -48,7 +57,7 @@ public class PlayerSkill2 : Skill
     public override void AnimationDeactivate()
     {
         stateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("OnSkill", false);
+        animator.SetBool("Attack Bite", false);
         OffSkill();
     }
 

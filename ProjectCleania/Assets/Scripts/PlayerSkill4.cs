@@ -38,7 +38,7 @@ public class PlayerSkill4 : Skill
 
     override public void Activate()
     {
-        playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        stateMachine.Transition(StateMachine.enumState.Attacking);
 
         //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -60,7 +60,7 @@ public class PlayerSkill4 : Skill
 
     public override void AnimationDeactivate()
     {
-        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
 
         if (passAvailable)

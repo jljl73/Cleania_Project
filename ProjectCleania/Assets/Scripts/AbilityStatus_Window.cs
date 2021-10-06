@@ -69,7 +69,7 @@ public class AbilityStatus_Window : MonoBehaviour
                     switch (i)
                     {
                         case (int)Ability.Stat.EnumTotal:
-                            texts[(int)i].text = "Total Damage" + " : " + ability.TotalDamage();
+                            texts[(int)i].text = "Total Damage" + " : " + ability.DPS();
                             break;
                         case (int)Ability.Stat.EnumTotal + 1:
                             texts[(int)i].text = "HP" + " : " + ability.HP;

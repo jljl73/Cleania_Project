@@ -54,16 +54,16 @@ public class AbilityStatus : MonoBehaviour
         switch (stat)                            // special values
         {
             case Ability.Stat.Attack:
-                _stats[(int)Ability.Stat.Attack] *= 1 + this[Ability.Stat.Strength] * 0.01f;
+                _stats[(int)Ability.Stat.Attack] *= 1 + _stats[(int)Ability.Stat.Strength] * 0.01f;
                 break;
 
             case Ability.Stat.MaxHP:
-                _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
+                _stats[(int)Ability.Stat.MaxHP] += _stats[(int)Ability.Stat.Vitality] * 100;
                 break;
 
-            case Ability.Stat.Defense:
-                _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
-                break;
+            //case Ability.Stat.Defense:
+            //    _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
+            //    break;
 
             default:
                 break;
@@ -143,6 +143,17 @@ public class AbilityStatus : MonoBehaviour
                 _stats[(int)stat] += equipmentsAddition;
         }
 
+        switch(stat)
+        {
+            case Ability.Stat.Strength:
+                RefreshStat(Ability.Stat.Attack);
+                break;
+
+            case Ability.Stat.Vitality:
+                RefreshStat(Ability.Stat.MaxHP);
+                break;
+        }
+
         return _stats[(int)stat];
     }
 
@@ -156,17 +167,12 @@ public class AbilityStatus : MonoBehaviour
     }
 
     // deprecated function. use AttackedBy() or this[Ability.Stat.Attack].
-    public float TotalDamage()
+    public float DPS()
     {
-        if (this[Ability.Stat.Accuracy] < Random.Range(0.0f, 1.0f))
-            return 0;
-
         float tot = this[Ability.Stat.Attack];
 
-        if (Random.Range(0.0f, 1.0f) < this[Ability.Stat.CriticalChance])
-            tot *= this[Ability.Stat.CriticalScale];
-
         tot *= this[Ability.Stat.IncreaseDamage];
+        tot *= this[Ability.Stat.AttackSpeed];
 
         return tot;
     }
@@ -216,6 +222,37 @@ public class AbilityStatus : MonoBehaviour
     public float getStat(Ability.Stat stat)
     {
         return this[stat];
+    }
+
+    public string StatToString(Ability.Stat stat)
+    {
+        switch(stat)
+        {
+            case Ability.Stat.Attack:
+            case Ability.Stat.AttackSpeed:
+            case Ability.Stat.Defense:
+            case Ability.Stat.MaxHP:
+            case Ability.Stat.MaxMP:
+            case Ability.Stat.Strength:
+            case Ability.Stat.Vitality:
+                return $"{this[stat]}";
+
+            case Ability.Stat.Accuracy:
+            case Ability.Stat.CriticalChance:
+            case Ability.Stat.CriticalScale:
+            case Ability.Stat.Dodge:
+            case Ability.Stat.MoveSpeed:
+            case Ability.Stat.Tenacity:
+                return $"{this[stat] * 100} %";
+
+            case Ability.Stat.ReduceDamage:
+            case Ability.Stat.IncreaseDamage:
+            case Ability.Stat.SkillCooldown:
+                return $"{(1.0f - this[stat]) * 100} %";
+
+            default:
+                return "error";
+        }
     }
 
 }
