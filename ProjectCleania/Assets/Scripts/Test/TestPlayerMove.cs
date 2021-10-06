@@ -15,7 +15,7 @@ public class TestPlayerMove : MonoBehaviour
     private BoxCollider attackBoxCollider;      // 공격 시 쓰이는 박스 콜라이더
 
     private GameObject targetObj;               // 공격 대상
-    private Vector3 targetPose;                 // 목표 위치
+    private Vector3 targetPos;                 // 목표 위치
 
     private NavMeshPath path;                   // 목표까지 path
     private int currentPathIdx;                 // path 내 현재 목표 지점
@@ -30,41 +30,56 @@ public class TestPlayerMove : MonoBehaviour
     bool bChasing = false;
     public StateMachine playerStateMachine;
 
-
     private void Awake()
     {
         // 컴포넌트 불러오기
         playerAnimator = GetComponent<Animator>();
-        playerNavMeshAgent = GetComponent<NavMeshAgent>();
+        //playerNavMeshAgent = GetComponent<NavMeshAgent>();
         //attackBoxCollider = GetComponent<BoxCollider>();
-        //playerRigidbody = GetComponent<Rigidbody>();
+        playerRigidbody = GetComponent<Rigidbody>();
     }
 
     void Start()
     {
         // 설정 초기화
         //attackBoxCollider.enabled = false;  // 공격 콜라이더 Off
-        targetPose = transform.position;    // 목표 위치는 현재 위치
-                                            //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
+        targetPos = transform.position;    // 목표 위치는 현재 위치
+        //isAttackPlaying = false;            // 공격 애니메이션 실행 중 여부 
     }
 
     void Update()
     {
-        //    isAttackPlaying = false;
-        //if (isAttackPlaying)
-        //    return;
-        Move();
-        AccelerateRotation();
+        //디버그
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            Physics.IgnoreLayerCollision(3, 6);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Physics.IgnoreLayerCollision(3, 6, false);
+        }
 
+
+
+        Move();
+        //AccelerateRotation();
         // 애니메이션 업데이트
         //playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
+    }
+
+    void FixedUpdate()
+    {
+        if (Vector3.Distance(targetPos, transform.position) < 0.01f) return;
+
+        transform.localPosition = Vector3.MoveTowards(transform.position, targetPos, 5 * Time.deltaTime);
+        AccelerateRotation();
     }
 
     private void ActivateNavigation()
     {
         if (playerStateMachine.State == StateMachine.enumState.Attacking)
         {
-            targetPose = transform.position;
+            targetPos = transform.position;
         }
 
         if (Input.GetMouseButton(0))// 누르고 있어도
@@ -86,7 +101,7 @@ public class TestPlayerMove : MonoBehaviour
 
         if (playerStateMachine.State != StateMachine.enumState.Chasing)
         {
-            playerNavMeshAgent.SetDestination(targetPose);
+            playerNavMeshAgent.SetDestination(targetPos);
         }
         else
             playerNavMeshAgent.SetDestination(targetObj.transform.position);
@@ -104,7 +119,7 @@ public class TestPlayerMove : MonoBehaviour
         }
         else
         {
-            rotateForward = Vector3.Normalize(targetPose - transform.position);
+            rotateForward = Vector3.Normalize(targetPos - transform.position);
             //rotateForward = new Vector3(targetPose.x, transform.position.y, targetPose.z);
         }
 
@@ -122,7 +137,7 @@ public class TestPlayerMove : MonoBehaviour
     public void MoveToPosition()
     {
         int layerMask = 0;
-        layerMask = 1 << 5 | 1 << 6 | 1 << 7;
+        layerMask = 1 << 5 | 1 << 7;
 
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
@@ -131,17 +146,16 @@ public class TestPlayerMove : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, 500.0f, layerMask))
         {
-            Debug.Log(hit.collider.name + " " + hit.collider.tag);
             if(hit.collider.tag == "Ground")
             {
-                targetPose = hit.point;
+                targetPos = hit.point;
             }
         }
     }
     
     public void JumpForward(float dist)
     {
-        targetPose = transform.position + transform.forward * dist;
+        targetPos = transform.position + transform.forward * dist;
     }
 
     void Targetting()
@@ -161,9 +175,6 @@ public class TestPlayerMove : MonoBehaviour
             {
                 targetObj = raycastHit.transform.gameObject;
                 bChasing = true;
-                // 수정 //
-                // playerStateMachine.Transition(StateMachine.enumState.Chasing);
-                // --- //
             }
         }
 
@@ -184,7 +195,7 @@ public class TestPlayerMove : MonoBehaviour
 
             //print(other.transform.name + "Collision");
             //transform.LookAt(targetObj.transform);
-            targetPose = transform.position;
+            targetPos = transform.position;
             skillL.AnimationActivate();
         }
     }
@@ -197,7 +208,7 @@ public class TestPlayerMove : MonoBehaviour
             if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
             {
                 MoveToPosition();
-                Targetting();
+                //Targetting();
             }
         }
 
@@ -208,14 +219,22 @@ public class TestPlayerMove : MonoBehaviour
         }
 
 
-        if (Vector3.Distance(targetPose, transform.position) < 0.01f)
-        {
+        if (Vector3.Distance(targetPos, transform.position) < 0.01f)
             playerAnimator.SetFloat("Speed", 0);
-            return;
-        }
+        else
+            playerAnimator.SetFloat("Speed", 10);
+    }
 
-        transform.localPosition = Vector3.MoveTowards(transform.position, targetPose, 5 * Time.deltaTime);
-        playerAnimator.SetFloat("Speed", 10 * Time.deltaTime);
-        //if (playerStateMachine.State != StateMachine.enumState.Chasing)
+    private void OnDrawGizmos()
+    {
+        int layerMask = 0;
+        layerMask = 1 << 5 | 1 << 6 | 1 << 7;
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 500f, layerMask))
+        {
+            Gizmos.DrawLine(ray.origin, hit.point);
+        }
     }
 }
