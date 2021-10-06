@@ -42,7 +42,6 @@ public class EnemySkillManager : MonoBehaviour
         while (enemyStateMachine.State == StateMachine.enumState.Attacking)
         {
             curSkill = InputHandler();
-            enemyAnimationEvent.SetSkill(curSkill);
             curSkill.AnimationActivate();
             yield return waitForSeconds;
         }
