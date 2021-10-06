@@ -23,5 +23,4 @@ public abstract class Skill : MonoBehaviour
     public abstract void AnimationActivate();
 
     public abstract void AnimationDeactivate();
-
 }

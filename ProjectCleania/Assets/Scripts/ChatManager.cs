@@ -34,6 +34,12 @@ public class ChatManager : MonoBehaviour
         ShowAcquireItem("dsfdsf");
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+            inputField.Select();
+    }
+
     public void OnClickedOK()
     {
         settingPopup.SetActive(false);
@@ -46,12 +52,13 @@ public class ChatManager : MonoBehaviour
 
     public void OnClickedDown()
     {
-        scrollRect.content.Translate(scrollRect.content.up * 10);
+        if(scrollRect.content.anchoredPosition.y < 0)
+            scrollRect.content.Translate(scrollRect.content.up * 10);
     }
 
     public void OnClicekdDD()
     {
-        scrollRect.content.localPosition = Vector3.zero;
+        scrollRect.content.anchoredPosition = Vector3.zero;
     }
 
     public void OnClickedSetting()

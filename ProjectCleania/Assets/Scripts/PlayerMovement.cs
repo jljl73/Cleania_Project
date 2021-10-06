@@ -59,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
         // 마우스 클릭에 따른 네비게이션 실행
         //ActivateNavigation();
 
+        if (Input.GetKeyDown(KeyCode.Space))
+            playerAnimator.SetTrigger("JumpOver");
+
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
         if (!EventSystem.current.IsPointerOverGameObject())
             ActivateNavigation();
@@ -221,8 +224,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void JumpForward(float dist)
     {
+        //playerNavMeshAgent.avoidancePriority = 1;
         targetPose = transform.position + transform.forward * dist;
     }
+
+
 
     void Targetting()
     {

@@ -30,8 +30,9 @@ public class PlayerSkill4 : Skill
         animator.SetInteger("Skill", 4);
         playerMovement.JumpForward(jumpDistance);
 
-        if (passAvailable)
-            navMeshAgent.radius = smallNaveAgentR;
+        navMeshAgent.avoidancePriority = 1;
+        //if (passAvailable)
+        //    navMeshAgent.radius = smallNaveAgentR;
         //playerMovement.MoveToPosition();
         //Invoke("OffSkill", 3.0f);
     }
@@ -63,8 +64,9 @@ public class PlayerSkill4 : Skill
         playerStateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
 
-        if (passAvailable)
-            navMeshAgent.radius = initialNavAgentR;
+        navMeshAgent.avoidancePriority = 50;
+        //if (passAvailable)
+        //    navMeshAgent.radius = initialNavAgentR;
     }
 
     private void OnTriggerEnter(Collider other)

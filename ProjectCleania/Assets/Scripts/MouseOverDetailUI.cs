@@ -42,7 +42,7 @@ public class MouseOverDetailUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     void Awake()
     {
-        playerStatus = FindObjectOfType<PlayerMovement>().gameObject.GetComponent<AbilityStatus>();
+        //playerStatus = FindObjectOfType<PlayerMovement>().gameObject.GetComponent<AbilityStatus>();
 
         textComponents = DetailGameObject.GetComponentsInChildren<Text>();
         imageComponents = DetailGameObject.GetComponentsInChildren<Image>();
