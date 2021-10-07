@@ -18,7 +18,7 @@ public class NameUI : ObjectUI
         // haha
     }
 
-    void Update()
+    protected void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Alpha6))
         //{
