@@ -15,18 +15,21 @@ public class UI_CombatGUI : MonoBehaviour
     public Image[] Skills;
     public GameObject HugeMap;
 
-    public GameObject player;
+    GameObject player;
     AbilityStatus playerStatus;
 
     [Range(0.0f, 1.0f)]
     public float XP_BarPercent = 1.0f;
-    public PlayerSkillManager SkillManager;
+    PlayerSkillManager SkillManager;
     [Range(0.0f, 1.0f)]
     public float[] Skills_CoolPercent;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameManager.Instance.SinglePlayer;
+        SkillManager = player.GetComponent<PlayerSkillManager>();
+
         Skills_CoolPercent = new float[Skills.Length];
         playerStatus = player.GetComponent<AbilityStatus>();
     }
