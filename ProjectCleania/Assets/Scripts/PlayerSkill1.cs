@@ -12,7 +12,7 @@ public class PlayerSkill1 : Skill
 
     public override void AnimationActivate()
     {
-        playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        stateMachine.Transition(StateMachine.enumState.Attacking);
         animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 1);
     }
@@ -52,7 +52,7 @@ public class PlayerSkill1 : Skill
 
     public override void AnimationDeactivate()
     {
-        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
     }
 }

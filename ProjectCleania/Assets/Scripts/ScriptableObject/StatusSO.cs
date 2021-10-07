@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Status : MonoBehaviour
+[CreateAssetMenu(fileName = "StatusData", menuName = "Scriptable Object/Status")]
+public class StatusSO : ScriptableObject
 {
     [Range(1, 50)]
     public int level = 1;
@@ -11,7 +12,7 @@ public class Status : MonoBehaviour
     {
         get
         {
-            switch(index)
+            switch (index)
             {
                 case Ability.Stat.Strength:
                     return Strength + (level - 1) * levelUpStrength;
@@ -40,6 +41,9 @@ public class Status : MonoBehaviour
                 case Ability.Stat.MaxMP:
                     return BasicMP;
 
+                case Ability.Stat.AttackSpeed:
+                    return 0;
+
                 default:
                     return 1;
             }
@@ -60,8 +64,9 @@ public class Status : MonoBehaviour
 
     public float Accuracy = 100;
     public float Dodge = 10;
-    public float Tenacity = 100;
+    public float Tenacity = 0;
 
     public float BasicHP = 0;
     public float BasicMP = 100;
+
 }
