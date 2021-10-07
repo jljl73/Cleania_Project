@@ -28,13 +28,17 @@ public class EnemySpawner : MonoBehaviour
         {
             if (tempTotalWeight < 0)
                 break;
-            Instantiate(RareMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            GameObject newMonster = Instantiate(RareMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            newMonster.transform.Find("EnemyRecognize").GetComponent<EnemyChase>().enemySpawner = gameObject;
+            newMonster.transform.Find("EnemyChase").GetComponent<EnemyRelease>().enemySpawner = gameObject;
             tempTotalWeight -= RareMonsterWeight;
         }
 
         while (tempTotalWeight > 0)
         {
-            Instantiate(NormalMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            GameObject newMonster = Instantiate(NormalMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            newMonster.transform.Find("EnemyRecognize").GetComponent<EnemyChase>().enemySpawner = gameObject;
+            newMonster.transform.Find("EnemyChase").GetComponent<EnemyRelease>().enemySpawner = gameObject;
             tempTotalWeight -= NormalMonsterWeight;
         }
     }

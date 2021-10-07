@@ -25,7 +25,7 @@ public class BatSkill1 : Skill
 
         col.enabled = true;
 
-        Invoke("AnimationDeactivate", 1.0f);
+        //Invoke("AnimationDeactivate", 1.0f);
     }
 
     override public void Activate()
@@ -40,7 +40,7 @@ public class BatSkill1 : Skill
         {
             Debug.Log("bat skill1 Hit");
 
-            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
+            //GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
             //if (Random.Range(0.0f, 1.0f) < 0.3f)
             {
                 //other.GetComponent<BuffManager>().Blood(bloodTime);

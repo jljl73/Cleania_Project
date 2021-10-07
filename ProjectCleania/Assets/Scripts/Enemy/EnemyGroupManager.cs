@@ -38,6 +38,7 @@ public class EnemyGroupManager : MonoBehaviour
     int CheckCollidedObject()
     {
         int sum = 0;
+        if (target == null) return 1;
 
         foreach (var e in enemies)
         {
