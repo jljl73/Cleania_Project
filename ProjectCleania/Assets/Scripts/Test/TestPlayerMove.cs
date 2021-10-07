@@ -70,6 +70,9 @@ public class TestPlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         if (Vector3.Distance(targetPos, transform.position) < 0.01f) return;
+        if (playerStateMachine.State != StateMachine.enumState.Idle &&
+            playerStateMachine.State != StateMachine.enumState.MoveAttack) return;
+
 
         transform.localPosition = Vector3.MoveTowards(transform.position, targetPos, 5 * Time.deltaTime);
         AccelerateRotation();
@@ -205,7 +208,8 @@ public class TestPlayerMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0))// 누르고 있어도
         {
-            if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
+            if (playerStateMachine.State == StateMachine.enumState.Idle || 
+                playerStateMachine.State == StateMachine.enumState.Chasing)
             {
                 MoveToPosition();
                 //Targetting();
@@ -225,16 +229,5 @@ public class TestPlayerMove : MonoBehaviour
             playerAnimator.SetFloat("Speed", 10);
     }
 
-    private void OnDrawGizmos()
-    {
-        int layerMask = 0;
-        layerMask = 1 << 5 | 1 << 6 | 1 << 7;
 
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 500f, layerMask))
-        {
-            Gizmos.DrawLine(ray.origin, hit.point);
-        }
-    }
 }
