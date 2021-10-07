@@ -18,9 +18,12 @@ public class EggletSkill1 : Skill
     public override void AnimationActivate()
     {
         animator.SetBool("Attack BodyBlow", true);
+        //animator.SetInteger("Skill", 1);
         stateMachine.Transition(StateMachine.enumState.Attacking);
 
         col.enabled = true;
+
+        Invoke("AnimationDeactivate", 0.5f);
     }
 
     override public void Activate()
@@ -35,7 +38,7 @@ public class EggletSkill1 : Skill
         {
             Debug.Log("egglet skill1 Hit");
 
-            //GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
         }
     }
 

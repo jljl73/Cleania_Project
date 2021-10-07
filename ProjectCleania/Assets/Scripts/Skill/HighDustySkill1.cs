@@ -25,7 +25,7 @@ public class HighDustySkill1 : Skill
         //col.enabled = true;
         Activate();
 
-        //Invoke("AnimationDeactivate", 0.5f);
+        Invoke("AnimationDeactivate", 0.5f);
     }
 
     override public void Activate()
