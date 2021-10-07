@@ -29,6 +29,9 @@ public class BatSkill2 : Skill
         GameObject bat1 = Instantiate(transform.parent.parent.gameObject);
         GameObject bat2 = Instantiate(transform.parent.parent.gameObject);
 
+        bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
+        bat2.transform.Translate(-bat1.transform.right * bat2.transform.localScale.x);
+
         bat1.transform.localScale *= 0.5f;
         bat2.transform.localScale *= 0.5f;
 

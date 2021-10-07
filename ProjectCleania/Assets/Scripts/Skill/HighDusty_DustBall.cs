@@ -5,7 +5,7 @@ using UnityEngine;
 public class HighDusty_DustBall : MonoBehaviour
 {
     public GameObject owner;
-    public float damage;
+    public float DamageScale;
 
     public GameObject ball;
     public GameObject pond;
@@ -30,7 +30,7 @@ public class HighDusty_DustBall : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                playerAbility.AttackedBy(ownerAbility, damage);
+                playerAbility.AttackedBy(ownerAbility, DamageScale);
                 
                 Destroy(gameObject);
             }
@@ -51,6 +51,6 @@ public class HighDusty_DustBall : MonoBehaviour
     {
         if (!isBall)
             if (other.gameObject.CompareTag("Player"))
-                playerAbility.AttackedBy(ownerAbility, Time.deltaTime * damage);
+                playerAbility.AttackedBy(ownerAbility, Time.deltaTime * DamageScale);
     }
 }

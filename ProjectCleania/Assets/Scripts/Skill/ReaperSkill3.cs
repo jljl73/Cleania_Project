@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EggletSkill1 : Skill
+public class ReaperSkill3 : Skill
 {
     public float DamageScale = 10;
 
@@ -17,13 +17,13 @@ public class EggletSkill1 : Skill
 
     public override void AnimationActivate()
     {
-        animator.SetBool("Attack BodyBlow", true);
+        animator.SetBool("Attack Spin", true);
         //animator.SetInteger("Skill", 1);
         stateMachine.Transition(StateMachine.enumState.Attacking);
 
         col.enabled = true;
 
-        Invoke("AnimationDeactivate", 0.5f);
+        Invoke("AnimationDeactivate", 1f);
     }
 
     override public void Activate()
@@ -36,7 +36,7 @@ public class EggletSkill1 : Skill
     {
         if (other.tag == "Player")
         {
-            Debug.Log("egglet skill1 Hit");
+            Debug.Log("reaper skill3 Hit");
 
             GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
         }
@@ -50,8 +50,7 @@ public class EggletSkill1 : Skill
     public override void AnimationDeactivate()
     {
         stateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("Attack BodyBlow", false);
+        animator.SetBool("Attack Spin", false);
         OffSkill();
     }
-
 }
