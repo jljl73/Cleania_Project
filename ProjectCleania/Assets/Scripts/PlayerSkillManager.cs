@@ -75,6 +75,7 @@ public class PlayerSkillManager : MonoBehaviour
             playerAbilityStatus.ConsumeMP(skills[4].ConsumMP);
             return skills[4];
         }
+
         if (Input.GetMouseButtonDown(1) && (isSkillAvailable(5) ||
             playerStateMachine.State == StateMachine.enumState.MoveAttack))
         {

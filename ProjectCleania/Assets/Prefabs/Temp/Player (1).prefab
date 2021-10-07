@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063b55561fbd1634c821d9897b86676b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 1353909840327960349}
+  stateMachine: {fileID: 1353909840327960349}
   animator: {fileID: 7527317929762643626}
   isAttacking: 0
   CoolTime: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1ab7c7345fa32489c24f96e41e8ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 1353909840327960349}
+  stateMachine: {fileID: 1353909840327960349}
   animator: {fileID: 7527317929762643626}
   isAttacking: 0
   CoolTime: 1.5
@@ -303,7 +303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -1.77}
+  m_AnchoredPosition: {x: 0, y: 23.54}
   m_SizeDelta: {x: 16, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2717002757874081547
@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112c59c2aab3a7149b1eb3b9b343db12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 1353909840327960349}
+  stateMachine: {fileID: 1353909840327960349}
   animator: {fileID: 7527317929762643626}
   isAttacking: 0
   CoolTime: 4
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e92f82b11153c74b94e3fb208196e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 1353909840327960349}
+  stateMachine: {fileID: 1353909840327960349}
   animator: {fileID: 7527317929762643626}
   isAttacking: 0
   CoolTime: 3
@@ -552,6 +552,7 @@ GameObject:
   - component: {fileID: 7527317929762643669}
   - component: {fileID: 7527317929762643671}
   - component: {fileID: 927307370}
+  - component: {fileID: 135485247}
   m_Layer: 3
   m_Name: Player (1)
   m_TagString: Player
@@ -669,6 +670,7 @@ MonoBehaviour:
   Def: 0
   CriticalChance: 10
   CriticalScale: 200
+  AttackSpeed: 0
   MoveSpeed: 1
   Accuracy: 100
   Dodge: 10
@@ -747,6 +749,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &135485247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527317929762643624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3df6cb8bd876c246aafa597c5521d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7527317930698292639
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,13 +907,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b0954b3da9ffd4587766cf2f3633e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 1353909840327960349}
+  stateMachine: {fileID: 1353909840327960349}
   animator: {fileID: 7527317929762643626}
   isAttacking: 0
   CoolTime: 5
   ConsumMP: 20
-  navMeshAgent: {fileID: 0}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 7527317929762643668}
   jumpDistance: 3.5
   passAvailable: 0
 --- !u!1 &7527317931467030260
@@ -945,7 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367dfb4120c1e914481c3f32841f0292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 1353909840327960349}
+  stateMachine: {fileID: 1353909840327960349}
   animator: {fileID: 7527317929762643626}
   isAttacking: 0
   CoolTime: 2

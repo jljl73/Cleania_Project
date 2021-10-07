@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerSkill4 : Skill
 {
-    public NavMeshAgent navMeshAgent;
-    public PlayerMovement playerMovement;
+    public TestPlayerMove playerMovement;
     public float jumpDistance = 7f;
 
     private float initialNavAgentR;
@@ -29,12 +28,7 @@ public class PlayerSkill4 : Skill
         animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 4);
         playerMovement.JumpForward(jumpDistance);
-
-        navMeshAgent.avoidancePriority = 1;
-        //if (passAvailable)
-        //    navMeshAgent.radius = smallNaveAgentR;
-        //playerMovement.MoveToPosition();
-        //Invoke("OffSkill", 3.0f);
+        
     }
 
     override public void Activate()
@@ -63,8 +57,6 @@ public class PlayerSkill4 : Skill
     {
         stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
-
-        navMeshAgent.avoidancePriority = 50;
         //if (passAvailable)
         //    navMeshAgent.radius = initialNavAgentR;
     }

@@ -8,7 +8,7 @@ public class OnTriggerNameUI : NameUI
     protected void OnTriggerEnter(Collider other)
     {
         base.ActiveUI(true);
-        print("Trigger enter");
+        //print("Trigger enter");
     }
 
     protected void OnTriggerExit(Collider other)
