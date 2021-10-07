@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class TestPlayerMove : MonoBehaviour
+public class TestPlayerMove : MonoBehaviour, IPointerEnterHandler
 {
     public float rotateCoef = 2f;
 
@@ -50,7 +50,7 @@ public class TestPlayerMove : MonoBehaviour
     void Update()
     {
         //디버그
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             Physics.IgnoreLayerCollision(3, 6);
         }
@@ -70,6 +70,9 @@ public class TestPlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         if (Vector3.Distance(targetPos, transform.position) < 0.01f) return;
+        if (playerStateMachine.State != StateMachine.enumState.Idle &&
+            playerStateMachine.State != StateMachine.enumState.MoveAttack) return;
+
 
         transform.localPosition = Vector3.MoveTowards(transform.position, targetPos, 5 * Time.deltaTime);
         AccelerateRotation();
@@ -89,7 +92,7 @@ public class TestPlayerMove : MonoBehaviour
                 MoveToPosition();
                 Targetting();
             }
-            
+
         }
         if (Input.GetMouseButton(1))
         {
@@ -139,20 +142,23 @@ public class TestPlayerMove : MonoBehaviour
         int layerMask = 0;
         layerMask = 1 << 5 | 1 << 7;
 
-        if (EventSystem.current.IsPointerOverGameObject(-1)) return;
+
+        //Debug.Log(EventSystem.current.currentSelectedGameObject);
+        //if (EventSystem.current.IsPointerOverGameObject(-1)) return;
+
 
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out hit, 500.0f, layerMask))
+        if (Physics.Raycast(ray, out hit, 500.0f, layerMask))
         {
-            if(hit.collider.tag == "Ground")
+            if (hit.collider.tag == "Ground")
             {
                 targetPos = hit.point;
             }
         }
     }
-    
+
     public void JumpForward(float dist)
     {
         targetPos = transform.position + transform.forward * dist;
@@ -205,7 +211,8 @@ public class TestPlayerMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0))// 누르고 있어도
         {
-            if (playerStateMachine.State == StateMachine.enumState.Idle || playerStateMachine.State == StateMachine.enumState.Chasing)
+            if (playerStateMachine.State == StateMachine.enumState.Idle ||
+                playerStateMachine.State == StateMachine.enumState.Chasing)
             {
                 MoveToPosition();
                 //Targetting();
@@ -225,16 +232,8 @@ public class TestPlayerMove : MonoBehaviour
             playerAnimator.SetFloat("Speed", 10);
     }
 
-    private void OnDrawGizmos()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        int layerMask = 0;
-        layerMask = 1 << 5 | 1 << 6 | 1 << 7;
-
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 500f, layerMask))
-        {
-            Gizmos.DrawLine(ray.origin, hit.point);
-        }
+        Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
     }
 }
