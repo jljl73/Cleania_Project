@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject RareMonster;
+    //public GameObject RareMonster;
+    public List<GameObject> RareMonsters;
     public float RareMonsterWeight = 100;
 
-    public GameObject NormalMonster;
+    //public GameObject NormalMonster;
+    public List<GameObject> NormalMonsters;
     public float NormalMonsterWeight = 2;
 
     public float SpawnRadius = 10f;
@@ -28,13 +30,13 @@ public class EnemySpawner : MonoBehaviour
         {
             if (tempTotalWeight < 0)
                 break;
-            Instantiate(RareMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            Instantiate(RareMonsters[Random.Range(0, RareMonsters.Count)], GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
             tempTotalWeight -= RareMonsterWeight;
         }
 
         while (tempTotalWeight > 0)
         {
-            Instantiate(NormalMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            Instantiate(NormalMonsters[Random.Range(0, NormalMonsters.Count)], GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
             tempTotalWeight -= NormalMonsterWeight;
         }
     }
