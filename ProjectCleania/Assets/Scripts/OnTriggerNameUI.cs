@@ -14,7 +14,7 @@ public class OnTriggerNameUI : NameUI
     void OnTriggerEnter(Collider other)
     {
         base.ActiveUI(true);
-        print("Trigger enter");
+        //print("Trigger enter");
     }
 
     private void OnTriggerStay(Collider other)
