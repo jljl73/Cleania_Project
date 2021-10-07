@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    //public GameObject RareMonster;
+    public GameObject RareMonster;
     public List<GameObject> RareMonsters;
     public float RareMonsterWeight = 100;
 
-    //public GameObject NormalMonster;
+    public GameObject NormalMonster;
     public List<GameObject> NormalMonsters;
     public float NormalMonsterWeight = 2;
 
