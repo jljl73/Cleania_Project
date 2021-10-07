@@ -40,11 +40,13 @@ public class UserSettingUIManager : MonoBehaviour
         {
             left2Right.Add(LeftButtons[i], RightContents[i]);
         }
+
         LoadData();
+
         if (GameManager.Instance.menuManager != null)
             GameManager.Instance.menuManager.SetNewUserSetting(this.gameObject);
-
-        gameObject.SetActive(false);
+        else
+            gameObject.SetActive(false);
     }
 
     private void Start()
