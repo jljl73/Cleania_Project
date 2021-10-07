@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EggletSkill1 : Skill
 {
-    public int damage = 10;
+    public float DamageScale = 10;
 
     Collider col;
     AbilityStatus myAbility;

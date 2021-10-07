@@ -224,7 +224,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void JumpForward(float dist)
     {
-        //playerNavMeshAgent.avoidancePriority = 1;
         targetPose = transform.position + transform.forward * dist;
     }
 

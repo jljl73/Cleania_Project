@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject RareMonster;
+    //public GameObject RareMonster;
+    public List<GameObject> RareMonsters;
     public float RareMonsterWeight = 100;
 
-    public GameObject NormalMonster;
+    //public GameObject NormalMonster;
+    public List<GameObject> NormalMonsters;
     public float NormalMonsterWeight = 2;
 
     public float SpawnRadius = 10f;
@@ -28,18 +30,18 @@ public class EnemySpawner : MonoBehaviour
         {
             if (tempTotalWeight < 0)
                 break;
-            GameObject newMonster = Instantiate(RareMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
-            newMonster.transform.Find("EnemyRecognize").GetComponent<EnemyChase>().enemySpawner = gameObject;
-            newMonster.transform.Find("EnemyChase").GetComponent<EnemyRelease>().enemySpawner = gameObject;
-            tempTotalWeight -= RareMonsterWeight;
+            //GameObject newMonster = Instantiate(RareMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            //newMonster.transform.Find("EnemyRecognize").GetComponent<EnemyChase>().enemySpawner = gameObject;
+            //newMonster.transform.Find("EnemyChase").GetComponent<EnemyRelease>().enemySpawner = gameObject;
+            //tempTotalWeight -= RareMonsterWeight;
         }
 
         while (tempTotalWeight > 0)
         {
-            GameObject newMonster = Instantiate(NormalMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
-            newMonster.transform.Find("EnemyRecognize").GetComponent<EnemyChase>().enemySpawner = gameObject;
-            newMonster.transform.Find("EnemyChase").GetComponent<EnemyRelease>().enemySpawner = gameObject;
-            tempTotalWeight -= NormalMonsterWeight;
+            //GameObject newMonster = Instantiate(NormalMonster, GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            //newMonster.transform.Find("EnemyRecognize").GetComponent<EnemyChase>().enemySpawner = gameObject;
+            //newMonster.transform.Find("EnemyChase").GetComponent<EnemyRelease>().enemySpawner = gameObject;
+            //tempTotalWeight -= NormalMonsterWeight;
         }
     }
 

@@ -7,7 +7,7 @@ public class ObjectUI : MonoBehaviour
 {
     public float BorderPercent = 0.8f;
     public GameObject UIObject;
-    public Canvas CanvasToDraw;
+    //public Canvas CanvasToDraw;
 
     protected GameObject uiObjectInst;
     protected bool uiObjectInstExist
@@ -44,7 +44,7 @@ public class ObjectUI : MonoBehaviour
 
     protected virtual void InstantiateUIObject()
     {
-        uiObjectInst = Instantiate(UIObject, CanvasToDraw.transform);
+        uiObjectInst = Instantiate(UIObject, GameManager.Instance.MainCanvas.transform);    // 메인 캔버스에 CanvasManager 넣어주세요
 
         imageComponents = uiObjectInst.GetComponentsInChildren<Image>();
         textComponents = uiObjectInst.GetComponentsInChildren<Text>();

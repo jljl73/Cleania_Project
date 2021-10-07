@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatSkill1 : Skill
+public class ReaperSkill3 : Skill
 {
     public float DamageScale = 10;
-    public float bloodChance = 0.3f;
-    public float bloodTime = 5.0f;
 
     Collider col;
     AbilityStatus myAbility;
@@ -19,13 +17,13 @@ public class BatSkill1 : Skill
 
     public override void AnimationActivate()
     {
-        animator.SetBool("Attack Bite", true);
+        animator.SetBool("Attack Spin", true);
         //animator.SetInteger("Skill", 1);
         stateMachine.Transition(StateMachine.enumState.Attacking);
 
         col.enabled = true;
 
-        //Invoke("AnimationDeactivate", 1.0f);
+        Invoke("AnimationDeactivate", 1f);
     }
 
     override public void Activate()
@@ -38,14 +36,9 @@ public class BatSkill1 : Skill
     {
         if (other.tag == "Player")
         {
-            Debug.Log("bat skill1 Hit");
+            Debug.Log("reaper skill3 Hit");
 
-            //GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
-            //if (Random.Range(0.0f, 1.0f) < 0.3f)
-            {
-                //other.GetComponent<BuffManager>().Blood(bloodTime);
-            }
-
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
         }
     }
 
@@ -57,8 +50,7 @@ public class BatSkill1 : Skill
     public override void AnimationDeactivate()
     {
         stateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("Attack Bite", false);
+        animator.SetBool("Attack Spin", false);
         OffSkill();
     }
-
 }

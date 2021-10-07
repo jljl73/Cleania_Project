@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HighDustySkill1 : Skill
 {
-    public int damage = 10;
+    public float DamageScale = 10;
 
     //Collider col
     AbilityStatus myAbility;
@@ -33,7 +33,7 @@ public class HighDustySkill1 : Skill
         //col.enabled = true;
         GameObject ball = Instantiate(DustBall, transform);
         ball.GetComponent<HighDusty_DustBall>().owner = gameObject;
-        ball.GetComponent<HighDusty_DustBall>().damage = damage;
+        ball.GetComponent<HighDusty_DustBall>().DamageScale = DamageScale;
         ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up/2)*200.0f);
         //Invoke("OffSkill", 1.0f);
     }

@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerSkill4 : Skill
 {
-    public NavMeshAgent navMeshAgent;
-    public PlayerMovement playerMovement;
+    public TestPlayerMove playerMovement;
     public float jumpDistance = 7f;
 
     private float initialNavAgentR;
@@ -30,26 +29,11 @@ public class PlayerSkill4 : Skill
         animator.SetInteger("Skill", 4);
         playerMovement.JumpForward(jumpDistance);
 
-        navMeshAgent.avoidancePriority = 1;
-        //if (passAvailable)
-        //    navMeshAgent.radius = smallNaveAgentR;
-        //playerMovement.MoveToPosition();
-        //Invoke("OffSkill", 3.0f);
     }
 
     override public void Activate()
     {
         stateMachine.Transition(StateMachine.enumState.Attacking);
-
-        //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        //if(Physics.Raycast(ray, out hit))
-        //{
-        //    transform.position = new Vector3(
-        //        hit.point.x,
-        //        0.0f,
-        //        hit.point.z);
-        //}
         attackArea.enabled = true;
         Invoke("OffSkill", 3.0f);
     }
@@ -63,10 +47,6 @@ public class PlayerSkill4 : Skill
     {
         stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
-
-        navMeshAgent.avoidancePriority = 50;
-        //if (passAvailable)
-        //    navMeshAgent.radius = initialNavAgentR;
     }
 
     private void OnTriggerEnter(Collider other)
