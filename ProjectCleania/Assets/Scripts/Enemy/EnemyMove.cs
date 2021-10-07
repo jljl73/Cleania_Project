@@ -9,29 +9,34 @@ public class EnemyMove : MonoBehaviour
     StateMachine state;
     GameObject targetObject = null;
     Animator animator;
- 
+
+    public GameObject temp;
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         state = GetComponent<StateMachine>();
 
+        // 테스트용
+        SetTarget(temp);
     }
     
     void FixedUpdate()
     {
         if (targetObject == null) return;
 
-        if (state.State == StateMachine.enumState.Idle)
-        {
-            nav.isStopped = false;
-            Rotate();
-        }
-        else
+        if (state.State == StateMachine.enumState.Attacking)
             nav.isStopped = true;
+        else
+            nav.isStopped = false;
+
 
         nav.SetDestination(targetObject.transform.position);
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
+
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        Rotate();
     }
 
     public void SetTarget(GameObject target)
