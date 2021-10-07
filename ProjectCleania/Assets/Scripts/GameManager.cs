@@ -7,8 +7,11 @@ public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
     public MenuManager menuManager = null;
+<<<<<<< HEAD
     public Canvas MainCanvas = null;
 
+=======
+>>>>>>> 80c7bcb91dccc74dd58aaaf3b163a9a4b068d795
     public static GameManager Instance
     {
         get
@@ -21,6 +24,14 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+
+    public GameObject SinglePlayer;
+    public AbilityStatus PlayerAbility;
+    public Status PlayerStatus;
+    public EquipmentSlot PlayerEquipments;
+    public BuffManager PlayerBuffs;
+
+
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
