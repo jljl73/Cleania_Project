@@ -7,11 +7,8 @@ public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
     public MenuManager menuManager = null;
-<<<<<<< HEAD
     public Canvas MainCanvas = null;
 
-=======
->>>>>>> 80c7bcb91dccc74dd58aaaf3b163a9a4b068d795
     public static GameManager Instance
     {
         get
