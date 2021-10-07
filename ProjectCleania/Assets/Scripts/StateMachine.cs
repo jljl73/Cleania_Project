@@ -9,6 +9,7 @@ public class StateMachine : MonoBehaviour
         Idle, MoveAttack, Attacking, Chasing, Attacked
     };
 
+    
     public enumState _state;
     public enumState State { get { return _state; } }
 

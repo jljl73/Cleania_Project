@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BatSkill1 : Skill
 {
-    public int damage = 10;
+    public float DamageScale = 10;
     public float bloodChance = 0.3f;
     public float bloodTime = 5.0f;
 
@@ -40,7 +40,7 @@ public class BatSkill1 : Skill
         {
             Debug.Log("bat skill1 Hit");
 
-            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
             //if (Random.Range(0.0f, 1.0f) < 0.3f)
             {
                 //other.GetComponent<BuffManager>().Blood(bloodTime);

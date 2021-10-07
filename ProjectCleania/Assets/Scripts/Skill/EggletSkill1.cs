@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EggletSkill1 : Skill
 {
-    public int damage = 10;
+    public float DamageScale = 10;
 
     Collider col;
     AbilityStatus myAbility;
@@ -38,7 +38,7 @@ public class EggletSkill1 : Skill
         {
             Debug.Log("egglet skill1 Hit");
 
-            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, damage);
+            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
         }
     }
 
