@@ -67,7 +67,7 @@ public class TestCleaningToolBox : OnTriggerNameUI
             return;
         }
 
-        if (other.CompareTag("Player") && Input.GetKey(KeyCode.Space))
+        if (other.CompareTag("Player") && Input.GetKey(KeyCode.G))
         {
             interactedTime += Time.deltaTime;
             print("interactedTime: " + interactedTime);
@@ -88,6 +88,8 @@ public class TestCleaningToolBox : OnTriggerNameUI
         else if (other.CompareTag("Player"))
         {
             interactedTime = 0f;
+            background.gameObject.SetActive(false);
+            fillImage.gameObject.SetActive(false);
         }
     }
 }
