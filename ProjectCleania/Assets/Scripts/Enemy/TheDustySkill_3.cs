@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class TheDustySkill_3 : Skill
 {
+    public EnemyEvent enemyEvent;
     public GameObject theDusty;
     public int nDivision = 3;
-    
+
+    private void Start()
+    {
+        enemyEvent.RegisterListener(Activate);
+    }
+
     public override void Activate()
     {
         for (int i = nDivision - 1; i >= 0; --i)
