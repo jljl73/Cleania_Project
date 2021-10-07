@@ -12,8 +12,7 @@ public class Vulnerable : AbilityStatus
     BuffManager buffs;
 
 
-    float[] _stats = new float[(int)Ability.Stat.EnumTotal];
-    public float this[Ability.Stat stat]
+    override public float this[Ability.Stat stat]
     {
         get
         {
@@ -21,14 +20,7 @@ public class Vulnerable : AbilityStatus
         }
     }
 
-    float _HP = 100;
-    public float HP
-    { get => _HP; }
-    float _MP = 100;
-    public float MP
-    { get => _MP; }
-
-    private void Awake()
+    override protected void Awake()
     {
         //RefreshAll();
         for (Ability.Stat i = 0; i < Ability.Stat.EnumTotal; ++i)
@@ -41,7 +33,7 @@ public class Vulnerable : AbilityStatus
 
 
 
-    float RefreshStat(Ability.Stat stat)
+    override protected float RefreshStat(Ability.Stat stat)
     {
         if (status == null)
             return -1;
@@ -154,73 +146,6 @@ public class Vulnerable : AbilityStatus
         }
 
         return _stats[(int)stat];
-    }
-
-    public void FullHP()
-    {
-        _HP = this[Ability.Stat.MaxHP];
-    }
-    public void FullMP()
-    {
-        _MP = this[Ability.Stat.MaxMP];
-    }
-
-    // deprecated function. use AttackedBy() or this[Ability.Stat.Attack].
-    public float DPS()
-    {
-        float tot = this[Ability.Stat.Attack];
-
-        tot *= this[Ability.Stat.IncreaseDamage];
-        tot *= this[Ability.Stat.AttackSpeed];
-
-        return tot;
-    }
-
-    public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
-    {
-        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))   // if dodge success, damage == 0
-            return 0;
-
-        float finalDamage = attacker[Ability.Stat.Attack] * skillScale;
-
-        if (Random.Range(0.0f, 1.0f) < attacker[Ability.Stat.CriticalChance])
-            finalDamage *= attacker[Ability.Stat.CriticalScale];
-
-        finalDamage *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
-
-        finalDamage *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
-
-        if (_HP > finalDamage)
-            _HP -= finalDamage;
-        else
-            _HP = 0;
-
-        return finalDamage;
-    }
-
-    public bool ConsumeMP(float usingMP)
-    {
-        if (_MP >= usingMP)
-        {
-            _MP -= usingMP;
-            return true;
-        }
-        else return false;
-    }
-
-    public bool ConsumeHP(float usingHP)
-    {
-        if (_HP > usingHP)
-        {
-            _HP -= usingHP;
-            return true;
-        }
-        else return false;
-    }
-
-    public float getStat(Ability.Stat stat)
-    {
-        return this[stat];
     }
 
 }

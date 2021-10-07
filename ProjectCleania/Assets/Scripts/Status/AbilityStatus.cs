@@ -9,8 +9,9 @@ public class AbilityStatus : MonoBehaviour
     EquipmentSlot equipments;
     BuffManager buffs;
 
-    float[] _stats = new float[(int)Ability.Stat.EnumTotal];
-    public float this[Ability.Stat stat]
+    protected float[] _stats = new float[(int)Ability.Stat.EnumTotal];
+
+    virtual public float this[Ability.Stat stat]
     {
         get
         {
@@ -25,7 +26,7 @@ public class AbilityStatus : MonoBehaviour
     public float MP
     { get => _MP; }
 
-    private void Awake()
+    virtual protected void Awake()
     {
         status = GetComponent<Status>();
         equipments = GetComponent<EquipmentSlot>();
@@ -42,7 +43,7 @@ public class AbilityStatus : MonoBehaviour
 
 
 
-    float RefreshStat(Ability.Stat stat)
+    virtual protected float RefreshStat(Ability.Stat stat)
     {
         if (status == null)
             return -1;
@@ -167,7 +168,7 @@ public class AbilityStatus : MonoBehaviour
     }
 
     // deprecated function. use AttackedBy() or this[Ability.Stat.Attack].
-    public float DPS()
+    virtual public float DPS()
     {
         float tot = this[Ability.Stat.Attack];
 
@@ -177,7 +178,7 @@ public class AbilityStatus : MonoBehaviour
         return tot;
     }
 
-    public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
+    virtual public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
     {
         if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))   // if dodge success, damage == 0
             return 0;
@@ -224,7 +225,7 @@ public class AbilityStatus : MonoBehaviour
         return this[stat];
     }
 
-    public string StatToString(Ability.Stat stat)
+    virtual public string StatToString(Ability.Stat stat)
     {
         switch(stat)
         {
