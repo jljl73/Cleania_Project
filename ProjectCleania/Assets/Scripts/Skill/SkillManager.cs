@@ -36,6 +36,8 @@ public class SkillManager : MonoBehaviour
         //skill = InputHandler();
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SkillTry(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && skills.Length > 1)
+            SkillTry(1);
         else
             skill = null;
 

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
     public MenuManager menuManager = null;
+    public Canvas MainCanvas = null;
+
     public static GameManager Instance
     {
         get
@@ -36,6 +38,11 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    void Reset()
+    {
+        MainCanvas = null;
     }
 
     public void QuitGame()

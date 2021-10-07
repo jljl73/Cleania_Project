@@ -62,8 +62,6 @@ public class MenuManager : MonoBehaviour
             uiList.Clear();
             uiList = new List<GameObject>();
         }
-        
-
 
         this.userSettingUIObj = userSettingUIObj;
 

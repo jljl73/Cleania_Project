@@ -76,6 +76,18 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+--- !u!114 &733309920501084086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7967387207742890409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b447303184a7c241aeb2c2e79cb8589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &389070135866364547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -773,6 +785,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4264276307084056280}
     m_Modifications:
+    - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 733309920501084086}
+    - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickMenuButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 869622781, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MinimapUIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2488154266723233772, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
       propertyPath: m_Name
       value: Mini Map
@@ -863,6 +887,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+--- !u!1 &7967387207742890409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2488154266723233772, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}
+  m_PrefabInstance: {fileID: 5482687711190486597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7967387207742890408 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2488154266723233773, guid: ea1cc5c72a5ecfc41a5a4a8dc7cbabdd, type: 3}

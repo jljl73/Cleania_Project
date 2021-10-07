@@ -9,7 +9,8 @@ public class IngameMenuUI : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         if (GameManager.Instance.menuManager != null)
             GameManager.Instance.menuManager.SetNewMenuUI(this.gameObject);
-
+        else
+            this.gameObject.SetActive(false);
     }
 
     public void OnClickExit()
