@@ -63,65 +63,6 @@ public class SkillManager : MonoBehaviour
         }
     }
 
-//    Skill InputHandler()
-//    {
-
-//        // 키보드
-//        if (Input.GetKeyDown(KeyCode.Alpha1) && isSkillAvailable(0))
-//        {
-//            initializeSkillSetting(0);
-//            abilityStatus.ConsumeMP(skills[0].ConsumMP);
-//            return skills[0];
-//        }
-//        if (Input.GetKeyDown(KeyCode.Alpha2) && isSkillAvailable(1))
-//        {
-//            initializeSkillSetting(1);
-//            abilityStatus.ConsumeMP(skills[1].ConsumMP);
-//            return skills[1];
-//        }
-//        if (Input.GetKeyDown(KeyCode.Alpha3) && isSkillAvailable(2))
-//        {
-//            initializeSkillSetting(2);
-//            abilityStatus.ConsumeMP(skills[2].ConsumMP);
-//            return skills[2];
-//        }
-//        if (Input.GetKeyDown(KeyCode.Alpha4) && isSkillAvailable(3))
-//        {
-//            initializeSkillSetting(3);
-//            abilityStatus.ConsumeMP(skills[3].ConsumMP);
-//            return skills[3];
-//        }
-
-//        // 마우스
-//        if (Input.GetKeyDown(KeyCode.C) && isSkillAvailable(4))
-//        {
-//            initializeSkillSetting(4);
-//            abilityStatus.ConsumeMP(skills[4].ConsumMP);
-//            return skills[4];
-//        }
-//        if (Input.GetMouseButtonDown(1) && (isSkillAvailable(5) ||
-//            stateMachine.State == StateMachine.enumState.MoveAttack))
-//        {
-//#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
-//            if (!EventSystem.current.IsPointerOverGameObject())
-//            {
-//                initializeSkillSetting(5);
-//                abilityStatus.ConsumeMP(skills[5].ConsumMP);
-//                return skills[5];
-//            }
-//#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-//            if (!EventSystem.current.IsPointerOverGameObject(0))
-//            {
-//                initializeSkillSetting(5);
-//                playerAbilityStatus.ConsumeMP(skills[5].ConsumMP);
-//                return skills[5];
-//            }
-//#endif
-//        }
-
-//        return null;
-//    }
-
     public void ActivateSkill(int type)
     {
         skills[type].Activate();
