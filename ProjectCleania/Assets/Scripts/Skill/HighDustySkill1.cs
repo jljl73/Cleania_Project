@@ -32,6 +32,7 @@ public class HighDustySkill1 : Skill
     {
         //col.enabled = true;
         GameObject ball = Instantiate(DustBall, transform);
+        ball.transform.SetParent(null);
         ball.GetComponent<HighDusty_DustBall>().owner = gameObject;
         ball.GetComponent<HighDusty_DustBall>().DamageScale = DamageScale;
         ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up/2)*200.0f);
