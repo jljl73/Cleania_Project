@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill1 : Skill
 {
-    public BuffManager buffManager;
+    public Buffable buffManager;
     public float speed = 10.0f;
     float duration = 0f;
     bool bSkill = false;

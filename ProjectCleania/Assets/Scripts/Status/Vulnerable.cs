@@ -6,10 +6,8 @@ public class Vulnerable : AbilityStatus
 {
     [SerializeField]
     StatusSO status;          // status is essential unlike equips or buffs
-    [SerializeField]
-    EquipableSO equipments;
-    [SerializeField]
-    BuffManager buffs;
+    Equipable equipments;
+    Buffable buffs;
 
 
     override public float this[Ability.Stat stat]
@@ -22,6 +20,9 @@ public class Vulnerable : AbilityStatus
 
     override protected void Awake()
     {
+        equipments = GetComponent<Equipable>();
+        buffs = GetComponent<Buffable>();
+
         //RefreshAll();
         for (Ability.Stat i = 0; i < Ability.Stat.EnumTotal; ++i)
         {

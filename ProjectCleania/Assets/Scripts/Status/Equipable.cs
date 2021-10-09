@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentSlot : MonoBehaviour
+public class Equipable : MonoBehaviour
 {
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
 
-    Dictionary<Ability.Stat, float> _stats
+    Dictionary<Ability.Stat, float> _staticOptions
         = new Dictionary<Ability.Stat, float>();
-    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _enchants
+    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _dynamicOptions
         = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
 
     //public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> Enchants
@@ -24,7 +24,7 @@ public class EquipmentSlot : MonoBehaviour
             KeyValuePair<Ability.Stat, Ability.Enhance> key
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            if (_enchants.TryGetValue(key, out float value))
+            if (_dynamicOptions.TryGetValue(key, out float value))
                 return value;
             else
                 return float.NaN;
@@ -35,7 +35,7 @@ public class EquipmentSlot : MonoBehaviour
     {
         get
         {
-            if (_stats.TryGetValue(stat, out float value))
+            if (_staticOptions.TryGetValue(stat, out float value))
                 return value;
             else
                 return float.NaN;
@@ -84,8 +84,8 @@ public class EquipmentSlot : MonoBehaviour
     void Refresh()
     {
         // reset
-        _stats.Clear();
-        _enchants.Clear();
+        _staticOptions.Clear();
+        _dynamicOptions.Clear();
 
 
         // getting equipment properties
@@ -94,26 +94,26 @@ public class EquipmentSlot : MonoBehaviour
             if (_equipments[i] != null)
             {
                 // static properties
-                foreach (var key_value in _equipments[i].StaticProperties) 
+                foreach (var key_value in _equipments[i].StaticOptions) 
                 {
-                    if (!_stats.ContainsKey(key_value.Key))
-                        _stats[key_value.Key] = 0;
+                    if (!_staticOptions.ContainsKey(key_value.Key))
+                        _staticOptions[key_value.Key] = 0;
 
-                    _stats[key_value.Key] += key_value.Value;
+                    _staticOptions[key_value.Key] += key_value.Value;
                 }
 
                 // dynamic properties
-                foreach (var key_value in _equipments[i].DynamicProperties)  
+                foreach (var key_value in _equipments[i].DynamicOptions)  
                 {
                     switch (key_value.Key.Value)
                     {
                         case Ability.Enhance.Addition:
                         case Ability.Enhance.Absolute:
                             {
-                                if (!_enchants.ContainsKey(key_value.Key))
-                                    _enchants[key_value.Key] = 0;
+                                if (!_dynamicOptions.ContainsKey(key_value.Key))
+                                    _dynamicOptions[key_value.Key] = 0;
 
-                                _enchants[key_value.Key] += key_value.Value;
+                                _dynamicOptions[key_value.Key] += key_value.Value;
                             }
                             break;
 
@@ -123,20 +123,20 @@ public class EquipmentSlot : MonoBehaviour
                         case Ability.Enhance.PosMul_Percent:
                         case Ability.Enhance.Addition_Percent:
                             {
-                                if (!_enchants.ContainsKey(key_value.Key))
-                                    _enchants[key_value.Key] = 1;
+                                if (!_dynamicOptions.ContainsKey(key_value.Key))
+                                    _dynamicOptions[key_value.Key] = 1;
 
                                 switch (key_value.Key.Value)
                                 {
                                     case Ability.Enhance.Chance_Percent:
                                     case Ability.Enhance.NegMul_Percent:
-                                        _enchants[key_value.Key] *= 1-key_value.Value;
+                                        _dynamicOptions[key_value.Key] *= 1-key_value.Value;
                                         break;
                                     case Ability.Enhance.PosMul_Percent:
-                                        _enchants[key_value.Key] *= 1+key_value.Value;
+                                        _dynamicOptions[key_value.Key] *= 1+key_value.Value;
                                         break;
                                     case Ability.Enhance.Addition_Percent:
-                                        _enchants[key_value.Key] += key_value.Value;
+                                        _dynamicOptions[key_value.Key] += key_value.Value;
                                         break;
                                 }
                             }
