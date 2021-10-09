@@ -6,20 +6,20 @@ public class QuestGiver : MonoBehaviour
 {
     public List<Quest> questList;
 
-    public void Talk(QuestReciever playerQuestReciever)
+    //public void GiveQuestWhileTalking(QuestReciever playerQuestReciever)
+    //{
+    //    Quest availableQuest = GetAvailableQuest(playerQuestReciever);
+    //    if (availableQuest == null)
+    //        return;
+
+    //    GiveQuest(playerQuestReciever, availableQuest);
+    //}
+
+    public void GiveQuest(QuestReciever playerQuestReciever)
     {
         Quest availableQuest = GetAvailableQuest(playerQuestReciever);
         if (availableQuest == null)
             return;
-
-        GiveQuest(playerQuestReciever, availableQuest);
-    }
-
-    public void GiveQuest(QuestReciever playerQuestReciever, Quest availableQuest)
-    {
-        //Quest availableQuest = GetAvailableQuest(playerQuestReciever);
-        //if (availableQuest == null)
-        //    return;
 
         playerQuestReciever.GetNewQuest(availableQuest);
     }
