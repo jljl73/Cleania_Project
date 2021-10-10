@@ -95,7 +95,7 @@ public class EquipableSO : ScriptableObject
             if (_equipments[i] != null)
             {
                 // static properties
-                foreach (var key_value in _equipments[i].StaticProperties)
+                foreach (var key_value in _equipments[i].StaticOptions)
                 {
                     if (!_stats.ContainsKey(key_value.Key))
                         _stats[key_value.Key] = 0;
@@ -104,7 +104,7 @@ public class EquipableSO : ScriptableObject
                 }
 
                 // dynamic properties
-                foreach (var key_value in _equipments[i].DynamicProperties)
+                foreach (var key_value in _equipments[i].DynamicOptions)
                 {
                     switch (key_value.Key.Value)
                     {

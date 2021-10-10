@@ -18,9 +18,9 @@ public class Equipment //: IEnumerable, IEnumerator
 
     public Type EquipmentType = Type.MainWeapon;
 
-    Dictionary<Ability.Stat, float> _stats
+    Dictionary<Ability.Stat, float> _staticOptions
         = new Dictionary<Ability.Stat, float>();
-    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _enchants
+    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _dynamicOptions
         = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
 
     /// <summary>
@@ -28,9 +28,9 @@ public class Equipment //: IEnumerable, IEnumerator
     ///  use this[stat] to modify stats.
     ///  * created for foreach access
     /// </summary>
-    public Dictionary<Ability.Stat, float> StaticProperties
+    public Dictionary<Ability.Stat, float> StaticOptions
     {
-        get { return new Dictionary<Ability.Stat, float>(_stats); }
+        get { return new Dictionary<Ability.Stat, float>(_staticOptions); }
     }
     
     /// <summary>
@@ -38,16 +38,16 @@ public class Equipment //: IEnumerable, IEnumerator
     ///  use this[stat, enhance] to modify enchants.
     ///  * created for foreach access
     /// </summary>
-    public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> DynamicProperties
+    public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> DynamicOptions
     {
-        get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_enchants); }
+        get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_dynamicOptions); }
     }
 
     public float this[Ability.Stat stat]                                                   // stat indexer
     {
         get
         {
-            if (_stats.TryGetValue(stat, out float value))
+            if (_staticOptions.TryGetValue(stat, out float value))
                 return value;
             else
                 return float.NaN;
@@ -55,10 +55,10 @@ public class Equipment //: IEnumerable, IEnumerator
         set
         {
             if (float.IsNaN(value))                         // set value NaN to remove property
-                if (_stats.ContainsKey(stat))
-                    _stats.Remove(stat);
+                if (_staticOptions.ContainsKey(stat))
+                    _staticOptions.Remove(stat);
                 else
-                    _stats[stat] = value;
+                    _staticOptions[stat] = value;
         }
     }
 
@@ -69,7 +69,7 @@ public class Equipment //: IEnumerable, IEnumerator
             KeyValuePair<Ability.Stat, Ability.Enhance> key
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            if (_enchants.TryGetValue(key, out float value))
+            if (_dynamicOptions.TryGetValue(key, out float value))
                 return value;
             else
                 return float.NaN;
@@ -80,19 +80,19 @@ public class Equipment //: IEnumerable, IEnumerator
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
             if (float.IsNaN(value))                         // set value NaN to remove property
-                if (_enchants.ContainsKey(key))
-                    _enchants.Remove(key);
+                if (_dynamicOptions.ContainsKey(key))
+                    _dynamicOptions.Remove(key);
                 else
-                    _enchants[key] = value;
+                    _dynamicOptions[key] = value;
         }
     }
 
     
-    public List<string> StaticProperties_ToString()
+    public List<string> StaticOptions_ToString()
     {
         List<string> string_list = new List<string>();
 
-        foreach(var key_value in _stats)
+        foreach(var key_value in _staticOptions)
         {
             string_list.Add($"{key_value.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{key_value.Value}");
         }
@@ -100,11 +100,11 @@ public class Equipment //: IEnumerable, IEnumerator
         return string_list;
     }
 
-    public List<string> DynamicProperties_ToString()
+    public List<string> DynamicOptions_ToString()
     {
         List<string> string_list = new List<string>();
 
-        foreach (var key_value in _enchants)
+        foreach (var key_value in _dynamicOptions)
         {
             switch (key_value.Key.Value)
             {

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class AbilityStatus : MonoBehaviour
 {
-
     Status status;          // status is essential unlike equips or buffs
-    EquipmentSlot equipments;
-    BuffManager buffs;
+    Equipable equipments;
+    Buffable buffs;
 
     protected float[] _stats = new float[(int)Ability.Stat.EnumTotal];
 
@@ -29,8 +28,8 @@ public class AbilityStatus : MonoBehaviour
     virtual protected void Awake()
     {
         status = GetComponent<Status>();
-        equipments = GetComponent<EquipmentSlot>();
-        buffs = GetComponent<BuffManager>();
+        equipments = GetComponent<Equipable>();
+        buffs = GetComponent<Buffable>();
 
         //RefreshAll();
         for (Ability.Stat i = 0; i < Ability.Stat.EnumTotal; ++i)

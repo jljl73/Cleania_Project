@@ -9,7 +9,7 @@ public class SinglePlayer : MonoBehaviour
         GameManager.Instance.SinglePlayer = this.gameObject;
         GameManager.Instance.PlayerAbility = GetComponent<AbilityStatus>();
         GameManager.Instance.PlayerStatus = GetComponent<Status>();
-        GameManager.Instance.PlayerEquipments = GetComponent<EquipmentSlot>();
-        GameManager.Instance.PlayerBuffs = GetComponent<BuffManager>();
+        GameManager.Instance.PlayerEquipments = GetComponent<Equipable>();
+        GameManager.Instance.PlayerBuffs = GetComponent<Buffable>();
     }
 }

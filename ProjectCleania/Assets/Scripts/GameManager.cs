@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
     public GameObject SinglePlayer;
     public AbilityStatus PlayerAbility;
     public Status PlayerStatus;
-    public EquipmentSlot PlayerEquipments;
-    public BuffManager PlayerBuffs;
+    public Equipable PlayerEquipments;
+    public Buffable PlayerBuffs;
 
 
     void Awake()
