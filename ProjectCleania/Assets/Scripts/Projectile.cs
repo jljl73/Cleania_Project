@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public AbilityStatus abilityStatus;
     public float moveSpeed = 5.0f;
+    public float skillScale = 5.4f;
+
     void Start()
     {
+        Invoke("OnOffCollider", 1.0f);
         Destroy(gameObject, 2.0f);
     }
     
@@ -18,16 +22,18 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
-        {
-            //other.GetComponent<EnemyState>().Damaged();
-            EnemyAI enemyAI = other.GetComponent<EnemyAI>();
-            if (enemyAI != null)
-                enemyAI.Die();
-
-            Destroy(gameObject);
-        }
+        //if (other.tag == "Enemy")
+        //{
+        //    if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+        //        other.GetComponent<Enemy>().Die();
+        //}
     }
 
+    void OnOffCollider()
+    {
+        Collider collider = GetComponent<Collider>();
+        collider.enabled = false;
+        collider.enabled = true;
+    }
 
 }

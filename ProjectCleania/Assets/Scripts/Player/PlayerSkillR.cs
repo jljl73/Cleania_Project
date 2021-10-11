@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerSkillR : Skill
 {
-    public PlayerMovement playerMovement;
+    public AbilityStatus abilityStatus;
+    public float skillScale = 1.0f;
+
     Collider attackArea;
 
     void Start()
@@ -14,10 +16,8 @@ public class PlayerSkillR : Skill
 
     public override void AnimationActivate()
     {
-        animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 6);
-        stateMachine.Transition(StateMachine.enumState.MoveAttack);
-
+        animator.SetBool("OnSkill", true);
     }
 
     public override void Activate()
@@ -25,17 +25,19 @@ public class PlayerSkillR : Skill
         attackArea.enabled = true;
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
-        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
         attackArea.enabled = false;
     }
 
-   private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        //if (other.tag == "Enemy")
-        //    Debug.Log("R Hit");
+        if (other.tag == "Enemy")
+        {
+            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+                other.GetComponent<Enemy>().Die();
+        }
     }
- 
+
 }

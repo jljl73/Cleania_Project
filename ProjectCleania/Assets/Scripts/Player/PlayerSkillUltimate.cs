@@ -24,7 +24,7 @@ public class PlayerSkillUltimate : Skill
 
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
 
     }

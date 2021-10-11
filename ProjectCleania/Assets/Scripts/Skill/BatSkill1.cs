@@ -9,56 +9,36 @@ public class BatSkill1 : Skill
     public float bloodTime = 5.0f;
 
     Collider col;
-    AbilityStatus myAbility;
+    Enemy enemy;
 
     private void Start()
     {
+        enemy = transform.parent.parent.GetComponent<Enemy>();
         col = GetComponent<Collider>();
-        myAbility = GetComponentInParent<AbilityStatus>();
     }
 
     public override void AnimationActivate()
     {
-        animator.SetBool("Attack Bite", true);
+        animator.SetTrigger("Attack Bite");
         //animator.SetInteger("Skill", 1);
-        stateMachine.Transition(StateMachine.enumState.Attacking);
-
-        col.enabled = true;
-
-        Invoke("AnimationDeactivate", 1.0f);
     }
 
     override public void Activate()
     {
         col.enabled = true;
-        Invoke("OffSkill", 1.0f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Debug.Log("bat skill1 Hit");
-
-            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
-            //if (Random.Range(0.0f, 1.0f) < 0.3f)
-            {
-                //other.GetComponent<BuffManager>().Blood(bloodTime);
-            }
-
+            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
         }
     }
 
-    void OffSkill()
+    public override void Deactivate()
     {
         col.enabled = false;
-    }
-
-    public override void AnimationDeactivate()
-    {
-        stateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("Attack Bite", false);
-        OffSkill();
     }
 
 }

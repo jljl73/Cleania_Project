@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    public StateMachine stateMachine;
     public Animator animator;
 
     public bool isAttacking;
@@ -22,5 +21,5 @@ public abstract class Skill : MonoBehaviour
 
     public abstract void AnimationActivate();
 
-    public abstract void AnimationDeactivate();
+    public abstract void Deactivate();
 }

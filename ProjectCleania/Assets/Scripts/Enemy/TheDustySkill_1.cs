@@ -5,28 +5,38 @@ using UnityEngine.Events;
 
 public class TheDustySkill_1 : Skill
 {
-    Collider attackCollider;
+    public float DamageScale = 10;
+    Enemy enemy;
+    Collider col;
     public UnityEvent unityEvent;
 
     void Start()
     {
-        attackCollider = GetComponent<Collider>();
+        col = GetComponent<Collider>();
+        enemy = transform.parent.parent.GetComponent<Enemy>();
     }
 
     public override void Activate()
     {
-        attackCollider.enabled = true;
+        col.enabled = true;
     }
 
     public override void AnimationActivate()
     {
-        animator.SetBool("RightSlash", true);
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
-        animator.SetBool("RightSlash", false);
-        attackCollider.enabled = false;
+        animator.SetFloat("Probability", Random.Range(0, 1.0f));
+        col.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
+        }
     }
 
 }

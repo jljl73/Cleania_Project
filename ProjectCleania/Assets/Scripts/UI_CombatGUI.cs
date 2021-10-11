@@ -28,10 +28,10 @@ public class UI_CombatGUI : MonoBehaviour
     void Start()
     {
         player = GameManager.Instance.SinglePlayer;
-        SkillManager = player.GetComponent<PlayerSkillManager>();
+        SkillManager = player.GetComponent<Player>().playerSkillManager;
 
         Skills_CoolPercent = new float[Skills.Length];
-        playerStatus = player.GetComponent<AbilityStatus>();
+        playerStatus = player.GetComponent<Player>().abilityStatus;
     }
 
     // Update is called once per frame

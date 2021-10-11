@@ -17,9 +17,9 @@ public class EnemySkillManager : MonoBehaviour
         skills[type].Activate();
     }
 
-    public void AnimationDeactivate(int type)
+    public void DeactivateSkill(int type)
     {
-        skills[type].AnimationDeactivate();
+        skills[type].Deactivate();
     }
 
 

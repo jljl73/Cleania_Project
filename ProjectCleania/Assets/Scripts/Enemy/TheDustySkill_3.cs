@@ -10,7 +10,7 @@ public class TheDustySkill_3 : Skill
 
     private void Start()
     {
-        enemyEvent.RegisterListener(Activate);
+        //enemyEvent.RegisterListener(Activate);
     }
 
     public override void Activate()
@@ -29,7 +29,7 @@ public class TheDustySkill_3 : Skill
         animator.SetTrigger("Cast");
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
 
     }

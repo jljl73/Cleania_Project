@@ -12,7 +12,6 @@ public class PlayerSkill1 : Skill
 
     public override void AnimationActivate()
     {
-        stateMachine.Transition(StateMachine.enumState.Attacking);
         animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 1);
     }
@@ -40,19 +39,17 @@ public class PlayerSkill1 : Skill
             yield return new WaitForSeconds(1.0f);
         }
 
-        //status.GetComponent<PlayerStatus>().SetSpeed(speed);
         bSkill = false;
     }
 
-    public void addDeadEnemy()
+    public void AddDeadEnemy()
     {
         if(bSkill)
             ++nDeadEnemy;
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
-        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
     }
 }

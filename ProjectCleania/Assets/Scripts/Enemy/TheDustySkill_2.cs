@@ -16,9 +16,9 @@ public class TheDustySkill_2 : Skill
         animator.SetTrigger("Projectile");
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
-
+        animator.SetFloat("Probability", Random.Range(0, 1.0f));
     }
 
 }

@@ -9,45 +9,34 @@ public class HighDustySkill1 : Skill
     //Collider col
     AbilityStatus myAbility;
     public GameObject DustBall;
+    public Enemy enemy;
+
+    int skillCount = 0;
 
     private void Start()
     {
-        //col = GetComponent<Collider>();
         myAbility = GetComponentInParent<AbilityStatus>();
     }
 
     public override void AnimationActivate()
     {
-        animator.SetBool("Attack ThrowDust", true);
-        //animator.SetInteger("Skill", 1);
-        stateMachine.Transition(StateMachine.enumState.Attacking);
-
-        //col.enabled = true;
-        Activate();
-
-        Invoke("AnimationDeactivate", 0.5f);
     }
 
     override public void Activate()
     {
-        //col.enabled = true;
-        GameObject ball = Instantiate(DustBall, transform);
-        ball.GetComponent<HighDusty_DustBall>().owner = gameObject;
+        GameObject ball = Instantiate(DustBall, transform.position, transform.rotation);
+        ball.GetComponent<HighDusty_DustBall>().owner = enemy.gameObject;
         ball.GetComponent<HighDusty_DustBall>().DamageScale = DamageScale;
-        ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up/2)*200.0f);
-        //Invoke("OffSkill", 1.0f);
+        ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up / 2) * 200.0f);
+
+        if (++skillCount == 3)
+        {
+            skillCount = 0;
+            enemy.enemyMove.RunAway();
+        }
     }
 
-    void OffSkill()
+    public override void Deactivate()
     {
-        //col.enabled = false;
     }
-
-    public override void AnimationDeactivate()
-    {
-        stateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("Attack ThrowDust", false);
-        OffSkill();
-    }
-
 }
