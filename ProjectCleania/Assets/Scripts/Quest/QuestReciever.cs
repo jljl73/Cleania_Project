@@ -67,4 +67,6 @@ public class QuestReciever : MonoBehaviour
     {
         // 받은 상을 플레이어에게 적용
     }
+
+    
 }
