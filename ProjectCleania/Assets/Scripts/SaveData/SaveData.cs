@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveData : MonoBehaviour
+public class SaveData : MonoBehaviour, iSaveData
 {
-    public string characterName;
-    string jsonString;
+    public string characterName;    
     string Path
     {
         get
@@ -16,9 +15,15 @@ public class SaveData : MonoBehaviour
     }
 
     [SerializeField]
-    string itemJson;
+    double playTime = 0;
+
+
     [SerializeField]
     SaveData_Item item = new SaveData_Item();
+
+    AbilityStatus player;
+    [SerializeField]
+    string playerJson;
 
 
 
@@ -28,7 +33,7 @@ public class SaveData : MonoBehaviour
         {
             JsonUtility.FromJsonOverwrite(File.ReadAllText(Path), this);
 
-            SubLoad();
+            AfterLoad();
 
             return true;
         }
@@ -42,22 +47,24 @@ public class SaveData : MonoBehaviour
 
     public void Save()
     {
-        SubSave();
+        BeforeSave();
 
-        jsonString = JsonUtility.ToJson(this, true);
-        File.WriteAllText(Path, jsonString);
-        print($"saved in {Path}");
+        File.WriteAllText(Path, JsonUtility.ToJson(this, true));
+        //print($"saved in {Path}");
     }
 
-    void SubLoad()
+    public void AfterLoad()
     {
-        JsonUtility.FromJsonOverwrite(itemJson, item);
+        item.AfterLoad();
+        JsonUtility.FromJsonOverwrite(playerJson, player);
     }
 
-    void SubSave()
+    public void BeforeSave()
     {
-        itemJson = JsonUtility.ToJson(item, true);
+        item.BeforeSave();
+        playerJson = JsonUtility.ToJson(player);
     }
+
 
     private void Awake()
     {
@@ -67,12 +74,14 @@ public class SaveData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameManager.Instance.PlayerAbility;
+
         Load();
     }
 
     private void Update()
     {
-        item.wow2++;
+        playTime += Time.deltaTime;
     }
 
     private void OnDestroy()

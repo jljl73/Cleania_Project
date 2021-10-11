@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class AbilityStatus : MonoBehaviour
 {
     Status status;          // status is essential unlike equips or buffs
@@ -18,9 +19,12 @@ public class AbilityStatus : MonoBehaviour
         }
     }
 
+    [SerializeField]
     float _HP = 100;
     public float HP
     { get => _HP; }
+
+    [SerializeField]
     float _MP = 100;
     public float MP
     { get => _MP; }
