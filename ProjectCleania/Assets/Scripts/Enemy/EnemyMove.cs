@@ -5,24 +5,29 @@ using UnityEngine.AI;
 
 public class EnemyMove : MonoBehaviour
 {
+    Enemy enemy;
     NavMeshAgent nav;
-    StateMachine state;
-    GameObject targetObject = null;
+    StateMachine stateMachine;
     Animator animator;
+    GameObject targetObject = null;
+    Vector3 targetPosition;
+
+    bool isRunAway;
 
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        state = GetComponent<StateMachine>();
-
+        enemy = transform.parent.GetComponent<Enemy>();
+        nav = transform.parent.GetComponent<NavMeshAgent>();
+        animator = transform.parent.GetComponent<Animator>();
+        stateMachine = transform.parent.GetComponent<StateMachine>();
+        StartCoroutine(SetPositionToTarget());
     }
 
     void FixedUpdate()
     {
-        if (targetObject == null) return;
+        if (targetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
 
-        if (state.State == StateMachine.enumState.Idle)
+        if (stateMachine.CompareState(StateMachine.enumState.Idle))
         {
             nav.isStopped = false;
             Rotate();
@@ -30,20 +35,66 @@ public class EnemyMove : MonoBehaviour
         else
             nav.isStopped = true;
 
-        nav.SetDestination(targetObject.transform.position);
+        AccelerateRotation();
+        nav.SetDestination(targetPosition);
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
+    }
+
+    void AccelerateRotation()
+    {
+        if (Vector3.Distance(targetPosition, transform.position) < 0.1f) return;
+
+        Vector3 rotateForward; //= Vector3.zero;
+
+        rotateForward = Vector3.Normalize(targetPosition - transform.position);
+        rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
+        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward, 
+            360f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
+
+        enemy.transform.LookAt(transform.position + limit);
     }
 
     public void SetTarget(GameObject target)
     {
         targetObject = target;
-        //state.Transition(StateMachine.enumState.Chasing);
     }
 
     public void ReleaseTarget()
     {
         targetObject = null;
-        state.Transition(StateMachine.enumState.Idle);
+        stateMachine.Transition(StateMachine.enumState.Idle);
+    }
+
+    public void RunAway()
+    {
+        if (targetObject == null) return;
+
+        animator.SetBool("OnSkill", false);
+        isRunAway = true;
+        targetPosition = (transform.position - targetObject.transform.position) * 3;
+        targetPosition += transform.position;
+        Invoke("StopRunAway", 5.0f);
+    }
+
+    void StopRunAway()
+    {
+        isRunAway = false;
+    }
+
+    public void WarpToPosition(Vector3 target)
+    {
+        transform.position = target;
+    }
+
+    IEnumerator SetPositionToTarget()
+    {
+        while(true)
+        {
+            if(targetObject !=null)
+                targetPosition = targetObject.transform.position;
+
+            yield return new WaitForSeconds(Random.Range(4.0f, 6.0f));
+        }
     }
 
     private void Rotate()
@@ -60,5 +111,10 @@ public class EnemyMove : MonoBehaviour
             180.0f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
 
         transform.LookAt(this.transform.position + limit);
+    }
+
+    public bool ExistTarget()
+    {
+        return targetObject != null;
     }
 }

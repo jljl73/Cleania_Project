@@ -29,6 +29,7 @@ public class ChatManager : MonoBehaviour
     
     private void Start()
     {
+        GameManager.Instance.chatManager = this;
         ShowAcquireClean(321);
         ShowAcquireExp(3215);
         ShowAcquireItem("dsfdsf");

@@ -22,7 +22,7 @@ public class EnemyGroupManager : MonoBehaviour
     {
         foreach (var e in enemies)
         {
-            e.GetComponent<EnemyMove>().SetTarget(target);
+            e.GetComponent<Enemy>().SetTarget(target);
         }
         this.target = target;
     }
@@ -32,7 +32,7 @@ public class EnemyGroupManager : MonoBehaviour
         if (CheckCollidedObject() > 0) return;
 
         foreach (var e in enemies)
-            e.GetComponent<EnemyMove>().ReleaseTarget();
+            e.GetComponent<Enemy>().ReleaseTarget();
     }
 
     int CheckCollidedObject()

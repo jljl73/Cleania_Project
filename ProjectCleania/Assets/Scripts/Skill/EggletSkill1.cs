@@ -7,51 +7,34 @@ public class EggletSkill1 : Skill
     public float DamageScale = 10;
 
     Collider col;
-    AbilityStatus myAbility;
+    Enemy enemy;
 
     private void Start()
     {
         col = GetComponent<Collider>();
-        myAbility = GetComponentInParent<AbilityStatus>();
+        enemy = transform.parent.parent.GetComponent<Enemy>();
     }
 
     public override void AnimationActivate()
     {
-        animator.SetBool("Attack BodyBlow", true);
-        //animator.SetInteger("Skill", 1);
-        stateMachine.Transition(StateMachine.enumState.Attacking);
-
         col.enabled = true;
-
-        Invoke("AnimationDeactivate", 0.5f);
     }
 
     override public void Activate()
     {
         col.enabled = true;
-        Invoke("OffSkill", 1.0f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Debug.Log("egglet skill1 Hit");
-
-            GameManager.Instance.PlayerAbility.AttackedBy(myAbility, DamageScale);
+            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
         }
     }
 
-    void OffSkill()
+    public override void Deactivate()
     {
         col.enabled = false;
     }
-
-    public override void AnimationDeactivate()
-    {
-        stateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("Attack BodyBlow", false);
-        OffSkill();
-    }
-
 }

@@ -1,25 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StateMachine : MonoBehaviour
 {
     public enum enumState
     {
-        Idle, MoveAttack, Attacking, Chasing, Attacked
+        Idle, MoveAttack, Walk, Attacking, Chasing, Attacked, ReadyAttack, Dead
     };
 
-    
-    public enumState _state;
-    public enumState State { get { return _state; } }
+    public enumState state;
+    public enumState State { get { return state; } }
 
     private void Start()
     {
-        _state = enumState.Idle;
+        state = enumState.Idle;
     }
 
     public void Transition(enumState nextState)
     {
-        _state = nextState;
+        if (state == enumState.Dead) return;
+        state = nextState;
+    }
+
+    public bool CompareState(enumState state)
+    {
+        return this.state == state;
     }
 }

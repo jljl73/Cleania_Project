@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
     public Status PlayerStatus;
     public EquipmentSlot PlayerEquipments;
     public BuffManager PlayerBuffs;
-
+    public Player player;
+    public ChatManager chatManager;
 
     void Awake()
     {

@@ -10,7 +10,8 @@ public class EnemyChase : MonoBehaviour
     void Start()
     {
         enemy = transform.parent.gameObject;
-        enemySpawner.GetComponent<EnemyGroupManager>().AddMember(transform.parent.gameObject);
+        enemySpawner = transform.parent.GetComponent<Enemy>().enemySpawner;
+        enemySpawner.GetComponent<EnemyGroupManager>().AddMember(enemy);
     }
 
     void OnTriggerEnter(Collider other)
@@ -21,4 +22,8 @@ public class EnemyChase : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(enemy);
+    }
 }

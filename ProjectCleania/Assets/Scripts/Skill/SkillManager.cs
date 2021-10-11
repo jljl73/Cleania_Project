@@ -129,7 +129,7 @@ public class SkillManager : MonoBehaviour
 
     public void AnimationDeactivate(int type)
     {
-        skills[type].AnimationDeactivate();
+        skills[type].Deactivate();
         //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 

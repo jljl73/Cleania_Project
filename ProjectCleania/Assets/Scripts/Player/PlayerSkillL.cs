@@ -15,29 +15,21 @@ public class PlayerSkillL : Skill
 
     // Update is called once per frame
 
+    public override void AnimationActivate()
+    {
+        animator.SetBool("OnSkill", true);
+        animator.SetInteger("Skill", 5);
+    }
+
     public override void Activate()
     {
         attackArea.enabled = true;
     }
 
-    public override void AnimationActivate()
+    public override void Deactivate()
     {
-        stateMachine.Transition(StateMachine.enumState.Attacking);
-        animator.SetBool("OnSkill", true);
-
-        animator.SetInteger("Skill", 5);
-    }
-
-    public void OffSkill()
-    {
-        attackArea.enabled = false;
-    }
-
-    public override void AnimationDeactivate()
-    {
-        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
-        OffSkill();
+        attackArea.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,11 +38,6 @@ public class PlayerSkillL : Skill
         {
             Debug.Log("L Hit");
 
-            EnemyAI enemyAI = other.GetComponent<EnemyAI>();
-            if (enemyAI != null)
-            {
-                enemyAI.Die();
-            }
         }
     }
 

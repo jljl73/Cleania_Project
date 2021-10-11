@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerSkill2 : Skill
 {
-    public int damage = 10;
-    public int reduceArmor = 10;
+    public AbilityStatus abilityStatus;
+    public float skillScale = 1.0f;
 
     Collider col;
 
@@ -16,38 +16,33 @@ public class PlayerSkill2 : Skill
 
     public override void AnimationActivate()
     {
-        animator.SetBool("OnSkill", true);
         animator.SetInteger("Skill", 2);
-        stateMachine.Transition(StateMachine.enumState.Attacking);
-
-        col.enabled = true;
+        animator.SetBool("OnSkill", true);
     }
 
     override public void Activate()
     {
         col.enabled = true;
-        Invoke("OffSkill", 1.0f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Enemy")
         {
-            Debug.Log("2 Hit");
-            //other.GetComponent<Status>().Damaged(damage);
-            // n√ ∞£
-            //other.GetComponent<Status>().ReduceArmor(damage, n);
+            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+                other.GetComponent<Enemy>().Die();
+            else
+                other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);
         }
     }
-    
+
     void OffSkill()
     {
         col.enabled = false;
     }
 
-    public override void AnimationDeactivate()
+    public override void Deactivate()
     {
-        stateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
         OffSkill();
     }

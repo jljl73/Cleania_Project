@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySkillTrigger : MonoBehaviour
 {
     public Skill skill;
-    public StateMachine enemyStateMachine;
+    public Animator animator;
 
     WaitForSeconds waitForSeconds = new WaitForSeconds(3.0f);
     bool isCouroutineRunning = false;
@@ -14,24 +14,14 @@ public class EnemySkillTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        enemyStateMachine.Transition(StateMachine.enumState.Attacking);
-        if (!isCouroutineRunning) StartCoroutine(ActivateSkill());
+        animator.SetBool("OnSkill", true);
     }
 
     void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        enemyStateMachine.Transition(StateMachine.enumState.Idle);
+
+        animator.SetBool("OnSkill", false);
     }
 
-    IEnumerator ActivateSkill()
-    {
-        isCouroutineRunning = true;
-        while (enemyStateMachine.State == StateMachine.enumState.Attacking)
-        {
-            skill.AnimationActivate();
-            yield return waitForSeconds;
-        }
-        isCouroutineRunning = false;
-    }
 }

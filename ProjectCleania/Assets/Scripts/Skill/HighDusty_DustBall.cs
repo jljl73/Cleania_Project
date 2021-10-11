@@ -14,17 +14,11 @@ public class HighDusty_DustBall : MonoBehaviour
     AbilityStatus ownerAbility;
     bool isBall = true;
 
-    //private void Start()
-    //{
-    //    GetComponent<Rigidbody>().AddForce((transform.up + transform.forward)*100.0f);
-    //}
-
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        ownerAbility = owner.GetComponentInParent<AbilityStatus>();
-
-        if (playerAbility == null && other.gameObject.CompareTag("Player"))
-            playerAbility = other.gameObject.GetComponent<AbilityStatus>();
+        ownerAbility = owner.GetComponent<Enemy>().abilityStatus;
+        if (other.CompareTag("Player"))
+            playerAbility = other.GetComponent<Player>().abilityStatus;
 
         if (isBall)
         {
@@ -47,7 +41,7 @@ public class HighDusty_DustBall : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (!isBall)
             if (other.gameObject.CompareTag("Player"))

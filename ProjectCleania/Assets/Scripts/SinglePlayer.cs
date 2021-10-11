@@ -11,5 +11,6 @@ public class SinglePlayer : MonoBehaviour
         GameManager.Instance.PlayerStatus = GetComponent<Status>();
         GameManager.Instance.PlayerEquipments = GetComponent<EquipmentSlot>();
         GameManager.Instance.PlayerBuffs = GetComponent<BuffManager>();
+        GameManager.Instance.player = GetComponent<Player>();
     }
 }

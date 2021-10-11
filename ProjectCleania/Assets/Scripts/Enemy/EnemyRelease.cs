@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class EnemyRelease : MonoBehaviour
 {
-    public GameObject enemySpawner;
+    Enemy enemy;
+
+    void Start()
+    {
+        enemy = transform.parent.GetComponent<Enemy>();
+    }
 
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
-            enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
+            enemy.enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
     }
 }

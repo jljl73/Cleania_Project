@@ -19,9 +19,11 @@ public class AbilityStatus : MonoBehaviour
         }
     }
 
+    [SerializeField]
     float _HP = 100;
     public float HP
     { get => _HP; }
+    [SerializeField]
     float _MP = 100;
     public float MP
     { get => _MP; }
@@ -180,7 +182,7 @@ public class AbilityStatus : MonoBehaviour
 
     virtual public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
     {
-        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))   // if dodge success, damage == 0
+        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))
             return 0;
 
         float finalDamage = attacker[Ability.Stat.Attack] * skillScale;
@@ -191,6 +193,8 @@ public class AbilityStatus : MonoBehaviour
         finalDamage *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
 
         finalDamage *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
+
+        //
 
         if (_HP > finalDamage)
             _HP -= finalDamage;
@@ -220,7 +224,7 @@ public class AbilityStatus : MonoBehaviour
         else return false;
     }
 
-    public float getStat(Ability.Stat stat)
+    public float GetStat(Ability.Stat stat)
     {
         return this[stat];
     }
