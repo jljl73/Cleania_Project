@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063b55561fbd1634c821d9897b86676b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 3998833969856424691}
+  stateMachine: {fileID: 0}
   animator: {fileID: 5603283165797389124}
   isAttacking: 0
   CoolTime: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1ab7c7345fa32489c24f96e41e8ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 3998833969856424691}
+  stateMachine: {fileID: 0}
   animator: {fileID: 5603283165797389124}
   isAttacking: 0
   CoolTime: 1.5
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e92f82b11153c74b94e3fb208196e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 3998833969856424691}
+  stateMachine: {fileID: 0}
   animator: {fileID: 5603283165797389124}
   isAttacking: 0
   CoolTime: 3
@@ -505,14 +505,13 @@ GameObject:
   - component: {fileID: 4739194}
   - component: {fileID: 1304943514554244153}
   - component: {fileID: 3998833969856424689}
-  - component: {fileID: 7463862372460928624}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5603283165797389125
 Transform:
   m_ObjectHideFlags: 0
@@ -733,18 +732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7463862372460928624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5603283165797389126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3df6cb8bd876c246aafa597c5521d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5603283166733987953
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,13 +878,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b0954b3da9ffd4587766cf2f3633e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 3998833969856424691}
+  stateMachine: {fileID: 0}
   animator: {fileID: 5603283165797389124}
   isAttacking: 0
   CoolTime: 5
   ConsumMP: 20
-  navMeshAgent: {fileID: 6772193168857397614}
-  playerMovement: {fileID: 6772193168857397611}
+  playerMovement: {fileID: 0}
   jumpDistance: 3.5
   passAvailable: 0
 --- !u!1 &5603283167574029082
@@ -943,7 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367dfb4120c1e914481c3f32841f0292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 3998833969856424691}
+  stateMachine: {fileID: 0}
   animator: {fileID: 5603283165797389124}
   isAttacking: 0
   CoolTime: 2
@@ -2920,7 +2906,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6772193167777711542}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.317, y: 0.122, z: 0.012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6772193167777225130}
@@ -3182,7 +3168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112c59c2aab3a7149b1eb3b9b343db12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 3998833969856424691}
+  stateMachine: {fileID: 0}
   animator: {fileID: 5603283165797389124}
   isAttacking: 0
   CoolTime: 4
