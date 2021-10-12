@@ -42,11 +42,10 @@ public class EnemyMove : MonoBehaviour
 
     void AccelerateRotation()
     {
-        if (Vector3.Distance(targetPosition, transform.position) < 0.1f) return;
 
         Vector3 rotateForward; //= Vector3.zero;
 
-        rotateForward = Vector3.Normalize(targetPosition - transform.position);
+        rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
         Vector3 limit = Vector3.Slerp(transform.forward, rotateForward, 
             360f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
