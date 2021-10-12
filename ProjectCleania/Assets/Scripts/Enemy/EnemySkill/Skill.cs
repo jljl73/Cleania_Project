@@ -6,15 +6,22 @@ public abstract class Skill : MonoBehaviour
 {
     public Animator animator;
 
-    public bool isAttacking;
+    public string SkillName;
+    [TextArea]
+    public string SkillDetails;
+
+    // public bool isAttacking;
     public float CoolTime;  // 추후 private 처리
     public float GetCoolTime { get { return CoolTime; } }
+    public float CreatedMP = 0f;
     public float ConsumMP = 0f;
 
+    public float speedMultiplier = 1.0f;
+
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
-        isAttacking = false;
+        // isAttacking = false;
     }
 
     public abstract void Activate();

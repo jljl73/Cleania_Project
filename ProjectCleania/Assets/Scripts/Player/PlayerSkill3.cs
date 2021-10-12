@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkill3 : Skill
+public class PlayerSkill3 : PlayerSkill
 {
     public GameObject hurricanePrefabs;
     public AbilityStatus abilityStatus;
     GameObject newProjectile;
 
+    protected new void Start()
+    {
+        base.Start();
+        animator.SetFloat("CleaningWind multiplier", speedMultiplier);
+    }
+
     public override void AnimationActivate()
     {
-        animator.SetInteger("Skill", 3);
+        //animator.SetInteger("Skill", 3);
         animator.SetBool("OnSkill", true);
+        animator.SetTrigger("CleaningWind");
     }
 
     public override void Deactivate()

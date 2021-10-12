@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkill2 : Skill
+public class PlayerSkill2 : PlayerSkill
 {
     public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
 
     Collider col;
 
-    private void Start()
+
+
+    protected new void Start()
     {
+        base.Start();
         col = GetComponent<Collider>();
+        animator.SetFloat("Sweeping multiplier", speedMultiplier);
     }
 
     public override void AnimationActivate()
     {
-        animator.SetInteger("Skill", 2);
+        //animator.SetInteger("Skill", 2);
         animator.SetBool("OnSkill", true);
+        animator.SetTrigger("Sweeping");
     }
 
     override public void Activate()

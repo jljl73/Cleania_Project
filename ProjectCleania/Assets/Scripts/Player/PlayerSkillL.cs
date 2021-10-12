@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillL : Skill
+public class PlayerSkillL : PlayerSkill
 {
     //public GameObject player;
     public PlayerMovement playerMovement;
     Collider attackArea;
 
-    void Start()
+    new void Start()
     {
         attackArea = GetComponent<Collider>();
+        //initialNavAgentR = navMeshAgent.radius;
+        base.Start();
+        animator.SetFloat("Dusting multiplier", speedMultiplier);
     }
 
     // Update is called once per frame
@@ -18,7 +21,7 @@ public class PlayerSkillL : Skill
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
-        animator.SetInteger("Skill", 5);
+        // animator.SetInteger("Skill", 5);
     }
 
     public override void Activate()

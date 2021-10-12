@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkill1 : Skill
+public class PlayerSkill1 : PlayerSkill
 {
     public BuffManager buffManager;
-    public float speed = 10.0f;
+    // public float speed = 10.0f;
     float duration = 0f;
     bool bSkill = false;
     int nDeadEnemy = 0;
 
+
+    protected new void Start()
+    {
+        base.Start();
+        animator.SetFloat("FairysWings multiplier", speedMultiplier);
+    }
+
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
-        animator.SetInteger("Skill", 1);
+        //animator.SetInteger("Skill", 1);
+        animator.SetTrigger("FairysWings");
     }
 
     override public void Activate()

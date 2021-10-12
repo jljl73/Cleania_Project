@@ -9,19 +9,28 @@ public class PlayerSkillManager : MonoBehaviour
     //public StateMachine stateMachine;
     AbilityStatus abilityStatus;
 
-    public Skill[] skills = new Skill[6];
+    PlayerSkill[] skills = new PlayerSkill[6];
     float[] coolTimePassed = new float[6];
     bool[] skillAvailable = new bool[6];
-    public float[] CoolTimePassedRatio = new float[6];
+
+    float[] CoolTimePassedRatio = new float[6];
+
+    public float GetCoolTimePassedRatio(int idx) { return CoolTimePassedRatio[idx]; }
+
+    SkillStorage skillStorage;
 
     void Awake()
     {
         player = transform.parent.GetComponent<Player>();
         abilityStatus = player.abilityStatus;
+
+        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
     }
 
     void Start()
     {
+        SetDefaultSkillSetting();
+
         for (int i = 0; i < skills.Length; i++)
         {
             coolTimePassed[i] = 1f;
@@ -82,5 +91,25 @@ public class PlayerSkillManager : MonoBehaviour
     {
         player.stateMachine.Transition(StateMachine.enumState.Idle);
         skills[index].Deactivate();
+    }
+
+
+    // ---------------------------------------------------------------------------------------------- //
+    //                                             New Code
+    // ---------------------------------------------------------------------------------------------- //
+
+    public void ChangeSkill(int skillSlotIndex, PlayerSkill.SkillID skillNameEnum)
+    {
+        skills[skillSlotIndex] = skillStorage.GetSkill(skillNameEnum);
+    }
+
+    void SetDefaultSkillSetting()
+    {
+        ChangeSkill(0, PlayerSkill.SkillID.FairysWings);
+        ChangeSkill(1, PlayerSkill.SkillID.Sweeping);
+        ChangeSkill(2, PlayerSkill.SkillID.CleaningWind);
+        ChangeSkill(3, PlayerSkill.SkillID.RefreshingLeapForward);
+        ChangeSkill(4, PlayerSkill.SkillID.Dusting);
+        ChangeSkill(5, PlayerSkill.SkillID.Dehydration);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerSkill4 : Skill
+public class PlayerSkill4 : PlayerSkill
 {
     public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
@@ -15,16 +15,19 @@ public class PlayerSkill4 : Skill
     RaycastHit hit;
     Collider attackArea;
 
-    void Start()
+    new void Start()
     {   
         attackArea = GetComponent<Collider>();
         //initialNavAgentR = navMeshAgent.radius;
+        base.Start();
+        animator.SetFloat("RefreshingLeapForward multiplier", speedMultiplier);
     }
 
     public override void AnimationActivate()
     {
-        animator.SetInteger("Skill", 4);
+        //animator.SetInteger("Skill", 4);
         animator.SetBool("OnSkill", true);
+        animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
         playerMovement.JumpForward(jumpDistance);
     }

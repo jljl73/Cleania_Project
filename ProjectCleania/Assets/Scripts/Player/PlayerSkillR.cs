@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillR : Skill
+public class PlayerSkillR : PlayerSkill
 {
     public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
 
     Collider attackArea;
 
-    void Start()
+    new void Start()
     {
         attackArea = GetComponent<Collider>();
+        //initialNavAgentR = navMeshAgent.radius;
+        base.Start();
+        animator.SetFloat("Dehydration multiplier", speedMultiplier);
     }
 
     public override void AnimationActivate()
     {
-        animator.SetInteger("Skill", 6);
+        // animator.SetInteger("Skill", 6);
         animator.SetBool("OnSkill", true);
+        animator.SetTrigger("Dehydration");
     }
 
     public override void Activate()
