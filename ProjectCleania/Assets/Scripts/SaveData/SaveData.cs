@@ -15,12 +15,10 @@ public class SaveData : MonoBehaviour, iSaveData
     }
 
     [SerializeField]
-    double playTime = 0;
-
-
-    [SerializeField]
     SaveData_Item item = new SaveData_Item();
 
+    [SerializeField]
+    ItemData itemAlone;
     AbilityStatus player;
     [SerializeField]
     string playerJson;
@@ -66,22 +64,13 @@ public class SaveData : MonoBehaviour, iSaveData
     }
 
 
-    private void Awake()
-    {
-        
-    }
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameManager.Instance.PlayerAbility;
+        itemAlone = new ItemData(Resources.Load<ItemSO>("ScriptableObject/ItemTable/1101001"));
 
         Load();
-    }
-
-    private void Update()
-    {
-        playTime += Time.deltaTime;
     }
 
     private void OnDestroy()

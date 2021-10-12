@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Equipment //: IEnumerable, IEnumerator
 {
     public enum Type
@@ -16,7 +17,20 @@ public class Equipment //: IEnumerable, IEnumerator
         EnumTotal
     }
 
+    public Equipment()
+    {
+
+    }
+    public Equipment(EquipmentOptionSO table, int level)
+    {
+
+    }
+
     public Type EquipmentType = Type.MainWeapon;
+    public int Level;
+    public int Xp;
+    public int NextXP;
+    public float Durability;
 
     Dictionary<Ability.Stat, float> _statics
         = new Dictionary<Ability.Stat, float>();
