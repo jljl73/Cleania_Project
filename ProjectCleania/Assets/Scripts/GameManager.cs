@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public Buffable PlayerBuffs;
     public Player player;
     public ChatManager chatManager;
+    public string nextSceneName;
 
     void Awake()
     {
@@ -38,7 +39,8 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        nextSceneName = sceneName;
+        SceneManager.LoadScene("LoadingScene");
     }
 
     void Reset()

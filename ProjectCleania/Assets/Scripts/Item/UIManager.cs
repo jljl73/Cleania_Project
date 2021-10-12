@@ -19,23 +19,23 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
-        OnOffItemPanel();
+        OnOffInventory();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            OnOffItemPanel();
+            OnOffInventory();
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             skillPanel.OnOffPanel();
         }
     }
 
-    public void OnOffItemPanel()
+    public void OnOffInventory()
     {
         if (isActiveItemPanel)
             itemPanel.transform.Translate(new Vector3(2000, 0, 0));
@@ -43,6 +43,11 @@ public class UIManager : MonoBehaviour
             itemPanel.transform.Translate(new Vector3(-2000, 0, 0));
 
         isActiveItemPanel = !isActiveItemPanel;
+    }
+
+    public void OnOffSkillPanel()
+    {
+        skillPanel.OnOffPanel();
     }
 
 }
