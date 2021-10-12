@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 // 기능 : 현재 상황에 따라 자신의 상태를 선택하고 그에 따라 행동함
-public class EnemyAI : MonoBehaviour
+public class EnemyAI_Obsolute : MonoBehaviour
 {
     // 상태 : Idle, Chase, Attack, Hurt, Die
     // Idle : Idle 애니메이션을 실행하며 움직이지 않는다. 
