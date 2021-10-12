@@ -109,4 +109,9 @@ public class ItemSO : ScriptableObject
     bool droppable;
     public bool Droppable
     { get => droppable; }
+
+    [SerializeField]
+    EquipmentOptionSO optionTable;
+    public EquipmentOptionSO OptionTable
+    { get => optionTable; }
 }

@@ -78,7 +78,7 @@ public class NpcTalkingAbility : MonoBehaviour, IPointerDownHandler
     
     
 
-    public void Talk(QuestReciever otherPerson)
+    public void TalkWithPlayer()
     {
         // X버튼이 대화 마지막에 눌리면 창이 닫혀야 하기 떄문에 앞에 위치
         CheckIfConversationEnd();
@@ -93,7 +93,7 @@ public class NpcTalkingAbility : MonoBehaviour, IPointerDownHandler
                 if (questGiver != null)
                 {
                     // 쿼스트 줄 수 있으면 주고, 없으면 안줌
-                    questGiver.GiveQuest(otherPerson);
+                    questGiver.GiveQuest(GameManager.Instance.SinglePlayer.GetComponent<QuestReciever>());
                 }
             }
         }
@@ -105,7 +105,7 @@ public class NpcTalkingAbility : MonoBehaviour, IPointerDownHandler
             if (scriptList[indexInScriptList].IsQuestLocation2)
             {
                 if (questGiver != null)
-                    questGiver.GiveQuest(otherPerson);
+                    questGiver.GiveQuest(GameManager.Instance.SinglePlayer.GetComponent<QuestReciever>());
             }
 
             indexInScriptList++;
@@ -119,7 +119,7 @@ public class NpcTalkingAbility : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if (playerInSpeakableArea)
-            Talk(GameManager.Instance.SinglePlayer.GetComponent<QuestReciever>());
+            TalkWithPlayer();
     }
 
     private void OnTriggerEnter(Collider other)

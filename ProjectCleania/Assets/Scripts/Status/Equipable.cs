@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentSlot : MonoBehaviour
+public class Equipable : MonoBehaviour
 {
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
 

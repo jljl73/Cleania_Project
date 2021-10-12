@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Equipment //: IEnumerable, IEnumerator
 {
     public enum Type
@@ -16,11 +17,24 @@ public class Equipment //: IEnumerable, IEnumerator
         EnumTotal
     }
 
-    public Type EquipmentType = Type.MainWeapon;
+    public Equipment()
+    {
 
-    Dictionary<Ability.Stat, float> _stats
+    }
+    public Equipment(EquipmentOptionSO table, int level)
+    {
+
+    }
+
+    public Type EquipmentType = Type.MainWeapon;
+    public int Level;
+    public int Xp;
+    public int NextXP;
+    public float Durability;
+
+    Dictionary<Ability.Stat, float> _statics
         = new Dictionary<Ability.Stat, float>();
-    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _enchants
+    Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _dynamics
         = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
 
     /// <summary>
@@ -30,7 +44,7 @@ public class Equipment //: IEnumerable, IEnumerator
     /// </summary>
     public Dictionary<Ability.Stat, float> StaticProperties
     {
-        get { return new Dictionary<Ability.Stat, float>(_stats); }
+        get { return new Dictionary<Ability.Stat, float>(_statics); }
     }
     
     /// <summary>
@@ -40,14 +54,14 @@ public class Equipment //: IEnumerable, IEnumerator
     /// </summary>
     public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> DynamicProperties
     {
-        get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_enchants); }
+        get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_dynamics); }
     }
 
     public float this[Ability.Stat stat]                                                   // stat indexer
     {
         get
         {
-            if (_stats.TryGetValue(stat, out float value))
+            if (_statics.TryGetValue(stat, out float value))
                 return value;
             else
                 return float.NaN;
@@ -55,10 +69,10 @@ public class Equipment //: IEnumerable, IEnumerator
         set
         {
             if (float.IsNaN(value))                         // set value NaN to remove property
-                if (_stats.ContainsKey(stat))
-                    _stats.Remove(stat);
+                if (_statics.ContainsKey(stat))
+                    _statics.Remove(stat);
                 else
-                    _stats[stat] = value;
+                    _statics[stat] = value;
         }
     }
 
@@ -69,7 +83,7 @@ public class Equipment //: IEnumerable, IEnumerator
             KeyValuePair<Ability.Stat, Ability.Enhance> key
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
-            if (_enchants.TryGetValue(key, out float value))
+            if (_dynamics.TryGetValue(key, out float value))
                 return value;
             else
                 return float.NaN;
@@ -80,10 +94,10 @@ public class Equipment //: IEnumerable, IEnumerator
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
             if (float.IsNaN(value))                         // set value NaN to remove property
-                if (_enchants.ContainsKey(key))
-                    _enchants.Remove(key);
+                if (_dynamics.ContainsKey(key))
+                    _dynamics.Remove(key);
                 else
-                    _enchants[key] = value;
+                    _dynamics[key] = value;
         }
     }
 
@@ -92,7 +106,7 @@ public class Equipment //: IEnumerable, IEnumerator
     {
         List<string> string_list = new List<string>();
 
-        foreach(var key_value in _stats)
+        foreach(var key_value in _statics)
         {
             string_list.Add($"{key_value.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{key_value.Value}");
         }
@@ -104,7 +118,7 @@ public class Equipment //: IEnumerable, IEnumerator
     {
         List<string> string_list = new List<string>();
 
-        foreach (var key_value in _enchants)
+        foreach (var key_value in _dynamics)
         {
             switch (key_value.Key.Value)
             {

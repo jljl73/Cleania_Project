@@ -7,10 +7,10 @@ public class SinglePlayer : MonoBehaviour
     void Awake()
     {
         GameManager.Instance.SinglePlayer = this.gameObject;
-        GameManager.Instance.PlayerAbility = GetComponent<AbilityStatus>();
-        GameManager.Instance.PlayerStatus = GetComponent<Status>();
-        GameManager.Instance.PlayerEquipments = GetComponent<EquipmentSlot>();
-        GameManager.Instance.PlayerBuffs = GetComponent<BuffManager>();
+        GameManager.Instance.PlayerAbility = GetComponentInChildren<AbilityStatus>();
+        GameManager.Instance.PlayerStatus = GetComponentInChildren<Status>();
+        GameManager.Instance.PlayerEquipments = GetComponentInChildren<Equipable>();
+        GameManager.Instance.PlayerBuffs = GetComponentInChildren<Buffable>();
         GameManager.Instance.player = GetComponent<Player>();
     }
 }
