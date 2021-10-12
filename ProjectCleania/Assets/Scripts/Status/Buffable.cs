@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffManager : MonoBehaviour
+public class Buffable : MonoBehaviour
 {
     float[] _options = { 1, 1, 1, 1 };
 

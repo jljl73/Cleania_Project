@@ -7,9 +7,8 @@ public class Vulnerable : AbilityStatus
     [SerializeField]
     StatusSO status;          // status is essential unlike equips or buffs
     [SerializeField]
-    EquipableSO equipments;
-    [SerializeField]
-    BuffManager buffs;
+    Equipable equipments;
+    Buffable buffs;
 
 
     override public float this[Ability.Stat stat]
