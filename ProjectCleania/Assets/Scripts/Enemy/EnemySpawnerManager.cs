@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class ProcedureContentsGenerator : MonoBehaviour
+public class EnemySpawnerManager : MonoBehaviour
 {
     public enum CategoriesCountType { Three, Five, Ten };
 
