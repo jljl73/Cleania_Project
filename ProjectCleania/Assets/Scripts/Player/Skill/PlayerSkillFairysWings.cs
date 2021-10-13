@@ -10,7 +10,6 @@ public class PlayerSkillFairysWings : PlayerSkill
     bool bSkill = false;
     int nDeadEnemy = 0;
 
-
     protected new void Start()
     {
         base.Start();
