@@ -42,6 +42,10 @@ public class InputManager : MonoBehaviour
         {
             player.DoSkill(3);
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            player.DoSkill(4);
+        }
         if (Input.GetMouseButton(1))
         {
             player.DoSkill(5);

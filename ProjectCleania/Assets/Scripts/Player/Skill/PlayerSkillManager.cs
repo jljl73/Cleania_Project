@@ -10,6 +10,7 @@ public class PlayerSkillManager : MonoBehaviour
     AbilityStatus abilityStatus;
 
     PlayerSkill[] skills = new PlayerSkill[6];
+    Dictionary<string, int> skillSlotDependencyDict = new Dictionary<string, int>();
     float[] coolTimePassed = new float[6];
     bool[] skillAvailable = new bool[6];
 
@@ -29,6 +30,8 @@ public class PlayerSkillManager : MonoBehaviour
 
     void Start()
     {
+        SetskillSlotDependencyDict();
+
         SetDefaultSkillSetting();
 
         for (int i = 0; i < skills.Length; i++)
@@ -36,6 +39,16 @@ public class PlayerSkillManager : MonoBehaviour
             coolTimePassed[i] = 1f;
             skillAvailable[i] = true;
         }
+    }
+
+    void SetskillSlotDependencyDict()
+    {
+        skillSlotDependencyDict.Add("1", 0);
+        skillSlotDependencyDict.Add("2", 1);
+        skillSlotDependencyDict.Add("3", 2);
+        skillSlotDependencyDict.Add("4", 3);
+        skillSlotDependencyDict.Add("C", 4);
+        skillSlotDependencyDict.Add("R", 5);
     }
 
     void Update()
@@ -73,7 +86,11 @@ public class PlayerSkillManager : MonoBehaviour
     {
         if (!skillAvailable[index]) return;
 
-        if(index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+        // MP가 없으면 실행 불가
+        if (!abilityStatus.ConsumeMP(skills[index].ConsumMP))
+            return;
+
+        if (index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
 
         skills[index].AnimationActivate();
         ResetSkill(index);
@@ -84,7 +101,9 @@ public class PlayerSkillManager : MonoBehaviour
         if(index == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
 
         skills[index].Activate();
-        abilityStatus.ConsumeMP(skills[index].ConsumMP);
+
+        // R스킬 때문인 것으로 추정되지만, 스킬 사용하자마자 하는게 좋으므로 Obsolete
+        // abilityStatus.ConsumeMP(skills[index].ConsumMP);
     }
 
     public void DeactivateSkill(int index)
@@ -98,18 +117,23 @@ public class PlayerSkillManager : MonoBehaviour
     //                                             New Code
     // ---------------------------------------------------------------------------------------------- //
 
-    public void ChangeSkill(int skillSlotIndex, PlayerSkill.SkillID skillNameEnum)
+    public void ChangeSkill(string skillSlot, PlayerSkill.SkillID skillNameEnum)
     {
-        skills[skillSlotIndex] = skillStorage.GetSkill(skillNameEnum);
+        PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
+
+        if (playerSkill.SkillSlotDependency != skillSlot)
+            return;
+
+        skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
     }
 
     void SetDefaultSkillSetting()
     {
-        ChangeSkill(0, PlayerSkill.SkillID.FairysWings);
-        ChangeSkill(1, PlayerSkill.SkillID.Sweeping);
-        ChangeSkill(2, PlayerSkill.SkillID.CleaningWind);
-        ChangeSkill(3, PlayerSkill.SkillID.RefreshingLeapForward);
-        ChangeSkill(4, PlayerSkill.SkillID.Dusting);
-        ChangeSkill(5, PlayerSkill.SkillID.Dehydration);
+        ChangeSkill("1", PlayerSkill.SkillID.FairysWings);
+        ChangeSkill("2", PlayerSkill.SkillID.Sweeping);
+        ChangeSkill("3", PlayerSkill.SkillID.CleaningWind);
+        ChangeSkill("4", PlayerSkill.SkillID.RefreshingLeapForward);
+        ChangeSkill("C", PlayerSkill.SkillID.Dusting);
+        ChangeSkill("R", PlayerSkill.SkillID.Dehydration);
     }
 }

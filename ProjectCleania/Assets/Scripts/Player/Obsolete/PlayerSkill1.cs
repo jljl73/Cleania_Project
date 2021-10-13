@@ -20,6 +20,7 @@ public class PlayerSkill1 : PlayerSkill
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
+        animator.SetBool("OnSkill1", true);
         //animator.SetInteger("Skill", 1);
         animator.SetTrigger("FairysWings");
     }
@@ -58,6 +59,7 @@ public class PlayerSkill1 : PlayerSkill
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkill1", false);
         animator.SetBool("OnSkill", false);
     }
 }

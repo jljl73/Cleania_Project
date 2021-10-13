@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1090549136244302}
-  - component: {fileID: 1090549136244304}
+  - component: {fileID: 3840771924209690448}
   - component: {fileID: 1090549136244305}
   m_Layer: 0
   m_Name: SkillC Dusting
@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090549136244307}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1090549136244304
+--- !u!114 &3840771924209690448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090549136244307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 063b55561fbd1634c821d9897b86676b, type: 3}
+  m_Script: {fileID: 11500000, guid: e679cd07aada02249a1db1f57f007f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -51,7 +51,9 @@ MonoBehaviour:
   CoolTime: 0
   CreatedMP: 12
   ConsumMP: 0
+  speedMultiplier: 1
   ID: 0
+  SkillSlotDependency: C
   playerMovement: {fileID: 0}
 --- !u!65 &1090549136244305
 BoxCollider:

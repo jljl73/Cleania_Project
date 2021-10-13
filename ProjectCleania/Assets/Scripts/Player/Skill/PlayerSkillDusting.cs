@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillL : PlayerSkill
+public class PlayerSkillDusting : PlayerSkill
 {
     //public GameObject player;
-    public PlayerMovement playerMovement;
+    public TestPlayerMove playerMovement;
     Collider attackArea;
 
     new void Start()
@@ -21,6 +21,8 @@ public class PlayerSkillL : PlayerSkill
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
+        animator.SetBool("OnSkillC", true);
+        animator.SetTrigger("Dusting");
         // animator.SetInteger("Skill", 5);
     }
 
@@ -31,6 +33,7 @@ public class PlayerSkillL : PlayerSkill
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkillC", false);
         animator.SetBool("OnSkill", false);
         attackArea.enabled = false;
     }
@@ -43,5 +46,4 @@ public class PlayerSkillL : PlayerSkill
 
         }
     }
-
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkill3 : PlayerSkill
+public class PlayerSkillCleaningWind : PlayerSkill
 {
     public GameObject hurricanePrefabs;
     public AbilityStatus abilityStatus;
@@ -18,11 +18,13 @@ public class PlayerSkill3 : PlayerSkill
     {
         //animator.SetInteger("Skill", 3);
         animator.SetBool("OnSkill", true);
+        animator.SetBool("OnSkill3", true);
         animator.SetTrigger("CleaningWind");
     }
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkill3", false);
         animator.SetBool("OnSkill", false);
     }
 
@@ -44,5 +46,4 @@ public class PlayerSkill3 : PlayerSkill
         newProjectile = Instantiate(hurricanePrefabs, transform.position, right);
         newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
     }
-
 }

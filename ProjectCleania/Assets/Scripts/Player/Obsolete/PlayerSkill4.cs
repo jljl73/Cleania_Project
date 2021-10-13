@@ -27,6 +27,7 @@ public class PlayerSkill4 : PlayerSkill
     {
         //animator.SetInteger("Skill", 4);
         animator.SetBool("OnSkill", true);
+        animator.SetBool("OnSkill4", true);
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
         playerMovement.JumpForward(jumpDistance);
@@ -40,6 +41,7 @@ public class PlayerSkill4 : PlayerSkill
     public override void Deactivate()
     {
         Physics.IgnoreLayerCollision(3, 6, false);
+        animator.SetBool("OnSkill4", false);
         animator.SetBool("OnSkill", false);
         attackArea.enabled = false;
     }

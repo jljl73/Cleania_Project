@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillR : PlayerSkill
+public class PlayerSkillL : PlayerSkill
 {
-    public AbilityStatus abilityStatus;
-    public float skillScale = 1.0f;
-
+    //public GameObject player;
+    public PlayerMovement playerMovement;
     Collider attackArea;
 
     new void Start()
@@ -14,14 +13,17 @@ public class PlayerSkillR : PlayerSkill
         attackArea = GetComponent<Collider>();
         //initialNavAgentR = navMeshAgent.radius;
         base.Start();
-        animator.SetFloat("Dehydration multiplier", speedMultiplier);
+        animator.SetFloat("Dusting multiplier", speedMultiplier);
     }
+
+    // Update is called once per frame
 
     public override void AnimationActivate()
     {
-        // animator.SetInteger("Skill", 6);
         animator.SetBool("OnSkill", true);
-        animator.SetTrigger("Dehydration");
+        animator.SetBool("OnSkillC", true);
+        animator.SetTrigger("Dusting");
+        // animator.SetInteger("Skill", 5);
     }
 
     public override void Activate()
@@ -31,16 +33,17 @@ public class PlayerSkillR : PlayerSkill
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkillC", false);
         animator.SetBool("OnSkill", false);
         attackArea.enabled = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
-                other.GetComponent<Enemy>().Die();
+            Debug.Log("L Hit");
+
         }
     }
 

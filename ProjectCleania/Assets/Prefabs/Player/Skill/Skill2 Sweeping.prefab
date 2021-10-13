@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9082029263396531095}
   - component: {fileID: 9082029263396531094}
   - component: {fileID: 9082029263396531097}
-  - component: {fileID: 9082029263396531096}
+  - component: {fileID: 577957185208371725}
   m_Layer: 0
   m_Name: Skill2 Sweeping
   m_TagString: PlayerAttack
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9082029263396531099}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -98,7 +98,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9082029263396531096
+--- !u!114 &577957185208371725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9082029263396531099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e92f82b11153c74b94e3fb208196e21, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e006b5164c05b74a8e1ae59f2671594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -118,5 +118,8 @@ MonoBehaviour:
   CoolTime: 2
   CreatedMP: 0
   ConsumMP: 8
+  speedMultiplier: 1
+  ID: 3
+  SkillSlotDependency: 2
   abilityStatus: {fileID: 0}
   skillScale: 0

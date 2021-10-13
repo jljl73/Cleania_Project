@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1380775491731411332}
-  - component: {fileID: 1380775491731411330}
+  - component: {fileID: 6273608854895934762}
   - component: {fileID: 1380775491731411333}
   m_Layer: 0
   m_Name: SkillR Dehydration
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1380775491731411330
+--- !u!114 &6273608854895934762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1380775491731411335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe1ab7c7345fa32489c24f96e41e8ea9, type: 3}
+  m_Script: {fileID: 11500000, guid: d7fc321c80260e949a61c8c8e819dd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -52,6 +52,9 @@ MonoBehaviour:
   CoolTime: 0
   CreatedMP: 0
   ConsumMP: 4
+  speedMultiplier: 1
+  ID: 1
+  SkillSlotDependency: R
   abilityStatus: {fileID: 0}
   skillScale: 3
 --- !u!136 &1380775491731411333

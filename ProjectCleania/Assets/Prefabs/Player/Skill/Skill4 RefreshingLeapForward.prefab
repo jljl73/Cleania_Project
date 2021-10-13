@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4200457137595083418}
   - component: {fileID: 4200457137595083419}
   - component: {fileID: 4200457137595083416}
-  - component: {fileID: 4200457137595083417}
+  - component: {fileID: 5604432946984027590}
   m_Layer: 0
   m_Name: Skill4 RefreshingLeapForward
   m_TagString: PlayerAttack
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4200457137595083398}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -98,7 +98,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4200457137595083417
+--- !u!114 &5604432946984027590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4200457137595083398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b0954b3da9ffd4587766cf2f3633e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a2adb6dfda320e42b1ae24da6991514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
@@ -120,6 +120,9 @@ MonoBehaviour:
   CoolTime: 8
   CreatedMP: 0
   ConsumMP: 8
+  speedMultiplier: 1
+  ID: 5
+  SkillSlotDependency: 4
   abilityStatus: {fileID: 0}
   skillScale: 6
   playerMovement: {fileID: 0}

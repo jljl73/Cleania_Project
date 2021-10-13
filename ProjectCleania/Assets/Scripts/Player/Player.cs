@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-  
     public void Move(Vector3 position)
     {
         playerMove.Move(position);
@@ -30,8 +29,11 @@ public class Player : MonoBehaviour
 
     public void DoSkill(int index)
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+            && !animator.IsInTransition(0))
+        {
             playerSkillManager.InputListener(index);
+        }
     }
 
     public void ActivateSkill(int index)

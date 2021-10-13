@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkill2 : PlayerSkill
+public class PlayerSkillSweeping : PlayerSkill
 {
     public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
@@ -22,6 +22,7 @@ public class PlayerSkill2 : PlayerSkill
     {
         //animator.SetInteger("Skill", 2);
         animator.SetBool("OnSkill", true);
+        animator.SetBool("OnSkill2", true);
         animator.SetTrigger("Sweeping");
     }
 
@@ -32,7 +33,7 @@ public class PlayerSkill2 : PlayerSkill
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
             if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
                 other.GetComponent<Enemy>().Die();
@@ -48,8 +49,8 @@ public class PlayerSkill2 : PlayerSkill
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkill2", false);
         animator.SetBool("OnSkill", false);
         OffSkill();
     }
-
 }
