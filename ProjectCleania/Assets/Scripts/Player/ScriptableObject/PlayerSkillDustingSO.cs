@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerSkillFairysWings", menuName = "Scriptable Object/PlayerSkill/PlayerSkillFairysWings")]
-public class PlayerSkillFairysWingsSO : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerSkillDusting", menuName = "Scriptable Object/PlayerSkill/PlayerSkillDusting")]
+public class PlayerSkillDustingSO : ScriptableObject
 {
     public string SkillName;
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
@@ -13,12 +13,6 @@ public class PlayerSkillFairysWingsSO : ScriptableObject
     {
         string tempString = SkillDetails;
 
-        string duration = Duration.ToString();
-        tempString = tempString.Replace("Duration", duration);
-
-        string speedUpRate = (SpeedUpRate * 100).ToString();
-        tempString = tempString.Replace("SpeedUpRate", speedUpRate);
-
         string coolTime = CoolTime.ToString();
         tempString = tempString.Replace("CoolTime", coolTime);
 
@@ -27,6 +21,9 @@ public class PlayerSkillFairysWingsSO : ScriptableObject
 
         string consumMP = ConsumMP.ToString();
         tempString = tempString.Replace("ConsumMP", consumMP);
+
+        string damageRate = (DamageRate * 100).ToString();
+        tempString = tempString.Replace("DamageRate", damageRate);
 
         return tempString;
     }
@@ -48,11 +45,10 @@ public class PlayerSkillFairysWingsSO : ScriptableObject
     [Header("전체 애니메이션 배속")]
     public float speedMultiplier = 1.0f;
 
-    [Header("지속 시간")]
-    public float Duration = 5f;
+    [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
+    public float DamageRate = 5.4f;
 
-    [Header("속도 상승률 (ex. 0.4 = 40% 증가)")]
-    public float SpeedUpRate = 1.4f;
-
-    
+    /*
+      무기로 적을 후려칩니다. 적에게 320%만큼의 피해를 줍니다.
+     */
 }
