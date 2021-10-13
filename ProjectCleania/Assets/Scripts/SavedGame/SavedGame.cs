@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveData : MonoBehaviour, iSaveData
+public class SavedGame : MonoBehaviour
 {
     public string characterName;    
     string Path
@@ -14,25 +14,29 @@ public class SaveData : MonoBehaviour, iSaveData
         }
     }
 
-    [SerializeField]
-    SaveData_Item item = new SaveData_Item();
+    
+    public SavedGame_Item SavedItem = new SavedGame_Item();
+    public SavedGame_Equipments SavedEquipments = new SavedGame_Equipments();
+
 
     [SerializeField]
     ItemData itemAlone;
-    AbilityStatus player;
+
+    AbilityStatus vulnerable;
     [SerializeField]
-    string playerJson;
+    string vulnerableString;
 
 
-
+    /// <summary>
+    /// Load saved game to primary memory.
+    /// </summary>
+    /// <returns></returns>
     public bool Load()
     {
         if (File.Exists(Path))
         {
             JsonUtility.FromJsonOverwrite(File.ReadAllText(Path), this);
-
             AfterLoad();
-
             return true;
         }
         else
@@ -43,31 +47,40 @@ public class SaveData : MonoBehaviour, iSaveData
         }
     }
 
+    /// <summary>
+    /// Save saved game to secondary memory.
+    /// </summary>
     public void Save()
     {
         BeforeSave();
-
         File.WriteAllText(Path, JsonUtility.ToJson(this, true));
-        //print($"saved in {Path}");
     }
 
-    public void AfterLoad()
+
+    void AfterLoad()
     {
-        item.AfterLoad();
-        JsonUtility.FromJsonOverwrite(playerJson, player);
+        SavedItem.AfterLoad();
+
+        SavedEquipments.playerEquips = GameManager.Instance.PlayerEquipments;
+        SavedEquipments.AfterLoad();
+
+        JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
     }
 
-    public void BeforeSave()
+    void BeforeSave()
     {
-        item.BeforeSave();
-        playerJson = JsonUtility.ToJson(player);
+        SavedItem.BeforeSave();
+
+        vulnerableString = JsonUtility.ToJson(vulnerable);
+
+        SavedEquipments.BeforeSave();
     }
 
 
 
     void Start()
     {
-        player = GameManager.Instance.PlayerAbility;
+        vulnerable = GameManager.Instance.PlayerAbility;
         itemAlone = new ItemData(Resources.Load<ItemSO>("ScriptableObject/ItemTable/1101001"));
 
         Load();

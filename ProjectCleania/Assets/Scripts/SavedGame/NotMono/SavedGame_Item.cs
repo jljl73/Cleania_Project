@@ -1,7 +1,7 @@
 ﻿
 
 [System.Serializable]
-struct SaveData_Item : iSaveData
+public class SavedGame_Item : iSavedGame
 {
     //[SerializeField]
     public int wow;
