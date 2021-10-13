@@ -1,18 +1,19 @@
-
+using System.Collections.Generic;
 
 [System.Serializable]
 public class SavedGame_Equipments : iSavedGame
 {
-    public Equipment[] Equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+    [UnityEngine.SerializeField]
+    List<Equipment> Equipments = new List<Equipment>();
     [System.NonSerialized]
     public Equipable playerEquips;
 
     public void AfterLoad()
     {
-        for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
+        foreach(var e in Equipments)
         {
             //if (Equipments[(int)i] != null)
-            playerEquips.Equip(Equipments[(int)i]);
+            playerEquips.Equip(e);
         }
     }
 
@@ -20,7 +21,13 @@ public class SavedGame_Equipments : iSavedGame
     {
         for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
         {
-            Equipments[(int)i] = playerEquips.Unequip(i);
+            var e = playerEquips.Unequip(i);
+
+            if (e != null)
+            {
+                Equipments.Add(e);
+                playerEquips.Equip(e);
+            }
         }
     }
 }

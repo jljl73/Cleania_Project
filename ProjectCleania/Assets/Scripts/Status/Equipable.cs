@@ -47,6 +47,10 @@ public class Equipable : MonoBehaviour
 
     public Equipment Equip(Equipment newEquipment)
     {
+        // Exception
+        if (newEquipment == null)
+            return null;
+
         int inType = (int)newEquipment.EquipmentType;
 
         if (_equipments[inType] != null)
@@ -70,13 +74,18 @@ public class Equipable : MonoBehaviour
 
     public Equipment Unequip(Equipment.Type offType)
     {
+        // Exception
+        if (offType < Equipment.Type.MainWeapon || offType >= Equipment.Type.EnumTotal)
+            return null;
+
         int type = (int)offType;
 
         Equipment oldEquipment = _equipments[type];
 
         _equipments[type] = null;
 
-        Refresh();
+        if (oldEquipment != null)
+            Refresh();
 
         return oldEquipment;
     }

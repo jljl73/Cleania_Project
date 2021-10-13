@@ -15,7 +15,7 @@ public class SavedGame : MonoBehaviour
     }
 
     
-    public SavedGame_Item SavedItem = new SavedGame_Item();
+    public SavedGame_Inventory SavedInventory = new SavedGame_Inventory();
     public SavedGame_Equipments SavedEquipments = new SavedGame_Equipments();
 
 
@@ -59,7 +59,7 @@ public class SavedGame : MonoBehaviour
 
     void AfterLoad()
     {
-        SavedItem.AfterLoad();
+        SavedInventory.AfterLoad();
 
         SavedEquipments.playerEquips = GameManager.Instance.PlayerEquipments;
         SavedEquipments.AfterLoad();
@@ -69,7 +69,7 @@ public class SavedGame : MonoBehaviour
 
     void BeforeSave()
     {
-        SavedItem.BeforeSave();
+        SavedInventory.BeforeSave();
 
         vulnerableString = JsonUtility.ToJson(vulnerable);
 
