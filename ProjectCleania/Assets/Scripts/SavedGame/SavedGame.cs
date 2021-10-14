@@ -16,11 +16,9 @@ public class SavedGame : MonoBehaviour
 
     
     public SavedGame_Inventory SavedInventory = new SavedGame_Inventory();
+    //SavedGame_World
+    //SavedGame_SkillSet
     public SavedGame_Equipments SavedEquipments = new SavedGame_Equipments();
-
-
-    [SerializeField]
-    ItemData itemAlone;
 
     AbilityStatus vulnerable;
     [SerializeField]
@@ -78,17 +76,20 @@ public class SavedGame : MonoBehaviour
 
 
 
-    void Start()
+    private void Start()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
-        itemAlone = new ItemData(Resources.Load<ItemSO>("ScriptableObject/ItemTable/1101001"));
 
         Load();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         Save();
     }
 
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
 }

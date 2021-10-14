@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Equipable : MonoBehaviour
 {
-    [SerializeField]
+    //[System.NonSerialized]
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
 
     Dictionary<Ability.Stat, float> _stats

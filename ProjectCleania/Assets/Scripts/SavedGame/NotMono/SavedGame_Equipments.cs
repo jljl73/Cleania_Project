@@ -9,22 +9,26 @@ public class SavedGame_Equipments : iSavedGame
     public Equipable playerEquips;
 
     public void AfterLoad()
-    {
-        foreach(var e in Equipments)
+    { 
+        foreach(Equipment e in Equipments)
         {
-            //if (Equipments[(int)i] != null)
+            e.AfterLoad();
+
             playerEquips.Equip(e);
         }
     }
 
     public void BeforeSave()
     {
+        Equipments.Clear();
+
         for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
         {
-            var e = playerEquips.Unequip(i);
+            Equipment e = playerEquips.Unequip(i);
 
             if (e != null)
             {
+                e.BeforeSave();
                 Equipments.Add(e);
                 playerEquips.Equip(e);
             }
