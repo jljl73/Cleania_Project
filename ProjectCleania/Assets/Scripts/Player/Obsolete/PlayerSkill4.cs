@@ -20,7 +20,7 @@ public class PlayerSkill4 : PlayerSkill
         attackArea = GetComponent<Collider>();
         //initialNavAgentR = navMeshAgent.radius;
         base.Start();
-        animator.SetFloat("RefreshingLeapForward multiplier", speedMultiplier);
+        animator.SetFloat("RefreshingLeapForward multiplier", SpeedMultiplier);
     }
 
     public override void AnimationActivate()

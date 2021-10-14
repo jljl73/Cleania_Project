@@ -14,7 +14,7 @@ public class PlayerSkill1 : PlayerSkill
     protected new void Start()
     {
         base.Start();
-        animator.SetFloat("FairysWings multiplier", speedMultiplier);
+        animator.SetFloat("FairysWings multiplier", SpeedMultiplier);
     }
 
     public override void AnimationActivate()

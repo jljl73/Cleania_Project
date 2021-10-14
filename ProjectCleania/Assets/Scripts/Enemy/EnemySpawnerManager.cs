@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class EnemySpawnerManager : MonoBehaviour
 {
-    public enum CategoriesCountType { Three, Five, Ten };
+    public enum CategoriesCountType { One, Three, Five, Ten };
 
     public float MapWeight = 1000;
     public int RareMonsterCount = 6;
@@ -35,6 +35,9 @@ public class EnemySpawnerManager : MonoBehaviour
     {
         switch (CurrentCategoriesCount)
         {
+            case CategoriesCountType.One:
+                weightPerCategories = MapWeight;
+                break;
             case CategoriesCountType.Three:
                 weightPerCategories = MapWeight / 3f;
                 break;

@@ -24,12 +24,12 @@ public class PlayerSkillManager : MonoBehaviour
     {
         player = transform.parent.GetComponent<Player>();
         abilityStatus = player.abilityStatus;
-
-        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
     }
 
     void Start()
     {
+        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
+
         SetskillSlotDependencyDict();
 
         SetDefaultSkillSetting();
@@ -62,10 +62,11 @@ public class PlayerSkillManager : MonoBehaviour
         {
             // 쿨타임 업데이트
             coolTimePassed[i] += Time.deltaTime;
-            if (skills[i].GetCoolTime < 0.01f)
+
+            if (skills[i].GetCoolTime() < 0.01f)
                 CoolTimePassedRatio[i] = 1f;
             else
-                CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime;
+                CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime();
 
             // 업데이트가 됬으면 스킬 가능 설정
             if (CoolTimePassedRatio[i] >= 1f)
@@ -87,7 +88,7 @@ public class PlayerSkillManager : MonoBehaviour
         if (!skillAvailable[index]) return;
 
         // MP가 없으면 실행 불가
-        if (!abilityStatus.ConsumeMP(skills[index].ConsumMP))
+        if (!abilityStatus.ConsumeMP(skills[index].GetConsumMP()))
             return;
 
         if (index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
@@ -120,9 +121,21 @@ public class PlayerSkillManager : MonoBehaviour
     public void ChangeSkill(string skillSlot, PlayerSkill.SkillID skillNameEnum)
     {
         PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
+        if (playerSkill is PlayerSkillDehydration)
+        {
+            //print("playerSkill is PlayerSkillDehydration");
+            //print("dependency: playerSkill.GetSkillSlotDependency(): " + playerSkill.GetSkillSlotDependency());
+            //print("skillSlot: " + skillSlot);
+        }
 
-        if (playerSkill.SkillSlotDependency != skillSlot)
+
+
+
+        if (playerSkill.GetSkillSlotDependency() != skillSlot)
             return;
+
+        //print("skillSlot: " + skillSlot);
+        //print("skillSlotDependencyDict[skillSlot]: " + skillSlotDependencyDict[skillSlot]);
 
         skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
     }
@@ -135,5 +148,13 @@ public class PlayerSkillManager : MonoBehaviour
         ChangeSkill("4", PlayerSkill.SkillID.RefreshingLeapForward);
         ChangeSkill("C", PlayerSkill.SkillID.Dusting);
         ChangeSkill("R", PlayerSkill.SkillID.Dehydration);
+
+        //for (int i = 0; i < skills.Length; i++)
+        //{
+        //    if (skills[i] == null)
+        //        Debug.Log(string.Format("skills {0} == null", i));
+        //    else
+        //        Debug.Log(string.Format("skills {0} != null", i));
+        //}
     }
 }

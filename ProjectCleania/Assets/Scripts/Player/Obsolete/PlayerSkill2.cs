@@ -15,7 +15,7 @@ public class PlayerSkill2 : PlayerSkill
     {
         base.Start();
         col = GetComponent<Collider>();
-        animator.SetFloat("Sweeping multiplier", speedMultiplier);
+        animator.SetFloat("Sweeping multiplier", SpeedMultiplier);
     }
 
     public override void AnimationActivate()

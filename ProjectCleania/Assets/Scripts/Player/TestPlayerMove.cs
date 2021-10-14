@@ -87,6 +87,7 @@ public class TestPlayerMove : MonoBehaviour
             if (hit.collider.tag == "Ground")
             {
                 targetPos = hit.point;
+                print("Ground Hit");
             }
             else if (hit.collider.CompareTag("Enemy"))
                 targetPos = hit.collider.transform.position;

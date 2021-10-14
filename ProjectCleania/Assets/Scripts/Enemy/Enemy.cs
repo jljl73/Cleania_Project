@@ -14,13 +14,32 @@ public class Enemy : MonoBehaviour
     public EnemySkillManager skillManager;
     public EnemyMove enemyMove;
 
+    public delegate void DelegateVoid();
+    public event DelegateVoid OnDead;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
         stateMachine = GetComponent<StateMachine>();
     }
 
+    private void Start()
+    {
+        OnDead += Die;
+    }
 
+    private void Update()
+    {
+        if (abilityStatus.HP == 0)
+        {
+            OnDead();
+        }
+    }
+
+    public void Stunned(float stunnedTime)
+    {
+
+    }
 
     public void Die()
     {

@@ -4,18 +4,47 @@ using UnityEngine;
 
 public class PlayerSkillSweeping : PlayerSkill
 {
+    public PlayerSkillSweepingSO SkillData;
     public AbilityStatus abilityStatus;
-    public float skillScale = 1.0f;
+    float skillScale = 0.0f;
 
-    Collider col;
+    CapsuleCollider col;
 
+    // "경직 시간"
+    float stunTime = 2;
+    public float GetStunTime() { return stunTime; }
 
+    // "쓸어담기 범위"
+    float sweepRange = 2f;
+    public float GetSweepRange() { return sweepRange; }
+
+    private void Awake()
+    {
+        col = GetComponent<CapsuleCollider>();
+        UpdateSkillData();
+    }
 
     protected new void Start()
     {
         base.Start();
-        col = GetComponent<Collider>();
-        animator.SetFloat("Sweeping multiplier", speedMultiplier);
+        GameManager.Instance.player.OnLevelUp += UpdateSkillData;
+        animator.SetFloat("FairysWings multiplier", SpeedMultiplier);
+    }
+
+    public void UpdateSkillData()
+    {
+        SkillName = SkillData.GetSkillName();
+        SkillDetails = SkillData.GetSkillDetails();
+        CoolTime = SkillData.GetCoolTime();
+        CreatedMP = SkillData.GetCreatedMP();
+        ConsumMP = SkillData.GetConsumMP();
+        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+
+        SkillSlotDependency = SkillData.GetTriggerKey();
+
+        stunTime = SkillData.GetStunTime();
+        sweepRange = SkillData.GetSweepRange();
+        col.radius = sweepRange;
     }
 
     public override void AnimationActivate()
@@ -35,6 +64,9 @@ public class PlayerSkillSweeping : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
+            // 기절
+            other.GetComponent<Enemy>().Stunned(stunTime);
+
             if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
                 other.GetComponent<Enemy>().Die();
             else

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -11,10 +12,27 @@ public class Player : MonoBehaviour
     public AbilityStatus abilityStatus;
     public Animator animator;
 
+    public delegate void DelegateVoid();
+    public event DelegateVoid OnLevelUp;
+    public event DelegateVoid OnDead;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
+        OnDead += RunDieAnimation;
+    }
+
+    private void Update()
+    {
+        if (abilityStatus.HP == 0)
+        {
+            OnDead();
+        }
+    }
+
+    void RunDieAnimation()
+    {
+        animator.SetTrigger("Die");
     }
 
     public void Move(Vector3 position)
