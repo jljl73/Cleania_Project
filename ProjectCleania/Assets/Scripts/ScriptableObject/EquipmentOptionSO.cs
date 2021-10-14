@@ -5,39 +5,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EquipmentOption", menuName = "Scriptable Object/Equipment Option Table")]
 public class EquipmentOptionSO : ScriptableObject
 {
-    [SerializeField]
-    Ability.Stat[] staticKey;
-    public Ability.Stat[] StaticKey
-    { get => staticKey; }
+    [System.Serializable]
+    public struct StaticOptionTable
+    {
+        public Ability.Stat Key;
+        public float Min;
+        public float Max;
+    }
+
+    [System.Serializable]
+    public struct DynamicOptionTable
+    {
+        public Ability.Stat KeyStat;
+        public Ability.Enhance KeyHow;
+        public float Min;
+        public float Max;
+    }
 
     [SerializeField]
-    float[] staticMin;
-    public float[] StaticMin
-    { get => staticMin; }
+    StaticOptionTable[] staticTable;
+    public StaticOptionTable[] StaticTable
+    { get => staticTable; }
 
     [SerializeField]
-    float[] staticMax;
-    public float[] StaticMax
-    { get => staticMax; }
+    DynamicOptionTable[] dynamicTable;
+    public DynamicOptionTable[] DynamicTable
+    { get => dynamicTable; }
 
-
-    [SerializeField]
-    Ability.Stat[] dynamicKeyStat;
-    public Ability.Stat[] StaticKeyStat
-    { get => dynamicKeyStat; }
-
-    [SerializeField]
-    Ability.Enhance[] dynamicKeyEnhance;
-    public Ability.Enhance[] StaticKeyEnhance
-    { get => dynamicKeyEnhance; }
-
-    [SerializeField]
-    float[] dynamicMin;
-    public float[] DynamicMin
-    { get => dynamicMin; }
-
-    [SerializeField]
-    float[] dynamicMax;
-    public float[] DynamicMax
-    { get => dynamicMax; }
 }

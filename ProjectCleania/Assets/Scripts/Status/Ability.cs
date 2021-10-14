@@ -42,19 +42,43 @@ public class Ability
         EnumTotal
     }
 
-    public struct Enchant
+    [System.Serializable]
+    public struct StaticOption
     {
         public float Value;
         public Ability.Stat Stat;
-        public Ability.Enhance Enhance;
 
-        public Enchant(float val, Ability.Stat stat, Ability.Enhance how = Ability.Enhance.Absolute)
+        public StaticOption(float val, Ability.Stat stat)
         {
             Value = val;
             Stat = stat;
-            Enhance = how;
         }
     }
+
+    [System.Serializable]
+    public struct DynamicOption
+    {
+        public float Value;
+        public Ability.Stat Stat;
+        public Ability.Enhance How;
+        public KeyValuePair<Ability.Stat, Ability.Enhance> Key
+        { get => new KeyValuePair<Stat, Enhance>(Stat, How); }
+
+        public DynamicOption(float val, Ability.Stat stat, Ability.Enhance how)
+        {
+            Value = val;
+            Stat = stat;
+            How = how;
+        }
+
+        public DynamicOption(float val, KeyValuePair<Ability.Stat, Ability.Enhance> key)
+        {
+            Value = val;
+            Stat = key.Key;
+            How = key.Value;
+        }
+    }
+
 
 
     public static KeyValuePair<Ability.Stat, Ability.Enhance> EquipmentOptionToAbility(EquipmentOption.Option opt)

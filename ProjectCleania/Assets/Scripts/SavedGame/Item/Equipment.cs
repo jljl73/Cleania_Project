@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Equipment //: IEnumerable, IEnumerator
+public class Equipment : ItemData, iSavedGame
 {
     public enum Type
     {
@@ -19,14 +19,20 @@ public class Equipment //: IEnumerable, IEnumerator
 
     public Equipment()
     {
-
     }
-    public Equipment(EquipmentOptionSO table, int level)
+
+    public Equipment(ItemSO itemSO) : base(itemSO)
+    {
+        Level = 1;
+    }
+    public Equipment(ItemSO itemSO, int level) : base(itemSO)
     {
 
+        Level = level;
     }
 
     public Type EquipmentType = Type.MainWeapon;
+    [Range(1, 50)]
     public int Level;
     public int Xp;
     public int NextXP;
@@ -56,6 +62,8 @@ public class Equipment //: IEnumerable, IEnumerator
     {
         get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_dynamics); }
     }
+
+    
 
     public float this[Ability.Stat stat]                                                   // stat indexer
     {
@@ -147,6 +155,7 @@ public class Equipment //: IEnumerable, IEnumerator
     }
 
 
+
     //public IEnumerator GetEnumerator()
     //{
     //    return (IEnumerator)this;
@@ -173,5 +182,44 @@ public class Equipment //: IEnumerable, IEnumerator
     //        return 0;
     //    }
     //    }
+
+
+        // IMPLEMENTATION OF SAVE DATA
+
+    [SerializeField]
+    List<Ability.StaticOption> jsonStatic;
+    [SerializeField]
+    List<Ability.DynamicOption> jsonDynamic;
+
+    public void AfterLoad()
+    {
+        foreach(var en in jsonStatic)
+        {
+            _statics[en.Stat] = en.Value;
+        }
+        foreach (var en in jsonDynamic)
+        {
+            _dynamics[en.Key] = en.Value;
+        }
+
+        //jsonStatic.Clear();
+        //jsonDynamic.Clear();
+    }
+
+    public void BeforeSave()
+    {
+        jsonStatic.Clear();
+        jsonDynamic.Clear();
+
+        foreach(var kv in _statics)
+        {
+            jsonStatic.Add(new Ability.StaticOption(kv.Value, kv.Key));
+        }
+        foreach(var kv in _dynamics)
+        {
+            jsonDynamic.Add(new Ability.DynamicOption(kv.Value, kv.Key));
+        }
+    }
+
 
 }
