@@ -16,6 +16,8 @@ public class SavedGame_Equipments : iSavedGame
 
             playerEquips.Equip(e);
         }
+
+        //Equipments.Clear();
     }
 
     public void BeforeSave()

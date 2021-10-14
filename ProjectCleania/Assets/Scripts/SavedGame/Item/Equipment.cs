@@ -202,8 +202,8 @@ public class Equipment : ItemData, iSavedGame
             _dynamics[en.Key] = en.Value;
         }
 
-        jsonStatic.Clear();
-        jsonDynamic.Clear();
+        //jsonStatic.Clear();
+        //jsonDynamic.Clear();
     }
 
     public void BeforeSave()
