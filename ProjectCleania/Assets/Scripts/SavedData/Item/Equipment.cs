@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Equipment : ItemData, iSavedGame
+public class Equipment : ItemData, iSavedData
 {
     public enum Type
     {

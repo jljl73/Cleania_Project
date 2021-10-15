@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SavedGame_Equipments : iSavedGame
+public class SavedData_Equipments : iSavedData
 {
     Equipable playerEquips;
     [SerializeField]

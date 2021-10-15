@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Equipable : MonoBehaviour, iSavedGame
+public class Equipable : MonoBehaviour, iSavedData
 {
     //[System.NonSerialized]
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
