@@ -8,6 +8,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     public GameObject hurricanePrefabs;
     public AbilityStatus abilityStatus;
+
     GameObject newProjectile;
 
     // "내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)"
@@ -34,6 +35,10 @@ public class PlayerSkillCleaningWind : PlayerSkill
     int maxHitPerSameObject = 2;
     int GetMaxHitPerSameObject() { return maxHitPerSameObject; }
 
+    // "회오리 생성 높이"
+    float projectilePositionY = 0.5f;
+    float GetprojectilePositionY() { return projectilePositionY; }
+
     private void Awake()
     {
         UpdateSkillData();
@@ -59,6 +64,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
         smashDamageRate = SkillData.GetSmashDamageRate();
         smashRange = SkillData.GetSmashRange();
+        projectilePositionY = SkillData.GetProjectilePositionY();
         projectileCount = SkillData.GetProjectileCount();
         projectileDamageRatePerSec = SkillData.GetProjectileDamageRatePerSec();
         maxHitPerSameObject = SkillData.GetMaxHitPerSameObject();
@@ -89,9 +95,9 @@ public class PlayerSkillCleaningWind : PlayerSkill
             Quaternion tempYAngle = yAngle;
             tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (projectileCount + 1)) * i, 0f);
 
-            newProjectile = Instantiate(hurricanePrefabs, transform.position, tempYAngle);
+            newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
             Projectile proj = newProjectile.GetComponent<Projectile>();
-            proj.pitcherStatus = abilityStatus;
+            proj.PitcherStatus = abilityStatus;
             proj.ResetSetting(maxHitPerSameObject, projectileDamageRatePerSec, projectileDuration);
         }
 

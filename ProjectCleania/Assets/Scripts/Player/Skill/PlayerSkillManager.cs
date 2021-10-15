@@ -97,6 +97,18 @@ public class PlayerSkillManager : MonoBehaviour
         ResetSkill(index);
     }
 
+    public void ActivateSkillEffect(int index)
+    {
+        if (skills[index].effectController != null)
+            skills[index].effectController.PlaySkillEffect();
+    }
+
+    public void DeactivateSkillEffect(int index)
+    {
+        if (skills[index].effectController != null)
+            skills[index].effectController.StopSKillEffect();
+    }
+
     public void ActivateSkill(int index)
     {
         if(index == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);

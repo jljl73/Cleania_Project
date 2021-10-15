@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1090549136244302}
   - component: {fileID: 3840771924209690448}
   - component: {fileID: 1090549136244305}
+  - component: {fileID: 2261358614881871779}
   m_Layer: 0
   m_Name: SkillC Dusting
   m_TagString: PlayerAttack
@@ -28,7 +29,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3525409327438860831}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,7 +49,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   ID: 0
   SkillData: {fileID: 11400000, guid: 30033e4076805fa4ea463680d04284df, type: 2}
-  playerMovement: {fileID: 0}
+  abilityStatus: {fileID: 0}
+  effectController: {fileID: 2261358614881871779}
 --- !u!65 &1090549136244305
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61,3 +64,84 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 1}
+--- !u!114 &2261358614881871779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090549136244307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParticleObject: {fileID: 3525409327438398821}
+  Scale: 0.5
+--- !u!1001 &3525409327438457393
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1090549136244302}
+    m_Modifications:
+    - target: {fileID: 126804, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_Name
+      value: Fx_Skill_KZ_Attact_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+--- !u!1 &3525409327438398821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 126804, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+  m_PrefabInstance: {fileID: 3525409327438457393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3525409327438860831 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 456750, guid: c12f05e50a064f44c8f40a662368f749, type: 3}
+  m_PrefabInstance: {fileID: 3525409327438457393}
+  m_PrefabAsset: {fileID: 0}

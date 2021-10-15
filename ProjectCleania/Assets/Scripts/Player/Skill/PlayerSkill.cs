@@ -10,4 +10,6 @@ public abstract class PlayerSkill : Skill
     // ¿€µø ≈∞
     protected string SkillSlotDependency = 1.ToString();
     public string GetSkillSlotDependency() { return SkillSlotDependency; }
+
+    public SkillEffectController effectController;
 }

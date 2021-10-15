@@ -6,7 +6,7 @@ public class PlayerSkillDusting : PlayerSkill
 {
     public PlayerSkillDustingSO SkillData;
 
-    public TestPlayerMove playerMovement;
+    // public TestPlayerMove playerMovement;
 
     public AbilityStatus abilityStatus;
 

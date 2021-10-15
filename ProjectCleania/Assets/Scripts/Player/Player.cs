@@ -56,13 +56,26 @@ public class Player : MonoBehaviour
 
     public void ActivateSkill(int index)
     {
+        print("ActivateSkill");
         playerSkillManager.ActivateSkill(index);
     }
 
     public void DeactivateSkill(int index)
     {
+        print("deactivateSkill");
         playerSkillManager.DeactivateSkill(index);
-        StopMoving();
     }
 
+    public void ActivateSkillEffect(int index)
+    {
+        print("ActivateSkillEffect!");
+        playerSkillManager.ActivateSkillEffect(index);
+    }
+
+    public void DeactivateSkillEffect(int index)
+    {
+        print("DeactivateSkillEffect!");
+        playerSkillManager.DeactivateSkillEffect(index);
+        StopMoving();
+    }
 }

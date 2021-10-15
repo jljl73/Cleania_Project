@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public AbilityStatus pitcherStatus;
+    AbilityStatus pitcherStatus;
+    public AbilityStatus PitcherStatus { get { return pitcherStatus; } set { pitcherStatus = value; } }
+
     public float moveSpeed = 5.0f;
 
     // "무기 데미지의 5.4 = 540%

@@ -74,6 +74,10 @@ public class PlayerSkillCleaningWindSO : ScriptableObject
     public float SmashRange = 2f;
     public float GetSmashRange() { return SmashRange; }
 
+    [Header("회오리 생성 높이")]
+    public float ProjectilePositionY = 0.5f;
+    public float GetProjectilePositionY() { return ProjectilePositionY; }
+
     [Header("회오리 유지 시간")]
     public float ProjectileDuration = 2f;
     public float GetProjectileDuration() { return ProjectileDuration; }

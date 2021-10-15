@@ -81,6 +81,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     override public void Activate()
     {
+        // effectController.PlaySkill();
         attackArea.enabled = true;
     }
 
@@ -101,7 +102,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
             if (enemyAbil.HP != 0)
             {
                 enemyAbil.AttackedBy(abilityStatus, smashDamageRate);
-                enemy.Stunned(stunTime);
+                enemy.Stunned(true, stunTime);
             }
         }
     }
