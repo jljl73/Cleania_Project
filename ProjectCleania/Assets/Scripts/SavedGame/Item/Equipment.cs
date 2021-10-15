@@ -184,20 +184,22 @@ public class Equipment : ItemData, iSavedGame
     //    }
 
 
-        // IMPLEMENTATION OF SAVE DATA
+
+
+        // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<Ability.StaticOption> jsonStatic;
+    List<Ability.StaticOption> _SG_staticOption;
     [SerializeField]
-    List<Ability.DynamicOption> jsonDynamic;
+    List<Ability.DynamicOption> _SG_dynamicOption;
 
     public void AfterLoad()
     {
-        foreach(var en in jsonStatic)
+        foreach(var en in _SG_staticOption)
         {
             _statics[en.Stat] = en.Value;
         }
-        foreach (var en in jsonDynamic)
+        foreach (var en in _SG_dynamicOption)
         {
             _dynamics[en.Key] = en.Value;
         }
@@ -208,16 +210,16 @@ public class Equipment : ItemData, iSavedGame
 
     public void BeforeSave()
     {
-        jsonStatic.Clear();
-        jsonDynamic.Clear();
+        _SG_staticOption.Clear();
+        _SG_dynamicOption.Clear();
 
         foreach(var kv in _statics)
         {
-            jsonStatic.Add(new Ability.StaticOption(kv.Value, kv.Key));
+            _SG_staticOption.Add(new Ability.StaticOption(kv.Value, kv.Key));
         }
         foreach(var kv in _dynamics)
         {
-            jsonDynamic.Add(new Ability.DynamicOption(kv.Value, kv.Key));
+            _SG_dynamicOption.Add(new Ability.DynamicOption(kv.Value, kv.Key));
         }
     }
 

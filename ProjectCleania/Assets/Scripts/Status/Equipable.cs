@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipable : MonoBehaviour
+[System.Serializable]
+public class Equipable : MonoBehaviour, iSavedGame
 {
     //[System.NonSerialized]
     Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
@@ -157,6 +158,46 @@ public class Equipable : MonoBehaviour
                             break;
                     }
                 }
+            }
+        }
+    }
+
+
+    
+
+
+
+    // SAVE DATA IMPLEMENTATION
+
+    [SerializeField]
+    List<Equipment> _SG_equipments;
+
+    public void AfterLoad()
+    {
+        foreach (Equipment e in _SG_equipments)
+        {
+            e.AfterLoad();
+
+            _equipments[(int)e.EquipmentType] = e;
+        }
+
+        Refresh();
+
+        //Equipments.Clear();
+    }
+
+    public void BeforeSave()
+    {
+        _SG_equipments.Clear();
+
+        for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
+        {
+            Equipment e = _equipments[(int)i];
+
+            if (e != null)
+            {
+                e.BeforeSave();
+                _SG_equipments.Add(e);
             }
         }
     }

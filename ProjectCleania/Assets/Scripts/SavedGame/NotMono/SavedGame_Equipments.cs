@@ -1,39 +1,28 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class SavedGame_Equipments : iSavedGame
 {
-    [UnityEngine.SerializeField]
-    List<Equipment> Equipments = new List<Equipment>();
-    [System.NonSerialized]
-    public Equipable playerEquips;
+    Equipable playerEquips;
+    [SerializeField]
+    string json;
 
     public void AfterLoad()
-    { 
-        foreach(Equipment e in Equipments)
-        {
-            e.AfterLoad();
+    {
+        playerEquips = GameManager.Instance.PlayerEquipments;
 
-            playerEquips.Equip(e);
-        }
+        // load
+        JsonUtility.FromJsonOverwrite(json, playerEquips);
 
-        //Equipments.Clear();
+        playerEquips.AfterLoad();
     }
 
     public void BeforeSave()
     {
-        Equipments.Clear();
-
-        for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
-        {
-            Equipment e = playerEquips.Unequip(i);
-
-            if (e != null)
-            {
-                e.BeforeSave();
-                Equipments.Add(e);
-                playerEquips.Equip(e);
-            }
-        }
+        playerEquips.BeforeSave();
+        
+        // save
+        json = JsonUtility.ToJson(playerEquips);
     }
 }

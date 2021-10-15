@@ -20,6 +20,7 @@ public class SavedGame : MonoBehaviour
     //SavedGame_SkillSet
     public SavedGame_Equipments SavedEquipments = new SavedGame_Equipments();
 
+    [SerializeField]
     AbilityStatus vulnerable;
     [SerializeField]
     string vulnerableString;
@@ -58,8 +59,6 @@ public class SavedGame : MonoBehaviour
     void AfterLoad()
     {
         SavedInventory.AfterLoad();
-
-        SavedEquipments.playerEquips = GameManager.Instance.PlayerEquipments;
         SavedEquipments.AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
@@ -68,10 +67,9 @@ public class SavedGame : MonoBehaviour
     void BeforeSave()
     {
         SavedInventory.BeforeSave();
+        SavedEquipments.BeforeSave();
 
         vulnerableString = JsonUtility.ToJson(vulnerable);
-
-        SavedEquipments.BeforeSave();
     }
 
 
