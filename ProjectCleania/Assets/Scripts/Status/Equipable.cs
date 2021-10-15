@@ -170,11 +170,11 @@ public class Equipable : MonoBehaviour, iSavedData
     // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<Equipment> _SG_equipments;
+    List<Equipment> SD_equipments;
 
     public void AfterLoad()
     {
-        foreach (Equipment e in _SG_equipments)
+        foreach (Equipment e in SD_equipments)
         {
             e.AfterLoad();
 
@@ -188,7 +188,7 @@ public class Equipable : MonoBehaviour, iSavedData
 
     public void BeforeSave()
     {
-        _SG_equipments.Clear();
+        SD_equipments.Clear();
 
         for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
         {
@@ -197,7 +197,7 @@ public class Equipable : MonoBehaviour, iSavedData
             if (e != null)
             {
                 e.BeforeSave();
-                _SG_equipments.Add(e);
+                SD_equipments.Add(e);
             }
         }
     }

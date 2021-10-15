@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Equipment : ItemData, iSavedData
 {
+    
+
     public enum Type
     {
         MainWeapon,
@@ -17,19 +19,23 @@ public class Equipment : ItemData, iSavedData
         EnumTotal
     }
 
-    public Equipment()
+    protected Equipment()
     {
     }
 
-    public Equipment(ItemSO itemSO) : base(itemSO)
+    protected Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
     {
-        Level = 1;
-    }
-    public Equipment(ItemSO itemSO, int level) : base(itemSO)
-    {
-
         Level = level;
     }
+
+    static public Equipment New(ItemSO itemSO, int level = 1)
+    {
+        if (itemSO.OptionTable != null && itemSO.MainCategory == ItemSO.enumMainCategory.Equipment)
+            return new Equipment(itemSO, level);
+        else
+            return null;
+    }
+    
 
     public Type EquipmentType = Type.MainWeapon;
     [Range(1, 50)]
@@ -189,17 +195,17 @@ public class Equipment : ItemData, iSavedData
         // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<Ability.StaticOption> _SG_staticOption;
+    List<Ability.StaticOption> SD_staticOption;
     [SerializeField]
-    List<Ability.DynamicOption> _SG_dynamicOption;
+    List<Ability.DynamicOption> SD_dynamicOption;
 
     public void AfterLoad()
     {
-        foreach(var en in _SG_staticOption)
+        foreach(var en in SD_staticOption)
         {
             _statics[en.Stat] = en.Value;
         }
-        foreach (var en in _SG_dynamicOption)
+        foreach (var en in SD_dynamicOption)
         {
             _dynamics[en.Key] = en.Value;
         }
@@ -210,16 +216,16 @@ public class Equipment : ItemData, iSavedData
 
     public void BeforeSave()
     {
-        _SG_staticOption.Clear();
-        _SG_dynamicOption.Clear();
+        SD_staticOption.Clear();
+        SD_dynamicOption.Clear();
 
         foreach(var kv in _statics)
         {
-            _SG_staticOption.Add(new Ability.StaticOption(kv.Value, kv.Key));
+            SD_staticOption.Add(new Ability.StaticOption(kv.Value, kv.Key));
         }
         foreach(var kv in _dynamics)
         {
-            _SG_dynamicOption.Add(new Ability.DynamicOption(kv.Value, kv.Key));
+            SD_dynamicOption.Add(new Ability.DynamicOption(kv.Value, kv.Key));
         }
     }
 
