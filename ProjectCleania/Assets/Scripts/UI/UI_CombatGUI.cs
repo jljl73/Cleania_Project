@@ -72,7 +72,7 @@ public class UI_CombatGUI : MonoBehaviour
         XP_Bar.fillAmount = XP_BarPercent;
         for(int i = 0; i < Skills.Length; ++i)
         {
-            Skills[i].fillAmount = SkillManager.CoolTimePassedRatio[i]; // Skills_CoolPercent[i];
+            Skills[i].fillAmount = SkillManager.GetCoolTimePassedRatio(i); // Skills_CoolPercent[i];
             if (Skills[i].fillAmount < 1.0f)
                 Skills[i].color = Color.gray;
             else

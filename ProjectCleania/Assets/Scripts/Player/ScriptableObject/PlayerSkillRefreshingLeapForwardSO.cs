@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "PlayerSkillRefreshingLeapForward", menuName = "Scriptable Object/PlayerSkill/PlayerSkillRefreshingLeapForward")]
+public class PlayerSkillRefreshingLeapForwardSO : ScriptableObject
+{
+    public string SkillName;
+    [Header("Tip: 변수명을 입력할 수 있습니다.")]
+    [TextArea]
+    public string SkillDetails;
+    public string GetSkillDetails()
+    {
+        string tempString = SkillDetails;
+
+        string coolTime = CoolTime.ToString();
+        tempString = tempString.Replace("CoolTime", coolTime);
+
+        string createdMP = CreatedMP.ToString();
+        tempString = tempString.Replace("CreatedMP", createdMP);
+
+        string consumMP = ConsumMP.ToString();
+        tempString = tempString.Replace("ConsumMP", consumMP);
+
+        string smashDamageRate = (SmashDamageRate * 100).ToString();
+        tempString = tempString.Replace("SmashDamageRate", smashDamageRate);
+
+        string smashRange = SmashRange.ToString();
+        tempString = tempString.Replace("SmashRange", smashRange);
+
+        string stunTime = StunTime.ToString();
+        tempString = tempString.Replace("StunTime", stunTime);
+
+        string slowTime = SlowTime.ToString();
+        tempString = tempString.Replace("SlowTime", slowTime);
+
+        return tempString;
+    }
+
+    [Header("작동 키")]
+    public string TriggerKey;
+
+    // public bool isAttacking;
+    [Header("쿨타임")]
+    public float CoolTime;  // 추후 private 처리
+    public float GetCoolTime { get { return CoolTime; } }
+
+    [Header("생성 고유 자원")]
+    public float CreatedMP = 0f;
+
+    [Header("소모 고유 자원")]
+    public float ConsumMP = 0f;
+
+    [Header("전체 애니메이션 배속")]
+    public float speedMultiplier = 1.0f;
+
+    [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
+    public float SmashDamageRate = 5.4f;
+
+    [Header("내려치기 범위")]
+    public float SmashRange = 2f;
+
+    [Header("경직 시간")]
+    public float StunTime = 1.5f;
+
+    [Header("슬로우 시간")]
+    public float SlowTime = 2f;
+
+
+    /*
+     반원의 형태를 그리며 전방으로 뛰어오른 후 무기로 찍으며 착지하며, 540%의 피해를 줍니다. 피격된 적들은 1.5초간 경직 상태에 빠진 뒤, 2초간 슬로우 상태가 됩니다.
+     */
+}
