@@ -49,7 +49,7 @@ public class EquipmentManager : MonoBehaviour
         if (eo == null)
         {
             print("unequip");
-            GameManager.Instance.SinglePlayer.GetComponent<EquipmentSlot>().Unequip((Equipment.Type)part);
+            GameManager.Instance.SinglePlayer.GetComponent<Equipable>().Unequip((Equipment.Type)part);
             return;
         }
         print("equip");
@@ -71,7 +71,7 @@ public class EquipmentManager : MonoBehaviour
         if (type == ItemInventory.EquipmentType.Weapon)
             equip[Ability.Stat.AttackSpeed, Ability.Enhance.Absolute] = 1.3f;
 
-        GameManager.Instance.SinglePlayer.GetComponent<EquipmentSlot>().Equip(equip);
+        GameManager.Instance.SinglePlayer.GetComponent<Equipable>().Equip(equip);
     }
     // << End
 

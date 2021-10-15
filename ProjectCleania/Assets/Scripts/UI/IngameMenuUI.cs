@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class IngameMenuUI : MonoBehaviour
 {
-    private void Awake()
+    public GameObject backToSelectScenePanel;
+    public GameObject exitPanel;
+
+    GameObject clickedPanel;
+
+    void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         if (GameManager.Instance.menuManager != null)
@@ -13,27 +18,49 @@ public class IngameMenuUI : MonoBehaviour
             this.gameObject.SetActive(false);
     }
 
-    public void OnClickExit()
+    public void OnOffThisPanel()
     {
-        GameManager.Instance.QuitGame();
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 
-    public void OnClickCloseUI()
+    public void OnClickedExit()
+    {
+        exitPanel.SetActive(true);
+        clickedPanel = exitPanel;
+    }
+
+    public void OnClickedCloseUI()
     {
         if (GameManager.Instance.menuManager != null)
             GameManager.Instance.menuManager.PopDownMenuUI();
     }
 
-    public void OnClickSetting()
+    public void OnClickedSetting()
     {
         if (GameManager.Instance.menuManager != null)
             GameManager.Instance.menuManager.PopUpUserSettingUI();
     }
 
-    public void OnClickResume()
+    public void OnClickedBackToSelectScene()
     {
-        if (GameManager.Instance.menuManager != null)
-            GameManager.Instance.menuManager.PopDownMenuUI();
+        backToSelectScenePanel.SetActive(true);
+        clickedPanel = backToSelectScenePanel;
+    }
+
+    public void OnOKBackToSelectScene()
+    {
+        GameManager.Instance.ChangeScene("CharacterSelect");
+    }
+
+    public void OnOKExitGame()
+    {
+        GameManager.Instance.QuitGame();
+    }
+
+    public void OnClosePanel()
+    {
+        if(clickedPanel != null)
+            clickedPanel.SetActive(false);
     }
 
 }
