@@ -7,7 +7,7 @@ public class ItemStorage_LocalGrid
 {
     public struct GriddedItem
     {
-        ItemData ItemData;
+        ItemInstance ItemData;
         Point Location;
     }
 

@@ -6,13 +6,13 @@ public class ItemStorage_World : iSavedData
 {
     public struct PositionedItem
     {
-        ItemData ItemData;
+        ItemInstance ItemData;
         Vector3 Position;
     }
 
     List<GameObject> _items;
 
-    public bool Add(ItemData item, Vector3 position)
+    public bool Add(ItemInstance item, Vector3 position)
     {
         GameObject newItem = new GameObject(item.Idea.ItemName);
         newItem.transform.position = position;
@@ -22,7 +22,7 @@ public class ItemStorage_World : iSavedData
 
     public bool Add(int itemID, Vector3 position)
     {
-        ItemData item = ItemData.New(itemID);
+        ItemInstance item = ItemInstance.Instantiate(itemID);
 
         // recycle
         if (item != null)

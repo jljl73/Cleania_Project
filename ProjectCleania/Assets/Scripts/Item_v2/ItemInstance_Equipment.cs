@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Equipment : ItemData, iSavedData
+public class ItemInstance_Equipment : ItemInstance, iSavedData
 {
     
 
@@ -19,19 +19,19 @@ public class Equipment : ItemData, iSavedData
         EnumTotal
     }
 
-    protected Equipment()
+    public ItemInstance_Equipment()
     {
     }
 
-    protected Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
+    protected ItemInstance_Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
     {
         Level = level;
     }
 
-    static public Equipment New(ItemSO itemSO, int level = 1)
+    static public ItemInstance_Equipment Instantiate(ItemSO itemSO, int level = 1)
     {
         if (itemSO.OptionTable != null && itemSO.MainCategory == ItemSO.enumMainCategory.Equipment)
-            return new Equipment(itemSO, level);
+            return new ItemInstance_Equipment(itemSO, level);
         else
             return null;
     }

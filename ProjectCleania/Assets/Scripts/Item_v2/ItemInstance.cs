@@ -3,30 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ItemData
+public class ItemInstance
 {
-    protected ItemData()
+    protected ItemInstance()
     {
 
     }
 
-    protected ItemData(ItemSO itemSO)
+    protected ItemInstance(ItemSO itemSO)
     {
         idea = itemSO;
     }
 
-    static public ItemData New(ItemSO itemSO)
+    /// <summary>
+    /// Used instead of new ItemInstance()
+    /// </summary>
+    /// <param name="itemSO"></param>
+    /// <returns></returns>
+    static public ItemInstance Instantiate(ItemSO itemSO)
     {
         switch(itemSO.MainCategory)
         {
             case ItemSO.enumMainCategory.Equipment:
-                return Equipment.New(itemSO);
+                return ItemInstance_Equipment.Instantiate(itemSO);
                
             default:
-                return new ItemData(itemSO);
+                return new ItemInstance(itemSO);
         }
     }
-    static public ItemData New(int itemID)
+    static public ItemInstance Instantiate(int itemID)
     {
         ItemSO itemSO = Resources.Load<ItemSO>($"ScriptableObject/ItemTable/{itemID.ToString()}");
 
@@ -36,10 +41,10 @@ public class ItemData
         switch((ItemSO.enumMainCategory)(itemID / 1000000))
         {
             case ItemSO.enumMainCategory.Equipment:
-                return Equipment.New(itemSO);
+                return ItemInstance_Equipment.Instantiate(itemSO);
                
             default:
-                return new ItemData(itemSO);
+                return new ItemInstance(itemSO);
         }
     }
 

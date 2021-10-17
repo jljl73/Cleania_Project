@@ -6,7 +6,7 @@ using UnityEngine;
 public class Equipable : MonoBehaviour, iSavedData
 {
     //[System.NonSerialized]
-    Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+    ItemInstance_Equipment[] _equipments = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];
 
     Dictionary<Ability.Stat, float> _stats
         = new Dictionary<Ability.Stat, float>();
@@ -46,7 +46,7 @@ public class Equipable : MonoBehaviour, iSavedData
 
 
 
-    public Equipment Equip(Equipment newEquipment)
+    public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment)
     {
         // Exception
         if (newEquipment == null)
@@ -56,7 +56,7 @@ public class Equipable : MonoBehaviour, iSavedData
 
         if (_equipments[inType] != null)
         {
-            Equipment oldEquipment = _equipments[inType];
+            ItemInstance_Equipment oldEquipment = _equipments[inType];
             _equipments[inType] = newEquipment;
 
             Refresh();
@@ -73,15 +73,15 @@ public class Equipable : MonoBehaviour, iSavedData
         }
     }
 
-    public Equipment Unequip(Equipment.Type offType)
+    public ItemInstance_Equipment Unequip(ItemInstance_Equipment.Type offType)
     {
         // Exception
-        if (offType < Equipment.Type.MainWeapon || offType >= Equipment.Type.EnumTotal)
+        if (offType < ItemInstance_Equipment.Type.MainWeapon || offType >= ItemInstance_Equipment.Type.EnumTotal)
             return null;
 
         int type = (int)offType;
 
-        Equipment oldEquipment = _equipments[type];
+        ItemInstance_Equipment oldEquipment = _equipments[type];
 
         _equipments[type] = null;
 
@@ -170,11 +170,11 @@ public class Equipable : MonoBehaviour, iSavedData
     // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<Equipment> SD_equipments;
+    List<ItemInstance_Equipment> SD_equipments;
 
     public void AfterLoad()
     {
-        foreach (Equipment e in SD_equipments)
+        foreach (ItemInstance_Equipment e in SD_equipments)
         {
             e.AfterLoad();
 
@@ -190,9 +190,9 @@ public class Equipable : MonoBehaviour, iSavedData
     {
         SD_equipments.Clear();
 
-        for (Equipment.Type i = Equipment.Type.MainWeapon; i < Equipment.Type.EnumTotal; i++)
+        for (ItemInstance_Equipment.Type i = ItemInstance_Equipment.Type.MainWeapon; i < ItemInstance_Equipment.Type.EnumTotal; i++)
         {
-            Equipment e = _equipments[(int)i];
+            ItemInstance_Equipment e = _equipments[(int)i];
 
             if (e != null)
             {
