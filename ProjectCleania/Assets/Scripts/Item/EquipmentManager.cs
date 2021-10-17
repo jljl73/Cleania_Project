@@ -54,7 +54,7 @@ public class EquipmentManager : MonoBehaviour
         }
         print("equip");
 
-        ItemInstance_Equipment equip = new ItemInstance_Equipment();
+        ItemInstance_Equipment equip = ItemInstance_Equipment.Instantiate();
 
         equip.EquipmentType = (ItemInstance_Equipment.Type)part;
     

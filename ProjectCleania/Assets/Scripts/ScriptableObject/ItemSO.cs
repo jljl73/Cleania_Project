@@ -114,4 +114,10 @@ public class ItemSO : ScriptableObject
     EquipmentOptionSO optionTable;
     public EquipmentOptionSO OptionTable
     { get => optionTable; }
+
+
+    static public ItemSO Load(int id)
+    {
+        return Resources.Load<ItemSO>($"ScriptableObject/ItemTable/{id.ToString()}");
+    }
 }

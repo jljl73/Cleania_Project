@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ItemInstance
+public abstract class ItemInstance
 {
-    protected ItemInstance()
-    {
-
-    }
-
     protected ItemInstance(ItemSO itemSO)
     {
-        idea = itemSO;
+        info = itemSO;
     }
 
     /// <summary>
@@ -22,36 +17,34 @@ public class ItemInstance
     /// <returns></returns>
     static public ItemInstance Instantiate(ItemSO itemSO)
     {
+        if (itemSO == null)
+            return null;
+        else
         switch(itemSO.MainCategory)
         {
             case ItemSO.enumMainCategory.Equipment:
                 return ItemInstance_Equipment.Instantiate(itemSO);
                
             default:
-                return new ItemInstance(itemSO);
+                return new ItemInstance_Etc(itemSO);
         }
     }
     static public ItemInstance Instantiate(int itemID)
     {
-        ItemSO itemSO = Resources.Load<ItemSO>($"ScriptableObject/ItemTable/{itemID.ToString()}");
+        ItemSO itemSO = ItemSO.Load(itemID);
 
         if (itemSO == null)
             return null;
-
-        switch((ItemSO.enumMainCategory)(itemID / 1000000))
-        {
-            case ItemSO.enumMainCategory.Equipment:
-                return ItemInstance_Equipment.Instantiate(itemSO);
-               
-            default:
-                return new ItemInstance(itemSO);
-        }
+        else
+            return Instantiate(itemSO); // delegate to overload
     }
 
     [SerializeField]
-    protected ItemSO idea;
-    public ItemSO Idea
-    { get => idea; }
+    protected ItemSO info;
+    public ItemSO Info
+    { get => info; }
     [SerializeField]
     protected int count;
+    
+
 }

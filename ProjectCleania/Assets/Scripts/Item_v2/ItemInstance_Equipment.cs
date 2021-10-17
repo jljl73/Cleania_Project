@@ -5,8 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class ItemInstance_Equipment : ItemInstance, iSavedData
 {
-    
-
     public enum Type
     {
         MainWeapon,
@@ -19,9 +17,14 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         EnumTotal
     }
 
-    public ItemInstance_Equipment()
+    // for test : WILL BE DELETED
+    protected ItemInstance_Equipment() : base(null)
     {
     }
+    // for test : WILL BE DELETED
+    static public ItemInstance_Equipment Instantiate()
+    { return new ItemInstance_Equipment(); }
+
 
     protected ItemInstance_Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
     {
@@ -76,7 +79,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         get
         {
             if (_statics.TryGetValue(stat, out float value))
-                return value;
+                return value * (Level / 50);
             else
                 return float.NaN;
         }
