@@ -11,5 +11,23 @@ public abstract class PlayerSkill : Skill
     protected string SkillSlotDependency = 1.ToString();
     public string GetSkillSlotDependency() { return SkillSlotDependency; }
 
-    public SkillEffectController effectController;
+    public List<SkillEffectController> effectController;
+
+    public void PlayEffects(int effectIdx)
+    {
+        effectController[effectIdx].PlaySkillEffect();
+        //foreach (SkillEffectController skillEffect in effectController)
+        //{
+        //    skillEffect.PlaySkillEffect();
+        //}
+    }
+
+    public void StopEffects(int effectIdx)
+    {
+        effectController[effectIdx].StopSKillEffect();
+        //foreach (SkillEffectController skillEffect in effectController)
+        //{
+        //    skillEffect.StopSKillEffect();
+        //}
+    }
 }

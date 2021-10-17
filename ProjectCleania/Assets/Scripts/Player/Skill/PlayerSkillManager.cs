@@ -97,17 +97,54 @@ public class PlayerSkillManager : MonoBehaviour
         ResetSkill(index);
     }
 
-    public void ActivateSkillEffect(int index)
+    //public void ActivateSkillEffect(int index)
+    //{
+    //    for (int i = 0; i < skills[index].effectController.Count; i++)
+    //    {
+    //        skills[index].PlayEffects(i);
+    //    }
+    //}
+
+    public void ActivateSkillEffect(AnimationEvent myEvent)
     {
-        if (skills[index].effectController != null)
-            skills[index].effectController.PlaySkillEffect();
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
+        if (skillEffectIndexSet != null)
+            skills[skillEffectIndexSet.GetSkillIndex()].PlayEffects(skillEffectIndexSet.GetEffectIndex());
+        else
+        {
+            for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
+            {
+                skills[myEvent.intParameter].PlayEffects(i);
+            }
+        }
     }
 
-    public void DeactivateSkillEffect(int index)
+    public void DeactivateSkillEffect(AnimationEvent myEvent)
     {
-        if (skills[index].effectController != null)
-            skills[index].effectController.StopSKillEffect();
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
+        if (skillEffectIndexSet != null)
+            skills[skillEffectIndexSet.GetSkillIndex()].StopEffects(skillEffectIndexSet.GetEffectIndex());
+        else
+        {
+            for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
+            {
+                skills[myEvent.intParameter].StopEffects(i);
+            }
+        }
+
     }
+
+    //public void DeactivateSkillEffect(int index)
+    //{
+    //    for (int i = 0; i < skills[index].effectController.Count; i++)
+    //    {
+    //        skills[index].StopEffects(i);
+    //    }
+    //}
 
     public void ActivateSkill(int index)
     {

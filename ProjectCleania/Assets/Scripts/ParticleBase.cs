@@ -7,6 +7,10 @@ public class ParticleBase : MonoBehaviour
     public GameObject ParticleObject;
     protected ParticleSystem[] particleChildrens;
     protected Animator[] particleChildrenAnimators;
+    protected MeshRenderer[] particleChildrenMeshRenderes;
+
+    protected ParticleSystem ParticleObjectWithPS;
+    protected MeshRenderer ParticleObjectWithMR;
 
     public float Scale = 1f;
 
@@ -16,11 +20,19 @@ public class ParticleBase : MonoBehaviour
 
         particleChildrenAnimators = ParticleObject.GetComponentsInChildren<Animator>(true);
 
+        particleChildrenMeshRenderes = ParticleObject.GetComponentsInChildren<MeshRenderer>(true);
+
+        ParticleObjectWithPS = ParticleObject.GetComponent<ParticleSystem>();
+        ParticleObjectWithMR = ParticleObject.GetComponent<MeshRenderer>();
+
         ResetSetting();
     }
 
     protected virtual void Start()
     {
+        if (ParticleObjectWithMR != null)
+            ParticleObjectWithMR.enabled = false;
+
         ChangeScalingMode(ParticleSystemScalingMode.Local);
     }
 
@@ -36,6 +48,11 @@ public class ParticleBase : MonoBehaviour
         {
             animator.enabled = false;
         }
+
+        foreach (MeshRenderer ms in particleChildrenMeshRenderes)
+        {
+            ms.enabled = false;
+        }
     }
 
     protected void ChangeScalingMode(ParticleSystemScalingMode mode)
@@ -49,6 +66,12 @@ public class ParticleBase : MonoBehaviour
 
     protected void ChangeScale(float value)
     {
+        if (ParticleObjectWithMR != null)
+        {
+            Vector3 changedScale = new Vector3(value, value, value);
+            ParticleObject.transform.localScale = changedScale;
+        }
+
         foreach (ParticleSystem particle in particleChildrens)
         {
             particle.transform.localScale = new Vector3(value, value, value);
@@ -57,9 +80,10 @@ public class ParticleBase : MonoBehaviour
 
     protected void PlayEffect()
     {
-        ParticleSystem ParticleObjectWithPS = ParticleObject.GetComponent<ParticleSystem>();
-
         ChangeScale(Scale);
+
+        if (ParticleObjectWithMR != null)
+            ParticleObjectWithMR.enabled = true;
 
         if (ParticleObjectWithPS != null)
         {
@@ -69,8 +93,14 @@ public class ParticleBase : MonoBehaviour
         {
             foreach (ParticleSystem particle in particleChildrens)
             {
+                print("Play particle system child");
                 particle.Play();
             }
+        }
+
+        foreach (MeshRenderer ms in particleChildrenMeshRenderes)
+        {
+            ms.enabled = true;
         }
 
         foreach (Animator animator in particleChildrenAnimators)
@@ -85,6 +115,9 @@ public class ParticleBase : MonoBehaviour
 
         print("Stop effec in particleBase!");
 
+        if (ParticleObjectWithMR != null)
+            ParticleObjectWithMR.enabled = false;
+
         if (ParticleObjectWithPS != null)
         {
             ParticleObjectWithPS.Stop(true);
@@ -95,6 +128,11 @@ public class ParticleBase : MonoBehaviour
             {
                 particle.Stop(true);
             }
+        }
+
+        foreach (MeshRenderer ms in particleChildrenMeshRenderes)
+        {
+            ms.enabled = false;
         }
 
         foreach (Animator animator in particleChildrenAnimators)

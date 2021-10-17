@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill1 : PlayerSkill
 {
-    public BuffManager buffManager;
+    // public BuffManager buffManager;
     // public float speed = 10.0f;
     float duration = 0f;
     bool bSkill = false;
@@ -39,7 +39,7 @@ public class PlayerSkill1 : PlayerSkill
         duration = 5.0f;
         nDeadEnemy = 0;
 
-        buffManager.AddBuff(0.4f, Ability.Buff.MoveSpeed_Buff, 5.0f);
+        // buffManager.AddBuff(0.4f, Ability.Buff.MoveSpeed_Buff, 5.0f);
         
         yield return new WaitForSeconds(duration);
 

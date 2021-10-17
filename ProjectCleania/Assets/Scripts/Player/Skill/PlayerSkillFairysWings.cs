@@ -6,7 +6,7 @@ public class PlayerSkillFairysWings : PlayerSkill
 {
     public PlayerSkillFairysWingsSO SkillData;
 
-    public BuffManager buffManager;
+    public Buffable buffManager;
     // public float speed = 10.0f;
 
     // "지속 시간"

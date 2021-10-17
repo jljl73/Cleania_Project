@@ -66,16 +66,26 @@ public class Player : MonoBehaviour
         playerSkillManager.DeactivateSkill(index);
     }
 
-    public void ActivateSkillEffect(int index)
+    //public void activateskilleffect(int index)
+    //{
+    //    print("ActivateSkillEffect!");
+    //    playerSkillManager.ActivateSkillEffect(index);
+    //}
+
+    public void ActivateSkillEffect(AnimationEvent myEvent)
     {
-        print("ActivateSkillEffect!");
-        playerSkillManager.ActivateSkillEffect(index);
+        playerSkillManager.ActivateSkillEffect(myEvent);
     }
 
-    public void DeactivateSkillEffect(int index)
+    public void DeactivateSkillEffect(AnimationEvent myEvent)
     {
-        print("DeactivateSkillEffect!");
-        playerSkillManager.DeactivateSkillEffect(index);
-        StopMoving();
+        playerSkillManager.DeactivateSkillEffect(myEvent);
     }
+
+    //public void DeactivateSkillEffect(int index)
+    //{
+    //    print("DeactivateSkillEffect!");
+    //    playerSkillManager.DeactivateSkillEffect(index);
+    //    StopMoving();
+    //}
 }
