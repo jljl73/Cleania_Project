@@ -50,7 +50,7 @@ public class AbilityStatus_Window : MonoBehaviour
             return;
 
         if (vulnerable != null)
-            ability = vulnerable.GetComponent<AbilityStatus>();
+            ability = vulnerable.GetComponentInChildren<AbilityStatus>();
         else
             ability = null;
 

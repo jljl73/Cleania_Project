@@ -13,7 +13,7 @@ public class PlayerSkillL : PlayerSkill
         attackArea = GetComponent<Collider>();
         //initialNavAgentR = navMeshAgent.radius;
         base.Start();
-        animator.SetFloat("Dusting multiplier", speedMultiplier);
+        animator.SetFloat("Dusting multiplier", SpeedMultiplier);
     }
 
     // Update is called once per frame

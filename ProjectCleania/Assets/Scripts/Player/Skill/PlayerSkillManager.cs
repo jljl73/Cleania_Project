@@ -24,12 +24,12 @@ public class PlayerSkillManager : MonoBehaviour
     {
         player = transform.parent.GetComponent<Player>();
         abilityStatus = player.abilityStatus;
-
-        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
     }
 
     void Start()
     {
+        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
+
         SetskillSlotDependencyDict();
 
         SetDefaultSkillSetting();
@@ -62,10 +62,11 @@ public class PlayerSkillManager : MonoBehaviour
         {
             // 쿨타임 업데이트
             coolTimePassed[i] += Time.deltaTime;
-            if (skills[i].GetCoolTime < 0.01f)
+
+            if (skills[i].GetCoolTime() < 0.01f)
                 CoolTimePassedRatio[i] = 1f;
             else
-                CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime;
+                CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime();
 
             // 업데이트가 됬으면 스킬 가능 설정
             if (CoolTimePassedRatio[i] >= 1f)
@@ -87,7 +88,7 @@ public class PlayerSkillManager : MonoBehaviour
         if (!skillAvailable[index]) return;
 
         // MP가 없으면 실행 불가
-        if (!abilityStatus.ConsumeMP(skills[index].ConsumMP))
+        if (!abilityStatus.ConsumeMP(skills[index].GetConsumMP()))
             return;
 
         if (index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
@@ -95,6 +96,55 @@ public class PlayerSkillManager : MonoBehaviour
         skills[index].AnimationActivate();
         ResetSkill(index);
     }
+
+    //public void ActivateSkillEffect(int index)
+    //{
+    //    for (int i = 0; i < skills[index].effectController.Count; i++)
+    //    {
+    //        skills[index].PlayEffects(i);
+    //    }
+    //}
+
+    public void ActivateSkillEffect(AnimationEvent myEvent)
+    {
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
+        if (skillEffectIndexSet != null)
+            skills[skillEffectIndexSet.GetSkillIndex()].PlayEffects(skillEffectIndexSet.GetEffectIndex());
+        else
+        {
+            for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
+            {
+                skills[myEvent.intParameter].PlayEffects(i);
+            }
+        }
+    }
+
+    public void DeactivateSkillEffect(AnimationEvent myEvent)
+    {
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
+        if (skillEffectIndexSet != null)
+            skills[skillEffectIndexSet.GetSkillIndex()].StopEffects(skillEffectIndexSet.GetEffectIndex());
+        else
+        {
+            for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
+            {
+                skills[myEvent.intParameter].StopEffects(i);
+            }
+        }
+
+    }
+
+    //public void DeactivateSkillEffect(int index)
+    //{
+    //    for (int i = 0; i < skills[index].effectController.Count; i++)
+    //    {
+    //        skills[index].StopEffects(i);
+    //    }
+    //}
 
     public void ActivateSkill(int index)
     {
@@ -120,9 +170,21 @@ public class PlayerSkillManager : MonoBehaviour
     public void ChangeSkill(string skillSlot, PlayerSkill.SkillID skillNameEnum)
     {
         PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
+        if (playerSkill is PlayerSkillDehydration)
+        {
+            //print("playerSkill is PlayerSkillDehydration");
+            //print("dependency: playerSkill.GetSkillSlotDependency(): " + playerSkill.GetSkillSlotDependency());
+            //print("skillSlot: " + skillSlot);
+        }
 
-        if (playerSkill.SkillSlotDependency != skillSlot)
+
+
+
+        if (playerSkill.GetSkillSlotDependency() != skillSlot)
             return;
+
+        //print("skillSlot: " + skillSlot);
+        //print("skillSlotDependencyDict[skillSlot]: " + skillSlotDependencyDict[skillSlot]);
 
         skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
     }
@@ -135,5 +197,13 @@ public class PlayerSkillManager : MonoBehaviour
         ChangeSkill("4", PlayerSkill.SkillID.RefreshingLeapForward);
         ChangeSkill("C", PlayerSkill.SkillID.Dusting);
         ChangeSkill("R", PlayerSkill.SkillID.Dehydration);
+
+        //for (int i = 0; i < skills.Length; i++)
+        //{
+        //    if (skills[i] == null)
+        //        Debug.Log(string.Format("skills {0} == null", i));
+        //    else
+        //        Debug.Log(string.Format("skills {0} != null", i));
+        //}
     }
 }

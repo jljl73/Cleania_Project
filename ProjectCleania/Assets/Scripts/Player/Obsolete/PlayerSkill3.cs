@@ -11,7 +11,7 @@ public class PlayerSkill3 : PlayerSkill
     protected new void Start()
     {
         base.Start();
-        animator.SetFloat("CleaningWind multiplier", speedMultiplier);
+        animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
     }
 
     public override void AnimationActivate()
@@ -37,14 +37,14 @@ public class PlayerSkill3 : PlayerSkill
         left *= Quaternion.Euler(0, 30.0f, 0.0f);
         right *= Quaternion.Euler(0, -30.0f, 0.0f);
 
-        newProjectile = Instantiate(hurricanePrefabs, transform.position, left);
-        newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
+        //newProjectile = Instantiate(hurricanePrefabs, transform.position, left);
+        //newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
 
-        newProjectile = Instantiate(hurricanePrefabs, transform.position, transform.rotation);
-        newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
+        //newProjectile = Instantiate(hurricanePrefabs, transform.position, transform.rotation);
+        //newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
 
-        newProjectile = Instantiate(hurricanePrefabs, transform.position, right);
-        newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
+        //newProjectile = Instantiate(hurricanePrefabs, transform.position, right);
+        //newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
     }
 
 }

@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     public void Spawn()
     {
         float tempTotalWeight = weight;
-        print("rareMonsterCount: " + rareMonsterCount);
+        // print("rareMonsterCount: " + rareMonsterCount);
         // float tempRareMosterCount = rareMonsterCount;
         for (int i = 0; i < rareMonsterCount; i++)
         {

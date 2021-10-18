@@ -6,17 +6,22 @@ public abstract class Skill : MonoBehaviour
 {
     public Animator animator;
 
-    public string SkillName;
+    protected string SkillName;
+    public string GetSkillName() { return SkillName; }
     [TextArea]
-    public string SkillDetails;
+    protected string SkillDetails;
+    public string GetSkillDetails() { return SkillDetails; }
 
     // public bool isAttacking;
-    public float CoolTime;  // 眠饶 private 贸府
-    public float GetCoolTime { get { return CoolTime; } }
-    public float CreatedMP = 0f;
-    public float ConsumMP = 0f;
+    protected float CoolTime;  // 眠饶 private 贸府
+    public float GetCoolTime() { return CoolTime; }
+    protected float CreatedMP = 0f;
+    public float GetCreatedMP() { return CreatedMP; }
+    protected float ConsumMP = 0f;
+    public float GetConsumMP() { return ConsumMP; }
 
-    public float speedMultiplier = 1.0f;
+    protected float SpeedMultiplier = 1.0f;
+    public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     // Start is called before the first frame update
     protected void Start()

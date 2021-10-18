@@ -14,7 +14,7 @@ public class PlayerSkillR : PlayerSkill
         attackArea = GetComponent<Collider>();
         //initialNavAgentR = navMeshAgent.radius;
         base.Start();
-        animator.SetFloat("Dehydration multiplier", speedMultiplier);
+        animator.SetFloat("Dehydration multiplier", SpeedMultiplier);
     }
 
     public override void AnimationActivate()

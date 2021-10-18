@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerSkillRefreshingLeapForwardSO : ScriptableObject
 {
     public string SkillName;
+    public string GetSkillName() { return SkillName; }
+
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
     public string SkillDetails;
@@ -39,32 +41,44 @@ public class PlayerSkillRefreshingLeapForwardSO : ScriptableObject
 
     [Header("작동 키")]
     public string TriggerKey;
+    public string GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]
     public float CoolTime;  // 추후 private 처리
-    public float GetCoolTime { get { return CoolTime; } }
+    public float GetCoolTime() { return CoolTime; }
 
     [Header("생성 고유 자원")]
     public float CreatedMP = 0f;
+    public float GetCreatedMP() { return CreatedMP; }
 
     [Header("소모 고유 자원")]
     public float ConsumMP = 0f;
+    public float GetConsumMP() { return ConsumMP; }
 
     [Header("전체 애니메이션 배속")]
-    public float speedMultiplier = 1.0f;
+    public float SpeedMultiplier = 1.0f;
+    public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     public float SmashDamageRate = 5.4f;
+    public float GetSmashDamageRate() { return SmashDamageRate; }
 
     [Header("내려치기 범위")]
     public float SmashRange = 2f;
+    public float GetSmashRange() { return SmashRange; }
 
     [Header("경직 시간")]
     public float StunTime = 1.5f;
+    public float GetStunTime() { return StunTime; }
 
     [Header("슬로우 시간")]
     public float SlowTime = 2f;
+    public float GetSlowTime() { return SlowTime; }
+
+    [Header("제자리 점프 거리")]
+    public float JumpDistance = 7f;
+    public float GetJumpDistance() { return JumpDistance; }
 
 
     /*

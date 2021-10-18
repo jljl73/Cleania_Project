@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerSkillSweepingSO : ScriptableObject
 {
     public string SkillName;
+    public string GetSkillName() { return SkillName; }
+
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
     public string SkillDetails;
@@ -33,24 +35,30 @@ public class PlayerSkillSweepingSO : ScriptableObject
 
     [Header("작동 키")]
     public string TriggerKey;
+    public string GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]
     public float CoolTime;  // 추후 private 처리
-    public float GetCoolTime { get { return CoolTime; } }
+    public float GetCoolTime() { return CoolTime; }
 
     [Header("생성 고유 자원")]
     public float CreatedMP = 0f;
+    public float GetCreatedMP() { return CreatedMP; }
 
     [Header("소모 고유 자원")]
     public float ConsumMP = 0f;
+    public float GetConsumMP() { return ConsumMP; }
 
     [Header("전체 애니메이션 배속")]
-    public float speedMultiplier = 1.0f;
+    public float SpeedMultiplier = 1.0f;
+    public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     [Header("경직 시간")]
     public float StunTime = 2;
+    public float GetStunTime() { return StunTime; }
 
     [Header("쓸어담기 범위")]
     public float SweepRange = 2f;
+    public float GetSweepRange() { return SweepRange; }
 }
