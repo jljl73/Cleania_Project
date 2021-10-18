@@ -2,10 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ItemStorage_World : ItemStorage, iSavedData
 {
+    public ItemStorage_World()
+    {
+        _itemObjectPrefab = Resources.Load<GameObject>("Prefab/ItemObject");
+    }
 
-    List<GameObject> _items;
+    GameObject _itemObjectPrefab;
+    Queue<GameObject> _objectPool = new Queue<GameObject>();
+    Dictionary<ItemInstance, GameObject> _items = new Dictionary<ItemInstance, GameObject>();
+
+
+    public override bool Add(ItemInstance item)
+    {
+        return false;
+    }
+    public override bool Remove(ItemInstance item)
+    {
+        return false;
+    }
 
     public bool Add(ItemInstance item, Vector3 position)
     {
@@ -13,17 +30,6 @@ public class ItemStorage_World : ItemStorage, iSavedData
         newItem.transform.position = position;
 
         return true;
-    }
-
-    public bool Add(int itemID, Vector3 position)
-    {
-        ItemInstance item = ItemInstance.Instantiate(itemID);
-
-        // recycle
-        if (item != null)
-            return Add(item, position);
-        else
-            return false;
     }
 
     public bool Remove(GameObject itemObject)
@@ -36,6 +42,7 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         // SAVE DATA IMPLEMENTATION
 
+    [System.Serializable]
     public struct PositionedItem
     {
         ItemInstance ItemData;
@@ -43,15 +50,15 @@ public class ItemStorage_World : ItemStorage, iSavedData
     }
 
     [SerializeField]
-    List<PositionedItem> SD_items;
+    List<PositionedItem> SD_items = new List<PositionedItem>();
 
-    public void AfterLoad()
+    void iSavedData.AfterLoad()
     {
-        
+
     }
 
-    public void BeforeSave()
+    void iSavedData.BeforeSave()
     {
-        
+
     }
 }

@@ -8,19 +8,19 @@ public class SavedData_Equipments : iSavedData
     [SerializeField]
     string json;
 
-    public void AfterLoad()
+    void iSavedData.AfterLoad()
     {
         playerEquips = GameManager.Instance.PlayerEquipments;
 
         // load
         JsonUtility.FromJsonOverwrite(json, playerEquips);
 
-        playerEquips.AfterLoad();
+        ((iSavedData)playerEquips).AfterLoad();
     }
 
-    public void BeforeSave()
+    void iSavedData.BeforeSave()
     {
-        playerEquips.BeforeSave();
+        ((iSavedData)playerEquips).BeforeSave();
         
         // save
         json = JsonUtility.ToJson(playerEquips);
