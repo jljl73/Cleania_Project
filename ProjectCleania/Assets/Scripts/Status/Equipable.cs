@@ -170,7 +170,7 @@ public class Equipable : MonoBehaviour, iSavedData
     // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<ItemInstance_Equipment> SD_equipments;
+    List<ItemInstance_Equipment> SD_equipments = new List<ItemInstance_Equipment>();
 
     void iSavedData.AfterLoad()
     {

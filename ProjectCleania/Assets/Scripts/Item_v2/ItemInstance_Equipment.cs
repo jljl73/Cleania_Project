@@ -198,9 +198,9 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<Ability.StaticOption> SD_staticOption;
+    List<Ability.StaticOption> SD_staticOption = new List<Ability.StaticOption>();
     [SerializeField]
-    List<Ability.DynamicOption> SD_dynamicOption;
+    List<Ability.DynamicOption> SD_dynamicOption = new List<Ability.DynamicOption>();
 
     void iSavedData.AfterLoad()
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ItemStorage_World : ItemStorage, iSavedData
 {
     public ItemStorage_World()
@@ -41,6 +42,7 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         // SAVE DATA IMPLEMENTATION
 
+    [System.Serializable]
     public struct PositionedItem
     {
         ItemInstance ItemData;
@@ -48,7 +50,7 @@ public class ItemStorage_World : ItemStorage, iSavedData
     }
 
     [SerializeField]
-    List<PositionedItem> SD_items;
+    List<PositionedItem> SD_items = new List<PositionedItem>();
 
     void iSavedData.AfterLoad()
     {

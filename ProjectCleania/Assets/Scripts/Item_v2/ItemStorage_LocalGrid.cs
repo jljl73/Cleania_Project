@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+[System.Serializable]
 public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 {
-    ItemStorage_LocalGrid(Size size)
+    public ItemStorage_LocalGrid(Size size)
     {
         gridSize = size;
         if (_referenceGrid == null || new Size(_referenceGrid.Length, _referenceGrid[0].Length) != gridSize)
-            _InitGrid(size);
+            _InitGrid();
     }
 
     [SerializeField]
@@ -18,6 +19,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     { get => gridSize; }
 
     Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
+    public Dictionary<ItemInstance, Point> Items
+    { get => new Dictionary<ItemInstance, Point>(_items); }
+
     ItemInstance[][] _referenceGrid;
 
     public override bool Add(ItemInstance item)
@@ -113,7 +117,7 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
 
 
-    void _InitGrid(Size size)
+    void _InitGrid()
     {
         _referenceGrid = new ItemInstance[gridSize.Height][];
         for (int i = 0; i < gridSize.Height; ++i)
@@ -122,8 +126,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
 
 
-    // SAVE DATA IMPLEMENTATION
+        // SAVE DATA IMPLEMENTATION
 
+    [System.Serializable]
     public struct GriddedItem
     {
         public GriddedItem(ItemInstance item, Point location)
@@ -137,11 +142,11 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
 
     [SerializeField]
-    List<GriddedItem> SD_items;
+    List<GriddedItem> SD_items = new List<GriddedItem>();
 
     void iSavedData.AfterLoad()
     {
-        _InitGrid(gridSize);
+        _InitGrid();
 
         _items.Clear();
 

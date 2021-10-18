@@ -20,14 +20,14 @@ public abstract class ItemInstance
         if (itemSO == null)
             return null;
         else
-        switch(itemSO.MainCategory)
-        {
-            case ItemSO.enumMainCategory.Equipment:
-                return ItemInstance_Equipment.Instantiate(itemSO);
-               
-            default:
-                return new ItemInstance_Etc(itemSO);
-        }
+            switch (itemSO.MainCategory)
+            {
+                case ItemSO.enumMainCategory.Equipment:
+                    return ItemInstance_Equipment.Instantiate(itemSO);
+
+                default:
+                    return new ItemInstance_Etc(itemSO);
+            }
     }
     static public ItemInstance Instantiate(int itemID)
     {
@@ -45,6 +45,6 @@ public abstract class ItemInstance
     { get => info; }
     [SerializeField]
     protected int count;
-    
+
 
 }
