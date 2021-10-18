@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPCTrigger : MonoBehaviour
 {
+    public UIManager ui;
     List<GameObject> npcs = new List<GameObject>();
 
     GameObject npc;
@@ -13,7 +14,7 @@ public class NPCTrigger : MonoBehaviour
         {
             npc = FindCloseNPC();
             if(npc != null)
-                npc.GetComponent<NPC>().ShowPanel();
+                ui.ShowPanel(true, npc.GetComponent<NPC>().NPCType);
         }
     }
 

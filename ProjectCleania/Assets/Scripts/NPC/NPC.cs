@@ -7,20 +7,17 @@ using UnityEngine.EventSystems;
 
 public class NPC : MonoBehaviour
 {
-    public GameObject panel;
     public GameObject fieldName;
     public TextMesh textMesh;
+
+    public string npctype;
+    public string NPCType { get { return npctype; } }
 
     void Update()
     {
         textMesh.transform.rotation = Camera.main.transform.rotation;
     }
-
-    public void ShowPanel()
-    {
-        panel.SetActive(true);
-    }
-
+    
     public void ShowName(bool value)
     {
         fieldName.SetActive(value);
