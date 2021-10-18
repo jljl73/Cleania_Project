@@ -202,7 +202,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     [SerializeField]
     List<Ability.DynamicOption> SD_dynamicOption;
 
-    public void AfterLoad()
+    void iSavedData.AfterLoad()
     {
         foreach(var en in SD_staticOption)
         {
@@ -217,7 +217,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         //jsonDynamic.Clear();
     }
 
-    public void BeforeSave()
+    void iSavedData.BeforeSave()
     {
         SD_staticOption.Clear();
         SD_dynamicOption.Clear();

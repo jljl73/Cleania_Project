@@ -84,11 +84,11 @@ public class ItemSO : ScriptableObject
     { get => toolTip; }
 
     [SerializeField]
-    int inventorySizeX;
+    int gridSizeX;
     [SerializeField]
-    int inventorySizeY;
-    public Size InventorySize
-    { get => new Size(inventorySizeX, inventorySizeY); }
+    int gridSizeY;
+    public Size GridSize
+    { get => new Size(gridSizeX, gridSizeY); }
 
     [SerializeField]
     bool disassemble;

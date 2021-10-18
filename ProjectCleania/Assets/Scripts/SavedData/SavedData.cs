@@ -58,16 +58,16 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        SavedInventory.AfterLoad();
-        SavedEquipments.AfterLoad();
+        ((iSavedData)SavedInventory).AfterLoad();
+        ((iSavedData)SavedEquipments).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
     }
 
     void BeforeSave()
     {
-        SavedInventory.BeforeSave();
-        SavedEquipments.BeforeSave();
+        ((iSavedData)SavedInventory).BeforeSave();
+        ((iSavedData)SavedEquipments).BeforeSave();
 
         vulnerableString = JsonUtility.ToJson(vulnerable);
     }

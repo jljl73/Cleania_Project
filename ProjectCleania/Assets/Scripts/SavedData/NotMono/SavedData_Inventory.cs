@@ -5,12 +5,12 @@ public class SavedData_Inventory : iSavedData
 {
     public List<ItemInstance> items = new List<ItemInstance>();
 
-    public void AfterLoad()
+    void iSavedData.AfterLoad()
     {
 
     }
 
-    public void BeforeSave()
+    void iSavedData.BeforeSave()
     {
 
     }
