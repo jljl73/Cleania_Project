@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Equipment : ItemData, iSavedGame
+public class ItemInstance_Equipment : ItemInstance, iSavedData
 {
     public enum Type
     {
@@ -17,19 +17,28 @@ public class Equipment : ItemData, iSavedGame
         EnumTotal
     }
 
-    public Equipment()
+    // for test : WILL BE DELETED
+    protected ItemInstance_Equipment() : base(null)
     {
     }
+    // for test : WILL BE DELETED
+    static public ItemInstance_Equipment Instantiate()
+    { return new ItemInstance_Equipment(); }
 
-    public Equipment(ItemSO itemSO) : base(itemSO)
-    {
-        Level = 1;
-    }
-    public Equipment(ItemSO itemSO, int level) : base(itemSO)
-    {
 
+    protected ItemInstance_Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
+    {
         Level = level;
     }
+
+    static public ItemInstance_Equipment Instantiate(ItemSO itemSO, int level = 1)
+    {
+        if (itemSO.OptionTable != null && itemSO.MainCategory == ItemSO.enumMainCategory.Equipment)
+            return new ItemInstance_Equipment(itemSO, level);
+        else
+            return null;
+    }
+    
 
     public Type EquipmentType = Type.MainWeapon;
     [Range(1, 50)]
@@ -70,7 +79,7 @@ public class Equipment : ItemData, iSavedGame
         get
         {
             if (_statics.TryGetValue(stat, out float value))
-                return value;
+                return value * (Level / 50);
             else
                 return float.NaN;
         }
@@ -184,20 +193,22 @@ public class Equipment : ItemData, iSavedGame
     //    }
 
 
-        // IMPLEMENTATION OF SAVE DATA
+
+
+        // SAVE DATA IMPLEMENTATION
 
     [SerializeField]
-    List<Ability.StaticOption> jsonStatic;
+    List<Ability.StaticOption> SD_staticOption;
     [SerializeField]
-    List<Ability.DynamicOption> jsonDynamic;
+    List<Ability.DynamicOption> SD_dynamicOption;
 
     public void AfterLoad()
     {
-        foreach(var en in jsonStatic)
+        foreach(var en in SD_staticOption)
         {
             _statics[en.Stat] = en.Value;
         }
-        foreach (var en in jsonDynamic)
+        foreach (var en in SD_dynamicOption)
         {
             _dynamics[en.Key] = en.Value;
         }
@@ -208,16 +219,16 @@ public class Equipment : ItemData, iSavedGame
 
     public void BeforeSave()
     {
-        jsonStatic.Clear();
-        jsonDynamic.Clear();
+        SD_staticOption.Clear();
+        SD_dynamicOption.Clear();
 
         foreach(var kv in _statics)
         {
-            jsonStatic.Add(new Ability.StaticOption(kv.Value, kv.Key));
+            SD_staticOption.Add(new Ability.StaticOption(kv.Value, kv.Key));
         }
         foreach(var kv in _dynamics)
         {
-            jsonDynamic.Add(new Ability.DynamicOption(kv.Value, kv.Key));
+            SD_dynamicOption.Add(new Ability.DynamicOption(kv.Value, kv.Key));
         }
     }
 
