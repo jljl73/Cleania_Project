@@ -15,19 +15,21 @@ public class UIManager : MonoBehaviour
     public Canvas GetCanvas { get { return canvas_; } }
 
     public SkillPanel skillPanel;
-    public GameObject ExpandMapPanel; 
+    public GameObject ExpandMapPanel;
+    public GameObject QuestPanel;
+    public GameObject RepairPanel;
 
     
     private void Start()
     {
-        OnOffInventory();
+        ShowInventory();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            OnOffInventory();
+            ShowInventory();
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -40,9 +42,14 @@ public class UIManager : MonoBehaviour
             ExpandMapPanel.SetActive(!ExpandMapPanel.activeSelf);
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ShowSkillPanel();
+        }
+
     }
 
-    public void OnOffInventory()
+    public void ShowInventory()
     {
         if (isActiveItemPanel)
             itemPanel.transform.Translate(new Vector3(2000, 0, 0));
@@ -52,9 +59,24 @@ public class UIManager : MonoBehaviour
         isActiveItemPanel = !isActiveItemPanel;
     }
 
-    public void OnOffSkillPanel()
+    public void ShowSkillPanel()
     {
         skillPanel.OnOffPanel();
+    }
+    
+    public void ShowQuestPanel()
+    {
+        QuestPanel.SetActive(!QuestPanel.activeSelf);
+    }
+
+    public void ShowPanel(bool value, string npcType)
+    {
+        switch(npcType)
+        {
+            case "Repair":
+                RepairPanel.SetActive(value);
+                break;
+        }
     }
 
 }
