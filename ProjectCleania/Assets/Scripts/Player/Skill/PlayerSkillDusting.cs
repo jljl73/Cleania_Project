@@ -4,16 +4,45 @@ using UnityEngine;
 
 public class PlayerSkillDusting : PlayerSkill
 {
-    //public GameObject player;
-    public TestPlayerMove playerMovement;
+    public PlayerSkillDustingSO SkillData;
+
+    // public TestPlayerMove playerMovement;
+
+    public AbilityStatus abilityStatus;
+
     Collider attackArea;
+
+    // "내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)"
+    float damageRate = 5.4f;
+    public float GetDamageRate() { return damageRate; }
+
+    private void Awake()
+    {
+        UpdateSkillData();
+    }
 
     new void Start()
     {
-        attackArea = GetComponent<Collider>();
         //initialNavAgentR = navMeshAgent.radius;
         base.Start();
-        animator.SetFloat("Dusting multiplier", speedMultiplier);
+
+        GameManager.Instance.player.OnLevelUp += UpdateSkillData;
+        attackArea = GetComponent<Collider>();
+        animator.SetFloat("Dusting multiplier", SpeedMultiplier);
+    }
+
+    public void UpdateSkillData()
+    {
+        SkillName = SkillData.GetSkillName();
+        SkillDetails = SkillData.GetSkillDetails();
+        CoolTime = SkillData.GetCoolTime();
+        CreatedMP = SkillData.GetCreatedMP();
+        ConsumMP = SkillData.GetConsumMP();
+        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+
+        SkillSlotDependency = SkillData.GetTriggerKey();
+
+        damageRate = SkillData.GetDamageRate();
     }
 
     // Update is called once per frame
@@ -43,7 +72,10 @@ public class PlayerSkillDusting : PlayerSkill
         if (other.tag == "Enemy")
         {
             Debug.Log("L Hit");
+            AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
 
+            if (enemyAbil.HP != 0)
+                enemyAbil.AttackedBy(abilityStatus, damageRate);
         }
     }
 }

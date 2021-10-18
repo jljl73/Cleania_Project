@@ -6,9 +6,12 @@ using UnityEngine;
 public class PlayerSkillFairysWingsSO : ScriptableObject
 {
     public string SkillName;
+    public string GetSkillName() { return SkillName; }
+
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
     public string SkillDetails;
+
     public string GetSkillDetails()
     {
         string tempString = SkillDetails;
@@ -33,26 +36,32 @@ public class PlayerSkillFairysWingsSO : ScriptableObject
 
     [Header("작동 키")]
     public string TriggerKey;
+    public string GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]
     public float CoolTime;  // 추후 private 처리
-    public float GetCoolTime { get { return CoolTime; } }
+    public float GetCoolTime() { return CoolTime; }
 
     [Header("생성 고유 자원")]
     public float CreatedMP = 0f;
+    public float GetCreatedMP() { return CreatedMP; }
 
     [Header("소모 고유 자원")]
     public float ConsumMP = 0f;
+    public float GetConsumMP() { return ConsumMP; }
 
     [Header("전체 애니메이션 배속")]
-    public float speedMultiplier = 1.0f;
+    public float SpeedMultiplier = 1.0f;
+    public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     [Header("지속 시간")]
     public float Duration = 5f;
+    public float GetDuration() { return Duration; }
 
     [Header("속도 상승률 (ex. 0.4 = 40% 증가)")]
     public float SpeedUpRate = 1.4f;
+    public float GetSpeedUpRate() { return SpeedUpRate; }
 
-    
+
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerSkillDustingSO : ScriptableObject
 {
     public string SkillName;
+    public string GetSkillName() { return SkillName; }
+
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
     public string SkillDetails;
@@ -28,25 +30,34 @@ public class PlayerSkillDustingSO : ScriptableObject
         return tempString;
     }
 
+    [Header("스킬 이팩트")]
+    public GameObject Effect;
+    public GameObject GetEffect() { return Effect; }
+
     [Header("작동 키")]
     public string TriggerKey;
+    public string GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]
     public float CoolTime;  // 추후 private 처리
-    public float GetCoolTime { get { return CoolTime; } }
+    public float GetCoolTime() { return CoolTime; }
 
     [Header("생성 고유 자원")]
     public float CreatedMP = 0f;
+    public float GetCreatedMP() { return CreatedMP; }
 
     [Header("소모 고유 자원")]
     public float ConsumMP = 0f;
+    public float GetConsumMP() { return ConsumMP; }
 
     [Header("전체 애니메이션 배속")]
-    public float speedMultiplier = 1.0f;
+    public float SpeedMultiplier = 1.0f;
+    public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     public float DamageRate = 5.4f;
+    public float GetDamageRate() { return DamageRate; }
 
     /*
       무기로 적을 후려칩니다. 적에게 320%만큼의 피해를 줍니다.

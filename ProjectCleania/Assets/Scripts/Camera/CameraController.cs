@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject player;
+    GameObject player;
     public float speed = 4.0f;
     public Vector3 cameraPosition;
+
+    private void Start()
+    {
+        player = GameManager.Instance.SinglePlayer;
+    }
 
     void Update()
     {

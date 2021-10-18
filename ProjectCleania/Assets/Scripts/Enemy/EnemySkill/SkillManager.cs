@@ -52,7 +52,7 @@ public class SkillManager : MonoBehaviour
         if(isSkillAvailable(index))
         {
             initializeSkillSetting(index);
-            abilityStatus.ConsumeMP(skills[index].ConsumMP);
+            abilityStatus.ConsumeMP(skills[index].GetConsumMP());
             skill = skills[index];
             return true;
         }
@@ -150,10 +150,10 @@ public class SkillManager : MonoBehaviour
         {
             // 쿨타임 업데이트
             coolTimePassed[i] += Time.deltaTime;
-            if (skills[i].GetCoolTime < 0.01f)
+            if (skills[i].GetCoolTime() < 0.01f)
                 CoolTimePassedRatio[i] = 1f;
             else
-                CoolTimePassedRatio[i] = coolTimePassed[i] / (skills[i].GetCoolTime * cooldownSpeed);
+                CoolTimePassedRatio[i] = coolTimePassed[i] / (skills[i].GetCoolTime() * cooldownSpeed);
 
             // 업데이트가 됬으면 스킬 가능 설정
             if (CoolTimePassedRatio[i] >= 1f)

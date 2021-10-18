@@ -24,9 +24,7 @@ public class MouseParticle : ParticleBase
 
             ChangePoseWith(rayhitInfo);
 
-            base.ChangeScale(Scale);
-
-            ParticleObject.Play();
+            PlayEffect();
         }
     }
 
