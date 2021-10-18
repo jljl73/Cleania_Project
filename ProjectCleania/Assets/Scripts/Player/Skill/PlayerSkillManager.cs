@@ -39,6 +39,20 @@ public class PlayerSkillManager : MonoBehaviour
             coolTimePassed[i] = 1f;
             skillAvailable[i] = true;
         }
+
+        player.OnDead += DeactivateAllSkill;
+    }
+
+    void DeactivateAllSkill()
+    {
+        foreach (PlayerSkill skill in skills)
+        {
+            skill.Deactivate();
+            for (int i = 0; i < skill.effectController.Count; i++)
+            {
+                skill.StopEffects(i);
+            }
+        }
     }
 
     void SetskillSlotDependencyDict()
@@ -146,11 +160,22 @@ public class PlayerSkillManager : MonoBehaviour
     //    }
     //}
 
-    public void ActivateSkill(int index)
+    public void ActivateSkill(AnimationEvent myEvent)
     {
-        if(index == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+        SkillEffectIndexSO skillEffectIndex = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        skills[index].Activate();
+        if (skillEffectIndex != null)
+        {
+            if (skillEffectIndex.GetSkillIndex() == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+
+            skills[skillEffectIndex.GetSkillIndex()].Activate(skillEffectIndex.GetEffectIndex());
+        }
+        else
+        {
+            if (myEvent.intParameter == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+
+            skills[myEvent.intParameter].Activate();
+        }
 
         // R스킬 때문인 것으로 추정되지만, 스킬 사용하자마자 하는게 좋으므로 Obsolete
         // abilityStatus.ConsumeMP(skills[index].ConsumMP);

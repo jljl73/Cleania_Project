@@ -55,19 +55,21 @@ public class PlayerSkillFairysWings : PlayerSkill
         animator.SetTrigger("FairysWings");
     }
 
-    override public void Activate()
+    override public void Activate(int dependedEffectIdx)
     {
         if (!bSkill)
         {
-            StartCoroutine(SpeedUp());
+            StartCoroutine(SpeedUp(dependedEffectIdx));
         }
     }
 
-    IEnumerator SpeedUp()
+    IEnumerator SpeedUp(int effectIdx)
     {
         bSkill = true;
         duration = 5.0f;
         nDeadEnemy = 0;
+
+        base.PlayEffects(effectIdx);
 
         buffManager.AddBuff(speedUpRate, Ability.Buff.MoveSpeed_Buff, 5.0f);
 
@@ -77,6 +79,8 @@ public class PlayerSkillFairysWings : PlayerSkill
         {
             yield return new WaitForSeconds(1.0f);
         }
+
+        base.StopEffects(effectIdx);
 
         bSkill = false;
     }

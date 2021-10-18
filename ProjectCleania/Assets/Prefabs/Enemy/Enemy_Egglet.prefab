@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1063191888395062793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7811537056224134981}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7811537056224134981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 143977882677537817, guid: e16c9150d2e06094982eb1a2e75f4c08, type: 3}
+  m_PrefabInstance: {fileID: 7896961408431795036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063191888395062793}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7717416709024651365}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7708564056460394859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2416376540407421081}
+  m_Layer: 0
+  m_Name: EnemyChase (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2416376540407421081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708564056460394859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7717416709024651365}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7717416708449175445
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,9 +105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7717416709024651364}
-  isAttacking: 0
-  CoolTime: 3
-  ConsumMP: 0
   DamageScale: 10
 --- !u!65 &5920054466618732198
 BoxCollider:
@@ -97,11 +154,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6243326042928325633}
-  - {fileID: 182835150967865229}
   - {fileID: 7811537056224134981}
+  - {fileID: 7811537056191338995}
   - {fileID: 7717416709810612296}
   - {fileID: 7405734526746438234}
   - {fileID: 8634467400488257038}
+  - {fileID: 2416376540407421081}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -518,6 +576,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7717416709024651365}
     m_Modifications:
+    - target: {fileID: 143977882677537817, guid: 4a34711833db01544859be299447663e, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8006884562098506336, guid: 4a34711833db01544859be299447663e, type: 3}
       propertyPath: m_Name
       value: EnemyRelease
@@ -576,9 +638,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a34711833db01544859be299447663e, type: 3}
---- !u!4 &182835150967865229 stripped
+--- !u!4 &7811537056191338995 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8006884562098506343, guid: 4a34711833db01544859be299447663e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 143977882677537817, guid: 4a34711833db01544859be299447663e, type: 3}
   m_PrefabInstance: {fileID: 7896961408398800362}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7896961408431795036
@@ -646,8 +708,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e16c9150d2e06094982eb1a2e75f4c08, type: 3}
---- !u!4 &7811537056224134981 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 143977882677537817, guid: e16c9150d2e06094982eb1a2e75f4c08, type: 3}
-  m_PrefabInstance: {fileID: 7896961408431795036}
-  m_PrefabAsset: {fileID: 0}

@@ -54,10 +54,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ActivateSkill(int index)
+    public void ActivateSkill(AnimationEvent myEvent)
     {
-        print("ActivateSkill");
-        playerSkillManager.ActivateSkill(index);
+        playerSkillManager.ActivateSkill(myEvent);
     }
 
     public void DeactivateSkill(int index)
