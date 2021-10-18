@@ -16,9 +16,9 @@ public class TestPlayerMove : MonoBehaviour
     RaycastHit hit;
 
     public float rotateCoef = 360f;
-    public PlayerSkillL skillL;
-    public bool bAttacking = false;
-    bool bChasing = false;
+    // public PlayerSkillL skillL;
+    // public bool bAttacking = false;
+    // bool bChasing = false;
     float speed = 1.0f;
 
     private void Awake()
@@ -113,7 +113,7 @@ public class TestPlayerMove : MonoBehaviour
         RaycastHit raycastHit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        bChasing = false;
+        // bChasing = false;
         // ¼öÁ¤ //
         targetObj = null;
 
@@ -124,7 +124,7 @@ public class TestPlayerMove : MonoBehaviour
             if (raycastHit.transform.CompareTag("Enemy"))
             {
                 targetObj = raycastHit.transform.gameObject;
-                bChasing = true;
+                // bChasing = true;
             }
         }
   

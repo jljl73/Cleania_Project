@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraWalk : MonoBehaviour
 {
-    public GameObject player;
+    GameObject player;
     public float speed = 4.0f;
     public Vector3 cameraPosition;
     private Camera miniMapCamera;
@@ -25,6 +25,8 @@ public class CameraWalk : MonoBehaviour
 
     private void Start()
     {
+        player = GameManager.Instance.SinglePlayer;
+
         terrainVertexes = new Vector3[4];
         cameraViewingSize = miniMapCamera.orthographicSize * 2; // Size x 2가 실제 보는 사각형 사이즈
 
