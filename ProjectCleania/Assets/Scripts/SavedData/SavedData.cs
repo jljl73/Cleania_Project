@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SavedGame : MonoBehaviour
+public class SavedData : MonoBehaviour
 {
     public string characterName;    
     string Path
@@ -15,11 +15,12 @@ public class SavedGame : MonoBehaviour
     }
 
     
-    public SavedGame_Inventory SavedInventory = new SavedGame_Inventory();
-    //SavedGame_World
-    //SavedGame_SkillSet
-    public SavedGame_Equipments SavedEquipments = new SavedGame_Equipments();
+    public SavedData_Inventory SavedInventory = new SavedData_Inventory();
+    //SavedData_World
+    //SavedData_SkillSet
+    public SavedData_Equipments SavedEquipments = new SavedData_Equipments();
 
+    [SerializeField]
     AbilityStatus vulnerable;
     [SerializeField]
     string vulnerableString;
@@ -58,8 +59,6 @@ public class SavedGame : MonoBehaviour
     void AfterLoad()
     {
         SavedInventory.AfterLoad();
-
-        SavedEquipments.playerEquips = GameManager.Instance.PlayerEquipments;
         SavedEquipments.AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
@@ -68,10 +67,9 @@ public class SavedGame : MonoBehaviour
     void BeforeSave()
     {
         SavedInventory.BeforeSave();
+        SavedEquipments.BeforeSave();
 
         vulnerableString = JsonUtility.ToJson(vulnerable);
-
-        SavedEquipments.BeforeSave();
     }
 
 

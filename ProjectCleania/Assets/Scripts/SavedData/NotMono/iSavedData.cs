@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-interface iSavedGame
+interface iSavedData
 {
     /// <summary>
     /// 1. call member's AfterLoad()

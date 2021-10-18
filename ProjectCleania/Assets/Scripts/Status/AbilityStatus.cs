@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class AbilityStatus : MonoBehaviour
 {
-
     Status status;          // status is essential unlike equips or buffs
     Equipable equipments;
     Buffable buffs;

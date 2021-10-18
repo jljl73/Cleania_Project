@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipable : MonoBehaviour
+[System.Serializable]
+public class Equipable : MonoBehaviour, iSavedData
 {
     //[System.NonSerialized]
-    Equipment[] _equipments = new Equipment[(int)Equipment.Type.EnumTotal];
+    ItemInstance_Equipment[] _equipments = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];
 
     Dictionary<Ability.Stat, float> _stats
         = new Dictionary<Ability.Stat, float>();
@@ -45,7 +46,7 @@ public class Equipable : MonoBehaviour
 
 
 
-    public Equipment Equip(Equipment newEquipment)
+    public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment)
     {
         // Exception
         if (newEquipment == null)
@@ -55,7 +56,7 @@ public class Equipable : MonoBehaviour
 
         if (_equipments[inType] != null)
         {
-            Equipment oldEquipment = _equipments[inType];
+            ItemInstance_Equipment oldEquipment = _equipments[inType];
             _equipments[inType] = newEquipment;
 
             Refresh();
@@ -72,15 +73,15 @@ public class Equipable : MonoBehaviour
         }
     }
 
-    public Equipment Unequip(Equipment.Type offType)
+    public ItemInstance_Equipment Unequip(ItemInstance_Equipment.Type offType)
     {
         // Exception
-        if (offType < Equipment.Type.MainWeapon || offType >= Equipment.Type.EnumTotal)
+        if (offType < ItemInstance_Equipment.Type.MainWeapon || offType >= ItemInstance_Equipment.Type.EnumTotal)
             return null;
 
         int type = (int)offType;
 
-        Equipment oldEquipment = _equipments[type];
+        ItemInstance_Equipment oldEquipment = _equipments[type];
 
         _equipments[type] = null;
 
@@ -109,7 +110,7 @@ public class Equipable : MonoBehaviour
                     if (!_stats.ContainsKey(key_value.Key))
                         _stats[key_value.Key] = 0;
 
-                    _stats[key_value.Key] += key_value.Value;
+                    _stats[key_value.Key] += key_value.Value * (_equipments[i].Level / 50);
                 }
 
                 // dynamic properties
@@ -157,6 +158,46 @@ public class Equipable : MonoBehaviour
                             break;
                     }
                 }
+            }
+        }
+    }
+
+
+    
+
+
+
+    // SAVE DATA IMPLEMENTATION
+
+    [SerializeField]
+    List<ItemInstance_Equipment> SD_equipments;
+
+    public void AfterLoad()
+    {
+        foreach (ItemInstance_Equipment e in SD_equipments)
+        {
+            e.AfterLoad();
+
+            _equipments[(int)e.EquipmentType] = e;
+        }
+
+        Refresh();
+
+        //Equipments.Clear();
+    }
+
+    public void BeforeSave()
+    {
+        SD_equipments.Clear();
+
+        for (ItemInstance_Equipment.Type i = ItemInstance_Equipment.Type.MainWeapon; i < ItemInstance_Equipment.Type.EnumTotal; i++)
+        {
+            ItemInstance_Equipment e = _equipments[(int)i];
+
+            if (e != null)
+            {
+                e.BeforeSave();
+                SD_equipments.Add(e);
             }
         }
     }
