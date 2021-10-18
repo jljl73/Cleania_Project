@@ -29,7 +29,8 @@ public abstract class Skill : MonoBehaviour
         // isAttacking = false;
     }
 
-    public abstract void Activate();
+    public virtual void Activate() { }
+    public virtual void Activate(int dependedEffectIdx = 0) { }
 
     public abstract void AnimationActivate();
 
