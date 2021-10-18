@@ -17,6 +17,10 @@ public class InputManager : MonoBehaviour
         // UI 클릭시 리턴
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
+        // 죽으면 플레이어 입력 불가
+        if (player.abilityStatus.HP == 0)
+            return;
+
         // 마우스 >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {

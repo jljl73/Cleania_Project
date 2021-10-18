@@ -39,6 +39,20 @@ public class PlayerSkillManager : MonoBehaviour
             coolTimePassed[i] = 1f;
             skillAvailable[i] = true;
         }
+
+        player.OnDead += DeactivateAllSkill;
+    }
+
+    void DeactivateAllSkill()
+    {
+        foreach (PlayerSkill skill in skills)
+        {
+            skill.Deactivate();
+            for (int i = 0; i < skill.effectController.Count; i++)
+            {
+                skill.StopEffects(i);
+            }
+        }
     }
 
     void SetskillSlotDependencyDict()
