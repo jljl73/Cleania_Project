@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public Canvas GetCanvas { get { return canvas_; } }
 
     public SkillPanel skillPanel;
+    public GameObject ExpandMapPanel; 
 
     
     private void Start()
@@ -33,6 +34,12 @@ public class UIManager : MonoBehaviour
         {
             skillPanel.OnOffPanel();
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ExpandMapPanel.SetActive(!ExpandMapPanel.activeSelf);
+        }
+
     }
 
     public void OnOffInventory()
