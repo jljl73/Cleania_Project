@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class ItemInstance
+public class ItemInstance
 {
     protected ItemInstance(ItemSO itemSO)
     {
