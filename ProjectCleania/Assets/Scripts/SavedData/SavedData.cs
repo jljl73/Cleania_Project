@@ -20,7 +20,8 @@ public class SavedData : MonoBehaviour
     //SavedData_SkillSet
     public SavedData_Equipments SavedEquipments = new SavedData_Equipments();
 
-    [SerializeField]
+    public ItemStorage_World WorldStorage = new ItemStorage_World();
+
     AbilityStatus vulnerable;
     [SerializeField]
     string vulnerableString;
@@ -60,6 +61,7 @@ public class SavedData : MonoBehaviour
     {
         ((iSavedData)SavedInventory).AfterLoad();
         ((iSavedData)SavedEquipments).AfterLoad();
+        ((iSavedData)WorldStorage).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
     }
@@ -68,6 +70,7 @@ public class SavedData : MonoBehaviour
     {
         ((iSavedData)SavedInventory).BeforeSave();
         ((iSavedData)SavedEquipments).BeforeSave();
+        ((iSavedData)WorldStorage).BeforeSave();
 
         vulnerableString = JsonUtility.ToJson(vulnerable);
     }
@@ -77,17 +80,37 @@ public class SavedData : MonoBehaviour
     private void Start()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
+        WorldStorage.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
 
         Load();
     }
 
-    private void OnDisable()
-    {
-        Save();
-    }
+   
 
     private void OnApplicationQuit()
     {
         Save();
+    }
+
+
+    public void Test_Add1101001()
+    {
+        SavedInventory.inventory.Add(ItemInstance.Instantiate(1101001));
+    }
+    public void Test_Drop1101001()
+    {
+        WorldStorage.Add(ItemInstance.Instantiate(1101001));
+    }
+    public void Test_RemoveAll()
+    {
+        foreach (var i in SavedInventory.inventory.Items)
+        {
+            SavedInventory.inventory.Remove(i.Key);
+        }
+
+        foreach(var i in WorldStorage.Items)
+        {
+            WorldStorage.Remove(i.Key);
+        }
     }
 }
