@@ -5,15 +5,17 @@ using UnityEngine;
 public class EnemyRelease : MonoBehaviour
 {
     Enemy enemy;
+    EnemyChase enemyChase;
 
     void Start()
     {
         enemy = transform.parent.GetComponent<Enemy>();
+        enemyChase = enemy.GetComponentInChildren<EnemyChase>();
     }
 
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
-            enemy.enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
+            enemyChase.EnemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
     }
 }

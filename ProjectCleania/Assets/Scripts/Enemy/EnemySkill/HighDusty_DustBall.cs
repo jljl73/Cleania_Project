@@ -45,6 +45,8 @@ public class HighDusty_DustBall : MonoBehaviour
     {
         if (!isBall)
             if (other.gameObject.CompareTag("Player"))
+            {
                 playerAbility.AttackedBy(ownerAbility, Time.deltaTime * DamageScale);
+            }
     }
 }

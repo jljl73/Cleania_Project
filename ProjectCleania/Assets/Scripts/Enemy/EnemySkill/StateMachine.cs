@@ -13,7 +13,7 @@ public class StateMachine : MonoBehaviour
     public enumState state;
     public enumState State { get { return state; } }
 
-    private void Start()
+    protected void Awake()
     {
         state = enumState.Idle;
     }

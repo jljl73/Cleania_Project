@@ -6,6 +6,21 @@ ModelImporter:
   - first:
       74: -203655887218126122
     second: Skill4
+  - first:
+      74: 6788893771938456181
+    second: Smash
+  - first:
+      74: 959146787054786400
+    second: Other
+  - first:
+      74: -253138450396989802
+    second: RefreshingLeapForward_LiftUp
+  - first:
+      74: -7563655815005987661
+    second: RefreshingLeapForward_SwingDown
+  - first:
+      74: -7489741512878796962
+    second: RefreshingLeapForward_Other
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -88,6 +103,128 @@ ModelImporter:
         intParameter: 3
         messageOptions: 0
       - time: 0.86388516
+        functionName: DeactivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 3
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RefreshingLeapForward_LiftUp
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.7226891
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 2f753e4d8b1ba98459dbb8670c483c50, type: 2}
+        floatParameter: 0
+        intParameter: 3
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RefreshingLeapForward_SwingDown
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 36
+      lastFrame: 55
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: f5d7148a236408c44be5cb84bc0cdba3, type: 2}
+        floatParameter: 0
+        intParameter: 3
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RefreshingLeapForward_Other
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 56
+      lastFrame: 110
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 32d99193bc4ac26409434abe6f2f5cb3, type: 2}
+        floatParameter: 0
+        intParameter: 3
+        messageOptions: 0
+      - time: 0.042016808
+        functionName: ActivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 3
+        messageOptions: 0
+      - time: 0.53781515
         functionName: DeactivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}

@@ -5,9 +5,11 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public Animator animator;
-    public StateMachine stateMachine;
-    public GameObject enemySpawner;
+    Animator animator;
+    EnemyStateMachine enemyStateMachine;
+
+    // GameObject enemySpawner;
+    // public GameObject EnemySpawner { get { return enemySpawner; } set { enemySpawner = value; } }
 
     [Header("Need Drag")]
     public AbilityStatus abilityStatus;
@@ -18,12 +20,14 @@ public class Enemy : MonoBehaviour
     public event DelegateVoid OnDead;
 
     NavMeshAgent navMeshAgent;
+    SkinnedMeshRenderer skinnedMeshRenderer;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        stateMachine = GetComponent<StateMachine>();
+        enemyStateMachine = GetComponent<EnemyStateMachine>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     private void Start()
@@ -33,7 +37,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (abilityStatus.HP == 0)
+        if (abilityStatus.HP == 0 && !enemyStateMachine.CompareState(EnemyStateMachine.enumState.Dead))
         {
             Stunned(false, 0);
             OnDead();
@@ -64,13 +68,46 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        if (stateMachine.CompareState(StateMachine.enumState.Dead)) return;
+        if (enemyStateMachine.CompareState(EnemyStateMachine.enumState.Dead)) return;
 
+        // 네비게이션 Off
         navMeshAgent.enabled = false;
-        GetComponent<Collider>().enabled = false;
-        stateMachine.Transition(StateMachine.enumState.Dead);
+
+        // 충돌체 끄기
+        TurnOffColliders();
+
+        // 상태 죽음으로 전환
+        enemyStateMachine.Transition(EnemyStateMachine.enumState.Dead);
+
+        // 죽음 애니메이션 발동
         animator.SetTrigger("Die");
+
+        // 3초 후에 외형 끄기
+        Invoke("TurnOffSkin", 3.0f);
+
+        // 10초 후에 파괴
         Destroy(gameObject, 10.0f);
+    }
+
+    void TurnOffColliders()
+    {
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
+        colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+    }
+
+    void TurnOffSkin()
+    {
+        // 외형 끄기
+        skinnedMeshRenderer.enabled = false;
     }
 
     public void SetTarget(GameObject target)
