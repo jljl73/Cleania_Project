@@ -87,7 +87,6 @@ public class ItemController : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         _raycaster.Raycast(ped, results);
 
-
         for(int i = 0; i < results.Count; ++i)
         {
             if (results[i].gameObject.tag == "Slot")

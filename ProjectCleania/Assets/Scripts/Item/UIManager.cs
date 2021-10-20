@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    bool isActiveItemPanel = true;
+    bool isActiveItemPanel;
+
     public GameObject itemPanel;
     public GameObject ItemPanel { get { return itemPanel; } }
 
@@ -14,27 +16,30 @@ public class UIManager : MonoBehaviour
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
-    public SkillPanel skillPanel;
+    public GameObject SkillPanel;
     public GameObject ExpandMapPanel;
     public GameObject QuestPanel;
     public GameObject RepairPanel;
+    public GameObject BuyPanel;
+    public GameObject SellPanel;
+    public GameObject EnchantPanel;
+    public GameObject StoragePanel;
+
+    List<int> ListOpendUI = new List<int>();
 
     
-    private void Start()
-    {
-        ShowInventory();
-    }
-
     void Update()
     {
+        if (GameManager.Instance.isChatting) return;
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             ShowInventory();
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            skillPanel.OnOffPanel();
+            ShowSkillPanel();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -42,26 +47,31 @@ public class UIManager : MonoBehaviour
             ExpandMapPanel.SetActive(!ExpandMapPanel.activeSelf);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            ShowSkillPanel();
+            ShowQuestPanel();
         }
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            OffAllPanels();
+        }
     }
 
     public void ShowInventory()
     {
         if (isActiveItemPanel)
-            itemPanel.transform.Translate(new Vector3(2000, 0, 0));
+            itemPanel.transform.Translate(new Vector3(20000, 0, 0));
         else
-            itemPanel.transform.Translate(new Vector3(-2000, 0, 0));
+            itemPanel.transform.Translate(new Vector3(-20000, 0, 0));
 
         isActiveItemPanel = !isActiveItemPanel;
+
     }
 
     public void ShowSkillPanel()
     {
-        skillPanel.OnOffPanel();
+        SkillPanel.SetActive(!SkillPanel.activeSelf);
     }
     
     public void ShowQuestPanel()
@@ -69,14 +79,52 @@ public class UIManager : MonoBehaviour
         QuestPanel.SetActive(!QuestPanel.activeSelf);
     }
 
-    public void ShowPanel(bool value, string npcType)
+    public void ShowRepairPanel()
     {
-        switch(npcType)
-        {
-            case "Repair":
-                RepairPanel.SetActive(value);
-                break;
-        }
+        RepairPanel.SetActive(!RepairPanel.activeSelf);
     }
+
+    public void ShowBuyPanel()
+    {
+        BuyPanel.SetActive(!BuyPanel.activeSelf);
+    }
+
+    public void ShowSellPanel()
+    {
+        SellPanel.SetActive(!SellPanel.activeSelf);
+    }
+
+    public void ShowEnchantPanel()
+    {
+        EnchantPanel.SetActive(!EnchantPanel.activeSelf);
+    }
+
+    public void ShowStoragePanel()
+    {
+        StoragePanel.SetActive(!StoragePanel.activeSelf);
+    }
+
+    void OffAllPanels()
+    {
+        if (isActiveItemPanel) ShowInventory();
+        this.SkillPanel.SetActive(false);
+        this.ExpandMapPanel.SetActive(false);
+        this.QuestPanel.SetActive(false);
+        this.RepairPanel.SetActive(false);
+        this.BuyPanel.SetActive(false);
+        this.SellPanel.SetActive(false);
+        this.EnchantPanel.SetActive(false);
+        this.StoragePanel.SetActive(false);
+    }
+
+    public void OffNPCPanels()
+    {
+        this.RepairPanel.SetActive(false);
+        this.BuyPanel.SetActive(false);
+        this.SellPanel.SetActive(false);
+        this.EnchantPanel.SetActive(false);
+        this.StoragePanel.SetActive(false);
+    }
+
 
 }
