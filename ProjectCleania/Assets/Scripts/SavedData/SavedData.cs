@@ -18,12 +18,21 @@ public class SavedData : MonoBehaviour
         }
     }
 
-    public SavedData_Items Item = new SavedData_Items();
-    public SavedData_Equipments Equipment = new SavedData_Equipments();
+
+    // save data 
+
+    public ItemStorage_World Item_World = new ItemStorage_World();
+    public ItemStorage_LocalGrid Item_Inventory = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 6));
+    public ItemStorage_LocalGrid Item_Storage = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 10));
+
+    Equipable equipable;
+    [SerializeField]
+    string equipableStirng;
 
     AbilityStatus vulnerable;
     [SerializeField]
     string vulnerableString;
+    //
 
 
     /// <summary>
@@ -58,17 +67,27 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        ((iSavedData)Equipment).AfterLoad();
-        ((iSavedData)Item).AfterLoad();
+        ((iSavedData)Item_World).AfterLoad();
+        ((iSavedData)Item_Inventory).AfterLoad();
+        ((iSavedData)Item_Storage).AfterLoad();
+
+        JsonUtility.FromJsonOverwrite(equipableStirng, equipable);
+        ((iSavedData)equipable).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
+        ((iSavedData)vulnerable).AfterLoad();
     }
 
     void BeforeSave()
     {
-        ((iSavedData)Equipment).BeforeSave();
-        ((iSavedData)Item).BeforeSave();
+        ((iSavedData)Item_World).BeforeSave();
+        ((iSavedData)Item_Inventory).BeforeSave();
+        ((iSavedData)Item_Storage).BeforeSave();
 
+        ((iSavedData)equipable).BeforeSave();
+        equipableStirng = JsonUtility.ToJson(equipable);
+
+        ((iSavedData)vulnerable).BeforeSave();
         vulnerableString = JsonUtility.ToJson(vulnerable);
     }
 
@@ -80,7 +99,8 @@ public class SavedData : MonoBehaviour
     private void Start()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
-        Item.World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
+        equipable = GameManager.Instance.PlayerEquipments;
+        Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
 
         Load();
     }
@@ -93,24 +113,24 @@ public class SavedData : MonoBehaviour
 
     public void Test_Add1101001()
     {
-        if (!Item.Inventory.Add(ItemInstance.Instantiate(1101001)))
+        if (!Item_Inventory.Add(ItemInstance.Instantiate(1101001)))
             print("failed to add in inventory");
     }
     public void Test_Drop1101001()
     {
-        if (!Item.World.Add(ItemInstance.Instantiate(1101001)))
+        if (!Item_World.Add(ItemInstance.Instantiate(1101001)))
             print("failed to drop in world");
     }
     public void Test_RemoveAll()
     {
-        foreach (var i in Item.Inventory.Items)
+        foreach (var i in Item_Inventory.Items)
         {
-            Item.Inventory.Remove(i.Key);
+            Item_Inventory.Remove(i.Key);
         }
 
-        foreach(var i in Item.World.Items)
+        foreach(var i in Item_World.Items)
         {
-            Item.World.Remove(i.Key);
+            Item_World.Remove(i.Key);
         }
     }
 }

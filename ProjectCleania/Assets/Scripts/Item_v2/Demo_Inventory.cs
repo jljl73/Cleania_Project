@@ -15,7 +15,7 @@ public class Demo_Inventory : MonoBehaviour
     {
         slots = GetComponentsInChildren<Grid>();
         images = GetComponentsInChildren<Image>();
-        inven = SavedData.Instance.Item.Inventory;
+        inven = SavedData.Instance.Item_Inventory;
     }
 
     // Update is called once per frame
