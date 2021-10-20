@@ -30,6 +30,16 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     float slowTime = 2f;
     public float GetSlowTime() { return slowTime; }
 
+    // "부분 애니메이션 배속"
+    float liftUpSpeedMultiplier = 1.0f;
+    public float GetLiftUpSpeedMultiplier() { return liftUpSpeedMultiplier; }
+
+    float swingDownSpeedMultiplier = 1.0f;
+    public float GetSwingDownSpeedMultiplier() { return swingDownSpeedMultiplier; }
+
+    float otherSpeedMultiplier = 1.0f;
+    public float GetOtherSpeedMultiplier() { return otherSpeedMultiplier; }
+
 
     Ray ray;
     RaycastHit hit;
@@ -48,7 +58,10 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
         attackArea = GetComponent<CapsuleCollider>();
         attackArea.radius = smashRange;
-        animator.SetFloat("RefreshingLeapForward multiplier", SpeedMultiplier);
+        animator.SetFloat("RefreshingLeapForward mulitplier", SpeedMultiplier);
+        animator.SetFloat("RefreshingLeapForward_LiftUp mulitplier", liftUpSpeedMultiplier);
+        animator.SetFloat("RefreshingLeapForward_SwingDown mulitplier", swingDownSpeedMultiplier);
+        animator.SetFloat("RefreshingLeapForward_Other mulitplier", otherSpeedMultiplier);
     }
 
     public void UpdateSkillData()
@@ -67,6 +80,16 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         smashRange = SkillData.GetSmashRange();
         stunTime = SkillData.GetStunTime();
         slowTime = SkillData.GetSlowTime();
+
+        liftUpSpeedMultiplier = SkillData.GetLiftUpSpeedMultiplier();
+        swingDownSpeedMultiplier = SkillData.GetSwingDownSpeedMultiplier();
+        otherSpeedMultiplier = SkillData.GetOtherSpeedMultiplier();
+
+        print("liftUpSpeedMultiplier: " + liftUpSpeedMultiplier);
+        print("swingDownSpeedMultiplier: " + swingDownSpeedMultiplier);
+        print("otherSpeedMultiplier: " + otherSpeedMultiplier);
+
+        // animationSplitCount = SkillData.GetAnimationSplitCount();
     }
 
     public override void AnimationActivate()

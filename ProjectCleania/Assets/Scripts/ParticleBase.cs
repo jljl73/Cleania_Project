@@ -93,7 +93,6 @@ public class ParticleBase : MonoBehaviour
         {
             foreach (ParticleSystem particle in particleChildrens)
             {
-                print("Play particle system child");
                 particle.Play();
             }
         }
@@ -112,8 +111,6 @@ public class ParticleBase : MonoBehaviour
     protected void StopEffect()
     {
         ParticleSystem ParticleObjectWithPS = ParticleObject.GetComponent<ParticleSystem>();
-
-        print("Stop effec in particleBase!");
 
         if (ParticleObjectWithMR != null)
             ParticleObjectWithMR.enabled = false;

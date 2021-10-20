@@ -12,6 +12,8 @@ public class EnemyMove : MonoBehaviour
     GameObject targetObject = null;
     Vector3 targetPosition;
 
+    public float SupposedSmallestEnemySize = 0.1f;
+
     bool isRunAway;
 
     void Start()
@@ -27,6 +29,9 @@ public class EnemyMove : MonoBehaviour
     {
         if (targetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
 
+        // Nav 우선순위 선정
+        SetNavAvoidancePriority();
+
         if (stateMachine.CompareState(StateMachine.enumState.Idle))
         {
             nav.isStopped = false;
@@ -40,12 +45,36 @@ public class EnemyMove : MonoBehaviour
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
     }
 
+    void SetNavAvoidancePriority()
+    {
+        int avoidancePriority = 0;
+
+        if (isRunAway)
+            avoidancePriority = 0;
+        else if (targetObject != null)
+        {
+            avoidancePriority = (int)(Vector3.Distance(transform.position, targetObject.transform.position) / SupposedSmallestEnemySize);
+            if (avoidancePriority == 0)
+                avoidancePriority = 1;
+            if (avoidancePriority >= 99)
+                avoidancePriority = 99;
+        }
+        else
+            avoidancePriority = 50;
+
+        nav.avoidancePriority = avoidancePriority;
+    }
+
     void AccelerateRotation()
     {
 
         Vector3 rotateForward; //= Vector3.zero;
 
-        rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+        if (!isRunAway)
+            rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+        else
+            rotateForward = Vector3.Normalize(targetPosition - transform.position);
+
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
         Vector3 limit = Vector3.Slerp(transform.forward, rotateForward, 
             360f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
@@ -68,10 +97,16 @@ public class EnemyMove : MonoBehaviour
     {
         if (targetObject == null) return;
 
+        
+
         animator.SetBool("OnSkill", false);
         isRunAway = true;
-        targetPosition = (transform.position - targetObject.transform.position) * 3;
-        targetPosition += transform.position;
+
+        Vector3 MoveAwayDistVector = (transform.position - targetObject.transform.position) * 3;
+        targetPosition = transform.position + MoveAwayDistVector;
+
+        // targetPosition = (transform.position - targetObject.transform.position) * 3;
+        // targetPosition += transform.position;
         Invoke("StopRunAway", 5.0f);
     }
 
@@ -101,8 +136,15 @@ public class EnemyMove : MonoBehaviour
         Vector3 rotateForward = Vector3.zero;
         //if (targetObject == null) return;
 
+        
+
         // 타겟 유무에 따른 회전 벡터 결정
-        rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+        // rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+        if (!isRunAway)
+            rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+        else
+            rotateForward = Vector3.Normalize(targetPosition - transform.position);
+
         // 목표 회전 벡터 결정
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
         // 회전

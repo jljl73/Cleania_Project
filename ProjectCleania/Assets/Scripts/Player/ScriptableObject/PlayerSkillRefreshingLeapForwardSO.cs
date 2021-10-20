@@ -60,6 +60,16 @@ public class PlayerSkillRefreshingLeapForwardSO : ScriptableObject
     public float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
+    [Header("부분 애니메이션 배속")]
+    public float LiftUpSpeedMultiplier = 1.0f;
+    public float GetLiftUpSpeedMultiplier() { return LiftUpSpeedMultiplier; }
+
+    public float SwingDownSpeedMultiplier = 1.0f;
+    public float GetSwingDownSpeedMultiplier() { return SwingDownSpeedMultiplier; }
+
+    public float OtherSpeedMultiplier = 1.0f;
+    public float GetOtherSpeedMultiplier() { return OtherSpeedMultiplier; }
+
     [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     public float SmashDamageRate = 5.4f;
     public float GetSmashDamageRate() { return SmashDamageRate; }
@@ -79,6 +89,10 @@ public class PlayerSkillRefreshingLeapForwardSO : ScriptableObject
     [Header("제자리 점프 거리")]
     public float JumpDistance = 7f;
     public float GetJumpDistance() { return JumpDistance; }
+
+    [Header("애니메이션 분리 갯수")]
+    public int AnimationSplitCount = 1;
+    public int GetAnimationSplitCount() { return AnimationSplitCount; }
 
 
     /*

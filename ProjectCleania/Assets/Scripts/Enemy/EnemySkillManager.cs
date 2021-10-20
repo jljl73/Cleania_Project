@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class EnemySkillManager : MonoBehaviour
 {
-    public StateMachine stateMachine;
+    public EnemyStateMachine stateMachine;
     //private AbilityStatus playerAbilityStatus;
 
     public Skill[] skills = new Skill[6];
@@ -25,8 +25,8 @@ public class EnemySkillManager : MonoBehaviour
 
     bool isSkillAvailable(int skillIndex)
     {
-        if (stateMachine.State == StateMachine.enumState.Idle ||
-            stateMachine.State == StateMachine.enumState.Chasing)
+        if (stateMachine.State == EnemyStateMachine.enumState.Idle ||
+            stateMachine.State == EnemyStateMachine.enumState.Chasing)
             return true;
         else
             return false;

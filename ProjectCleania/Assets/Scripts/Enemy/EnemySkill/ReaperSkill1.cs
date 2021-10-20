@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReaperSkill1 : Skill
+public class ReaperSkill1 : EnemySkill
 {
     public GameObject highDusty;
     public GameObject normalDusty;
 
-    public Enemy enemy;
-    EnemyMove enemyMove;
     GameObject newEnemy;
     WaitForSeconds waitForSeconds;
     float timeInterval = 10.0f;
-    
-    void Start()
+
+   
+    new void Start()
     {
+        base.Start();
+
         enemy = transform.parent.parent.GetComponent<Enemy>();
         enemyMove = enemy.enemyMove;
         waitForSeconds = new WaitForSeconds(timeInterval);
@@ -37,12 +38,13 @@ public class ReaperSkill1 : Skill
     public override void Activate()
     {
         newEnemy = Instantiate(highDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
-        newEnemy.GetComponent<Enemy>().enemySpawner = enemy.enemySpawner;
+        // newEnemy.GetComponent<Enemy>().EnemySpawner = enemy.EnemySpawner;
+        newEnemy.GetComponent<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
 
         for (int i = 0; i < 3; ++i)
         {
             newEnemy = Instantiate(normalDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
-            newEnemy.GetComponent<Enemy>().enemySpawner = enemy.enemySpawner;
+            newEnemy.GetComponent<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
         }
     }
 
