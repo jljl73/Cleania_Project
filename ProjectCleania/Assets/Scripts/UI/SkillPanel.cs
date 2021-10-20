@@ -19,11 +19,6 @@ public class SkillPanel : MonoBehaviour
         
     }
 
-    public void OnOffPanel()
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
-    }
-
     public void ShowMousePage()
     {
         title.text = "마우스 스킬";

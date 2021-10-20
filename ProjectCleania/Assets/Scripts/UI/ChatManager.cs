@@ -33,6 +33,7 @@ public class ChatManager : MonoBehaviour
         ShowAcquireClean(321);
         ShowAcquireExp(3215);
         ShowAcquireItem("dsfdsf");
+        GameManager.Instance.IF_Chat = inputField;
     }
 
     public void Update()
@@ -75,6 +76,7 @@ public class ChatManager : MonoBehaviour
 
     public void OnSubmitChat()
     {
+        if (inputField.text == "") return;
         messages.Add(new MSG(3, "\n[player]" + inputField.text));
         UpdateChat();
         inputField.text = "";

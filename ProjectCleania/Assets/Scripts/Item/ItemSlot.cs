@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -37,5 +38,5 @@ public class ItemSlot : MonoBehaviour
         itemController = null;
         IsActive = false;
     }
-
+        
 }
