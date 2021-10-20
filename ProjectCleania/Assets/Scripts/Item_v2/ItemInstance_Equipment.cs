@@ -204,6 +204,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
     void iSavedData.AfterLoad()
     {
+        so = ItemSO.Load(id);
+
         foreach(var en in SD_staticOption)
         {
             _statics[en.Stat] = en.Value;
@@ -219,6 +221,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
     void iSavedData.BeforeSave()
     {
+        id = so.ID;
+
         SD_staticOption.Clear();
         SD_dynamicOption.Clear();
 

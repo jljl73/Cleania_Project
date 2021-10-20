@@ -7,7 +7,7 @@ public class ItemInstance
 {
     protected ItemInstance(ItemSO itemSO)
     {
-        info = itemSO;
+        so = itemSO;
     }
 
     /// <summary>
@@ -39,10 +39,11 @@ public class ItemInstance
             return Instantiate(itemSO); // delegate to overload
     }
 
+    protected ItemSO so;
+    public ItemSO SO
+    { get => so; }
     [SerializeField]
-    protected ItemSO info;
-    public ItemSO Info
-    { get => info; }
+    protected int id;
     [SerializeField]
     protected int count;
 
