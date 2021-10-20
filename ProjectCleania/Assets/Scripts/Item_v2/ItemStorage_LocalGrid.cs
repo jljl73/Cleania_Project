@@ -8,15 +8,24 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 {
     public ItemStorage_LocalGrid(Size size)
     {
-        gridSize = size;
-        if (_referenceGrid == null || new Size(_referenceGrid.Length, _referenceGrid[0].Length) != gridSize)
+        GridSize = size;
+        if (_referenceGrid == null || _referenceGrid.Length != gridSizeY || _referenceGrid[0].Length != gridSizeX)
             _InitGrid();
     }
 
     [SerializeField]
-    Size gridSize;
+    int gridSizeX;
+    [SerializeField]
+    int gridSizeY;
     public Size GridSize
-    { get => gridSize; }
+    {
+        get => new Size(gridSizeX, gridSizeY);
+        private set
+        {
+            gridSizeX = value.Width;
+            gridSizeY = value.Height;
+        }
+    }
 
     Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
     public Dictionary<ItemInstance, Point> Items
@@ -29,8 +38,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
         if (item == null)
             return false;
 
-        for (int y = 0; y + item.Info.GridSize.Height < gridSize.Height; ++y)
-            for (int x = 0; x + item.Info.GridSize.Width < gridSize.Width; ++x)
+        for (int y = 0; y + item.Info.GridSize.Height <= gridSizeY; ++y)
+            for (int x = 0; x + item.Info.GridSize.Width <= gridSizeX; ++x)
                 if (_IsAreaEmpty(item.Info.GridSize, new Point(x, y)))
                 {
                     _Add(item, new Point(x, y));
@@ -45,8 +54,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
             return false;
 
         // index range check
-        if (location.X + item.Info.GridSize.Width >= gridSize.Width ||
-            location.Y + item.Info.GridSize.Height >= gridSize.Height ||
+        if (location.X + item.Info.GridSize.Width > gridSizeX ||
+            location.Y + item.Info.GridSize.Height > gridSizeY ||
             location.X < 0 || location.Y < 0)
             return false;
 
@@ -90,7 +99,7 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
     public bool Remove(Point location)
     {
-        if (location.X > gridSize.Width || location.Y > gridSize.Height ||
+        if (location.X > gridSizeX || location.Y > gridSizeY ||
            location.X < 0 || location.Y < 0)
             return false;
 
@@ -119,9 +128,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
     void _InitGrid()
     {
-        _referenceGrid = new ItemInstance[gridSize.Height][];
-        for (int i = 0; i < gridSize.Height; ++i)
-            _referenceGrid[i] = new ItemInstance[gridSize.Width];
+        _referenceGrid = new ItemInstance[gridSizeY][];
+        for (int i = 0; i < gridSizeY; ++i)
+            _referenceGrid[i] = new ItemInstance[gridSizeX];
     }
 
 
@@ -129,20 +138,30 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
         // SAVE DATA IMPLEMENTATION
 
     [System.Serializable]
-    public struct GriddedItem
+    public struct Gridded<T>
     {
-        public GriddedItem(ItemInstance item, Point location)
+        public Gridded(T item, Point location)
         {
             ItemData = item;
-            Location = location;
+            LocationX = location.X;
+            LocationY = location.Y;
         }
 
-        public ItemInstance ItemData;
-        public Point Location;
+        [SerializeField]
+        public T ItemData;
+        [SerializeField]
+        int LocationX;
+        [SerializeField]
+        int LocationY;
+
+        public Point Location
+        { get => new Point(LocationX, LocationY); }
     }
 
     [SerializeField]
-    List<GriddedItem> SD_items = new List<GriddedItem>();
+    List<Gridded<ItemInstance_Etc>> SD_etcs = new List<Gridded<ItemInstance_Etc>>();
+    [SerializeField]
+    List<Gridded<ItemInstance_Equipment>> SD_equipments = new List<Gridded<ItemInstance_Equipment>>();
 
     void iSavedData.AfterLoad()
     {
@@ -150,21 +169,35 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
         _items.Clear();
 
-        foreach(GriddedItem i in SD_items)
+        foreach(Gridded<ItemInstance_Etc> i in SD_etcs)
+        {
+            _Add(i.ItemData, i.Location);
+        }
+        foreach (Gridded<ItemInstance_Equipment> i in SD_equipments)
         {
             _Add(i.ItemData, i.Location);
         }
 
-        // SD_items.Clear();
+        // SD_etc.Clear();
+        // SD_equipment.Clear();
     }
 
     void iSavedData.BeforeSave()
     {
-        SD_items.Clear();
+        SD_etcs.Clear();
+        SD_equipments.Clear();
 
-        foreach(var i in _items)
+        foreach (var i in _items)
         {
-            SD_items.Add(new GriddedItem(i.Key, i.Value));
+            switch (i.Key.Info.MainCategory)
+            {
+                case ItemSO.enumMainCategory.Equipment:
+                    SD_equipments.Add(new Gridded<ItemInstance_Equipment>((ItemInstance_Equipment)i.Key, i.Value));
+                    break;
+                default:
+                    SD_etcs.Add(new Gridded<ItemInstance_Etc>((ItemInstance_Etc)i.Key, i.Value));
+                       break;
+            }
         }
     }
 

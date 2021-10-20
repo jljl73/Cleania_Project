@@ -6,7 +6,7 @@ using System.Drawing;
 public class SavedData_Inventory : iSavedData
 {
     [SerializeField]
-    ItemStorage_LocalGrid inventory = new ItemStorage_LocalGrid(new Size(10, 6));
+    public ItemStorage_LocalGrid inventory = new ItemStorage_LocalGrid(new Size(10, 6));
 
 
     void iSavedData.AfterLoad()
