@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+//[System.Serializable]
 public class ItemInstance
 {
-    protected ItemInstance(ItemSO itemSO)
+    /// <summary>
+    /// [Not public] Use Instantiate() instead.
+    /// </summary>
+    /// <param name="itemSO"></param>
+    protected ItemInstance(ItemSO itemSO, int count = 1)
     {
         so = itemSO;
+        this.count = count;
     }
 
     /// <summary>
-    /// Used instead of new ItemInstance()
+    /// Used instead of Constructor.<para></para>
+    /// Generate item data with its ScripableObject.<para></para>
+    /// returns 'ItemInstance_Equipment' or 'ItemInstance_Etc' or null.
     /// </summary>
     /// <param name="itemSO"></param>
     /// <returns></returns>
-    static public ItemInstance Instantiate(ItemSO itemSO)
+    static public ItemInstance Instantiate(ItemSO itemSO, int count = 1)
     {
         if (itemSO == null)
             return null;
@@ -26,17 +33,24 @@ public class ItemInstance
                     return ItemInstance_Equipment.Instantiate(itemSO);
 
                 default:
-                    return new ItemInstance_Etc(itemSO);
+                    return ItemInstance_Etc.Instantiate(itemSO, count);
             }
     }
-    static public ItemInstance Instantiate(int itemID)
+    /// <summary>
+    /// Used instead of Constructor.<para></para>
+    /// Generate item data with its ID.<para></para>
+    /// returns 'ItemInstance_Equipment' or 'ItemInstance_Etc' or null.
+    /// </summary>
+    /// <param name="itemID"></param>
+    /// <returns></returns>
+    static public ItemInstance Instantiate(int itemID, int count = 1)
     {
         ItemSO itemSO = ItemSO.Load(itemID);
 
         if (itemSO == null)
             return null;
         else
-            return Instantiate(itemSO); // delegate to overload
+            return Instantiate(itemSO, count); // delegate to overload
     }
 
     protected ItemSO so;
@@ -46,6 +60,8 @@ public class ItemInstance
     protected int id;
     [SerializeField]
     protected int count;
+    
+    public ItemStorage CurrentStorage;
 
 
 }

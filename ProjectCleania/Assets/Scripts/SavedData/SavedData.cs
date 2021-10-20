@@ -32,6 +32,9 @@ public class SavedData : MonoBehaviour
     AbilityStatus vulnerable;
     [SerializeField]
     string vulnerableString;
+
+    [SerializeField]
+    Vector3 playerPosition;
     //
 
 
@@ -76,6 +79,10 @@ public class SavedData : MonoBehaviour
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
         ((iSavedData)vulnerable).AfterLoad();
+
+        GameManager.Instance.SinglePlayer.transform.position = playerPosition;
+        GameManager.Instance.SinglePlayer.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+        GameManager.Instance.player.playerMove.StopMoving();
     }
 
     void BeforeSave()
@@ -89,6 +96,8 @@ public class SavedData : MonoBehaviour
 
         ((iSavedData)vulnerable).BeforeSave();
         vulnerableString = JsonUtility.ToJson(vulnerable);
+
+        playerPosition = GameManager.Instance.SinglePlayer.transform.position;
     }
 
     private void Awake()

@@ -17,28 +17,49 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         EnumTotal
     }
 
-    // for test : WILL BE DELETED
-    protected ItemInstance_Equipment() : base(null)
-    {
-    }
-    // for test : WILL BE DELETED
-    static public ItemInstance_Equipment Instantiate()
-    { return new ItemInstance_Equipment(); }
-
+    // used for unityengine only
+    private ItemInstance_Equipment() : base(null)
+    { }
 
     protected ItemInstance_Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
     {
         Level = level;
+        _statics = new Dictionary<Ability.Stat, float>();
     }
 
-    static public ItemInstance_Equipment Instantiate(ItemSO itemSO, int level = 1)
+    /// <summary>
+    /// Used instead of Constructor.<para></para>
+    /// Generate equipment data with its ScriptableObject.<para></para>
+    /// returns 'ItemInstance_Equipment' or null.
+    /// </summary>
+    /// <param name="itemSO"></param>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    new static public ItemInstance_Equipment Instantiate(ItemSO itemSO, int level = 1)
     {
         if (itemSO.OptionTable != null && itemSO.MainCategory == ItemSO.enumMainCategory.Equipment)
             return new ItemInstance_Equipment(itemSO, level);
         else
             return null;
     }
-    
+    /// <summary>
+    /// Used instead of Constructor.<para></para>
+    /// Generate equipment data with its ID.<para></para>
+    /// returns 'ItemInstance_Equipment' or null.
+    /// </summary>
+    /// <param name="itemID"></param>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    new static public ItemInstance_Equipment Instantiate(int itemID, int level = 1)
+    {
+        ItemSO itemSO = ItemSO.Load(itemID);
+
+        if (itemSO == null)
+            return null;
+        else
+            return Instantiate(itemSO, level); // delegate to overload
+    }
+
 
     public Type EquipmentType = Type.MainWeapon;
     [Range(1, 50)]
@@ -53,8 +74,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
 
     /// <summary>
-    ///  You can't change _stats with this accessor.
-    ///  use this[stat] to modify stats.
+    ///  You can't change _stats with this accessor.<para></para>
+    ///  use this[stat] to modify stats.<para></para>
     ///  * created for foreach access
     /// </summary>
     public Dictionary<Ability.Stat, float> StaticProperties
@@ -63,8 +84,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     }
     
     /// <summary>
-    ///  You can't change _enchants with this accessor.
-    ///  use this[stat, enhance] to modify enchants.
+    ///  You can't change _enchants with this accessor.<para></para>
+    ///  use this[stat, enhance] to modify enchants.<para></para>
     ///  * created for foreach access
     /// </summary>
     public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> DynamicProperties
@@ -73,7 +94,12 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     }
 
     
-
+    /// <summary>
+    /// returns equipment's stat value.<para></para>
+    /// set as float.NaN to remove stat.
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <returns></returns>
     public float this[Ability.Stat stat]                                                   // stat indexer
     {
         get
@@ -93,6 +119,13 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         }
     }
 
+    /// <summary>
+    /// returns equipment's option value.<para></para>
+    /// set as float.NaN to remove option.
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <param name="enhance"></param>
+    /// <returns></returns>
     public float this[Ability.Stat stat, Ability.Enhance enhance]                    // enchant indexer
     {
         get
