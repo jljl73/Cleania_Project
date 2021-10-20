@@ -5,6 +5,10 @@ using System.IO;
 
 public class SavedData : MonoBehaviour
 {
+    static private SavedData _singleton;
+    static public SavedData Instance
+    { get => _singleton;}
+
     public string characterName;    
     string Path
     {
@@ -14,13 +18,8 @@ public class SavedData : MonoBehaviour
         }
     }
 
-    
-    public SavedData_Inventory SavedInventory = new SavedData_Inventory();
-    //SavedData_World
-    //SavedData_SkillSet
-    public SavedData_Equipments SavedEquipments = new SavedData_Equipments();
-
-    public ItemStorage_World WorldStorage = new ItemStorage_World();
+    public SavedData_Items Item = new SavedData_Items();
+    public SavedData_Equipments Equipment = new SavedData_Equipments();
 
     AbilityStatus vulnerable;
     [SerializeField]
@@ -59,33 +58,32 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        ((iSavedData)SavedInventory).AfterLoad();
-        ((iSavedData)SavedEquipments).AfterLoad();
-        ((iSavedData)WorldStorage).AfterLoad();
+        ((iSavedData)Equipment).AfterLoad();
+        ((iSavedData)Item).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
     }
 
     void BeforeSave()
     {
-        ((iSavedData)SavedInventory).BeforeSave();
-        ((iSavedData)SavedEquipments).BeforeSave();
-        ((iSavedData)WorldStorage).BeforeSave();
+        ((iSavedData)Equipment).BeforeSave();
+        ((iSavedData)Item).BeforeSave();
 
         vulnerableString = JsonUtility.ToJson(vulnerable);
     }
 
-
+    private void Awake()
+    {
+        _singleton = this;
+    }
 
     private void Start()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
-        WorldStorage.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
+        Item.World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
 
         Load();
     }
-
-   
 
     private void OnApplicationQuit()
     {
@@ -95,24 +93,24 @@ public class SavedData : MonoBehaviour
 
     public void Test_Add1101001()
     {
-        if (!SavedInventory.inventory.Add(ItemInstance.Instantiate(1101001)))
+        if (!Item.Inventory.Add(ItemInstance.Instantiate(1101001)))
             print("failed to add in inventory");
     }
     public void Test_Drop1101001()
     {
-        if (!WorldStorage.Add(ItemInstance.Instantiate(1101001)))
+        if (!Item.World.Add(ItemInstance.Instantiate(1101001)))
             print("failed to drop in world");
     }
     public void Test_RemoveAll()
     {
-        foreach (var i in SavedInventory.inventory.Items)
+        foreach (var i in Item.Inventory.Items)
         {
-            SavedInventory.inventory.Remove(i.Key);
+            Item.Inventory.Remove(i.Key);
         }
 
-        foreach(var i in WorldStorage.Items)
+        foreach(var i in Item.World.Items)
         {
-            WorldStorage.Remove(i.Key);
+            Item.World.Remove(i.Key);
         }
     }
 }

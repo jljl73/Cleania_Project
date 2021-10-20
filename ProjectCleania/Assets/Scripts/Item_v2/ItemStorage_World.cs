@@ -112,10 +112,12 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         foreach (Positioned<ItemInstance_Etc> i in SD_etcs)
         {
+            ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Position, Quaternion.identity);
         }
         foreach (Positioned<ItemInstance_Equipment> i in SD_equipments)
         {
+            ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Position, Quaternion.identity);
         }
 
@@ -130,7 +132,9 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         foreach (var i in _items)
         {
-            switch (i.Key.Info.MainCategory)
+            ((iSavedData)i.Key).BeforeSave();
+
+            switch (i.Key.SO.MainCategory)
             {
                 case ItemSO.enumMainCategory.Equipment:
                     SD_equipments.Add(new Positioned<ItemInstance_Equipment>((ItemInstance_Equipment)i.Key, i.Value.transform.position));

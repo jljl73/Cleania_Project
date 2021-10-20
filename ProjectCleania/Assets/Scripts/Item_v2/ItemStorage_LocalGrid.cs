@@ -38,9 +38,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
         if (item == null)
             return false;
 
-        for (int y = 0; y + item.Info.GridSize.Height <= gridSizeY; ++y)
-            for (int x = 0; x + item.Info.GridSize.Width <= gridSizeX; ++x)
-                if (_IsAreaEmpty(item.Info.GridSize, new Point(x, y)))
+        for (int y = 0; y + item.SO.GridSize.Height <= gridSizeY; ++y)
+            for (int x = 0; x + item.SO.GridSize.Width <= gridSizeX; ++x)
+                if (_IsAreaEmpty(item.SO.GridSize, new Point(x, y)))
                 {
                     _Add(item, new Point(x, y));
                     return true;
@@ -54,13 +54,13 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
             return false;
 
         // index range check
-        if (location.X + item.Info.GridSize.Width > gridSizeX ||
-            location.Y + item.Info.GridSize.Height > gridSizeY ||
+        if (location.X + item.SO.GridSize.Width > gridSizeX ||
+            location.Y + item.SO.GridSize.Height > gridSizeY ||
             location.X < 0 || location.Y < 0)
             return false;
 
         // grid reservation check
-        if (_IsAreaEmpty(item.Info.GridSize, location) == false)
+        if (_IsAreaEmpty(item.SO.GridSize, location) == false)
             return false;
 
         _Add(item, location);
@@ -70,8 +70,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     void _Add(ItemInstance item, Point location)
     {
         // reserve grid
-        for (int y = 0; y < item.Info.GridSize.Height; ++y)
-            for (int x = 0; x < item.Info.GridSize.Width; ++x)
+        for (int y = 0; y < item.SO.GridSize.Height; ++y)
+            for (int x = 0; x < item.SO.GridSize.Width; ++x)
                 _referenceGrid[y + location.Y][x + location.X] = item;
 
         // add
@@ -117,8 +117,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
         Point location = _items[item];
 
         // checkout reserve
-        for (int y = 0; y < item.Info.GridSize.Height; ++y)
-            for (int x = 0; x < item.Info.GridSize.Width; ++x)
+        for (int y = 0; y < item.SO.GridSize.Height; ++y)
+            for (int x = 0; x < item.SO.GridSize.Width; ++x)
                 _referenceGrid[y + location.Y][x + location.X] = null;
 
         // remove
@@ -159,9 +159,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
 
     [SerializeField]
-    List<Gridded<ItemInstance_Etc>> SD_etcs = new List<Gridded<ItemInstance_Etc>>();
-    [SerializeField]
     List<Gridded<ItemInstance_Equipment>> SD_equipments = new List<Gridded<ItemInstance_Equipment>>();
+    [SerializeField]
+    List<Gridded<ItemInstance_Etc>> SD_etcs = new List<Gridded<ItemInstance_Etc>>();
 
     void iSavedData.AfterLoad()
     {
@@ -171,10 +171,12 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
         foreach(Gridded<ItemInstance_Etc> i in SD_etcs)
         {
+            ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Location);
         }
         foreach (Gridded<ItemInstance_Equipment> i in SD_equipments)
         {
+            ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Location);
         }
 
@@ -189,7 +191,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
         foreach (var i in _items)
         {
-            switch (i.Key.Info.MainCategory)
+            ((iSavedData)i.Key).BeforeSave();
+
+            switch (i.Key.SO.MainCategory)
             {
                 case ItemSO.enumMainCategory.Equipment:
                     SD_equipments.Add(new Gridded<ItemInstance_Equipment>((ItemInstance_Equipment)i.Key, i.Value));

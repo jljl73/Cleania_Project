@@ -7,15 +7,15 @@ public class Demo_Inventory : MonoBehaviour
 {
     Grid[] slots;
     Image[] images;
-    public SavedData save;
     ItemStorage_LocalGrid inven;
+
 
     // Start is called before the first frame update
     void Start()
     {
         slots = GetComponentsInChildren<Grid>();
         images = GetComponentsInChildren<Image>();
-        inven = save.SavedInventory.inventory;
+        inven = SavedData.Instance.Item.Inventory;
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class Demo_Inventory : MonoBehaviour
         foreach(var i in inven.Items)
         {
             images[i.Value.Y * 10 + i.Value.X].enabled = true;
-            images[i.Value.Y * 10 + i.Value.X].sprite = i.Key.Info.ItemImage;
+            images[i.Value.Y * 10 + i.Value.X].sprite = i.Key.SO.ItemImage;
         }
     }
 }
