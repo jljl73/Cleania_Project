@@ -95,11 +95,13 @@ public class SavedData : MonoBehaviour
 
     public void Test_Add1101001()
     {
-        SavedInventory.inventory.Add(ItemInstance.Instantiate(1101001));
+        if (!SavedInventory.inventory.Add(ItemInstance.Instantiate(1101001)))
+            print("failed to add in inventory");
     }
     public void Test_Drop1101001()
     {
-        WorldStorage.Add(ItemInstance.Instantiate(1101001));
+        if (!WorldStorage.Add(ItemInstance.Instantiate(1101001)))
+            print("failed to drop in world");
     }
     public void Test_RemoveAll()
     {
