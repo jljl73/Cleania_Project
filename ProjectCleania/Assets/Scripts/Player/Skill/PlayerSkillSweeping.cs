@@ -28,7 +28,7 @@ public class PlayerSkillSweeping : PlayerSkill
     {
         base.Start();
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
-        animator.SetFloat("FairysWings multiplier", SpeedMultiplier);
+        animator.SetFloat("Sweeping multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()

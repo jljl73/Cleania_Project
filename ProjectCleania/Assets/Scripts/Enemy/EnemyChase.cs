@@ -4,21 +4,49 @@ using UnityEngine;
 
 public class EnemyChase : MonoBehaviour
 {
-    public GameObject enemySpawner;
-    GameObject enemy;
-
-    void Start()
+    GameObject enemySpawner;
+    public GameObject EnemySpawner 
     {
+        get { return enemySpawner; }
+        set 
+        { 
+            enemySpawner = value;
+            myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
+            myGroupManager.AddMember(enemy);
+
+        }
+    }
+    GameObject enemy;
+    EnemyGroupManager myGroupManager;
+    AbilityStatus targetObjAbility;
+
+    private void Awake()
+    {
+        // enemySpawner = transform.parent.GetComponent<Enemy>().EnemySpawner;
+        // myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
         enemy = transform.parent.gameObject;
-        enemySpawner = transform.parent.GetComponent<Enemy>().enemySpawner;
-        enemySpawner.GetComponent<EnemyGroupManager>().AddMember(enemy);
+
+    }
+
+    private void Update()
+    {
+        if (targetObjAbility == null) return;
+        if (targetObjAbility.HP == 0)
+        {
+            if (enemySpawner != null)
+                enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(other.gameObject);
+            if (enemySpawner != null)
+            {
+                enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(other.gameObject);
+                targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
+            }
         }
     }
 

@@ -5,10 +5,12 @@ using UnityEngine;
 public class BatSkill2 : Skill
 {
     public AbilityStatus myAbility;
+    EnemyChase parentEnemyChase;
 
     private void Start()
     {
         myAbility = transform.parent.parent.GetComponent<Enemy>().abilityStatus;
+        parentEnemyChase = transform.parent.parent.GetComponentInChildren<EnemyChase>();
     }
 
     public override void AnimationActivate()
@@ -28,6 +30,9 @@ public class BatSkill2 : Skill
 
         bat1.transform.localScale *= 0.5f;
         bat2.transform.localScale *= 0.5f;
+
+        bat1.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
+        bat2.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
 
         //Status bat1stat = bat1.GetComponent<Enemy>().status;
         //Status bat2stat = bat2.GetComponent<Enemy>().status;
