@@ -24,7 +24,6 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     protected ItemInstance_Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
     {
         Level = level;
-        _statics = new Dictionary<Ability.Stat, float>();
     }
 
     /// <summary>

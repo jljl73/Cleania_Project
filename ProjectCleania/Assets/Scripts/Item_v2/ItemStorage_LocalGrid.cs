@@ -29,8 +29,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
     Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
     /// <summary>
-    ///  You can't change _items with this accessor.<para></para>
-    ///  use Add() and Remove() to modify items.<para></para>
+    ///  You can't change storage's items with this accessor.<para></para>
+    ///  use Add() and Remove() to modify storage.<para></para>
     ///  * created for foreach, search access
     /// </summary>
     public Dictionary<ItemInstance, Point> Items
