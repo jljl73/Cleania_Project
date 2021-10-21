@@ -18,6 +18,12 @@ public class ItemStorage_World : ItemStorage, iSavedData
     { get => new Dictionary<ItemInstance, GameObject>(_items); }
 
 
+    /// <summary>
+    /// Default Add function.<para></para>
+    /// Drops item under player's feet.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public override bool Add(ItemInstance item)
     {
         GameObject player = GameManager.Instance.SinglePlayer;
@@ -25,6 +31,12 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         return true;
     }
+    /// <summary>
+    /// Drops item in certain location.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="position"></param>
+    /// <returns></returns>
     public bool Add(ItemInstance item, Vector3 position)
     {
         _Add(item, position, Quaternion.identity);
@@ -33,10 +45,13 @@ public class ItemStorage_World : ItemStorage, iSavedData
     }
     void _Add(ItemInstance item, Vector3 position, Quaternion rotation)
     {
+        item.CurrentStorage = this;
+
         GameObject newObject;
 
         if(_objectPool.Count > 0)
         {
+            // use object in pool
             newObject = _objectPool.Dequeue();
             newObject.transform.position = position;
             newObject.transform.rotation = rotation;
@@ -44,6 +59,7 @@ public class ItemStorage_World : ItemStorage, iSavedData
         }
         else
         {
+            // new object
             newObject = GameObject.Instantiate(ItemObjectPrefab, position, rotation);
         }
 
@@ -54,7 +70,15 @@ public class ItemStorage_World : ItemStorage, iSavedData
         _items.Add(item, newObject);
     }
 
-
+    
+    /// <summary>
+    /// Default Remove function.<para></para>
+    /// ItemStorage will find out 'item' and remove it.<para></para>
+    /// Returns true if there was 'item' in storage.<para></para>
+    /// Returns false if 'item' wasn't here.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public override bool Remove(ItemInstance item)
     {
         if (!_items.ContainsKey(item))
@@ -63,6 +87,11 @@ public class ItemStorage_World : ItemStorage, iSavedData
         _Remove(item);
         return true;
     }
+    /// <summary>
+    /// Same with Remove(ItemInstance) but object version.
+    /// </summary>
+    /// <param name="itemObject"></param>
+    /// <returns></returns>
     public bool Remove(GameObject itemObject)
     {
         if (!_items.ContainsValue(itemObject))
@@ -73,9 +102,13 @@ public class ItemStorage_World : ItemStorage, iSavedData
     }
     void _Remove(ItemInstance item)
     {
+        if (item.CurrentStorage == this)
+            item.CurrentStorage = null;
+
         GameObject removingObject = _items[item];
         _items.Remove(item);
 
+        // back to object pool
         removingObject.SetActive(false);
         removingObject.GetComponent<ItemObject_v2>().ItemData = null;
         _objectPool.Enqueue(removingObject);
@@ -112,10 +145,12 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         foreach (Positioned<ItemInstance_Etc> i in SD_etcs)
         {
+            ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Position, Quaternion.identity);
         }
         foreach (Positioned<ItemInstance_Equipment> i in SD_equipments)
         {
+            ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Position, Quaternion.identity);
         }
 
@@ -130,7 +165,9 @@ public class ItemStorage_World : ItemStorage, iSavedData
 
         foreach (var i in _items)
         {
-            switch (i.Key.Info.MainCategory)
+            ((iSavedData)i.Key).BeforeSave();
+
+            switch (i.Key.SO.MainCategory)
             {
                 case ItemSO.enumMainCategory.Equipment:
                     SD_equipments.Add(new Positioned<ItemInstance_Equipment>((ItemInstance_Equipment)i.Key, i.Value.transform.position));

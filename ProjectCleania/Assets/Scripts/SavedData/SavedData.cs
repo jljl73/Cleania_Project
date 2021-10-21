@@ -5,6 +5,10 @@ using System.IO;
 
 public class SavedData : MonoBehaviour
 {
+    static private SavedData _singleton;
+    static public SavedData Instance
+    { get => _singleton;}
+
     public string characterName;    
     string Path
     {
@@ -14,17 +18,24 @@ public class SavedData : MonoBehaviour
         }
     }
 
-    
-    public SavedData_Inventory SavedInventory = new SavedData_Inventory();
-    //SavedData_World
-    //SavedData_SkillSet
-    public SavedData_Equipments SavedEquipments = new SavedData_Equipments();
 
-    public ItemStorage_World WorldStorage = new ItemStorage_World();
+    // save data 
+
+    public ItemStorage_World Item_World = new ItemStorage_World();
+    public ItemStorage_LocalGrid Item_Inventory = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 6));
+    public ItemStorage_LocalGrid Item_Storage = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 10));
+
+    Equipable equipable;
+    [SerializeField]
+    string equipableStirng;
 
     AbilityStatus vulnerable;
     [SerializeField]
     string vulnerableString;
+
+    [SerializeField]
+    Vector3 playerPosition;
+    //
 
 
     /// <summary>
@@ -59,33 +70,49 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        ((iSavedData)SavedInventory).AfterLoad();
-        ((iSavedData)SavedEquipments).AfterLoad();
-        ((iSavedData)WorldStorage).AfterLoad();
+        ((iSavedData)Item_World).AfterLoad();
+        ((iSavedData)Item_Inventory).AfterLoad();
+        ((iSavedData)Item_Storage).AfterLoad();
+
+        JsonUtility.FromJsonOverwrite(equipableStirng, equipable);
+        ((iSavedData)equipable).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
+        ((iSavedData)vulnerable).AfterLoad();
+
+        GameManager.Instance.SinglePlayer.transform.position = playerPosition;
+        GameManager.Instance.SinglePlayer.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+        GameManager.Instance.player.playerMove.StopMoving();
     }
 
     void BeforeSave()
     {
-        ((iSavedData)SavedInventory).BeforeSave();
-        ((iSavedData)SavedEquipments).BeforeSave();
-        ((iSavedData)WorldStorage).BeforeSave();
+        ((iSavedData)Item_World).BeforeSave();
+        ((iSavedData)Item_Inventory).BeforeSave();
+        ((iSavedData)Item_Storage).BeforeSave();
 
+        ((iSavedData)equipable).BeforeSave();
+        equipableStirng = JsonUtility.ToJson(equipable);
+
+        ((iSavedData)vulnerable).BeforeSave();
         vulnerableString = JsonUtility.ToJson(vulnerable);
+
+        playerPosition = GameManager.Instance.SinglePlayer.transform.position;
     }
 
-
+    private void Awake()
+    {
+        _singleton = this;
+    }
 
     private void Start()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
-        WorldStorage.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
+        equipable = GameManager.Instance.PlayerEquipments;
+        Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
 
         Load();
     }
-
-   
 
     private void OnApplicationQuit()
     {
@@ -95,24 +122,24 @@ public class SavedData : MonoBehaviour
 
     public void Test_Add1101001()
     {
-        if (!SavedInventory.inventory.Add(ItemInstance.Instantiate(1101001)))
+        if (!Item_Inventory.Add(ItemInstance.Instantiate(1101001)))
             print("failed to add in inventory");
     }
     public void Test_Drop1101001()
     {
-        if (!WorldStorage.Add(ItemInstance.Instantiate(1101001)))
+        if (!Item_World.Add(ItemInstance.Instantiate(1101001)))
             print("failed to drop in world");
     }
     public void Test_RemoveAll()
     {
-        foreach (var i in SavedInventory.inventory.Items)
+        foreach (var i in Item_Inventory.Items)
         {
-            SavedInventory.inventory.Remove(i.Key);
+            Item_Inventory.Remove(i.Key);
         }
 
-        foreach(var i in WorldStorage.Items)
+        foreach(var i in Item_World.Items)
         {
-            WorldStorage.Remove(i.Key);
+            Item_World.Remove(i.Key);
         }
     }
 }

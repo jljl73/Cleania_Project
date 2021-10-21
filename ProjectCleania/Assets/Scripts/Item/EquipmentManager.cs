@@ -44,34 +44,34 @@ public class EquipmentManager : MonoBehaviour
 
     void EquipmentSlotChange(ItemInventory.EquipmentType type, EquipmentOption eo = null)
     {
-        int part = (int)type - 1;
+        //int part = (int)type - 1;
 
-        if (eo == null)
-        {
-            print("unequip");
-            GameManager.Instance.SinglePlayer.GetComponent<Equipable>().Unequip((ItemInstance_Equipment.Type)part);
-            return;
-        }
-        print("equip");
+        //if (eo == null)
+        //{
+        //    print("unequip");
+        //    GameManager.Instance.SinglePlayer.GetComponent<Equipable>().Unequip((ItemInstance_Equipment.Type)part);
+        //    return;
+        //}
+        //print("equip");
 
-        ItemInstance_Equipment equip = ItemInstance_Equipment.Instantiate();
+        //ItemInstance_Equipment equip = ItemInstance_Equipment.Instantiate();
 
-        equip.EquipmentType = (ItemInstance_Equipment.Type)part;
+        //equip.EquipmentType = (ItemInstance_Equipment.Type)part;
     
-        for(int i = eo.StaticOptionKeys.Count-1; i >= 0; i--)
-        {
-            var key = Ability.EquipmentOptionToAbility(eo.StaticOptionKeys[i]);
-            equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.StaticOptionKeys[i]) * eo.StaticOptionValues[i];
-        }
-        for (int i = eo.VariableOptionKeys.Count-1; i >= 0; i--)
-        {
-            var key = Ability.EquipmentOptionToAbility(eo.VariableOptionKeys[i]);
-            equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.VariableOptionKeys[i]) * eo.VariableOptionValues[i];
-        }
-        if (type == ItemInventory.EquipmentType.Weapon)
-            equip[Ability.Stat.AttackSpeed, Ability.Enhance.Absolute] = 1.3f;
+        //for(int i = eo.StaticOptionKeys.Count-1; i >= 0; i--)
+        //{
+        //    var key = Ability.EquipmentOptionToAbility(eo.StaticOptionKeys[i]);
+        //    equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.StaticOptionKeys[i]) * eo.StaticOptionValues[i];
+        //}
+        //for (int i = eo.VariableOptionKeys.Count-1; i >= 0; i--)
+        //{
+        //    var key = Ability.EquipmentOptionToAbility(eo.VariableOptionKeys[i]);
+        //    equip[key.Key, key.Value] = Ability.EquipmentOptionToWeight(eo.VariableOptionKeys[i]) * eo.VariableOptionValues[i];
+        //}
+        //if (type == ItemInventory.EquipmentType.Weapon)
+        //    equip[Ability.Stat.AttackSpeed, Ability.Enhance.Absolute] = 1.3f;
 
-        GameManager.Instance.SinglePlayer.GetComponent<Equipable>().Equip(equip);
+        //GameManager.Instance.SinglePlayer.GetComponent<Equipable>().Equip(equip);
     }
     // << End
 

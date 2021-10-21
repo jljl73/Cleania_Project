@@ -13,8 +13,26 @@ public class NPCTrigger : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             npc = FindCloseNPC();
-            if(npc != null)
-                ui.ShowPanel(true, npc.GetComponent<NPC>().NPCType);
+            if (npc == null) return;
+
+            switch (npc.GetComponent<NPC>().NPCType)
+            {
+                case NPC.TYPE.Repair:
+                    ui.ShowRepairPanel();
+                    break;
+                case NPC.TYPE.Buy:
+                    ui.ShowBuyPanel();
+                    break;
+                case NPC.TYPE.Sell:
+                    ui.ShowSellPanel();
+                    break;
+                case NPC.TYPE.Enchant:
+                    ui.ShowEnchantPanel();
+                    break;
+                case NPC.TYPE.Storage:
+                    ui.ShowStoragePanel();
+                    break;
+            }
         }
     }
 
@@ -52,6 +70,7 @@ public class NPCTrigger : MonoBehaviour
     {
         if (other.CompareTag("NPC"))
         {
+            ui.OffNPCPanels();
             npcs.Remove(other.gameObject);
             other.GetComponent<NPC>().ShowName(false);
         }
