@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     Animator animator;
-    EnemyStateMachine enemyStateMachine;
+    public EnemyStateMachine enemyStateMachine;
 
     // GameObject enemySpawner;
     // public GameObject EnemySpawner { get { return enemySpawner; } set { enemySpawner = value; } }

@@ -26,6 +26,7 @@ public class ParticleBase : MonoBehaviour
         ParticleObjectWithMR = ParticleObject.GetComponent<MeshRenderer>();
 
         ResetSetting();
+        ChangeScale(Scale);
     }
 
     protected virtual void Start()

@@ -13,8 +13,9 @@ public class HighDustySkill1 : Skill
 
     int skillCount = 0;
 
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         myAbility = GetComponentInParent<AbilityStatus>();
     }
 
