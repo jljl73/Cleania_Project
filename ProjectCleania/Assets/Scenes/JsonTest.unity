@@ -1262,7 +1262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ce43e8ea3407b4aa470ad60507c339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  save: {fileID: 1553677081}
 --- !u!114 &349568263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5336,6 +5335,7 @@ GameObject:
   - component: {fileID: 1506312830}
   - component: {fileID: 1506312829}
   - component: {fileID: 1506312828}
+  - component: {fileID: 1506312831}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -5391,6 +5391,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1506312831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506312827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5033f056e4e945c418ffea280dd8a6bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1516043602
 GameObject:
   m_ObjectHideFlags: 0
@@ -5597,18 +5609,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: savePlayer1
-  SavedInventory:
-    inventory:
-      gridSizeX: 10
-      gridSizeY: 6
-      SD_etcs: []
-      SD_equipments: []
-  SavedEquipments:
-    json: 
-  WorldStorage:
+  Item_World:
     SD_equipments: []
     SD_etcs: []
+  Item_Inventory:
+    gridSizeX: 10
+    gridSizeY: 6
+    SD_equipments: []
+    SD_etcs: []
+  Item_Storage:
+    gridSizeX: 10
+    gridSizeY: 10
+    SD_equipments: []
+    SD_etcs: []
+  equipableStirng: 
   vulnerableString: 
+  playerPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1553677082
 Transform:
   m_ObjectHideFlags: 0

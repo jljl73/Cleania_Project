@@ -28,11 +28,32 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
 
     Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
+    /// <summary>
+    ///  You can't change storage's items with this accessor.<para></para>
+    ///  use Add() and Remove() to modify storage.<para></para>
+    ///  * created for foreach, search access
+    /// </summary>
     public Dictionary<ItemInstance, Point> Items
     { get => new Dictionary<ItemInstance, Point>(_items); }
 
     ItemInstance[][] _referenceGrid;
+    /// <summary>
+    /// returns placed ItemInstance of that grid.
+    /// </summary>
+    /// <param name="y"></param>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    public ItemInstance this[int y, int x]
+    { get => _referenceGrid[y][x]; }
 
+    /// <summary>
+    /// Default Add function.<para></para>
+    /// item will be placed in mostly left-upper empty grid.<para></para>
+    /// Returns true if ItemStorage had enough space and stored it well.<para></para>
+    /// Returns false if there was not enough space or failed to store.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public override bool Add(ItemInstance item)
     {
         if (item == null)
@@ -48,6 +69,14 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
         return false;
     }
+    /// <summary>
+    /// You can store item in wanted location with this function.<para></para>
+    /// Returns true if that location was not reserved.<para></para>
+    /// Returns false if that place(s) has owner already.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="location"></param>
+    /// <returns></returns>
     public bool Add(ItemInstance item, Point location)
     {
         if(item == null)
@@ -69,6 +98,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
     void _Add(ItemInstance item, Point location)
     {
+        item.CurrentStorage = this;
+
         // reserve grid
         for (int y = 0; y < item.SO.GridSize.Height; ++y)
             for (int x = 0; x < item.SO.GridSize.Width; ++x)
@@ -87,6 +118,14 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
         return true;
     }
 
+    /// <summary>
+    /// Default Remove function.<para></para>
+    /// ItemStorage will find out 'item' and remove it.<para></para>
+    /// Returns true if there was 'item' in storage.<para></para>
+    /// Returns false if 'item' wasn't here.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public override bool Remove(ItemInstance item)
     {
         // item check
@@ -97,6 +136,13 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
 
         return true;
     }
+    /// <summary>
+    /// Pinpoint Removing.<para></para>
+    /// Returns true if there was item in that place.<para></para>
+    /// Returns false if there was nothing.
+    /// </summary>
+    /// <param name="location"></param>
+    /// <returns></returns>
     public bool Remove(Point location)
     {
         if (location.X > gridSizeX || location.Y > gridSizeY ||
@@ -114,9 +160,11 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     }
     void _Remove(ItemInstance item)
     {
-        Point location = _items[item];
+        if (item.CurrentStorage == this)
+            item.CurrentStorage = null;
 
         // checkout reserve
+        Point location = _items[item];
         for (int y = 0; y < item.SO.GridSize.Height; ++y)
             for (int x = 0; x < item.SO.GridSize.Width; ++x)
                 _referenceGrid[y + location.Y][x + location.X] = null;
