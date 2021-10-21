@@ -64,11 +64,11 @@ public class ItemInstance
         switch(rank)
         {
             case ItemSO.enumRank.Common:
-                return Instantiate(ItemSO.CommonList[Random.Range(0, ItemSO.CommonList.Count)], count);
+                return Instantiate(ItemSO.CommonItemSO[Random.Range(0, ItemSO.CommonItemSO.Length)], count);
             case ItemSO.enumRank.Rare:
-                return Instantiate(ItemSO.RareList[Random.Range(0, ItemSO.RareList.Count)], count);                
+                return Instantiate(ItemSO.RareItemSO[Random.Range(0, ItemSO.RareItemSO.Length)], count);                
             case ItemSO.enumRank.Legendary:
-                return Instantiate(ItemSO.LegendaryList[Random.Range(0, ItemSO.LegendaryList.Count)], count);                
+                return Instantiate(ItemSO.LegendaryItemSO[Random.Range(0, ItemSO.LegendaryItemSO.Length)], count);                
             default:
                 return null;
         }

@@ -151,66 +151,72 @@ public class ItemSO : ScriptableObject
         }
     }
 
-    static List<ItemSO> _commonList;
-    static public List<ItemSO> CommonList
+    static ItemSO[] _commonItemSO;
+    static public ItemSO[] CommonItemSO
     {
         get
         {
-            if(_commonList == null)
+            if(_commonItemSO == null)
             {
                 LoadAll();
-                _commonList = new List<ItemSO>();
+                List<ItemSO> commons = new List<ItemSO>();
 
                 foreach(var kv in _dictionary)
                 {
                     if (kv.Value.rank == enumRank.Common)
-                        _commonList.Add(kv.Value);
+                        commons.Add(kv.Value);
                 }
+
+                _commonItemSO = commons.ToArray();
             }
 
-            return _commonList;
+            return _commonItemSO;
         }
     }
 
-    static List<ItemSO> _rareList;
-    static public List<ItemSO> RareList
+    static ItemSO[] _rareItemSO;
+    static public ItemSO[] RareItemSO
     {
         get
         {
-            if(_rareList == null)
+            if(_rareItemSO == null)
             {
                 LoadAll();
-                _rareList = new List<ItemSO>();
+                List<ItemSO> rares = new List<ItemSO>();
 
                 foreach(var kv in _dictionary)
                 {
                     if (kv.Value.rank == enumRank.Rare)
-                        _rareList.Add(kv.Value);
+                        rares.Add(kv.Value);
                 }
+
+                _rareItemSO = rares.ToArray();
             }
 
-            return _rareList;
+            return _rareItemSO;
         }
     }
 
-    static List<ItemSO> _legendaryList;
-    static public List<ItemSO> LegendaryList
+    static ItemSO[] _legendaryItemSO;
+    static public ItemSO[] LegendaryItemSO
     {
         get
         {
-            if(_legendaryList == null)
+            if(_legendaryItemSO == null)
             {
                 LoadAll();
-                _legendaryList = new List<ItemSO>();
+                List<ItemSO> legendaries = new List<ItemSO>();
 
                 foreach(var kv in _dictionary)
                 {
                     if (kv.Value.rank == enumRank.Legendary)
-                        _legendaryList.Add(kv.Value);
+                        legendaries.Add(kv.Value);
                 }
+
+                _legendaryItemSO = legendaries.ToArray();
             }
 
-            return _legendaryList;
+            return _legendaryItemSO;
         }
     }
 }
