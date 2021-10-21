@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
@@ -116,8 +117,100 @@ public class ItemSO : ScriptableObject
     { get => optionTable; }
 
 
+
+
+
+    // Loader
+
+    [System.NonSerialized]
+    static Dictionary<int, ItemSO> _dictionary = new Dictionary<int, ItemSO>();
+    static bool _loadedAll = false;
+
     static public ItemSO Load(int id)
     {
-        return Resources.Load<ItemSO>($"ScriptableObject/ItemTable/{id.ToString()}");
+        ItemSO item;
+        if (!_dictionary.TryGetValue(id, out item) && _loadedAll == false)
+        {
+            item = Resources.Load<ItemSO>($"ScriptableObject/ItemTable/{id.ToString()}");
+            _dictionary[id] = item;
+        }
+
+        return item;
+    }
+
+    static public void LoadAll()
+    {
+        if (_loadedAll == false)
+        {
+            ItemSO[] all = Resources.LoadAll<ItemSO>("ScriptableObject/ItemTable");
+
+            foreach (ItemSO i in all)
+                _dictionary[i.ID] = i;
+
+            _loadedAll = true;
+        }
+    }
+
+    static List<ItemSO> _commonList;
+    static public List<ItemSO> CommonList
+    {
+        get
+        {
+            if(_commonList == null)
+            {
+                LoadAll();
+                _commonList = new List<ItemSO>();
+
+                foreach(var kv in _dictionary)
+                {
+                    if (kv.Value.rank == enumRank.Common)
+                        _commonList.Add(kv.Value);
+                }
+            }
+
+            return _commonList;
+        }
+    }
+
+    static List<ItemSO> _rareList;
+    static public List<ItemSO> RareList
+    {
+        get
+        {
+            if(_rareList == null)
+            {
+                LoadAll();
+                _rareList = new List<ItemSO>();
+
+                foreach(var kv in _dictionary)
+                {
+                    if (kv.Value.rank == enumRank.Rare)
+                        _rareList.Add(kv.Value);
+                }
+            }
+
+            return _rareList;
+        }
+    }
+
+    static List<ItemSO> _legendaryList;
+    static public List<ItemSO> LegendaryList
+    {
+        get
+        {
+            if(_legendaryList == null)
+            {
+                LoadAll();
+                _legendaryList = new List<ItemSO>();
+
+                foreach(var kv in _dictionary)
+                {
+                    if (kv.Value.rank == enumRank.Legendary)
+                        _legendaryList.Add(kv.Value);
+                }
+            }
+
+            return _legendaryList;
+        }
     }
 }

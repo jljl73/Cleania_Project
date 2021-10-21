@@ -53,6 +53,27 @@ public class ItemInstance
             return Instantiate(itemSO, count); // delegate to overload
     }
 
+    /// <summary>
+    /// Random instantiate via rank.
+    /// </summary>
+    /// <param name="rank"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    static public ItemInstance Instantiate_RandomByRank(ItemSO.enumRank rank, int count = 1)
+    {
+        switch(rank)
+        {
+            case ItemSO.enumRank.Common:
+                return Instantiate(ItemSO.CommonList[Random.Range(0, ItemSO.CommonList.Count)], count);
+            case ItemSO.enumRank.Rare:
+                return Instantiate(ItemSO.RareList[Random.Range(0, ItemSO.RareList.Count)], count);                
+            case ItemSO.enumRank.Legendary:
+                return Instantiate(ItemSO.LegendaryList[Random.Range(0, ItemSO.LegendaryList.Count)], count);                
+            default:
+                return null;
+        }
+    }
+
     protected ItemSO so;
     public ItemSO SO
     { get => so; }
@@ -62,6 +83,4 @@ public class ItemInstance
     protected int count;
     
     public ItemStorage CurrentStorage;
-
-
 }
