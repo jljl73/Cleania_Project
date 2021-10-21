@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+/// <summary>
+/// Interfaces<para></para>
+/// 1. Add(), Remove()<para></para>
+/// 2. this[ItemInstance]<para></para>
+/// 3. this[int y, int x]<para></para>
+/// 4. Item<para></para>
+/// 5. foreach
+/// </summary>
 [System.Serializable]
-public class ItemStorage_LocalGrid : ItemStorage, iSavedData
+public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
 {
     public ItemStorage_LocalGrid(Size size)
     {
@@ -35,6 +43,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
     /// </summary>
     public Dictionary<ItemInstance, Point> Items
     { get => new Dictionary<ItemInstance, Point>(_items); }
+    public Point this[ItemInstance item]
+    { get => _items[item]; }
 
     ItemInstance[][] _referenceGrid;
     /// <summary>
@@ -253,4 +263,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData
         }
     }
 
+    public IEnumerator GetEnumerator()
+    {
+        return ((IEnumerable)_items).GetEnumerator();
+    }
 }
