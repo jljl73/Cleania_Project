@@ -9,7 +9,9 @@ public class ReaperSkill1 : EnemySkill
 
     GameObject newEnemy;
     WaitForSeconds waitForSeconds;
-    float timeInterval = 10.0f;
+
+    [Header("소환 주기")]
+    public float timeInterval = 10.0f;
 
    
     new void Start()
@@ -28,8 +30,8 @@ public class ReaperSkill1 : EnemySkill
         {
             if(enemyMove.ExistTarget())
             {
-                animator.SetTrigger("Summon");
                 animator.SetBool("OnSkill", true);
+                animator.SetTrigger("Summon");
             }
             yield return waitForSeconds;
         }

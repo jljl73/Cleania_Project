@@ -35,4 +35,24 @@ public abstract class Skill : MonoBehaviour
     public abstract void AnimationActivate();
 
     public abstract void Deactivate();
+
+    public List<SkillEffectController> effectController;
+
+    public void PlayEffects(int effectIdx)
+    {
+        effectController[effectIdx].PlaySkillEffect();
+        //foreach (SkillEffectController skillEffect in effectController)
+        //{
+        //    skillEffect.PlaySkillEffect();
+        //}
+    }
+
+    public void StopEffects(int effectIdx)
+    {
+        effectController[effectIdx].StopSKillEffect();
+        //foreach (SkillEffectController skillEffect in effectController)
+        //{
+        //    skillEffect.StopSKillEffect();
+        //}
+    }
 }
