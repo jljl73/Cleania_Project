@@ -125,6 +125,11 @@ public class SavedData : MonoBehaviour
         if (!Item_Inventory.Add(ItemInstance.Instantiate(1101001)))
             print("failed to add in inventory");
     }
+    public void Test_AddRandom()
+    {
+        if (!Item_Inventory.Add(ItemInstance.Instantiate_RandomByRank((ItemSO.enumRank)Random.Range(0, 3))))
+            print("failed to add in inventory");
+    }
     public void Test_Drop1101001()
     {
         if (!Item_World.Add(ItemInstance.Instantiate(1101001)))
