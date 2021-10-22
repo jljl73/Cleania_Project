@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class EnemySkillTrigger : MonoBehaviour
 {
-    public Skill skill;
+    //public Skill skill;
     public Animator animator;
 
-    WaitForSeconds waitForSeconds = new WaitForSeconds(3.0f);
-    bool isCouroutineRunning = false;
+    // WaitForSeconds waitForSeconds = new WaitForSeconds(3.0f);
+    // bool isCouroutineRunning = false;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (!other.CompareTag("Player")) return;
 
-        animator.SetBool("OnSkill", true);
-    }
+    //    animator.SetBool("OnSkill", true);
+    //    print("Do spin skill!");
+    //}
 
-    void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (!other.CompareTag("Player")) return;
 
-        animator.SetBool("OnSkill", false);
-    }
+    //    animator.SetBool("OnSkill", false);
+    //    print("Stop skill!");
+    //}
 
 }

@@ -21,6 +21,8 @@ public class TestPlayerMove : MonoBehaviour
     // bool bChasing = false;
     float speed = 1.0f;
 
+    bool isOrderedToMove = false;
+
     private void Awake()
     {
         playerObject = transform.parent.gameObject;
@@ -33,12 +35,15 @@ public class TestPlayerMove : MonoBehaviour
     {
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
             player.stateMachine.CompareState(StateMachine.enumState.Attacking)) return;
-        
 
-        if (Vector3.Distance(targetPos, transform.position) < 0.01f)
+        if (!isOrderedToMove) return;
+
+        if (Vector3.Distance(targetPos, transform.position) < 0.1f)
         {
             playerAnimator.SetBool("Walk", false);
             targetPos = transform.position;
+            isOrderedToMove = false;
+            return;
         }
 
         speed = player.abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6;
@@ -72,6 +77,7 @@ public class TestPlayerMove : MonoBehaviour
 
     public void Move(Vector3 MousePosition)
     {
+        isOrderedToMove = true;
         MoveToPosition(MousePosition);
     }
 

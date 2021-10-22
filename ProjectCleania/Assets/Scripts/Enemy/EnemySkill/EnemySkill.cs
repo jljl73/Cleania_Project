@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySkill : Skill
+public abstract class EnemySkill : Skill
 {
     public enum SkillID
     {
@@ -11,7 +11,7 @@ public class EnemySkill : Skill
 
     public SkillID ID;
 
-    public Enemy enemy;
+    protected Enemy enemy;
     protected EnemyMove enemyMove;
     protected EnemyChase enemyChase;
 
@@ -27,13 +27,13 @@ public class EnemySkill : Skill
         base.Start();
     }
 
-    public override void AnimationActivate()
-    {
-        throw new System.NotImplementedException();
-    }
+    //public override void AnimationActivate()
+    //{
+    //    throw new System.NotImplementedException();
+    //}
 
-    public override void Deactivate()
-    {
-        throw new System.NotImplementedException();
-    }
+    //public override void Deactivate()
+    //{
+    //    throw new System.NotImplementedException();
+    //}
 }

@@ -38,7 +38,10 @@ public class ItemDrop : MonoBehaviour
             print("Dropped : " + itemRank.ToString());
 
             // 아이템 생성
-            // Instantiate(ItemTable.GetRandomItemObj(itemRank), GetDropPosition(transform.position, DropRadius), transform.rotation);
+            //ItemInstance.Instantiate(1101001); 아이템 데이터 생성
+            SavedData.Instance.Item_World.Add(ItemInstance.Instantiate(1101001), GetDropPosition(transform.position, DropRadius));
+
+            //Instantiate(ItemTable.GetRandomItemObj(itemRank), GetDropPosition(transform.position, DropRadius), transform.rotation);
         }
     }
 

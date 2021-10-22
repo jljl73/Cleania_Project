@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     Animator animator;
-    public EnemyStateMachine enemyStateMachine;
 
     // GameObject enemySpawner;
     // public GameObject EnemySpawner { get { return enemySpawner; } set { enemySpawner = value; } }
@@ -15,6 +14,7 @@ public class Enemy : MonoBehaviour
     public AbilityStatus abilityStatus;
     public EnemySkillManager skillManager;
     public EnemyMove enemyMove;
+    public EnemyStateMachine enemyStateMachine;
 
     public delegate void DelegateVoid();
     public event DelegateVoid OnDead;
@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        enemyStateMachine = GetComponent<EnemyStateMachine>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
@@ -120,7 +119,15 @@ public class Enemy : MonoBehaviour
         enemyMove.ReleaseTarget();
     }
 
+    public void ActivateSkillEffect(AnimationEvent myEvent)
+    {
+        skillManager.ActivateSkillEffect(myEvent);
+    }
 
+    public void DeactivateSkillEffect(AnimationEvent myEvent)
+    {
+        skillManager.DeactivateSkillEffect(myEvent);
+    }
 
     // Listener
     public void ActivateSkill(int type)
