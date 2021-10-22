@@ -25,9 +25,15 @@ public class UIManager : MonoBehaviour
     public GameObject EnchantPanel;
     public GameObject StoragePanel;
 
-    List<int> ListOpendUI = new List<int>();
+    Stack<GameObject> sPanels = new Stack<GameObject>();
 
-    
+    GameObject currentPanel;
+
+    void Awake()
+    {
+        GameManager.Instance.uiManager = this;
+    }
+
     void Update()
     {
         if (GameManager.Instance.isChatting) return;
@@ -54,54 +60,57 @@ public class UIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            OffAllPanels();
+            //OffAllPanels();
+            CloseLastPanel();
         }
     }
 
     public void ShowInventory()
     {
-        if (isActiveItemPanel)
-            itemPanel.transform.Translate(new Vector3(20000, 0, 0));
-        else
-            itemPanel.transform.Translate(new Vector3(-20000, 0, 0));
+        ShowPanel(itemPanel);
+        //if (isActiveItemPanel)
+        //    itemPanel.transform.Translate(new Vector3(20000, 0, 0));
+        //else
+        //    itemPanel.transform.Translate(new Vector3(-20000, 0, 0));
 
-        isActiveItemPanel = !isActiveItemPanel;
-
+        //isActiveItemPanel = !isActiveItemPanel;
+        //if (isActiveItemPanel)
+        //    itemPanel.transform.SetAsLastSibling();
     }
 
     public void ShowSkillPanel()
     {
-        SkillPanel.SetActive(!SkillPanel.activeSelf);
+        ShowPanel(SkillPanel);
     }
     
     public void ShowQuestPanel()
     {
-        QuestPanel.SetActive(!QuestPanel.activeSelf);
+        ShowPanel(QuestPanel);
     }
 
     public void ShowRepairPanel()
     {
-        RepairPanel.SetActive(!RepairPanel.activeSelf);
+        ShowPanel(RepairPanel);
     }
 
     public void ShowBuyPanel()
     {
-        BuyPanel.SetActive(!BuyPanel.activeSelf);
+        ShowPanel(BuyPanel);
     }
 
     public void ShowSellPanel()
     {
-        SellPanel.SetActive(!SellPanel.activeSelf);
+        ShowPanel(SellPanel);
     }
 
     public void ShowEnchantPanel()
     {
-        EnchantPanel.SetActive(!EnchantPanel.activeSelf);
+        ShowPanel(EnchantPanel);
     }
 
     public void ShowStoragePanel()
     {
-        StoragePanel.SetActive(!StoragePanel.activeSelf);
+        ShowPanel(StoragePanel);
     }
 
     void OffAllPanels()
@@ -126,5 +135,19 @@ public class UIManager : MonoBehaviour
         this.StoragePanel.SetActive(false);
     }
 
+    void ShowPanel(GameObject panel)
+    {
+        panel.SetActive(!panel.activeSelf);
+        if (panel.activeSelf)
+        {
+            panel.transform.SetAsLastSibling();
+            sPanels.Push(panel);
+        }
+    }
 
+    void CloseLastPanel()
+    {
+        if (sPanels.Count > 0)
+            sPanels.Pop().SetActive(false);
+    }
 }
