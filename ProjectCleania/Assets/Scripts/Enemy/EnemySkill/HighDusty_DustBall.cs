@@ -7,8 +7,10 @@ public class HighDusty_DustBall : MonoBehaviour
     public GameObject owner;
     public float DamageScale;
 
-    public GameObject ball;
-    public GameObject pond;
+    public GameObject Ball;
+    public GameObject Pond;
+    public GameObject BallHitTargetEffect;
+    public SkillEffectController BallHitGroundEffect;
 
     AbilityStatus playerAbility;
     AbilityStatus ownerAbility;
@@ -25,13 +27,20 @@ public class HighDusty_DustBall : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
                 playerAbility.AttackedBy(ownerAbility, DamageScale);
-                
+
+                // BallHitTargetEffect.gameObject.transform.position = other.ClosestPoint(other.transform.position);
+                // BallHitTargetEffect.PlaySkillEffect();
+                Instantiate(BallHitTargetEffect, other.ClosestPoint(other.transform.position), other.transform.rotation);
+
                 Destroy(gameObject);
             }
             else if (other.gameObject.CompareTag("Ground"))
             {
-                ball.SetActive(false);
-                pond.SetActive(true);
+                Ball.SetActive(false);
+
+                BallHitGroundEffect.PlaySkillEffect();
+
+                Pond.SetActive(true);
                 GetComponent<Rigidbody>().isKinematic = true;
                 //GetComponent<Rigidbody>().useGravity = false;
 
