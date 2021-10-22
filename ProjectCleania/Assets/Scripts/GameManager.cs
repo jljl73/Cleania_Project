@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public Buffable PlayerBuffs;
     public Player player;
     public ChatManager chatManager;
+    public UIManager uiManager;
     public string nextSceneName;
 
     public InputField IF_Chat;

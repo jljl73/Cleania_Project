@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPCTrigger : MonoBehaviour
 {
+    public DialogManager dialogManager;
     public UIManager ui;
     List<GameObject> npcs = new List<GameObject>();
 
@@ -21,7 +22,8 @@ public class NPCTrigger : MonoBehaviour
                     ui.ShowRepairPanel();
                     break;
                 case NPC.TYPE.Buy:
-                    ui.ShowBuyPanel();
+                    //ui.ShowBuyPanel();
+                    dialogManager.ShowMarketDialog();
                     break;
                 case NPC.TYPE.Sell:
                     ui.ShowSellPanel();

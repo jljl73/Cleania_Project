@@ -16,7 +16,7 @@ public class EquipmentManager : MonoBehaviour
         for (int i = 0; i < nEquipment; ++i)
             equipmentOptions[i] = null;
 
-        Debug.Log(GetSumOptions(EquipmentOption.Option.Attack));
+        //Debug.Log(GetSumOptions(EquipmentOption.Option.Attack));
     }
 
     private void Update()

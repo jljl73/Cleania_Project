@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ItemInventory : MonoBehaviour
 {
     public enum Size { Height = 8, Width = 10, Area = 80 };
-    public enum EquipmentType { Helmet = 1, Chest, Gloves, Weapon, Pants, Amulet, Boots };
+    public enum EquipmentType { Weapon, Helmet, Chest, Pants, Gloves, Boots, Amulet };
 
     public GameObject[] slots;
     public GameObject[] EquipmentSlots;
@@ -27,14 +27,14 @@ public class ItemInventory : MonoBehaviour
 
         Transform Equipment = transform.Find("Equipment");
 
-        EquipmentSlots = new GameObject[Equipment.childCount];
+        EquipmentSlots = new GameObject[Equipment.childCount-1];
         for (int i = 1; i < EquipmentSlots.Length; i++)
         {
-            EquipmentSlots[i] = Equipment.GetChild(i).gameObject;
+            EquipmentSlots[i-1] = Equipment.GetChild(i).gameObject;
         }
     }
 
-    public GameObject GetSlotPosition(int index)
+    public GameObject GetSlot(int index)
     {
         if (index >= slots.Length)
             return null;
@@ -78,19 +78,9 @@ public class ItemInventory : MonoBehaviour
         temp.GetComponent<ItemController>().count = count;
     }
 
-    //public void GenerateItem(string objectName, Item item)
-    //{
-    //    GameObject newItem = Instantiate(Resources.Load("Prefabs/" + objectName, typeof(GameObject)) as GameObject, transform.position, transform.rotation);
-
-    //    //GameObject newItem = Instantiate(prefab);
-    //    newItem.GetComponent<ItemController>().Initialize(this, transform.parent.GetComponent<Canvas>(), );
-    //    newItem.SetActive(true);
-    //}
-
 
     public void OnThrowOK()
     {
-        //Debug.Log(currentItem.name);
         if(currentItem)
             currentItem.BackToField();
         currentItem = null;
@@ -98,7 +88,6 @@ public class ItemInventory : MonoBehaviour
 
     public void OnDivideOK(int value)
     {
-        //Debug.Log(currentItem.name);
         if (currentItem)
             Clone(currentItem.gameObject, value);
         currentItem = null;
