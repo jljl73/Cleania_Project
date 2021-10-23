@@ -4,16 +4,36 @@ using UnityEngine;
 
 public class ReaperSkill1 : EnemySkill
 {
-    public GameObject highDusty;
-    public GameObject normalDusty;
+    GameObject highDusty;
+    GameObject normalDusty;
 
     GameObject newEnemy;
     WaitForSeconds waitForSeconds;
 
-    [Header("家券 林扁")]
-    public float timeInterval = 10.0f;
+    // [Header("家券 林扁")]
+    // public float timeInterval = 10.0f;
 
-   
+    public SummonSkillSO SkillData;
+
+    private new void Awake()
+    {
+        base.Awake();
+        UpdateSkillData();
+    }
+
+    public void UpdateSkillData()
+    {
+        SkillName = SkillData.GetSkillName();
+        SkillDetails = SkillData.GetSkillDetails();
+        CoolTime = SkillData.GetCoolTime();
+        CreatedMP = SkillData.GetCreatedMP();
+        ConsumMP = SkillData.GetConsumMP();
+        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+
+        highDusty = SkillData.GetHighDustyForSummon();
+        normalDusty = SkillData.GetNormalDustyForSummon();
+    }
+
     //new void Start()
     //{
     //    base.Start();
@@ -39,16 +59,8 @@ public class ReaperSkill1 : EnemySkill
 
     public override void Activate()
     {
-
         newEnemy = Instantiate(highDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
         // newEnemy.GetComponent<Enemy>().EnemySpawner = enemy.EnemySpawner;
-
-        if (newEnemy == null)
-            print("newEnemy is null");
-        if (enemyChase == null)
-            print("enemyChase is null");
-        if (newEnemy.GetComponentInChildren<EnemyChase>() == null)
-            print("newEnemy.GetComponentInChildren<EnemyChase>() == null");
 
         newEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
 

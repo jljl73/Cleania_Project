@@ -15,6 +15,9 @@ public abstract class Skill : MonoBehaviour
     // public bool isAttacking;
     protected float CoolTime;  // 추후 private 처리
     public float GetCoolTime() { return CoolTime; }
+    protected float CreatedHP = 0f;
+    public float GetCreatedHP() { return CreatedHP; }
+
     protected float CreatedMP = 0f;
     public float GetCreatedMP() { return CreatedMP; }
     protected float ConsumMP = 0f;

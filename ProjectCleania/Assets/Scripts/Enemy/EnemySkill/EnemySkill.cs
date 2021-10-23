@@ -4,13 +4,6 @@ using UnityEngine;
 
 public abstract class EnemySkill : Skill
 {
-    public enum SkillID
-    {
-
-    }
-
-    public SkillID ID;
-
     protected Enemy enemy;
     protected EnemyMove enemyMove;
     protected EnemyChase enemyChase;

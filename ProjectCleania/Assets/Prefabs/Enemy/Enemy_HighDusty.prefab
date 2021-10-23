@@ -69,8 +69,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4972137586239127848}
-  - component: {fileID: 5230367244614923491}
   - component: {fileID: 5230367244614924060}
+  - component: {fileID: 7746828142501025532}
   - component: {fileID: 737282881}
   m_Layer: 0
   m_Name: SkillManager
@@ -89,25 +89,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4972137588133277434}
+  m_Children: []
   m_Father: {fileID: 4972137587626881285}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5230367244614923491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4972137586239127851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed38b70e67be9a747b1740162a79dcc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skill: {fileID: 4972137588133277428}
-  animator: {fileID: 4972137587626881284}
 --- !u!135 &5230367244614924060
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -121,6 +106,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7746828142501025532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972137586239127851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa8690a9bb8d7345b33544b207c7ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4972137587626881284}
 --- !u!114 &737282881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,10 +131,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7165da0fefa88b4468540fa3006687b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 0}
+  abilityStatus: {fileID: 8325564094977245204}
+  animator: {fileID: 4972137587626881284}
   skills:
   - {fileID: 4972137588133277428}
-  - {fileID: 4972137588133277428}
+  skillStorage: {fileID: 7327141011304213801}
+  myEnemy: {fileID: 1372266458}
 --- !u!1 &4972137587626881287
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 4972137587626881285}
   - component: {fileID: 4972137587626881284}
   - component: {fileID: 6877608270242394641}
-  - component: {fileID: 4972137587626881295}
   - component: {fileID: 2740891262376652219}
   - component: {fileID: 5230367245399787318}
   - component: {fileID: 4388122920729891846}
@@ -215,21 +214,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   rank: 1
---- !u!114 &4972137587626881295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4972137587626881287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!136 &2740891262376652219
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -322,11 +306,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4972137588133277429}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.001, z: 0.722}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4972137586239127848}
+  m_Father: {fileID: 4276550117953472930}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4972137588133277428
@@ -345,7 +329,6 @@ MonoBehaviour:
   effectController: []
   DamageScale: 10
   DustBall: {fileID: 870499553090971103, guid: 52b154e50b01fd748b924f58de1e2be5, type: 3}
-  enemy: {fileID: 1372266458}
 --- !u!1 &5644950459138557823
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +356,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4972137588133277434}
   m_Father: {fileID: 4972137587626881285}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -389,7 +373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19b2923ed5c9154fa40b22d88a0c9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InherentSkillList: []
+  InherentSkillList:
+  - {fileID: 4972137588133277428}
   SpecialSkillObjectList: []
   SpecialSkillCount: 4
 --- !u!1 &8725510562474149827

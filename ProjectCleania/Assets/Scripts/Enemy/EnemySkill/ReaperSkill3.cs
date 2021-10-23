@@ -4,16 +4,38 @@ using UnityEngine;
 
 public class ReaperSkill3 : EnemySkill
 {
-    public float DamageScale = 10;
-    public float hitForce = 1;
+    float DamageScale = 10;
+    float hitForce = 1;
 
     Collider col;
+
+    public DustWindSO SkillData;
+
+    private new void Awake()
+    {
+        base.Awake();
+        UpdateSkillData();
+    }
 
     private new void Start()
     {
         base.Start();
 
         col = GetComponent<Collider>();
+    }
+
+    public void UpdateSkillData()
+    {
+        SkillName = SkillData.GetSkillName();
+        SkillDetails = SkillData.GetSkillDetails();
+        CoolTime = SkillData.GetCoolTime();
+        CreatedMP = SkillData.GetCreatedMP();
+        ConsumMP = SkillData.GetConsumMP();
+        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+
+        DamageScale = SkillData.GetDamageRate();
+        hitForce = SkillData.GetHitForce();
+
     }
 
     public override void AnimationActivate()

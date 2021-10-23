@@ -7,9 +7,13 @@ public abstract class PlayerSkill : Skill
     public enum SkillID { Dusting, Dehydration, FairysWings, Sweeping, CleaningWind, RefreshingLeapForward };
     public SkillID ID = SkillID.Dusting;
 
+    
+
     // ¿€µø ≈∞
     protected string SkillSlotDependency = 1.ToString();
     public string GetSkillSlotDependency() { return SkillSlotDependency; }
+
+
 
     //public List<SkillEffectController> effectController;
 

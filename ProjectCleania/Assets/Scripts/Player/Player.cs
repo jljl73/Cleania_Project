@@ -30,6 +30,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Revive()
+    {
+        animator.SetTrigger("Revive");
+    }
+
     void RunDieAnimation()
     {
         animator.SetTrigger("Die");
@@ -45,12 +50,12 @@ public class Player : MonoBehaviour
         playerMove.StopMoving();
     }
 
-    public void DoSkill(int index)
+    public void PlaySkill(int index)
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
             && !animator.IsInTransition(0))
         {
-            playerSkillManager.InputListener(index);
+            playerSkillManager.PlaySkill(index);
         }
     }
 

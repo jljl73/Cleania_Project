@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HighDustySkill1 : Skill
+public class HighDustySkill1 : EnemySkill
 {
     public float DamageScale = 10;
 
     //Collider col
     AbilityStatus myAbility;
     public GameObject DustBall;
-    public Enemy enemy;
+    // public Enemy enemy;
 
     int skillCount = 0;
 
@@ -21,6 +21,8 @@ public class HighDustySkill1 : Skill
 
     public override void AnimationActivate()
     {
+        animator.SetBool("OnSkill", true);
+        animator.SetTrigger("ThrowingDust");
     }
 
     override public void Activate()
@@ -39,5 +41,6 @@ public class HighDustySkill1 : Skill
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkill", false);
     }
 }

@@ -3,31 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerSkillManager : MonoBehaviour
+public class PlayerSkillManager : BaseSkillManager
 {
     Player player;
-    //public StateMachine stateMachine;
-    AbilityStatus abilityStatus;
-
-    PlayerSkill[] skills = new PlayerSkill[6];
     Dictionary<string, int> skillSlotDependencyDict = new Dictionary<string, int>();
-    float[] coolTimePassed = new float[6];
-    bool[] skillAvailable = new bool[6];
+    #region
+    //public StateMachine stateMachine;
+    //AbilityStatus abilityStatus;
 
-    float[] CoolTimePassedRatio = new float[6];
+    //Skill[] skills = new Skill[6];
+    //float[] coolTimePassed = new float[6];
+    //bool[] skillAvailable = new bool[6];
 
-    public float GetCoolTimePassedRatio(int idx) { return CoolTimePassedRatio[idx]; }
+    //float[] CoolTimePassedRatio = new float[6];
+
+    //public float GetCoolTimePassedRatio(int idx) { return CoolTimePassedRatio[idx]; }
+    #endregion
 
     SkillStorage skillStorage;
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         player = transform.parent.GetComponent<Player>();
-        abilityStatus = player.abilityStatus;
+        // abilityStatus = player.abilityStatus;
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
 
         SetskillSlotDependencyDict();
@@ -43,17 +47,17 @@ public class PlayerSkillManager : MonoBehaviour
         player.OnDead += DeactivateAllSkill;
     }
 
-    void DeactivateAllSkill()
-    {
-        foreach (PlayerSkill skill in skills)
-        {
-            skill.Deactivate();
-            for (int i = 0; i < skill.effectController.Count; i++)
-            {
-                skill.StopEffects(i);
-            }
-        }
-    }
+    //void DeactivateAllSkill()
+    //{
+    //    foreach (Skill skill in skills)
+    //    {
+    //        skill.Deactivate();
+    //        for (int i = 0; i < skill.effectController.Count; i++)
+    //        {
+    //            skill.StopEffects(i);
+    //        }
+    //    }
+    //}
 
     void SetskillSlotDependencyDict()
     {
@@ -65,39 +69,40 @@ public class PlayerSkillManager : MonoBehaviour
         skillSlotDependencyDict.Add("R", 5);
     }
 
-    void Update()
-    {
-        UpdateCoolTime();
-    }
+    #region
+    //void Update()
+    //{
+    //    UpdateCoolTime();
+    //}
 
-    void UpdateCoolTime()
-    {
-        for (int i = 0; i < coolTimePassed.Length; i++)
-        {
-            // 쿨타임 업데이트
-            coolTimePassed[i] += Time.deltaTime;
+    //void UpdateCoolTime()
+    //{
+    //    for (int i = 0; i < coolTimePassed.Length; i++)
+    //    {
+    //        // 쿨타임 업데이트
+    //        coolTimePassed[i] += Time.deltaTime;
 
-            if (skills[i].GetCoolTime() < 0.01f)
-                CoolTimePassedRatio[i] = 1f;
-            else
-                CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime();
+    //        if (skills[i].GetCoolTime() < 0.01f)
+    //            CoolTimePassedRatio[i] = 1f;
+    //        else
+    //            CoolTimePassedRatio[i] = coolTimePassed[i] / skills[i].GetCoolTime();
 
-            // 업데이트가 됬으면 스킬 가능 설정
-            if (CoolTimePassedRatio[i] >= 1f)
-            {
-                CoolTimePassedRatio[i] = 1f;
-                skillAvailable[i] = true;
-            }
-        }
-    }
+    //        // 업데이트가 됬으면 스킬 가능 설정
+    //        if (CoolTimePassedRatio[i] >= 1f)
+    //        {
+    //            CoolTimePassedRatio[i] = 1f;
+    //            skillAvailable[i] = true;
+    //        }
+    //    }
+    //}
 
-    void ResetSkill(int index)
-    {
-        coolTimePassed[index] = 0f;
-        skillAvailable[index] = false;
-    }
-    
-    public void InputListener(int index)
+    //void ResetSkill(int index)
+    //{
+    //    coolTimePassed[index] = 0f;
+    //    skillAvailable[index] = false;
+    //}
+    #endregion
+    public override void PlaySkill(int index)
     {
         if (!skillAvailable[index]) return;
 
@@ -111,6 +116,7 @@ public class PlayerSkillManager : MonoBehaviour
         ResetSkill(index);
     }
 
+    #region
     //public void ActivateSkillEffect(int index)
     //{
     //    for (int i = 0; i < skills[index].effectController.Count; i++)
@@ -119,38 +125,38 @@ public class PlayerSkillManager : MonoBehaviour
     //    }
     //}
 
-    public void ActivateSkillEffect(AnimationEvent myEvent)
-    {
-        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+    //public void ActivateSkillEffect(AnimationEvent myEvent)
+    //{
+    //    SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
-        if (skillEffectIndexSet != null)
-            skills[skillEffectIndexSet.GetSkillIndex()].PlayEffects(skillEffectIndexSet.GetEffectIndex());
-        else
-        {
-            for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
-            {
-                skills[myEvent.intParameter].PlayEffects(i);
-            }
-        }
-    }
+    //    // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
+    //    if (skillEffectIndexSet != null)
+    //        skills[skillEffectIndexSet.GetSkillIndex()].PlayEffects(skillEffectIndexSet.GetEffectIndex());
+    //    else
+    //    {
+    //        for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
+    //        {
+    //            skills[myEvent.intParameter].PlayEffects(i);
+    //        }
+    //    }
+    //}
 
-    public void DeactivateSkillEffect(AnimationEvent myEvent)
-    {
-        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+    //public void DeactivateSkillEffect(AnimationEvent myEvent)
+    //{
+    //    SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
-        if (skillEffectIndexSet != null)
-            skills[skillEffectIndexSet.GetSkillIndex()].StopEffects(skillEffectIndexSet.GetEffectIndex());
-        else
-        {
-            for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
-            {
-                skills[myEvent.intParameter].StopEffects(i);
-            }
-        }
+    //    // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
+    //    if (skillEffectIndexSet != null)
+    //        skills[skillEffectIndexSet.GetSkillIndex()].StopEffects(skillEffectIndexSet.GetEffectIndex());
+    //    else
+    //    {
+    //        for (int i = 0; i < skills[myEvent.intParameter].effectController.Count; i++)
+    //        {
+    //            skills[myEvent.intParameter].StopEffects(i);
+    //        }
+    //    }
 
-    }
+    //}
 
     //public void DeactivateSkillEffect(int index)
     //{
@@ -159,6 +165,7 @@ public class PlayerSkillManager : MonoBehaviour
     //        skills[index].StopEffects(i);
     //    }
     //}
+    #endregion
 
     public void ActivateSkill(AnimationEvent myEvent)
     {
@@ -181,7 +188,7 @@ public class PlayerSkillManager : MonoBehaviour
         // abilityStatus.ConsumeMP(skills[index].ConsumMP);
     }
 
-    public void DeactivateSkill(int index)
+    public override void DeactivateSkill(int index)
     {
         player.stateMachine.Transition(StateMachine.enumState.Idle);
         skills[index].Deactivate();
@@ -195,26 +202,14 @@ public class PlayerSkillManager : MonoBehaviour
     public void ChangeSkill(string skillSlot, PlayerSkill.SkillID skillNameEnum)
     {
         PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
-        if (playerSkill is PlayerSkillDehydration)
-        {
-            //print("playerSkill is PlayerSkillDehydration");
-            //print("dependency: playerSkill.GetSkillSlotDependency(): " + playerSkill.GetSkillSlotDependency());
-            //print("skillSlot: " + skillSlot);
-        }
-
-
-
 
         if (playerSkill.GetSkillSlotDependency() != skillSlot)
             return;
 
-        //print("skillSlot: " + skillSlot);
-        //print("skillSlotDependencyDict[skillSlot]: " + skillSlotDependencyDict[skillSlot]);
-
         skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
     }
 
-    void SetDefaultSkillSetting()
+    protected override void SetDefaultSkillSetting()
     {
         ChangeSkill("1", PlayerSkill.SkillID.FairysWings);
         ChangeSkill("2", PlayerSkill.SkillID.Sweeping);
@@ -222,13 +217,5 @@ public class PlayerSkillManager : MonoBehaviour
         ChangeSkill("4", PlayerSkill.SkillID.RefreshingLeapForward);
         ChangeSkill("C", PlayerSkill.SkillID.Dusting);
         ChangeSkill("R", PlayerSkill.SkillID.Dehydration);
-
-        //for (int i = 0; i < skills.Length; i++)
-        //{
-        //    if (skills[i] == null)
-        //        Debug.Log(string.Format("skills {0} == null", i));
-        //    else
-        //        Debug.Log(string.Format("skills {0} != null", i));
-        //}
     }
 }
