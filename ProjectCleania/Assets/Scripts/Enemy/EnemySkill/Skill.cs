@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Skill : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public abstract class Skill : MonoBehaviour
     {
         // isAttacking = false;
     }
+
+    public UnityAction OnAnimationActivate;
 
     public virtual void Activate() { }
     public virtual void Activate(int dependedEffectIdx = 0) { }

@@ -22,11 +22,16 @@ public class PlayerSkillManager : BaseSkillManager
 
     SkillStorage skillStorage;
 
+    public delegate void delegateEvent(int index);
+    public event delegateEvent SkillEvent;
+
     new void Awake()
     {
         base.Awake();
         player = transform.parent.GetComponent<Player>();
         // abilityStatus = player.abilityStatus;
+
+        SkillEvent += PlaySkill;
     }
 
     new void Start()
@@ -58,6 +63,15 @@ public class PlayerSkillManager : BaseSkillManager
     //        }
     //    }
     //}
+
+    protected new bool isSkillAvailable()
+    {
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) 
+                && !animator.IsInTransition(0))
+            return true;
+        else
+            return false;
+    }
 
     void SetskillSlotDependencyDict()
     {
@@ -105,6 +119,8 @@ public class PlayerSkillManager : BaseSkillManager
     public override void PlaySkill(int index)
     {
         if (!skillAvailable[index]) return;
+
+        if (!isSkillAvailable()) return;
 
         // MP가 없으면 실행 불가
         if (!abilityStatus.ConsumeMP(skills[index].GetConsumMP()))

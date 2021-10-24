@@ -64,11 +64,11 @@ public class ReaperSkill1 : EnemySkill
 
         newEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            newEnemy = Instantiate(normalDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
-            newEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
-        }
+        //for (int i = 0; i < 3; ++i)
+        //{
+        //    newEnemy = Instantiate(normalDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
+        //    newEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
+        //}
     }
 
 

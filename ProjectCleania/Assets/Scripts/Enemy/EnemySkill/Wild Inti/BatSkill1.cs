@@ -11,15 +11,17 @@ public class BatSkill1 : Skill
     Collider col;
     Enemy enemy;
 
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         enemy = transform.parent.parent.GetComponent<Enemy>();
         col = GetComponent<Collider>();
     }
 
     public override void AnimationActivate()
     {
-        animator.SetTrigger("Attack Bite");
+        animator.SetBool("OnSkill", true);
+        animator.SetTrigger("Spear");
         //animator.SetInteger("Skill", 1);
     }
 
@@ -39,6 +41,7 @@ public class BatSkill1 : Skill
     public override void Deactivate()
     {
         col.enabled = false;
+        animator.SetBool("OnSkill", false);
     }
 
 }

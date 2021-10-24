@@ -125,11 +125,24 @@ public class BaseSkillManager : MonoBehaviour
         }
     }
 
+    //public virtual void ForcePlaySkill(int index)
+    //{
+    //    // 모든 진행중인 스킬 끈 후 IDle로 전환
+    //    DeactivateAllSkill();
+    //    animator.SetBool("OnSkill", false);
+
+    //    // 스킬 실행
+    //    skills[index].AnimationActivate();
+    //    ResetSkill(index);
+    //}
+
     public virtual void PlaySkill(int index)
     {
+        print("0");
         if (!isSkillAvailable()) return;
+        print("1");
         if (!skillAvailable[index]) return;
-
+        print("2");
         skills[index].AnimationActivate();
         ResetSkill(index);
     }
@@ -194,9 +207,10 @@ public class BaseSkillManager : MonoBehaviour
         skillAvailable[index] = false;
     }
 
-    protected bool isSkillAvailable()
+    public bool isSkillAvailable()
     {
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) && !animator.IsInTransition(0))
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) && !animator.IsInTransition(0))
             return true;
         else
             return false;

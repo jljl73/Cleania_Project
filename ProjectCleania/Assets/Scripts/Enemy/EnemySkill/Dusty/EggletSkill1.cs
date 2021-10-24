@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class EggletSkill1 : EnemySkill
 {
-    public float DamageScale = 10;
+    float DamageScale = 0;
+
+    [SerializeField]
+    EnemySkillSO skillData;
 
     Collider col;
     // Enemy enemy;
+
+    private new void Awake()
+    {
+        base.Awake();
+        UpdateSkillData();
+    }
 
     private new void Start()
     {
@@ -17,9 +26,22 @@ public class EggletSkill1 : EnemySkill
         // enemy = transform.parent.parent.GetComponent<Enemy>();
     }
 
+    public void UpdateSkillData()
+    {
+        SkillName = skillData.GetSkillName();
+        SkillDetails = skillData.GetSkillDetails();
+        CoolTime = skillData.GetCoolTime();
+        CreatedMP = skillData.GetCreatedMP();
+        ConsumMP = skillData.GetConsumMP();
+        SpeedMultiplier = skillData.GetSpeedMultiplier();
+
+        DamageScale = skillData.GetDamageRate();
+    }
+
     public override void AnimationActivate()
     {
-        // col.enabled = true;
+        animator.SetBool("OnSkill", true);
+        animator.SetTrigger("HittingByBody");
     }
 
     override public void Activate()
@@ -38,5 +60,6 @@ public class EggletSkill1 : EnemySkill
     public override void Deactivate()
     {
         col.enabled = false;
+        animator.SetBool("OnSkill", false);
     }
 }

@@ -9,12 +9,15 @@ public class EnemyMove : MonoBehaviour
     NavMeshAgent nav;
     StateMachine stateMachine;
     Animator animator;
-    GameObject targetObject = null;
-    Vector3 targetPosition;
+    // GameObject TargetObject = null;
+    public GameObject TargetObject { get; private set; }
+    public Vector3 TargetPosition { get; private set; }
 
     public float SupposedSmallestEnemySize = 0.1f;
 
-    bool isRunAway;
+    bool isRunAway = false;
+    bool isStopMoving = false;
+    bool isOnlyChasePositionMode = false;
 
     void Start()
     {
@@ -27,7 +30,7 @@ public class EnemyMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (targetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
+        if (TargetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
 
         // Nav 우선순위 선정
         SetNavAvoidancePriority();
@@ -40,8 +43,11 @@ public class EnemyMove : MonoBehaviour
         else
             nav.isStopped = true;
 
+        // print("dist in enemyMove : " + Vector3.Distance(TargetPosition, transform.position));
+        // print("Magnitude in enemyMove : " + Vector3.Magnitude(TargetPosition - transform.position));
+
         AccelerateRotation();
-        nav.SetDestination(targetPosition);
+        nav.SetDestination(TargetPosition);
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
     }
 
@@ -51,9 +57,9 @@ public class EnemyMove : MonoBehaviour
 
         if (isRunAway)
             avoidancePriority = 0;
-        else if (targetObject != null)
+        else if (TargetObject != null)
         {
-            avoidancePriority = (int)(Vector3.Distance(transform.position, targetObject.transform.position) / SupposedSmallestEnemySize);
+            avoidancePriority = (int)(Vector3.Distance(transform.position, TargetObject.transform.position) / SupposedSmallestEnemySize);
             if (avoidancePriority == 0)
                 avoidancePriority = 1;
             if (avoidancePriority >= 99)
@@ -71,9 +77,9 @@ public class EnemyMove : MonoBehaviour
         Vector3 rotateForward; //= Vector3.zero;
 
         if (!isRunAway)
-            rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+            rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
         else
-            rotateForward = Vector3.Normalize(targetPosition - transform.position);
+            rotateForward = Vector3.Normalize(TargetPosition - transform.position);
 
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
         Vector3 limit = Vector3.Slerp(transform.forward, rotateForward, 
@@ -84,35 +90,73 @@ public class EnemyMove : MonoBehaviour
 
     public void SetTarget(GameObject target)
     {
-        targetObject = target;
+        TargetObject = target;
     }
 
     public void ReleaseTarget()
     {
-        targetObject = null;
+        TargetObject = null;
         stateMachine.Transition(StateMachine.enumState.Idle);
     }
 
     public void RunAway()
     {
-        if (targetObject == null) return;
-
-        
+        if (TargetObject == null) return;
 
         animator.SetBool("OnSkill", false);
         isRunAway = true;
 
-        Vector3 MoveAwayDistVector = (transform.position - targetObject.transform.position) * 3;
-        targetPosition = transform.position + MoveAwayDistVector;
+        Vector3 MoveAwayDistVector = (transform.position - TargetObject.transform.position) * 3;
+        TargetPosition = transform.position + MoveAwayDistVector;
 
-        // targetPosition = (transform.position - targetObject.transform.position) * 3;
-        // targetPosition += transform.position;
+        // TargetPosition = (transform.position - TargetObject.transform.position) * 3;
+        // TargetPosition += transform.position;
         Invoke("StopRunAway", 5.0f);
     }
 
     void StopRunAway()
     {
         isRunAway = false;
+    }
+
+    public void SetOnlyChasePositionMode(bool value, Vector3 targetPose)
+    {
+        if (value)
+        {
+            isOnlyChasePositionMode = true;
+            TargetPosition = targetPose;
+            nav.stoppingDistance = 0f;
+        }
+        else
+        {
+            isOnlyChasePositionMode = false;
+            SetTargetPose();
+            nav.stoppingDistance = 2f;
+        }
+    }
+
+    void SetTargetPose()
+    {
+        if (isOnlyChasePositionMode)
+            return;
+
+        if (TargetObject != null && !isStopMoving)
+            TargetPosition = TargetObject.transform.position;
+    }
+
+    public void StopMoving(bool value)
+    {
+        if (value)
+        {
+            isStopMoving = true;
+            TargetPosition = transform.position;
+        }
+        else
+        {
+            isStopMoving = false;
+            SetTargetPose();
+        }
+        
     }
 
     public void WarpToPosition(Vector3 target)
@@ -124,8 +168,7 @@ public class EnemyMove : MonoBehaviour
     {
         while(true)
         {
-            if(targetObject !=null)
-                targetPosition = targetObject.transform.position;
+            SetTargetPose();
 
             yield return new WaitForSeconds(Random.Range(4.0f, 6.0f));
         }
@@ -134,16 +177,16 @@ public class EnemyMove : MonoBehaviour
     private void Rotate()
     {
         Vector3 rotateForward = Vector3.zero;
-        //if (targetObject == null) return;
+        //if (TargetObject == null) return;
 
         
 
         // 타겟 유무에 따른 회전 벡터 결정
-        // rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+        // rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
         if (!isRunAway)
-            rotateForward = Vector3.Normalize(targetObject.transform.position - transform.position);
+            rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
         else
-            rotateForward = Vector3.Normalize(targetPosition - transform.position);
+            rotateForward = Vector3.Normalize(TargetPosition - transform.position);
 
         // 목표 회전 벡터 결정
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
@@ -156,6 +199,6 @@ public class EnemyMove : MonoBehaviour
 
     public bool ExistTarget()
     {
-        return targetObject != null;
+        return TargetObject != null;
     }
 }

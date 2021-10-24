@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         playerMove.StopMoving();
     }
 
+
     public void PlaySkill(int index)
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))

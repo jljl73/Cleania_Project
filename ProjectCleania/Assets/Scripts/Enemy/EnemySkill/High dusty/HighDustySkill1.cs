@@ -28,7 +28,7 @@ public class HighDustySkill1 : EnemySkill
     override public void Activate()
     {
         GameObject ball = Instantiate(DustBall, transform.position, transform.rotation);
-        ball.GetComponent<HighDusty_DustBall>().owner = enemy.gameObject;
+        ball.GetComponent<HighDusty_DustBall>().Owner = enemy.gameObject;
         ball.GetComponent<HighDusty_DustBall>().DamageScale = DamageScale;
         ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up / 2) * 200.0f);
 

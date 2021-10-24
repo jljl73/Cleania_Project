@@ -2,28 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatSkill2 : Skill
+public class BatSkill2 : EnemySkill
 {
     public AbilityStatus myAbility;
     EnemyChase parentEnemyChase;
 
-    private void Start()
+    public GameObject DivisionObject;
+
+    private new void Start()
     {
+        base.Start();
         myAbility = transform.parent.parent.GetComponent<Enemy>().abilityStatus;
         parentEnemyChase = transform.parent.parent.GetComponentInChildren<EnemyChase>();
     }
 
     public override void AnimationActivate()
     {
-        animator.SetTrigger("Attack Soundwave");
+        // animator.SetTrigger("Attack Soundwave");
     }
 
     override public void Activate()
     {
         if (Random.Range(0, 2) == 0) return;
 
-        GameObject bat1 = Instantiate(transform.parent.parent.gameObject);
-        GameObject bat2 = Instantiate(transform.parent.parent.gameObject);
+        GameObject bat1 = Instantiate(DivisionObject);
+        GameObject bat2 = Instantiate(DivisionObject);
 
         bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
         bat2.transform.Translate(-bat1.transform.right * bat2.transform.localScale.x);
