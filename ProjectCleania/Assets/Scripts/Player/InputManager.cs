@@ -19,7 +19,13 @@ public class InputManager : MonoBehaviour
 
         // 죽으면 플레이어 입력 불가
         if (player.abilityStatus.HP == 0)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                player.Revive();
+            }
             return;
+        }
 
         // 마우스 >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
@@ -32,27 +38,28 @@ public class InputManager : MonoBehaviour
         // 키보드 >>>>>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            player.DoSkill(0);
+            player.PlaySkill(0);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            player.DoSkill(1);
+            player.PlaySkill(1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            player.DoSkill(2);
+            player.PlaySkill(2);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            player.DoSkill(3);
+            player.PlaySkill(3);
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
-            player.DoSkill(4);
+            player.PlaySkill(4);
+            print("C downed");
         }
         if (Input.GetMouseButton(1))
         {
-            player.DoSkill(5);
+            player.PlaySkill(5);
         }
         // 키보드 <<<<<
     }

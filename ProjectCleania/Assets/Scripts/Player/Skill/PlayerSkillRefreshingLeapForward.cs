@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerSkillRefreshingLeapForward : PlayerSkill
 {
@@ -44,6 +45,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     Ray ray;
     RaycastHit hit;
     CapsuleCollider attackArea;
+
+    
 
     private void Awake()
     {
@@ -99,6 +102,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         animator.SetBool("OnSkill4", true);
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
+
         playerMovement.JumpForward(jumpDistance);
     }
 

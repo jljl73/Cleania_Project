@@ -14,6 +14,11 @@ public class EnemySkillStorage : MonoBehaviour
     Enemy myEnemy;
     public int SpecialSkillCount = 4;
 
+    public EnemySkill GetInherentSkill(int idx)
+    {
+        return InherentSkillList[idx];
+    }
+
     //Dictionary<EnemySkill.SkillID, EnemySkill> skillDictionary;
     //public EnemySkill GetSkill(EnemySkill.SkillID skillNameEnum)
     //{

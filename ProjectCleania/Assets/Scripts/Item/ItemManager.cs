@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     List<GameObject> items = new List<GameObject>();
-
+    
     private void Update()
     {
         //if(Input.GetKeyDown(KeyCode.I))
