@@ -10,10 +10,10 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         MainWeapon,
         SubWeapon,
         Hat,
-        Top,
+        Chest,
         Pants,
-        Gloves,
-        Shoes,
+        Hands,
+        Boots,
         EnumTotal
     }
 

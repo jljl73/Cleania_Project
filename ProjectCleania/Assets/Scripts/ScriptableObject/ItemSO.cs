@@ -14,17 +14,17 @@ public class ItemSO : ScriptableObject
 
     public enum enumSubCategory
     {
-        Broom = 101,
-        Head = 301,
+        Weapon = 101,
+        Hat = 301,
         Chest = 302,
-        Leg = 303,
-        Hand = 304,
-        Foot = 305,
-        Jewwl = 777,
+        Pants = 303,
+        Hands = 304,
+        Boots = 305,
+        Jewel = 777,
 
         Quest = 666,
 
-        Null = 999,
+        Etc = 999,
     }
 
     public enum enumRank
