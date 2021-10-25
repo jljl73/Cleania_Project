@@ -41,7 +41,7 @@ public class ItemController : MonoBehaviour
     {
         UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         // 변수 초기화
-        _itemInventory = uiManager.ItemPanel.GetComponent<ItemInventory>(); 
+        _itemInventory = uiManager.InventoryPanel.GetComponent<ItemInventory>(); 
         // 다른 방법은 나중에
         _inventory = _itemInventory.transform.Find("Inventory").gameObject;
         _clicked = _itemInventory.transform.Find("Clicked").gameObject;
