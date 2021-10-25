@@ -7,13 +7,15 @@ using UnityEngine.EventSystems;
 
 public class NPC : MonoBehaviour
 {
-    public enum TYPE { Repair, Buy, Sell, Enchant, Storage };
+    public enum TYPE { None, Repair, Market, Enchant, Storage, Portal };
 
     public GameObject fieldName;
     public TextMesh textMesh;
 
     public TYPE npctype;
     public TYPE NPCType { get { return npctype; } }
+
+    public string Value;
 
     void Update()
     {

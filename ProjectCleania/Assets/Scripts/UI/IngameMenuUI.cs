@@ -9,20 +9,6 @@ public class IngameMenuUI : MonoBehaviour
 
     GameObject clickedPanel;
 
-    void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-        if (GameManager.Instance.menuManager != null)
-            GameManager.Instance.menuManager.SetNewMenuUI(this.gameObject);
-        else
-            this.gameObject.SetActive(false);
-    }
-
-    public void OnOffThisPanel()
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
-    }
-
     public void OnClickedExit()
     {
         exitPanel.SetActive(true);
@@ -62,5 +48,4 @@ public class IngameMenuUI : MonoBehaviour
         if(clickedPanel != null)
             clickedPanel.SetActive(false);
     }
-
 }

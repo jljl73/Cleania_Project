@@ -67,8 +67,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     public int NextXP;
     public float Durability;
 
-    Dictionary<Ability.Stat, float> _statics
-        = new Dictionary<Ability.Stat, float>();
+    Dictionary<Ability.Stat, float> _statics = new Dictionary<Ability.Stat, float>();
+
     Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _dynamics
         = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
 

@@ -9,6 +9,7 @@ public class CharacterSelect : MonoBehaviour
     public GameObject DeleteAskPanel;
     public GameObject DeletedPanel;
 
+    public string NextScene;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +80,6 @@ public class CharacterSelect : MonoBehaviour
 
     public void OnClick_ButtonStart()
     {
-        GameManager.Instance.ChangeScene("DirtyForest");
+        GameManager.Instance.ChangeScene(NextScene);
     }
 }

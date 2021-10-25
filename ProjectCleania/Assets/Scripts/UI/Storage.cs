@@ -15,6 +15,19 @@ public class Storage : MonoBehaviour
     List<int> filledSlots = new List<int>();
     List<int> tempSlots = new List<int>();
 
+    struct sItem
+    {
+        public int index;
+        public GameObject item;
+        public sItem(int index, GameObject item)
+        {
+            this.index = index;
+            this.item = item;
+        }
+    }
+
+    List<sItem> items = new List<sItem>();
+
     void Awake()
     {
         sizeSlots = slotParent.transform.childCount;
@@ -23,9 +36,9 @@ public class Storage : MonoBehaviour
             emptySlots.Add(i);
             slots[i] = slotParent.transform.GetChild(i).gameObject;
         }
+        gameObject.SetActive(false);
     }
 
-    
     bool isEmptySlot()
     {
         foreach (int i in tempSlots)
@@ -54,11 +67,13 @@ public class Storage : MonoBehaviour
             if (isEmptySlot())
             {
                 SetItemToSlot(i, height, width);
-                index = tempSlots[0];
+                items.Add(new sItem(tempSlots[0], item));
                 ChangeParent(item);
+
                 return slots[tempSlots[0]];
             }
         }
+
         index = -1;
         return null;
     }

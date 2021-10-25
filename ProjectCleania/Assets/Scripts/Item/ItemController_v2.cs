@@ -7,31 +7,31 @@ using UnityEngine.EventSystems;
 public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public int ItemCode = 1101001;
-
-    ItemInstance itemInstance;
-    ItemSO itemSO;
-
     public ItemSO.enumSubCategory subCat;
-
-    public int h = 2;
-    public int w = 1;
-    const float boxSize = 64;
-
     public static ItemController_v2 clickedItem;
 
-    public Vector3 prevPosition;
+    const float boxSize = 64;
+    //
+    ItemInstance itemInstance;
+    Vector3 prevPosition;
+    public int h = 2;
+    public int w = 1;
     int index = -1;
-    int state = 0;
+
+    UIManager uiManager;
 
     void Start()
     {
         itemInstance = ItemInstance.Instantiate(ItemCode);
+
         h = itemInstance.SO.GridSize.Height;
         w = itemInstance.SO.GridSize.Width;
         subCat = itemInstance.SO.SubCategory;
+        uiManager = GameManager.Instance.uiManager;
 
-        //임시
-        Invoke("StorageToInventory", 1.0f);
+        //
+        GameObject slot = uiManager.InventoryPanel.GetComponent<Storage>().Add(gameObject, out index);
+        MoveToSlot(slot);
     }
 
     void MoveToSlot(GameObject slot)
@@ -42,37 +42,40 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         prevPosition = position;
     }
 
-    // 인벤에서 창고로
-    void InventoryToStorage()
-    {
-        PullItemOut(GameManager.Instance.uiManager.ItemPanel.GetComponent<Storage>());
-        PutItemIn(GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>());
-    }
-    // 창고에서 인벤
-    void StorageToInventory()
-    {
-        PullItemOut(GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>());
-        PutItemIn(GameManager.Instance.uiManager.ItemPanel.GetComponent<Storage>());
-    }
-    
-    // 
-    void PutItemIn(Storage storage)
-    {
-        GameObject slot = storage.Add(this.gameObject, out index);
-        if (slot == null) return;
-        Debug.Log(slot.name);
-        MoveToSlot(slot);
-    }
+    // 인벤에서 창고로 옮길때
+    //void InventoryToStorage()
+    //{
+    //    PullItemOut(uiManager.InventoryPanel.GetComponent<Storage>());
+    //    PutItemIn(uiManager.StoragePanel.GetComponent<Storage>());
+    //}
 
-    void PullItemOut(Storage storage)
-    {
-        if(index != -1)
-            storage.Remove(index, h, w);
-    }
+    //// 창고에서 인벤 옮길때
+    //void StorageToInventory()
+    //{
+    //    PullItemOut(uiManager.StoragePanel.GetComponent<Storage>());
+    //    PutItemIn(uiManager.InventoryPanel.GetComponent<Storage>());
+    //}
+
+    //// 
+    //void PutItemIn(Storage storage)
+    //{
+    //    GameObject slot = storage.Add(this.gameObject, out index);
+    //    if (slot == null) return;
+    //    Debug.Log(slot.name);
+    //    MoveToSlot(slot);
+    //}
+
+    //void PullItemOut(Storage storage)
+    //{
+    //    if(index != -1)
+    //        storage.Remove(index, h, w);
+    //}
+
 
     //
     // 이벤트 리스너
     //
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
@@ -101,29 +104,17 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
             if (results[i].gameObject.tag == "Slot")
             {
                 MoveToSlot(results[i].gameObject);
-                break;
+                return;
             }
-            else if (results[i].gameObject.tag == "Panel")
-                transform.position = prevPosition;
         }
+        transform.position = prevPosition;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
 
-        
-
-        switch (state)
-        {
-            case 0:
-                InventoryToStorage();
-                state = 1;
-                break;
-            case 1:
-                StorageToInventory();
-                state = 0;
-                break;
-        }
+        clickedItem = this;
+        GameManager.Instance.npcManager.Dosmth(gameObject);
     }
 }
