@@ -5,13 +5,15 @@ using UnityEngine;
 public class DustySkillSuicide : EnemySkill
 {
     float damageScale = 10;
-
     float angryDuration = 3;
-    Collider bombCollider;
-
     float skillTriggerPercentage = 0.5f;
 
+    Collider bombCollider;
+
     bool isFlying = false;
+
+    [SerializeField]
+    DustySuicideSO skillData;
 
     private new void Awake()
     {
@@ -23,6 +25,23 @@ public class DustySkillSuicide : EnemySkill
         }
         else
             bombCollider.enabled = false;
+    }
+
+    public void UpdateSkillData()
+    {
+        if (skillData == null)
+            throw new System.Exception("BatSkill1 no skillData");
+
+        SkillName = skillData.GetSkillName();
+        SkillDetails = skillData.GetSkillDetails();
+        CoolTime = skillData.GetCoolTime();
+        CreatedMP = skillData.GetCreatedMP();
+        ConsumMP = skillData.GetConsumMP();
+        SpeedMultiplier = skillData.GetSpeedMultiplier();
+
+        damageScale = skillData.GetDamageRate();
+        skillTriggerPercentage = skillData.GetTriggerChance();
+        angryDuration = skillData.GetAngryDuration();
     }
 
     private void Update()

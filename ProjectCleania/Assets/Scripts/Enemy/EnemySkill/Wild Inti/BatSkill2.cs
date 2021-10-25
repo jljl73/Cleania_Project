@@ -1,19 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BatSkill2 : EnemySkill
 {
     public AbilityStatus myAbility;
     EnemyChase parentEnemyChase;
 
+    float triggerChance;
+    int divisionCount;
+    float SummonRange;
+
     public GameObject DivisionObject;
+
+    [SerializeField]
+    DivisionSO skillData;
 
     private new void Start()
     {
         base.Start();
         myAbility = transform.parent.parent.GetComponent<Enemy>().abilityStatus;
         parentEnemyChase = transform.parent.parent.GetComponentInChildren<EnemyChase>();
+
+        UpdateSkillData();
+    }
+
+    public void UpdateSkillData()
+    {
+        if (skillData == null)
+            throw new System.Exception("BatSkill1 no skillData");
+
+        SkillName = skillData.GetSkillName();
+        SkillDetails = skillData.GetSkillDetails();
+        CoolTime = skillData.GetCoolTime();
+        CreatedMP = skillData.GetCreatedMP();
+        ConsumMP = skillData.GetConsumMP();
+        SpeedMultiplier = skillData.GetSpeedMultiplier();
+
+        triggerChance = skillData.GetTriggerChance();
+        SummonRange = skillData.GetSummonRange();
+        divisionCount = skillData.GetDividedCount();
+    }
+
+    Vector3 GetRandPosition(Vector3 center, float distance)
+    {
+        Vector3 randomPos = Random.insideUnitSphere * distance + center;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPos, out hit, distance, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+        return center;
     }
 
     public override void AnimationActivate()
@@ -23,19 +61,31 @@ public class BatSkill2 : EnemySkill
 
     override public void Activate()
     {
-        if (Random.Range(0, 2) == 0) return;
+        if (!(Random.Range(0f, 1f) <= triggerChance)) return;
 
-        GameObject bat1 = Instantiate(DivisionObject);
-        GameObject bat2 = Instantiate(DivisionObject);
+        print("분열 발동!");
 
-        bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
-        bat2.transform.Translate(-bat1.transform.right * bat2.transform.localScale.x);
+        for (int i = 0; i < divisionCount; i++)
+        {
+            GameObject bat1 = Instantiate(DivisionObject);
+            // bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
+            bat1.transform.position = GetRandPosition(transform.position, SummonRange);
+            bat1.transform.localScale *= 0.5f;
+            bat1.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
+            bat1.GetComponent<Enemy>().abilityStatus.FullHP();
+        }
 
-        bat1.transform.localScale *= 0.5f;
-        bat2.transform.localScale *= 0.5f;
+        //GameObject bat1 = Instantiate(DivisionObject);
+        //GameObject bat2 = Instantiate(DivisionObject);
 
-        bat1.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
-        bat2.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
+        //bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
+        //bat2.transform.Translate(-bat1.transform.right * bat2.transform.localScale.x);
+
+        //bat1.transform.localScale *= 0.5f;
+        //bat2.transform.localScale *= 0.5f;
+
+        //bat1.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
+        //bat2.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
 
         //Status bat1stat = bat1.GetComponent<Enemy>().status;
         //Status bat2stat = bat2.GetComponent<Enemy>().status;
@@ -61,8 +111,8 @@ public class BatSkill2 : EnemySkill
         //bat1stat.levelUpVitality = myStat.levelUpVitality / 2;
         //bat2stat.levelUpVitality = myStat.levelUpVitality / 2;
 
-        bat1.GetComponent<Enemy>().abilityStatus.FullHP();
-        bat2.GetComponent<Enemy>().abilityStatus.FullHP();
+        //bat1.GetComponent<Enemy>().abilityStatus.FullHP();
+        //bat2.GetComponent<Enemy>().abilityStatus.FullHP();
     }
 
     public override void Deactivate()

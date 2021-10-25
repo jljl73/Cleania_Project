@@ -50,6 +50,7 @@ MonoBehaviour:
   - {fileID: 6461262453403508038}
   myAbility: {fileID: 5182758185160883321}
   DivisionObject: {fileID: 4185383675751946793}
+  skillData: {fileID: 11400000, guid: 7af57f19671e311488eb14a44c40844b, type: 2}
 --- !u!114 &6461262453403508038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,9 +127,7 @@ MonoBehaviour:
   animator: {fileID: 4185383675751946794}
   effectController:
   - {fileID: 8839183043309329987}
-  DamageScale: 10
-  bloodChance: 0.3
-  bloodTime: 5
+  skillData: {fileID: 11400000, guid: ffd914dbb83be124dbeee2e118c6fd8f, type: 2}
 --- !u!114 &8839183043309329987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +158,7 @@ GameObject:
   - component: {fileID: 6443105551693911329}
   - component: {fileID: 338930018133428618}
   m_Layer: 6
-  m_Name: Wild Inti
+  m_Name: Enemy_Wild Inti
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

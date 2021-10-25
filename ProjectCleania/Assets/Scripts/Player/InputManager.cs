@@ -52,9 +52,10 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(3);
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
             player.PlaySkill(4);
+            print("C downed");
         }
         if (Input.GetMouseButton(1))
         {

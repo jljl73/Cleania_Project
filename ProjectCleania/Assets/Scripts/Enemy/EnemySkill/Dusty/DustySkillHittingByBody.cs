@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DustySkillHittingByBody : EnemySkill
 {
-    float DamageScale = 0;
+    float damageScale = 0;
 
     [SerializeField]
     EnemySkillSO skillData;
@@ -28,6 +28,9 @@ public class DustySkillHittingByBody : EnemySkill
 
     public void UpdateSkillData()
     {
+        if (skillData == null)
+            throw new System.Exception("BatSkill1 no skillData");
+
         SkillName = skillData.GetSkillName();
         SkillDetails = skillData.GetSkillDetails();
         CoolTime = skillData.GetCoolTime();
@@ -35,7 +38,7 @@ public class DustySkillHittingByBody : EnemySkill
         ConsumMP = skillData.GetConsumMP();
         SpeedMultiplier = skillData.GetSpeedMultiplier();
 
-        DamageScale = skillData.GetDamageRate();
+        damageScale = skillData.GetDamageRate();
     }
 
     public override void AnimationActivate()
@@ -53,7 +56,7 @@ public class DustySkillHittingByBody : EnemySkill
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
+            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, damageScale);
         }
     }
 

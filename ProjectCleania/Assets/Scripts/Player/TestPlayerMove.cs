@@ -38,7 +38,7 @@ public class TestPlayerMove : MonoBehaviour
 
         if (!isOrderedToMove) return;
 
-        if (Vector3.Distance(targetPos, transform.position) < 0.1f)
+        if (Vector3.Distance(targetPos, transform.position) < 0.2f)
         {
             playerAnimator.SetBool("Walk", false);
             targetPos = transform.position;
