@@ -27,6 +27,7 @@ public class ParticleBase : MonoBehaviour
 
         ResetSetting();
         ChangeScale(Scale);
+
     }
 
     protected virtual void Start()
@@ -35,6 +36,7 @@ public class ParticleBase : MonoBehaviour
             ParticleObjectWithMR.enabled = false;
 
         ChangeScalingMode(ParticleSystemScalingMode.Local);
+        ParticleObject.SetActive(false);
     }
 
     private void ResetSetting()
@@ -81,6 +83,8 @@ public class ParticleBase : MonoBehaviour
 
     protected void PlayEffect()
     {
+        ParticleObject.SetActive(true);
+
         ChangeScale(Scale);
 
         if (ParticleObjectWithMR != null)
@@ -137,5 +141,7 @@ public class ParticleBase : MonoBehaviour
         {
             animator.enabled = false;
         }
+
+        ParticleObject.SetActive(false);
     }
 }

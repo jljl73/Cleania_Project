@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class PlayerSkill : Skill
 {
@@ -10,6 +11,8 @@ public abstract class PlayerSkill : Skill
     // ¿€µø ≈∞
     protected string SkillSlotDependency = 1.ToString();
     public string GetSkillSlotDependency() { return SkillSlotDependency; }
+
+
 
     //public List<SkillEffectController> effectController;
 

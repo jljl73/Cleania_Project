@@ -32,6 +32,7 @@ Transform:
   - {fileID: 7131567150333917512}
   - {fileID: 1130245542587216835}
   - {fileID: 9156710911405404127}
+  - {fileID: 2565410906078145413}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63,11 +64,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fbf0eab50ff35489feac18a3aa8dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   DamageScale: 0
   Ball: {fileID: 7690718378295579197}
   Pond: {fileID: 6806748710544713604}
-  BallHitTargetEffect: {fileID: 2969287969773774999, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+  BallHitTargetEffect: {fileID: 608704141585310915}
   BallHitGroundEffect: {fileID: 5951172878672553604}
 --- !u!1 &5074716212061962679
 GameObject:
@@ -147,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9156710911405404127
 Transform:
   m_ObjectHideFlags: 0
@@ -247,6 +247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_MST_B011_HZLY_02_1
       objectReference: {fileID: 0}
+    - target: {fileID: 181086, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 475174, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -293,11 +297,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19839756, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19841498, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19841498, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
@@ -317,11 +321,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19850046, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19899152, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19925254, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
       propertyPath: m_Materials.Array.size
@@ -351,6 +355,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 475174, guid: f8248e7acaae0ea478dd1470debd278e, type: 3}
   m_PrefabInstance: {fileID: 6695799036043702190}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6731444143790509939
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2112369569328965804}
+    m_Modifications:
+    - target: {fileID: 2969287969773774999, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_Name
+      value: Dusty Ball Hit Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131767413727046576, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: Scale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+--- !u!4 &2565410906078145413 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9147038892123694326, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+  m_PrefabInstance: {fileID: 6731444143790509939}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &608704141585310915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6131767413727046576, guid: 3fc92a134632f8f448c12ce035871bb1, type: 3}
+  m_PrefabInstance: {fileID: 6731444143790509939}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7562248666422594052
 PrefabInstance:
   m_ObjectHideFlags: 0
