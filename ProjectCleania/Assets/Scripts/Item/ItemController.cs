@@ -116,7 +116,7 @@ public class ItemController : MonoBehaviour
         {
             for (int j = 0; j < h; j++)
             {
-                GameObject slot = _itemInventory.GetSlotPosition(
+                GameObject slot = _itemInventory.GetSlot(
                     index + j * width + i);
                 if (slot && slot.GetComponent<ItemSlot>().IsActive == false)
                     tempSlots.Add(slot);
