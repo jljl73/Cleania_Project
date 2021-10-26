@@ -22,16 +22,11 @@ public class PlayerSkillManager : BaseSkillManager
 
     SkillStorage skillStorage;
 
-    public delegate void delegateEvent(int index);
-    public event delegateEvent SkillEvent;
-
     new void Awake()
     {
         base.Awake();
         player = transform.parent.GetComponent<Player>();
         // abilityStatus = player.abilityStatus;
-
-        SkillEvent += PlaySkill;
     }
 
     new void Start()
