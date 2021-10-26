@@ -128,6 +128,8 @@ public class PlayerSkillManager : BaseSkillManager
 
         if (index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
 
+        player.playerMove.ImmediateLookAtMouse();
+
         skills[index].AnimationActivate();
         ResetSkill(index);
     }
