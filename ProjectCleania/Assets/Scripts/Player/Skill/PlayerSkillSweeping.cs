@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerSkillSweeping : PlayerSkill
 {
     public PlayerSkillSweepingSO SkillData;
-    public AbilityStatus abilityStatus;
     float skillScale = 0.0f;
 
     CapsuleCollider col;
@@ -67,7 +66,7 @@ public class PlayerSkillSweeping : PlayerSkill
             // ±âÀý
             other.GetComponent<Enemy>().Stunned(true, stunTime);
 
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
                 other.GetComponent<Enemy>().Die();
             else
                 other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);

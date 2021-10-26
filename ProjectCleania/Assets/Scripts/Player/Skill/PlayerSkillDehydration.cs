@@ -6,7 +6,6 @@ public class PlayerSkillDehydration : PlayerSkill
 {
     public PlayerSkillDehydrationSO SkillData;
 
-    public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
 
     Collider attackArea;
@@ -68,7 +67,7 @@ public class PlayerSkillDehydration : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
                 other.GetComponent<Enemy>().Die();
         }
     }

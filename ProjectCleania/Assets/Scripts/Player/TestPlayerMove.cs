@@ -118,23 +118,6 @@ public class TestPlayerMove : MonoBehaviour
         targetPos = transform.position;
     }
 
-    //public void JumpForward(float value)
-    //{
-    //    float dist = value;
-    //    isOrderedToMove = true;
-    //    targetPos = transform.position + transform.forward * dist;
-    //}
-
-    public void LeapForwardSkillJumpForward()
-    {
-        print("LeapForwardSkillJumpForward!");
-        if (LeapForwardSkill == null)
-            throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
-        float dist = LeapForwardSkill.GetJumpDistance();
-        isOrderedToMove = true;
-        targetPos = transform.position + transform.forward * dist;
-    }
-
     void Targetting()
     {
         RaycastHit raycastHit;
@@ -156,17 +139,12 @@ public class TestPlayerMove : MonoBehaviour
         }
     }
 
-    public void immediateLookAt(Vector3 vec)
-    {
-        player.gameObject.transform.LookAt(vec);
-    }
-
     public void ImmediateLookAtMouse()
     {
         RaycastHit rayhitInfo;
         if (CanBeTriggerd("Ground", out rayhitInfo))
         {
-            player.playerMove.immediateLookAt(rayhitInfo.point);
+            player.gameObject.transform.LookAt(rayhitInfo.point);
         }
     }
 
@@ -186,10 +164,21 @@ public class TestPlayerMove : MonoBehaviour
         return result;
     }
 
-    private void OnTriggerStay(Collider other)
+
+    //public void JumpForward(float value)
+    //{
+    //    float dist = value;
+    //    isOrderedToMove = true;
+    //    targetPos = transform.position + transform.forward * dist;
+    //}
+
+    public void LeapForwardSkillJumpForward()
     {
-      
+        print("LeapForwardSkillJumpForward!");
+        if (LeapForwardSkill == null)
+            throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
+        float dist = LeapForwardSkill.GetJumpDistance();
+        isOrderedToMove = true;
+        targetPos = transform.position + transform.forward * dist;
     }
-
-
 }

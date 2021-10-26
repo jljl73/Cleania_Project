@@ -7,10 +7,10 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 {
     public PlayerSkillRefreshingLeapForwardSO SkillData;
 
-    public AbilityStatus abilityStatus;
+    //public AbilityStatus abilityStatus;
     // public float skillScale = 1.0f;
 
-    public TestPlayerMove playerMovement;
+    // public TestPlayerMove playerMovement;
 
     float jumpDistance = 7f;
     public float GetJumpDistance() { return jumpDistance; }
@@ -129,7 +129,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
             AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
             if (enemyAbil.HP != 0)
             {
-                enemyAbil.AttackedBy(abilityStatus, smashDamageRate);
+                enemyAbil.AttackedBy(OwnerAbilityStatus, smashDamageRate);
                 enemy.Stunned(true, stunTime);
             }
         }

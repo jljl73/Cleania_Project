@@ -7,7 +7,7 @@ public class BaseSkillManager : MonoBehaviour
     // public StateMachine stateMachine;
     public AbilityStatus abilityStatus;
     public Animator animator;
-    public Skill[] skills;              // 인스펙터에서 할당
+    protected Skill[] skills;              
     public int SkillSlotCount = 1;
     // Skill skill;
 
@@ -19,6 +19,7 @@ public class BaseSkillManager : MonoBehaviour
     protected virtual void Awake()
     {
         // abilityStatus = GetComponent<AbilityStatus>();
+        skills = new Skill[SkillSlotCount];
         coolTimePassed = new float[SkillSlotCount];
         skillAvailable = new bool[SkillSlotCount];
         CoolTimePassedRatio = new float[SkillSlotCount];

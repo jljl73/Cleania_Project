@@ -6,8 +6,10 @@ using UnityEngine.Events;
 public abstract class Skill : MonoBehaviour
 {
     public UnityEvent PlaySkillEvent;
+    // public UnityAction OnAnimationActivate;
 
     public Animator animator;
+    public AbilityStatus OwnerAbilityStatus;
 
     protected string SkillName;
     public string GetSkillName() { return SkillName; }
@@ -35,7 +37,6 @@ public abstract class Skill : MonoBehaviour
         // isAttacking = false;
     }
 
-    public UnityAction OnAnimationActivate;
 
     public virtual void Activate() { }
     public virtual void Activate(int dependedEffectIdx = 0) { }

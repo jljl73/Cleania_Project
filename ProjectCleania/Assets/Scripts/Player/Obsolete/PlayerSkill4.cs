@@ -8,7 +8,7 @@ public class PlayerSkill4 : PlayerSkill
     public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
 
-    public TestPlayerMove playerMovement;
+    // public TestPlayerMove playerMovement;
     public float jumpDistance = 7f;
 
     Ray ray;

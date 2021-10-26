@@ -11,6 +11,7 @@ public class PlayerSkillManager : BaseSkillManager
     public StateMachine playerStateMachine;
     public TestPlayerMove playerMove;
     public SkillStorage skillStorage;
+    // public Buffable buffable;
 
     Dictionary<string, int> skillSlotDependencyDict = new Dictionary<string, int>();
     #region
@@ -32,15 +33,21 @@ public class PlayerSkillManager : BaseSkillManager
         base.Awake();
 
         playerStateMachine = GetComponent<StateMachine>();
+        if (playerStateMachine == null)
+            throw new System.Exception("PlayerSkillManager doesnt have playerStateMachine");
+
         playerMove = GetComponent<TestPlayerMove>();
+        if (playerMove == null)
+            throw new System.Exception("PlayerSkillManager doesnt have playerMove");
+
+        skillStorage = GetComponentInChildren<SkillStorage>();
+        if (skillStorage == null)
+            throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
     }
 
     new void Start()
     {
         base.Start();
-
-        if (skillStorage == null)
-            throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
 
         SetskillSlotDependencyDict();
 
@@ -52,7 +59,7 @@ public class PlayerSkillManager : BaseSkillManager
             skillAvailable[i] = true;
         }
 
-        SkillConnect();
+        SkillEventConnect();
     }
 
     //void DeactivateAllSkill()
@@ -67,9 +74,9 @@ public class PlayerSkillManager : BaseSkillManager
     //    }
     //}
 
-    void SkillConnect()
+    void SkillEventConnect()
     {
-        skills[skillSlotDependencyDict["4"]].PlaySkillEvent.AddListener(playerMove.LeapForwardSkillJumpForward);
+        skillStorage.GetSkill(PlayerSkill.SkillID.RefreshingLeapForward).PlaySkillEvent.AddListener(playerMove.LeapForwardSkillJumpForward);
     }
 
 
@@ -234,6 +241,8 @@ public class PlayerSkillManager : BaseSkillManager
             return;
 
         skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
+        skills[skillSlotDependencyDict[skillSlot]].OwnerAbilityStatus = abilityStatus;
+        //skills[skillSlotDependencyDict[skillSlot]].
     }
 
     protected override void SetDefaultSkillSetting()
