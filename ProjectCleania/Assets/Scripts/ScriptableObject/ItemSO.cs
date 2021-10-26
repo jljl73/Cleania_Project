@@ -14,7 +14,8 @@ public class ItemSO : ScriptableObject
 
     public enum enumSubCategory
     {
-        Weapon = 101,
+        MainWeapon = 101,
+        SubWeapon = 201,
         Hat = 301,
         Chest = 302,
         Pants = 303,
