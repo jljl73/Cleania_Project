@@ -23,12 +23,16 @@ public class EquipmentDealer
         foreach (var keyval in equipment.DynamicProperties)
             equipment[keyval.Key] = float.NaN;
 
+        // add options again
         var optionTable = equipment.SO.OptionTable.DynamicTable;
 
         int count = 0;
-        while(count < number)
+        int limit = 100;
+        while(count < number && limit > 0)
         {
+            limit--;
             var option = optionTable[Random.Range(0, optionTable.Length)];
+
             if (!float.IsNaN(equipment[option.KeyStat, option.KeyHow]))
                 continue;
 
