@@ -78,6 +78,7 @@ public class Equipable : MonoBehaviour, iSavedData
         {
             ItemInstance_Equipment oldEquipment = _equipments[inType];
             _equipments[inType] = newEquipment;
+            //newEquipment.WoreBy = this;
 
             Refresh();
 
@@ -86,6 +87,7 @@ public class Equipable : MonoBehaviour, iSavedData
         else
         {
             _equipments[inType] = newEquipment;
+            //newEquipment.WoreBy = this;
 
             Refresh();
 
@@ -106,7 +108,10 @@ public class Equipable : MonoBehaviour, iSavedData
         _equipments[type] = null;
 
         if (oldEquipment != null)
+        {
+            //oldEquipment.WoreBy = null;
             Refresh();
+        }
 
         return oldEquipment;
     }
