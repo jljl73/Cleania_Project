@@ -46,8 +46,8 @@ public class PlayerSkillCleaningWindSO : ScriptableObject
     }
 
     [Header("작동 키")]
-    public string TriggerKey;
-    public string GetTriggerKey() { return TriggerKey; }
+    public KeyCode TriggerKey;
+    public KeyCode GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]

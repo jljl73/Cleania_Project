@@ -45,6 +45,8 @@ public class PlayerSkillDehydration : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         // animator.SetInteger("Skill", 6);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillR", true);

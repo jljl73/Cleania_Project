@@ -49,8 +49,11 @@ public class EnemySkillManager : BaseSkillManager
         {
             skills[i] = skillStorage.GetInherentSkill(i);
         }
+
+        base.SetDefaultSkillSetting();
     }
 
+    #region
     // public EnemyStateMachine stateMachine;
     // private AbilityStatus playerAbilityStatus;
 
@@ -114,5 +117,5 @@ public class EnemySkillManager : BaseSkillManager
     //    else
     //        return false;
     //}
-
+    #endregion
 }

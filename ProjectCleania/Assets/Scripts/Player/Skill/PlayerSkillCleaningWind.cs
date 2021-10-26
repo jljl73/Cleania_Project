@@ -72,6 +72,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         //animator.SetInteger("Skill", 3);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill3", true);

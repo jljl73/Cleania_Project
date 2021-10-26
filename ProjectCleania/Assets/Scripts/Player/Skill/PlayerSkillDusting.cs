@@ -45,6 +45,8 @@ public class PlayerSkillDusting : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillC", true);
         animator.SetTrigger("Dusting");

@@ -13,7 +13,7 @@ public class PlayerSkillManager : BaseSkillManager
     public SkillStorage skillStorage;
     // public Buffable buffable;
 
-    Dictionary<string, int> skillSlotDependencyDict = new Dictionary<string, int>();
+    Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
     //public StateMachine stateMachine;
     //AbilityStatus abilityStatus;
@@ -76,7 +76,7 @@ public class PlayerSkillManager : BaseSkillManager
 
     void SkillEventConnect()
     {
-        skillStorage.GetSkill(PlayerSkill.SkillID.RefreshingLeapForward).PlaySkillEvent.AddListener(playerMove.LeapForwardSkillJumpForward);
+        skillStorage.GetSkill(PlayerSkill.SkillID.RefreshingLeapForward).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
     }
 
 
@@ -91,12 +91,12 @@ public class PlayerSkillManager : BaseSkillManager
 
     void SetskillSlotDependencyDict()
     {
-        skillSlotDependencyDict.Add("1", 0);
-        skillSlotDependencyDict.Add("2", 1);
-        skillSlotDependencyDict.Add("3", 2);
-        skillSlotDependencyDict.Add("4", 3);
-        skillSlotDependencyDict.Add("C", 4);
-        skillSlotDependencyDict.Add("R", 5);
+        skillSlotDependencyDict.Add(KeyCode.Alpha1, 0);
+        skillSlotDependencyDict.Add(KeyCode.Alpha2, 1);
+        skillSlotDependencyDict.Add(KeyCode.Alpha3, 2);
+        skillSlotDependencyDict.Add(KeyCode.Alpha4, 3);
+        skillSlotDependencyDict.Add(KeyCode.C, 4);
+        skillSlotDependencyDict.Add(KeyCode.Mouse1, 5);
     }
 
     #region
@@ -233,7 +233,7 @@ public class PlayerSkillManager : BaseSkillManager
     //                                             New Code
     // ---------------------------------------------------------------------------------------------- //
 
-    public void ChangeSkill(string skillSlot, PlayerSkill.SkillID skillNameEnum)
+    public void ChangeSkill(KeyCode skillSlot, PlayerSkill.SkillID skillNameEnum)
     {
         PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
 
@@ -241,17 +241,19 @@ public class PlayerSkillManager : BaseSkillManager
             return;
 
         skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
-        skills[skillSlotDependencyDict[skillSlot]].OwnerAbilityStatus = abilityStatus;
-        //skills[skillSlotDependencyDict[skillSlot]].
+        // skills[skillSlotDependencyDict[skillSlot]].OwnerAbilityStatus = abilityStatus;
+        // skills[skillSlotDependencyDict[skillSlot]].
     }
 
     protected override void SetDefaultSkillSetting()
     {
-        ChangeSkill("1", PlayerSkill.SkillID.FairysWings);
-        ChangeSkill("2", PlayerSkill.SkillID.Sweeping);
-        ChangeSkill("3", PlayerSkill.SkillID.CleaningWind);
-        ChangeSkill("4", PlayerSkill.SkillID.RefreshingLeapForward);
-        ChangeSkill("C", PlayerSkill.SkillID.Dusting);
-        ChangeSkill("R", PlayerSkill.SkillID.Dehydration);
+        ChangeSkill(KeyCode.Alpha1, PlayerSkill.SkillID.FairysWings);
+        ChangeSkill(KeyCode.Alpha2, PlayerSkill.SkillID.Sweeping);
+        ChangeSkill(KeyCode.Alpha3, PlayerSkill.SkillID.CleaningWind);
+        ChangeSkill(KeyCode.Alpha4, PlayerSkill.SkillID.RefreshingLeapForward);
+        ChangeSkill(KeyCode.C, PlayerSkill.SkillID.Dusting);
+        ChangeSkill(KeyCode.Mouse1, PlayerSkill.SkillID.Dehydration);
+
+        base.SetDefaultSkillSetting();
     }
 }

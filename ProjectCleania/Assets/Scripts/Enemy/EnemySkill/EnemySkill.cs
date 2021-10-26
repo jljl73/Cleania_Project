@@ -15,11 +15,6 @@ public abstract class EnemySkill : Skill
         enemyChase = enemy.GetComponentInChildren<EnemyChase>();
     }
 
-    protected new void Start()
-    {
-        base.Start();
-    }
-
     //public override void AnimationActivate()
     //{
     //    throw new System.NotImplementedException();

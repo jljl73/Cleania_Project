@@ -5,8 +5,11 @@ using UnityEngine.Events;
 
 public abstract class Skill : MonoBehaviour
 {
-    public UnityEvent PlaySkillEvent;
+    // public UnityEvent PlaySkillEvent;
     // public UnityAction OnAnimationActivate;
+
+    public delegate void DelegateVoid();
+    public event DelegateVoid OnPlaySkill;
 
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
@@ -31,21 +34,22 @@ public abstract class Skill : MonoBehaviour
     protected float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
-    // Start is called before the first frame update
-    protected void Start()
-    {
-        // isAttacking = false;
-    }
-
-
     public virtual void Activate() { }
     public virtual void Activate(int dependedEffectIdx = 0) { }
 
-    public abstract void AnimationActivate();
+    public virtual void AnimationActivate()
+    {
+        if (OnPlaySkill != null)
+            OnPlaySkill();
+    }
 
     public abstract void Deactivate();
 
     public List<SkillEffectController> effectController;
+
+    protected void Start()
+    {
+    }
 
     public void PlayEffects(int effectIdx)
     {

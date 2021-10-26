@@ -97,6 +97,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         //animator.SetInteger("Skill", 4);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill4", true);
@@ -104,7 +106,9 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         Physics.IgnoreLayerCollision(3, 6);
 
         // playerMovement.JumpForward(jumpDistance);
-        PlaySkillEvent.Invoke();
+        // PlaySkillEvent.Invoke();
+        //if (OnPlaySkill != null)
+        //    OnPlaySkill();
     }
 
     override public void Activate()

@@ -50,7 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdefaf103e48f74f94184f9ae1bf687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlaySkillEvent:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 7717416709024651364}
+  OwnerAbilityStatus: {fileID: 7405734526746438233}
   effectController:
   - {fileID: 6008768842996009720}
   - {fileID: 4755104038347188109}
@@ -171,7 +175,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c6d64f27fe8264aa0fd0397a7baa82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlaySkillEvent:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 7717416709024651364}
+  OwnerAbilityStatus: {fileID: 7405734526746438233}
   effectController:
   - {fileID: 5978548497622511616}
   skillData: {fileID: 11400000, guid: 9ebffb7b034aa2940af71dc40be71fe0, type: 2}
@@ -424,9 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatus: {fileID: 7405734526746438233}
   animator: {fileID: 7717416709024651364}
-  skills:
-  - {fileID: 2533120371948066580}
-  - {fileID: 4918299493791087085}
+  SkillSlotCount: 1
   skillStorage: {fileID: 0}
   myEnemy: {fileID: 3404450377915123936}
 --- !u!1001 &2425448031528068613

@@ -226,6 +226,13 @@ public class BaseSkillManager : MonoBehaviour
 
     protected virtual void SetDefaultSkillSetting()
     {
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (skills[i] == null)
+                throw new System.Exception("SetDefaultSkillSetting (skills[i] == null");
 
+            skills[i].OwnerAbilityStatus = abilityStatus;
+            skills[i].animator = animator;
+        }
     }
 }

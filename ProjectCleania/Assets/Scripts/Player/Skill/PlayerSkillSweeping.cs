@@ -48,6 +48,8 @@ public class PlayerSkillSweeping : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         //animator.SetInteger("Skill", 2);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill2", true);
