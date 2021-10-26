@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class PlayerSkillManager : BaseSkillManager
 {
-    Player player;
+    // Player player;
+
+    public StateMachine playerStateMachine;
+    public TestPlayerMove playerMove;
+    public SkillStorage skillStorage;
+
     Dictionary<string, int> skillSlotDependencyDict = new Dictionary<string, int>();
     #region
     //public StateMachine stateMachine;
@@ -20,19 +26,21 @@ public class PlayerSkillManager : BaseSkillManager
     //public float GetCoolTimePassedRatio(int idx) { return CoolTimePassedRatio[idx]; }
     #endregion
 
-    SkillStorage skillStorage;
 
     new void Awake()
     {
         base.Awake();
-        player = transform.parent.GetComponent<Player>();
-        // abilityStatus = player.abilityStatus;
+
+        playerStateMachine = GetComponent<StateMachine>();
+        playerMove = GetComponent<TestPlayerMove>();
     }
 
     new void Start()
     {
         base.Start();
-        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
+
+        if (skillStorage == null)
+            throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
 
         SetskillSlotDependencyDict();
 
@@ -44,7 +52,7 @@ public class PlayerSkillManager : BaseSkillManager
             skillAvailable[i] = true;
         }
 
-        player.OnDead += DeactivateAllSkill;
+        SkillConnect();
     }
 
     //void DeactivateAllSkill()
@@ -58,6 +66,12 @@ public class PlayerSkillManager : BaseSkillManager
     //        }
     //    }
     //}
+
+    void SkillConnect()
+    {
+        skills[skillSlotDependencyDict["4"]].PlaySkillEvent.AddListener(playerMove.LeapForwardSkillJumpForward);
+    }
+
 
     protected new bool isSkillAvailable()
     {
@@ -121,9 +135,9 @@ public class PlayerSkillManager : BaseSkillManager
         if (!abilityStatus.ConsumeMP(skills[index].GetConsumMP()))
             return;
 
-        if (index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+        if (index != 3 && index != 5) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
-        player.playerMove.ImmediateLookAtMouse();
+        playerMove.ImmediateLookAtMouse();
 
         skills[index].AnimationActivate();
         ResetSkill(index);
@@ -186,13 +200,13 @@ public class PlayerSkillManager : BaseSkillManager
 
         if (skillEffectIndex != null)
         {
-            if (skillEffectIndex.GetSkillIndex() == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+            if (skillEffectIndex.GetSkillIndex() == 3) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
             skills[skillEffectIndex.GetSkillIndex()].Activate(skillEffectIndex.GetEffectIndex());
         }
         else
         {
-            if (myEvent.intParameter == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+            if (myEvent.intParameter == 3) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
             skills[myEvent.intParameter].Activate();
         }
@@ -203,7 +217,7 @@ public class PlayerSkillManager : BaseSkillManager
 
     public override void DeactivateSkill(int index)
     {
-        player.stateMachine.Transition(StateMachine.enumState.Idle);
+        playerStateMachine.Transition(StateMachine.enumState.Idle);
         skills[index].Deactivate();
     }
 

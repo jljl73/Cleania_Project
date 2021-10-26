@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class TestPlayerMove : MonoBehaviour 
 {
+    [Header("움직임 사용 스킬")]
+    public PlayerSkillRefreshingLeapForward LeapForwardSkill;
+
     GameObject playerObject;
     Player player;
     Animator playerAnimator;            // 애니메이터 컴포넌트
@@ -15,6 +18,7 @@ public class TestPlayerMove : MonoBehaviour
     Vector3 targetPos;                 // 목표 위치
     RaycastHit hit;
 
+    [Header("회전 계수")]
     public float rotateCoef = 360f;
     // public PlayerSkillL skillL;
     // public bool bAttacking = false;
@@ -25,9 +29,9 @@ public class TestPlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        playerObject = transform.parent.gameObject;
-        player = playerObject.GetComponent<Player>();
-        playerAnimator = playerObject.GetComponent<Animator>();
+        playerObject = transform.gameObject;
+        player = GetComponent<Player>();
+        playerAnimator = GetComponent<Animator>();
         targetPos = transform.position;
     }
 
@@ -114,8 +118,19 @@ public class TestPlayerMove : MonoBehaviour
         targetPos = transform.position;
     }
 
-    public void JumpForward(float dist)
+    //public void JumpForward(float value)
+    //{
+    //    float dist = value;
+    //    isOrderedToMove = true;
+    //    targetPos = transform.position + transform.forward * dist;
+    //}
+
+    public void LeapForwardSkillJumpForward()
     {
+        print("LeapForwardSkillJumpForward!");
+        if (LeapForwardSkill == null)
+            throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
+        float dist = LeapForwardSkill.GetJumpDistance();
         isOrderedToMove = true;
         targetPos = transform.position + transform.forward * dist;
     }

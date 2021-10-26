@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public abstract class Skill : MonoBehaviour
 {
+    public UnityEvent PlaySkillEvent;
+
     public Animator animator;
 
     protected string SkillName;

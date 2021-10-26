@@ -30,7 +30,8 @@ public class PlayerSkill4 : PlayerSkill
         animator.SetBool("OnSkill4", true);
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
-        playerMovement.JumpForward(jumpDistance);
+        // playerMovement.JumpForward(jumpDistance);
+        PlaySkillEvent.Invoke();
     }
 
     override public void Activate()

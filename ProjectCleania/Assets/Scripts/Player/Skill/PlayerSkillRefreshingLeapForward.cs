@@ -103,7 +103,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
 
-        playerMovement.JumpForward(jumpDistance);
+        // playerMovement.JumpForward(jumpDistance);
+        PlaySkillEvent.Invoke();
     }
 
     override public void Activate()
