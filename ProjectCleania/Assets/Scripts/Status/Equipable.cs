@@ -129,7 +129,10 @@ public class Equipable : MonoBehaviour, iSavedData
                     if (!_stats.ContainsKey(key_value.Key))
                         _stats[key_value.Key] = 0;
 
-                    _stats[key_value.Key] += key_value.Value * (_equipments[i].Level / 50);
+                    if (key_value.Key == Ability.Stat.CriticalChance || key_value.Key == Ability.Stat.AttackSpeed || key_value.Key == Ability.Stat.MoveSpeed)
+                        _stats[key_value.Key] += key_value.Value;
+                    else
+                        _stats[key_value.Key] += key_value.Value * _equipments[i].Level / 50;
                 }
 
                 // dynamic properties

@@ -111,7 +111,10 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         get
         {
             if (_statics.TryGetValue(stat, out float value))
-                return value * (Level / 50);
+                if (stat == Ability.Stat.CriticalChance || stat == Ability.Stat.AttackSpeed || stat == Ability.Stat.MoveSpeed)
+                    return value;
+                else
+                    return value * Level / 50;
             else
                 return float.NaN;
         }
