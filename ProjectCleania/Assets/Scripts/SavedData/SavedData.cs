@@ -147,4 +147,19 @@ public class SavedData : MonoBehaviour
             Item_World.Remove(i.Key);
         }
     }
+
+    public void Test_EquipFirst()
+    {
+        for (int y = 0; y < Item_Inventory.GridSize.Height; ++y)
+            for (int x = 0; x < Item_Inventory.GridSize.Width; ++x)
+            {
+                ItemInstance item = Item_Inventory[y, x];
+                if (item != null && item is ItemInstance_Equipment)
+                {
+                    Item_Inventory.Remove(item);
+                    Item_Inventory.Add(equipable.Equip((ItemInstance_Equipment)item));
+                    return;
+                }
+            }
+    }
 }
