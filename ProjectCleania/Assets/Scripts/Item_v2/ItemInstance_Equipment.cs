@@ -10,10 +10,10 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         MainWeapon,
         SubWeapon,
         Hat,
-        Top,
+        Chest,
         Pants,
-        Gloves,
-        Shoes,
+        Hands,
+        Boots,
         EnumTotal
     }
 
@@ -24,6 +24,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     protected ItemInstance_Equipment(ItemSO itemSO, int level = 1) : base(itemSO)
     {
         Level = level;
+        EquipmentType = CategoryToType(itemSO.SubCategory);
     }
 
     /// <summary>
@@ -37,7 +38,13 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     new static public ItemInstance_Equipment Instantiate(ItemSO itemSO, int level = 1)
     {
         if (itemSO.OptionTable != null && itemSO.MainCategory == ItemSO.enumMainCategory.Equipment)
-            return new ItemInstance_Equipment(itemSO, level);
+        {
+            ItemInstance_Equipment instance = new ItemInstance_Equipment(itemSO, level);
+
+            EquipmentDealer.ShuffleStatics(instance);
+            EquipmentDealer.ShuffleDynamics(instance);
+            return instance;
+        }
         else
             return null;
     }
@@ -60,7 +67,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     }
 
 
-    public Type EquipmentType = Type.MainWeapon;
+    public Type EquipmentType;
     [Range(1, 50)]
     public int Level;
     public int Xp;
@@ -111,10 +118,12 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         set
         {
             if (float.IsNaN(value))                         // set value NaN to remove property
+            {
                 if (_statics.ContainsKey(stat))
                     _statics.Remove(stat);
-                else
-                    _statics[stat] = value;
+            }
+            else
+                _statics[stat] = value;
         }
     }
 
@@ -125,13 +134,10 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     /// <param name="stat"></param>
     /// <param name="enhance"></param>
     /// <returns></returns>
-    public float this[Ability.Stat stat, Ability.Enhance enhance]                    // enchant indexer
+    public float this[KeyValuePair<Ability.Stat, Ability.Enhance> key]
     {
         get
-        {
-            KeyValuePair<Ability.Stat, Ability.Enhance> key
-                = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
-
+        { 
             if (_dynamics.TryGetValue(key, out float value))
                 return value;
             else
@@ -139,18 +145,62 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         }
         set
         {
-            KeyValuePair<Ability.Stat, Ability.Enhance> key
-                = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
-
             if (float.IsNaN(value))                         // set value NaN to remove property
+            {
                 if (_dynamics.ContainsKey(key))
                     _dynamics.Remove(key);
-                else
-                    _dynamics[key] = value;
+            }
+            else
+                _dynamics[key] = value;
+        }
+    }
+    /// <summary>
+    /// Warping indexer
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <param name="enhance"></param>
+    /// <returns></returns>
+    public float this[Ability.Stat stat, Ability.Enhance enhance]                    // enchant indexer
+    {
+        get
+        {
+            KeyValuePair<Ability.Stat, Ability.Enhance> key
+               = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
+            return this[key];
+        }
+        set
+        {
+            KeyValuePair<Ability.Stat, Ability.Enhance> key
+               = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
+            this[key] = value;
         }
     }
 
-    
+
+    Type CategoryToType(ItemSO.enumSubCategory sub)
+    {
+        switch(sub)
+        {
+            case ItemSO.enumSubCategory.MainWeapon:
+                return Type.MainWeapon;
+            case ItemSO.enumSubCategory.SubWeapon:
+                return Type.SubWeapon;
+            case ItemSO.enumSubCategory.Hat:
+                return Type.Hat;
+            case ItemSO.enumSubCategory.Chest:
+                return Type.Chest;
+            case ItemSO.enumSubCategory.Pants:
+                return Type.Pants;
+            case ItemSO.enumSubCategory.Hands:
+                return Type.Hands;
+            case ItemSO.enumSubCategory.Boots:
+                return Type.Boots;
+            default:
+                return Type.EnumTotal;
+        }
+    }
+
+
     public List<string> StaticProperties_ToString()
     {
         List<string> string_list = new List<string>();
@@ -236,6 +286,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
     void iSavedData.AfterLoad()
     {
+        Debug.Log("Equipment al");
         so = ItemSO.Load(id);
 
         foreach(var en in SD_staticOption)
@@ -253,6 +304,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
     void iSavedData.BeforeSave()
     {
+        Debug.Log("Equipment bs");
         id = so.ID;
 
         SD_staticOption.Clear();

@@ -7,6 +7,26 @@ public class Equipable : MonoBehaviour, iSavedData
 {
     //[System.NonSerialized]
     ItemInstance_Equipment[] _equipments = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];
+    /// <summary>
+    /// Get & Set current equipments with this indexer.
+    /// </summary>
+    /// <param name="type">input euipment to access slot.</param>
+    /// <returns>
+    /// - getter returns current wearing equipment.<para></para>
+    /// - setter returns replaced equipment before Equip/Unequip.
+    /// </returns>
+    public ItemInstance_Equipment this[ItemInstance_Equipment.Type type]
+    {
+        get => _equipments[(int)type];
+        set
+        {
+            if (value == null)
+                Unequip(type);
+            else if (value is ItemInstance_Equipment)
+                Equip(value);
+        }
+    }
+
 
     Dictionary<Ability.Stat, float> _stats
         = new Dictionary<Ability.Stat, float>();
@@ -58,6 +78,7 @@ public class Equipable : MonoBehaviour, iSavedData
         {
             ItemInstance_Equipment oldEquipment = _equipments[inType];
             _equipments[inType] = newEquipment;
+            //newEquipment.WoreBy = this;
 
             Refresh();
 
@@ -66,6 +87,7 @@ public class Equipable : MonoBehaviour, iSavedData
         else
         {
             _equipments[inType] = newEquipment;
+            //newEquipment.WoreBy = this;
 
             Refresh();
 
@@ -86,7 +108,10 @@ public class Equipable : MonoBehaviour, iSavedData
         _equipments[type] = null;
 
         if (oldEquipment != null)
+        {
+            //oldEquipment.WoreBy = null;
             Refresh();
+        }
 
         return oldEquipment;
     }

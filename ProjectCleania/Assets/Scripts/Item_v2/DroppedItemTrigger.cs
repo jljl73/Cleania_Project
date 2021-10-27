@@ -36,10 +36,13 @@ public class DroppedItemTrigger : MonoBehaviour
 
             ItemObject_v2 container = droppedItem.GetComponent<ItemObject_v2>();
             ItemInstance itemData = container.ItemData;
-            container.Parent.Remove(itemData);
-            SavedData.Instance.Item_Inventory.Add(itemData);
 
-            droppedItems.Remove(droppedItem);
+            if (SavedData.Instance.Item_Inventory.Add(itemData))
+            {
+                container.Parent.Remove(itemData);
+                droppedItems.Remove(droppedItem);
+            }
+
         }
     }
 
