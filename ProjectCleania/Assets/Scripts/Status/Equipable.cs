@@ -8,12 +8,13 @@ public class Equipable : MonoBehaviour, iSavedData
     //[System.NonSerialized]
     ItemInstance_Equipment[] _equipments = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];
     /// <summary>
-    /// Get & Set current equipments with this indexer.
+    /// Get & Set current equipments with this indexer.<para></para>
+    /// setter call Equip when value is correct with type / Unequip when value is null.
     /// </summary>
     /// <param name="type">input euipment to access slot.</param>
     /// <returns>
     /// - getter returns current wearing equipment.<para></para>
-    /// - setter returns replaced equipment before Equip/Unequip.
+    /// - setter returns void.
     /// </returns>
     public ItemInstance_Equipment this[ItemInstance_Equipment.Type type]
     {
@@ -22,7 +23,7 @@ public class Equipable : MonoBehaviour, iSavedData
         {
             if (value == null)
                 Unequip(type);
-            else if (value is ItemInstance_Equipment)
+            else if (value.EquipmentType == type)
                 Equip(value);
         }
     }
@@ -30,15 +31,19 @@ public class Equipable : MonoBehaviour, iSavedData
 
     Dictionary<Ability.Stat, float> _stats
         = new Dictionary<Ability.Stat, float>();
+    public float this[Ability.Stat stat]                            // stat indexer
+    {
+        get
+        {
+            if (_stats.TryGetValue(stat, out float value))
+                return value;
+            else
+                return float.NaN;
+        }
+    }
+
     Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> _enchants
         = new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>();
-
-    //public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> Enchants
-    //{
-    //    get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_enchants); }
-    //}
-
-
     public float this[Ability.Stat stat, Ability.Enhance enhance]   // enchant indexer
     {
         get
@@ -47,17 +52,6 @@ public class Equipable : MonoBehaviour, iSavedData
                 = new KeyValuePair<Ability.Stat, Ability.Enhance>(stat, enhance);
 
             if (_enchants.TryGetValue(key, out float value))
-                return value;
-            else
-                return float.NaN;
-        }
-    }
-
-    public float this[Ability.Stat stat]                            // stat indexer
-    {
-        get
-        {
-            if (_stats.TryGetValue(stat, out float value))
                 return value;
             else
                 return float.NaN;
@@ -130,7 +124,7 @@ public class Equipable : MonoBehaviour, iSavedData
             if (_equipments[i] != null)
             {
                 // static properties
-                foreach (var key_value in _equipments[i].StaticProperties) 
+                foreach (var key_value in _equipments[i].StaticProperties)
                 {
                     if (!_stats.ContainsKey(key_value.Key))
                         _stats[key_value.Key] = 0;
@@ -139,7 +133,7 @@ public class Equipable : MonoBehaviour, iSavedData
                 }
 
                 // dynamic properties
-                foreach (var key_value in _equipments[i].DynamicProperties)  
+                foreach (var key_value in _equipments[i].DynamicProperties)
                 {
                     switch (key_value.Key.Value)
                     {
@@ -166,10 +160,10 @@ public class Equipable : MonoBehaviour, iSavedData
                                 {
                                     case Ability.Enhance.Chance_Percent:
                                     case Ability.Enhance.NegMul_Percent:
-                                        _enchants[key_value.Key] *= 1-key_value.Value;
+                                        _enchants[key_value.Key] *= 1 - key_value.Value;
                                         break;
                                     case Ability.Enhance.PosMul_Percent:
-                                        _enchants[key_value.Key] *= 1+key_value.Value;
+                                        _enchants[key_value.Key] *= 1 + key_value.Value;
                                         break;
                                     case Ability.Enhance.Addition_Percent:
                                         _enchants[key_value.Key] += key_value.Value;
@@ -188,7 +182,7 @@ public class Equipable : MonoBehaviour, iSavedData
     }
 
 
-    
+
 
 
 

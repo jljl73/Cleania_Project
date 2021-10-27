@@ -17,13 +17,10 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     public ItemStorage_LocalGrid(Size size)
     {
         GridSize = size;
-        if (_referenceGrid == null || _referenceGrid.Length != gridSizeY || _referenceGrid[0].Length != gridSizeX)
-            _InitGrid();
+        _InitGrid();
     }
 
-    [SerializeField]
     int gridSizeX;
-    [SerializeField]
     int gridSizeY;
     public Size GridSize
     {
@@ -44,7 +41,17 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     public Dictionary<ItemInstance, Point> Items
     { get => new Dictionary<ItemInstance, Point>(_items); }
     public Point this[ItemInstance item]
-    { get => _items[item]; }
+    {
+        get
+        {
+            Point ret = Point.Empty;
+            if (item == null)
+                return ret;
+
+            _items.TryGetValue(item, out ret);
+            return ret;
+        }
+    }
 
     ItemInstance[][] _referenceGrid;
     /// <summary>
@@ -54,7 +61,15 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     /// <param name="x"></param>
     /// <returns></returns>
     public ItemInstance this[int y, int x]
-    { get => _referenceGrid[y][x]; }
+    {
+        get
+        {
+            if (y >= 0 && y < gridSizeY && x >= 0 && x < gridSizeX)
+                return _referenceGrid[y][x];
+            else
+                return null;
+        }
+    }
 
     /// <summary>
     /// Default Add function.<para></para>
