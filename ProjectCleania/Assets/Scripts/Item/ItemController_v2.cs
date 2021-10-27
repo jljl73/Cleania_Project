@@ -10,67 +10,74 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     public ItemSO.enumSubCategory subCat;
     public static ItemController_v2 clickedItem;
 
-    const float boxSize = 64;
-    //
-    ItemInstance itemInstance;
-    Vector3 prevPosition;
-    public int h = 2;
-    public int w = 1;
-    int index = -1;
-
+    public ItemInstance itemInstance { get; private set; }
     UIManager uiManager;
+
+
+    public int prevIndex = -1;
+    public GameObject slot;
+    int storageType = -1;
+
+    public Storage Inventory;
+    public Storage storage;
+
 
     void Start()
     {
         itemInstance = ItemInstance.Instantiate(ItemCode);
 
-        h = itemInstance.SO.GridSize.Height;
-        w = itemInstance.SO.GridSize.Width;
         subCat = itemInstance.SO.SubCategory;
         uiManager = GameManager.Instance.uiManager;
 
-        //
-        GameObject slot = uiManager.InventoryPanel.GetComponent<Storage>().Add(gameObject, out index);
-        MoveToSlot(slot);
+        PutStorage();
     }
 
-    void MoveToSlot(GameObject slot)
+    public void MoveToSlot(GameObject slot)
     {
         Vector3 position = slot.transform.position;
-        position.y -= 32 * (h - 1);
         transform.position = position;
-        prevPosition = position;
     }
 
-    // 인벤에서 창고로 옮길때
-    //void InventoryToStorage()
-    //{
-    //    PullItemOut(uiManager.InventoryPanel.GetComponent<Storage>());
-    //    PutItemIn(uiManager.StoragePanel.GetComponent<Storage>());
-    //}
+    void PutStorage()
+    {
+        int t_index = -1;
+        Remove();
 
-    //// 창고에서 인벤 옮길때
-    //void StorageToInventory()
-    //{
-    //    PullItemOut(uiManager.StoragePanel.GetComponent<Storage>());
-    //    PutItemIn(uiManager.InventoryPanel.GetComponent<Storage>());
-    //}
+        if(storageType == 0)
+            slot = storage.Add(gameObject, out t_index);
+        else
+            slot = Inventory.Add(gameObject, out t_index);
+        if (slot == null) return;
 
-    //// 
-    //void PutItemIn(Storage storage)
-    //{
-    //    GameObject slot = storage.Add(this.gameObject, out index);
-    //    if (slot == null) return;
-    //    Debug.Log(slot.name);
-    //    MoveToSlot(slot);
-    //}
+        MoveToSlot(slot);
+        prevIndex = t_index;
+        storageType = (storageType == 0) ? 1 : 0;
+    }
 
-    //void PullItemOut(Storage storage)
-    //{
-    //    if(index != -1)
-    //        storage.Remove(index, h, w);
-    //}
+    void PutStorage(int t_index)
+    {
+        Remove();
 
+        if (storageType == 0)
+            slot = storage.Add(gameObject, t_index);
+        else
+            slot = Inventory.Add(gameObject, t_index);
+        if (slot == null) return;
+
+        MoveToSlot(slot);
+        prevIndex = t_index;
+        storageType = (storageType == 0) ? 1 : 0;
+    }
+
+
+    void Remove()
+    {
+        if (prevIndex == -1) return;
+        if (storageType == 0)
+            Inventory.Remove(prevIndex);
+        else
+            storage.Remove(prevIndex);
+    }
 
     //
     // 이벤트 리스너
@@ -95,7 +102,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
         List<RaycastResult> results = new List<RaycastResult>();
         Vector2 curSorPoint = eventData.position;
-        curSorPoint.y += 32 * (h - 1);
+
         eventData.position = curSorPoint;
         GameManager.Instance.MainCanvas.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
 
@@ -103,18 +110,26 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         {
             if (results[i].gameObject.tag == "Slot")
             {
-                MoveToSlot(results[i].gameObject);
+                //나중에 추가하랠
                 return;
             }
         }
-        transform.position = prevPosition;
+
+        MoveToSlot(slot);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
 
-        clickedItem = this;
-        GameManager.Instance.npcManager.Dosmth(gameObject);
+        if(GameManager.Instance.npcManager.curNPC == NPC.TYPE.Storage)
+        {
+            PutStorage();
+        }
+        else
+            GameManager.Instance.npcManager.Dosmth(gameObject);
+
+
+
     }
 }

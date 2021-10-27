@@ -138,11 +138,8 @@ public class BaseSkillManager : MonoBehaviour
 
     public virtual void PlaySkill(int index)
     {
-        print("0");
         if (!isSkillAvailable()) return;
-        print("1");
         if (!skillAvailable[index]) return;
-        print("2");
         skills[index].AnimationActivate();
         ResetSkill(index);
     }
