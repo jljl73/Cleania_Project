@@ -9,12 +9,28 @@ public class Demo_Inventory : MonoBehaviour
     ItemStorage_LocalGrid inven;
     Equipable equipable;
 
+    Text[] optionTexts;
+    Image optionPanel;
+
+    private void Awake()
+    {
+        optionTexts = GetComponentsInChildren<Text>();
+        optionPanel = optionTexts[0].GetComponentInParent<Image>();
+        optionPanel.gameObject.SetActive(false);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         itemSlots = GetComponentsInChildren<Demo_ItemSlot>();
         equipable = GameManager.Instance.PlayerEquipments;
         inven = SavedData.Instance.Item_Inventory;
+
+        foreach(var i in itemSlots)
+        {
+            i.optionPanel = optionPanel;
+            i.optionTexts = optionTexts;
+        }
     }
 
     // Update is called once per frame
