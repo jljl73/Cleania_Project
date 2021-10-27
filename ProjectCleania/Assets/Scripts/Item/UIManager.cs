@@ -56,13 +56,15 @@ public class UIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseLastPanel();
+            OffAllPanels();
         }
     }
 
     public void ShowInventory()
     {
         ShowPanel(InventoryPanel);
+        if (RepairPanel.activeSelf)
+            GameManager.Instance.npcManager.curNPC = NPC.TYPE.None;
     }
 
     public void ShowSkillPanel()
@@ -110,7 +112,8 @@ public class UIManager : MonoBehaviour
 
     void OffAllPanels()
     {
-        if (isActiveItemPanel) ShowInventory();
+        //if (isActiveItemPanel) ShowInventory();
+        this.InventoryPanel.SetActive(false);
         this.SkillPanel.SetActive(false);
         this.ExpandMapPanel.SetActive(false);
         this.QuestPanel.SetActive(false);
@@ -130,7 +133,10 @@ public class UIManager : MonoBehaviour
 
     public void ShowPanel(GameObject panel)
     {
+        Debug.Log(panel.name);
         panel.SetActive(!panel.activeSelf);
+
+
         if (panel.activeSelf)
         {
             panel.transform.SetAsLastSibling();
@@ -138,6 +144,7 @@ public class UIManager : MonoBehaviour
         }
         else
             sPanels.Remove(panel);
+
     }
 
     void CloseLastPanel()
