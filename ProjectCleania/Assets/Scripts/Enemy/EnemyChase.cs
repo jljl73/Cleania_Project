@@ -45,7 +45,7 @@ public class EnemyChase : MonoBehaviour
             if (enemySpawner != null)
             {
                 //enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(other.gameObject);
-                myGroupManager.SetTarget(other.gameObject);
+                myGroupManager.Target = other.gameObject;
                 targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
             }
         }
