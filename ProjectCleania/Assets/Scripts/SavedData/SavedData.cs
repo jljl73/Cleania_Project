@@ -160,6 +160,6 @@ public class SavedData : MonoBehaviour
                     Item_Inventory.Add(equipable.Equip((ItemInstance_Equipment)item));
                     return;
                 }
-            }
+            }   
     }
 }
