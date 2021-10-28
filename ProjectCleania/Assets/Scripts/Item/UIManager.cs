@@ -63,8 +63,6 @@ public class UIManager : MonoBehaviour
     public void ShowInventory()
     {
         ShowPanel(InventoryPanel);
-        if (RepairPanel.activeSelf)
-            GameManager.Instance.npcManager.curNPC = NPC.TYPE.None;
     }
 
     public void ShowSkillPanel()
@@ -80,34 +78,35 @@ public class UIManager : MonoBehaviour
     public void ShowRepairPanel()
     {
         ShowPanel(RepairPanel);
-        if(RepairPanel.activeSelf)
-            GameManager.Instance.npcManager.curNPC = NPC.TYPE.Repair;
     }
 
     public void ShowMarketPanel()
     {
         ShowPanel(MarketPanel);
-        if (MarketPanel.activeSelf)
-            GameManager.Instance.npcManager.curNPC = NPC.TYPE.Market;
     }
     
     public void ShowEnchantPanel()
     {
         ShowPanel(EnchantPanel);
-        if (EnchantPanel.activeSelf)
-            GameManager.Instance.npcManager.curNPC = NPC.TYPE.Enchant;
     }
 
     public void ShowStoragePanel()
     {
         ShowPanel(StoragePanel);
-        if (StoragePanel.activeSelf)
-            GameManager.Instance.npcManager.curNPC = NPC.TYPE.Storage;
     }
 
     public void ShowMenuPanel()
     {
         ShowPanel(MenuPanel);
+    }
+
+    public NPC.TYPE GetCurrentNPC()
+    {
+        if (StoragePanel.activeSelf) return NPC.TYPE.Storage;
+        else if (MarketPanel.activeSelf) return NPC.TYPE.Market;
+        else if (EnchantPanel.activeSelf) return NPC.TYPE.Enchant;
+        else if (RepairPanel.activeSelf) return NPC.TYPE.Repair;
+        else return NPC.TYPE.None;
     }
 
     void OffAllPanels()

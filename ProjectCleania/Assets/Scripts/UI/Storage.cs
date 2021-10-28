@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour
 {
-    public GameObject[] slots;
     public GameObject slotParent;
+    public GameObject[] slots;
     public Transform ItemList;
 
     [SerializeField]
@@ -14,7 +14,8 @@ public class Storage : MonoBehaviour
     //public int nSize = 10;
     int nSize;
 
-    public GameObject[] items;
+    [SerializeField]
+    GameObject[] items;
 
     void Awake()
     {
@@ -24,13 +25,12 @@ public class Storage : MonoBehaviour
         for (int i = 0; i < nSize; ++i)
         {
             items[i] = null;
-            slots[i] = slotParent.transform.GetChild(i).gameObject;
         }
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
         
     // 자동 추가
-    public GameObject Add(GameObject item, out int index)
+    public void Add(GameObject item, out int index)
     {
         for (int i = 0; i < items.Length; ++i)
         {
@@ -39,24 +39,24 @@ public class Storage : MonoBehaviour
                 items[i] = item;
                 ChangeParent(item);
                 index = i;
-                return slots[i];
+                items[i].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(i).position);
+                return;
             }
         }
         index = -1;
-        return null;
     }
 
-    // 드래그 추가
-    public GameObject Add(GameObject item, int index)
+    public void Move(int src, int dest)
     {
-        if (items[index] == null)
-            items[index] = item;
-        else
+        GameObject temp = items[dest];
+        items[dest] = items[src];
+        items[src] = temp;
+        items[dest].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(dest).position);
+        if (items[src] != null)
         {
-            Debug.Log("교체");
+            items[src].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(src).position);
+            items[src].GetComponent<ItemController_v2>().prevIndex = src;
         }
-        ChangeParent(item);
-        return slots[index];
     }
 
     public void Remove(int index)

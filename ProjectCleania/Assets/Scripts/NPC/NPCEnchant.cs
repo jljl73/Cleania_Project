@@ -20,15 +20,18 @@ public class NPCEnchant : MonoBehaviour
         selectedItem = item;
         // Image 불러오기 수정 필요할수도
         Image = Instantiate(selectedItem.transform.GetChild(0).gameObject, ItemImage.transform);
-        instance = item.GetComponent<ItemController_v2>().itemInstance;
 
+        instance = item.GetComponent<ItemController_v2>().itemInstance;
         ItemName.text = instance.SO.ItemName;
         ItemDetail.text = instance.SO.ToolTip;
-        
-        for(int i = 0; i < instance.SO.OptionTable.DynamicTable.Length; ++i)
+
+        ItemInstance_Equipment ie = (ItemInstance_Equipment)instance;
+
+        int ct = 0;
+        foreach(var v in ie.DynamicProperties_ToString())
         {
-            options[i].SetActive(true);
-            options[i].transform.GetComponentInChildren<Text>().text = instance.SO.OptionTable.DynamicTable[i].KeyStat.ToString();
+            options[ct].SetActive(true);
+            options[ct++].transform.GetComponentInChildren<Text>().text = v;
         }
 
     }

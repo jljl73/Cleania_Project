@@ -19,5 +19,6 @@ public class ItemInMarket : MonoBehaviour
         this.itemInstance = itemInstance;
         price.text = itemInstance.SO.Price.ToString();
         itemName.text = itemInstance.SO.ItemName;
+        image.sprite = itemInstance.SO.ItemImage;
     }
 }

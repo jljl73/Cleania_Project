@@ -293,7 +293,7 @@ public class ItemController : MonoBehaviour
         slots.Add(slot);
         ActivateSlot();
         isEquipped = true;
-        _equipmentManager.WearEquipment(_type, _option);
+        //_equipmentManager.WearEquipment(_type, _option);
     }
 
     public void TakeOff(int index)
@@ -303,7 +303,7 @@ public class ItemController : MonoBehaviour
         else SetSlot(index);
         ActivateSlot();
         isEquipped = false;
-        _equipmentManager.TakeOffEquipment(_type);
+        //_equipmentManager.TakeOffEquipment(_type);
     }
 
     public void OnButtonClicked(BaseEventData eventData)

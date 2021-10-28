@@ -26,6 +26,7 @@ public class NPCMarket : MonoBehaviour
 
         foreach(Toggle t in toggles)
         {
+            // ±¸¸Å
             Debug.Log(t.name);
         }
     }
@@ -41,6 +42,8 @@ public class NPCMarket : MonoBehaviour
         GameObject newItem = Instantiate(prefab_Item, pages[2].transform);
         newItem.GetComponent<ItemInMarket>().Initialize(item.GetComponent<ItemController_v2>().itemInstance);
         sellItems.Enqueue(newItem);
+
+        //item.GetComponent<ItemController_v2>().itemInstance.SO.Price
 
         if (sellItems.Count >= 10)
             Destroy(sellItems.Dequeue());
