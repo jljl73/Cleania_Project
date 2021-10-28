@@ -17,6 +17,7 @@ public class NPC : MonoBehaviour
 
     public string Value;
 
+
     void Update()
     {
         textMesh.transform.rotation = Camera.main.transform.rotation;

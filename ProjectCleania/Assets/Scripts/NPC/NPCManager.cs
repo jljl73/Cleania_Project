@@ -5,7 +5,6 @@ using System;
 
 public class NPCManager : MonoBehaviour
 {
-    public NPC.TYPE curNPC;
     [SerializeField]
     NPCMarket market;
     [SerializeField]
@@ -17,7 +16,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField]
     Storage inventory;
     [SerializeField]
-    GameObject equpiments;
+    EquipmentManager equpiments;
 
     void Awake()
     {
@@ -26,7 +25,7 @@ public class NPCManager : MonoBehaviour
 
     public void Dosmth(GameObject item)
     {
-        switch (curNPC)
+        switch (GameManager.Instance.uiManager.GetCurrentNPC())
         {
             case NPC.TYPE.None:
                 Equip(item);
@@ -68,19 +67,6 @@ public class NPCManager : MonoBehaviour
 
     void Equip(GameObject item)
     {
-
-        ItemSO.enumSubCategory eCat = item.GetComponent<ItemController_v2>().itemInstance.SO.SubCategory;
-        int ct = 1;
-        foreach(ItemSO.enumSubCategory c in Enum.GetValues(typeof(ItemSO.enumSubCategory)))
-        {
-            if (eCat == c)
-                break;
-            ++ct;
-        }
-
-        if (ct < equpiments.transform.childCount)
-            item.transform.position = equpiments.transform.GetChild(ct).position;
-
-
+        equpiments.Equip(item);
     }
 }

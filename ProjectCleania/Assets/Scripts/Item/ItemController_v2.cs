@@ -7,77 +7,67 @@ using UnityEngine.EventSystems;
 public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public int ItemCode = 1101001;
-    public ItemSO.enumSubCategory subCat;
+    [SerializeField]
+    Image image;
+    ItemSO.enumSubCategory subCat;
+
     public static ItemController_v2 clickedItem;
 
     public ItemInstance itemInstance { get; private set; }
+
+    Vector3 prevPosition;
     UIManager uiManager;
-
-
+    bool isInStorage = false;
     public int prevIndex = -1;
-    public GameObject slot;
-    int storageType = -1;
-
-    public Storage Inventory;
-    public Storage storage;
-
+    public Storage inventory;
+    public Storage storage; 
 
     void Start()
     {
         itemInstance = ItemInstance.Instantiate(ItemCode);
 
         subCat = itemInstance.SO.SubCategory;
+        image.sprite = itemInstance.SO.ItemImage;
         uiManager = GameManager.Instance.uiManager;
 
-        PutStorage();
+        PutInventory();
     }
 
-    public void MoveToSlot(GameObject slot)
+
+    public void PutInventory()
     {
-        Vector3 position = slot.transform.position;
+        inventory.Add(gameObject, out prevIndex);
+    }
+
+    public void PullInventory()
+    {
+        inventory.Remove(prevIndex);
+    }
+
+    void MoveToInventory()
+    {
+        if (prevIndex != -1)
+            storage.Remove(prevIndex);
+        inventory.Add(gameObject, out prevIndex);
+        if (prevIndex != -1)
+            isInStorage = false;
+    }
+
+    void MoveToStorage()
+    {
+        if (prevIndex != -1)
+            inventory.Remove(prevIndex);
+        storage.Add(gameObject, out prevIndex);
+        if (prevIndex != -1)
+            isInStorage = true;
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        prevPosition = position;
         transform.position = position;
     }
 
-    void PutStorage()
-    {
-        int t_index = -1;
-        Remove();
-
-        if(storageType == 0)
-            slot = storage.Add(gameObject, out t_index);
-        else
-            slot = Inventory.Add(gameObject, out t_index);
-        if (slot == null) return;
-
-        MoveToSlot(slot);
-        prevIndex = t_index;
-        storageType = (storageType == 0) ? 1 : 0;
-    }
-
-    void PutStorage(int t_index)
-    {
-        Remove();
-
-        if (storageType == 0)
-            slot = storage.Add(gameObject, t_index);
-        else
-            slot = Inventory.Add(gameObject, t_index);
-        if (slot == null) return;
-
-        MoveToSlot(slot);
-        prevIndex = t_index;
-        storageType = (storageType == 0) ? 1 : 0;
-    }
-
-
-    void Remove()
-    {
-        if (prevIndex == -1) return;
-        if (storageType == 0)
-            Inventory.Remove(prevIndex);
-        else
-            storage.Remove(prevIndex);
-    }
 
     //
     // 이벤트 리스너
@@ -110,26 +100,31 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         {
             if (results[i].gameObject.tag == "Slot")
             {
-                //나중에 추가하랠
+                int index = results[i].gameObject.transform.GetSiblingIndex();
+                if (isInStorage)
+                    storage.Move(prevIndex, index);
+                else
+                    inventory.Move(prevIndex, index);
+
+                prevIndex = index;
+                prevPosition = transform.position;
                 return;
             }
         }
 
-        MoveToSlot(slot);
+        transform.position = prevPosition;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
 
-        if(GameManager.Instance.npcManager.curNPC == NPC.TYPE.Storage)
+        if(uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
         {
-            PutStorage();
+            if (isInStorage) MoveToInventory();
+            else MoveToStorage();
         }
         else
             GameManager.Instance.npcManager.Dosmth(gameObject);
-
-
-
     }
 }
