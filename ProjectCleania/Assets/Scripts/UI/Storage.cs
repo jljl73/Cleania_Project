@@ -9,6 +9,18 @@ public class Storage : MonoBehaviour
     public GameObject[] slots;
     public Transform ItemList;
 
+    // <Modified>
+    enum StorageType
+    {
+        Inventory,
+        Storage
+    }
+
+    [SerializeField]
+    StorageType LinkedStorage;
+    // </Modified>
+
+
     [SerializeField]
     Storage otherStorage;
     //public int nSize = 10;
@@ -17,7 +29,7 @@ public class Storage : MonoBehaviour
     [SerializeField]
     GameObject[] items;
 
-    void Awake()
+    protected void Awake()
     {
         nSize = slotParent.transform.childCount;
         items = new GameObject[nSize];
@@ -27,6 +39,18 @@ public class Storage : MonoBehaviour
             items[i] = null;
         }
         //gameObject.SetActive(false);
+
+        //<>
+        switch(LinkedStorage)
+        {
+            case StorageType.Inventory:
+                GameManager.Instance.uiManager.InventoryPanel = gameObject;
+                break;
+            case StorageType.Storage:
+                GameManager.Instance.uiManager.StoragePanel = gameObject;
+                break;
+        }
+        //</>
     }
         
     // 자동 추가
@@ -40,6 +64,11 @@ public class Storage : MonoBehaviour
                 ChangeParent(item);
                 index = i;
                 items[i].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(i).position);
+
+                //<Modified>
+
+                //</Modified>
+
                 return;
             }
         }

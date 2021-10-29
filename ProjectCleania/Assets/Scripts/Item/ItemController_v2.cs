@@ -19,16 +19,18 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     UIManager uiManager;
     bool isInStorage = false;
     public int prevIndex = -1;
-    public Storage inventory;
-    public Storage storage; 
+    Storage inventory;
+    Storage storage; 
 
-    void Start()
+    public void Initialize(ItemInstance item)
     {
-        itemInstance = ItemInstance.Instantiate(ItemCode);
+        itemInstance = item;
 
         subCat = itemInstance.SO.SubCategory;
         image.sprite = itemInstance.SO.ItemImage;
         uiManager = GameManager.Instance.uiManager;
+        inventory = uiManager.InventoryPanel.GetComponent<Storage>();
+        storage = uiManager.StoragePanel.GetComponent<Storage>();
 
         PutInventory();
     }
@@ -37,6 +39,11 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     public void PutInventory()
     {
         inventory.Add(gameObject, out prevIndex);
+
+        //<Modified>
+        if (prevIndex == -1)
+            SavedData.Instance.Item_World.Add(gameObject.GetComponent<ItemController_v2>().itemInstance);
+        //</Modified>
     }
 
     public void PullInventory()
