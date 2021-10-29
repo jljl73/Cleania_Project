@@ -66,7 +66,7 @@ public class PlayerSkillSweeping : PlayerSkill
         if (other.tag == "Enemy")
         {
             // ±âÀý
-            other.GetComponent<Enemy>().Stunned(true, stunTime);
+            other.GetComponent<Enemy>().OnStunned(true, stunTime);
 
             if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
                 other.GetComponent<Enemy>().Die();

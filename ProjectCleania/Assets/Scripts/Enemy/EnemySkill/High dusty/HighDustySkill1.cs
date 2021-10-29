@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class HighDustySkill1 : EnemySkill
 {
-    public float DamageScale = 10;
+    float DamageScale = 10;
 
     //Collider col
     AbilityStatus myAbility;
     public GameObject DustBall;
+
+    [SerializeField]
+    EnemySkillSO skillData;
     // public Enemy enemy;
 
     int skillCount = 0;
@@ -17,6 +20,19 @@ public class HighDustySkill1 : EnemySkill
     {
         base.Start();
         myAbility = GetComponentInParent<AbilityStatus>();
+        UpdateSkillData();
+    }
+
+    public void UpdateSkillData()
+    {
+        SkillName = skillData.GetSkillName();
+        SkillDetails = skillData.GetSkillDetails();
+        CoolTime = skillData.GetCoolTime();
+        CreatedMP = skillData.GetCreatedMP();
+        ConsumMP = skillData.GetConsumMP();
+        SpeedMultiplier = skillData.GetSpeedMultiplier();
+
+        DamageScale = skillData.GetDamageRate();
     }
 
     public override void AnimationActivate()
@@ -35,7 +51,7 @@ public class HighDustySkill1 : EnemySkill
         if (++skillCount == 3)
         {
             skillCount = 0;
-            enemy.enemyMove.RunAway();
+            base.AnimationActivate();
         }
     }
 

@@ -5,12 +5,14 @@ using UnityEngine.AI;
 
 public class BatSkill2 : EnemySkill
 {
-    public AbilityStatus myAbility;
-    EnemyChase parentEnemyChase;
+    // public AbilityStatus myAbility;
+    public EnemyChase parentEnemyChase;
 
     float triggerChance;
     int divisionCount;
     float SummonRange;
+    float divisionAvailableCount = 1;
+    public float DivisionAvailableCount { get { return divisionAvailableCount; } set { divisionAvailableCount = value; } }
 
     public GameObject DivisionObject;
 
@@ -20,8 +22,10 @@ public class BatSkill2 : EnemySkill
     private new void Start()
     {
         base.Start();
-        myAbility = transform.parent.parent.GetComponent<Enemy>().abilityStatus;
-        parentEnemyChase = transform.parent.parent.GetComponentInChildren<EnemyChase>();
+        // myAbility = transform.parent.parent.GetComponent<Enemy>().abilityStatus;
+        // parentEnemyChase = transform.parent.parent.GetComponentInChildren<EnemyChase>();
+        if (parentEnemyChase == null)
+            throw new System.Exception("BatSkill2 dosent have parentEnemyChase");
 
         UpdateSkillData();
     }
@@ -62,17 +66,24 @@ public class BatSkill2 : EnemySkill
     override public void Activate()
     {
         if (!(Random.Range(0f, 1f) <= triggerChance)) return;
+        if (divisionAvailableCount == 0) return;
 
-        print("분열 발동!");
+        divisionAvailableCount--;
 
         for (int i = 0; i < divisionCount; i++)
         {
-            GameObject bat1 = Instantiate(DivisionObject);
+            GameObject bat1 = Instantiate(enemy.gameObject);
+            Enemy batEnemy = bat1.GetComponent<Enemy>();
             // bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
             bat1.transform.position = GetRandPosition(transform.position, SummonRange);
             bat1.transform.localScale *= 0.5f;
             bat1.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
-            bat1.GetComponent<Enemy>().abilityStatus.FullHP();
+            bat1.GetComponentInChildren<BatSkill2>().DivisionAvailableCount = divisionAvailableCount;
+            if (batEnemy != null)
+            {
+                batEnemy.Revive();
+                batEnemy.abilityStatus.FullHP();
+            }
         }
 
         //GameObject bat1 = Instantiate(DivisionObject);

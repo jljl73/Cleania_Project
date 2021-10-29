@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseSkillManager : MonoBehaviour
+public abstract class BaseSkillManager : MonoBehaviour, IStunned
 {
     // public StateMachine stateMachine;
     public AbilityStatus abilityStatus;
@@ -19,6 +19,9 @@ public class BaseSkillManager : MonoBehaviour
     protected virtual void Awake()
     {
         // abilityStatus = GetComponent<AbilityStatus>();
+        if (abilityStatus == null)
+            throw new System.Exception("BaseSkillManager doesnt have abilityStatus");
+
         skills = new Skill[SkillSlotCount];
         coolTimePassed = new float[SkillSlotCount];
         skillAvailable = new bool[SkillSlotCount];
@@ -127,24 +130,12 @@ public class BaseSkillManager : MonoBehaviour
         }
     }
 
-    //public virtual void ForcePlaySkill(int index)
-    //{
-    //    // 모든 진행중인 스킬 끈 후 IDle로 전환
-    //    DeactivateAllSkill();
-    //    animator.SetBool("OnSkill", false);
-
-    //    // 스킬 실행
-    //    skills[index].AnimationActivate();
-    //    ResetSkill(index);
-    //}
+    protected abstract void SkillEventConnect();
 
     public virtual void PlaySkill(int index)
     {
-        print("0");
         if (!isSkillAvailable()) return;
-        print("1");
         if (!skillAvailable[index]) return;
-        print("2");
         skills[index].AnimationActivate();
         ResetSkill(index);
     }
@@ -234,5 +225,24 @@ public class BaseSkillManager : MonoBehaviour
             skills[i].OwnerAbilityStatus = abilityStatus;
             skills[i].animator = animator;
         }
+    }
+
+    public void Stunned(bool isStunned, float stunnedTime)
+    {
+        if (isStunned)
+        {
+            StartCoroutine("StunnedFor", stunnedTime);
+        }
+        else
+        {
+            animator.speed = 1;
+        }
+    }
+
+    IEnumerator IStunned.StunnedFor(float time)
+    {
+        animator.speed = 0;
+        yield return new WaitForSeconds(time);
+        animator.speed = 1;
     }
 }

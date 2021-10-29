@@ -134,7 +134,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
             if (enemyAbil.HP != 0)
             {
                 enemyAbil.AttackedBy(OwnerAbilityStatus, smashDamageRate);
-                enemy.Stunned(true, stunTime);
+                enemy.OnStunned(true, stunTime);
             }
         }
     }

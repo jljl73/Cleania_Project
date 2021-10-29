@@ -7,9 +7,9 @@ using UnityEngine;
 public class EnemySkillStorage : MonoBehaviour
 {
     public List<EnemySkill> InherentSkillList;
-    List<EnemySkill> usableSpecialSkillList;
+    public List<EnemySkill> usableSpecialSkillList;
 
-    public List<GameObject> SpecialSkillObjectList;
+    List<GameObject> SpecialSkillObjectList;
 
     Enemy myEnemy;
     public int SpecialSkillCount = 4;
@@ -33,33 +33,33 @@ public class EnemySkillStorage : MonoBehaviour
 
     private void Start()
     {
-        uploadSpecialSkills();
+        // uploadSpecialSkills();
     }
 
 
-    void uploadSpecialSkills()
-    {
-        SpecialSkillObjectList = SpecialSkillObjectList.OrderBy(i => Guid.NewGuid()).ToList();
+    //void uploadSpecialSkills()
+    //{
+    //    SpecialSkillObjectList = SpecialSkillObjectList.OrderBy(i => Guid.NewGuid()).ToList();
 
-        if (myEnemy.enemyStateMachine.Rank == EnemyStateMachine.enumRank.Rare)
-        {
-            if (SpecialSkillObjectList.Count == 0)
-            {
-                print("SpecialSkillObjectList.Count == 0");
-                return;
-            }
+    //    if (myEnemy.enemyStateMachine.Rank == EnemyStateMachine.enumRank.Rare)
+    //    {
+    //        if (SpecialSkillObjectList.Count == 0)
+    //        {
+    //            print("SpecialSkillObjectList.Count == 0");
+    //            return;
+    //        }
 
-            for (int i = 0; i < SpecialSkillCount; i++)
-            {
-                // 특수 스킬 부여
-                GameObject specialSkill = Instantiate(SpecialSkillObjectList[i], transform.parent, false);
+    //        for (int i = 0; i < SpecialSkillCount; i++)
+    //        {
+    //            // 특수 스킬 부여
+    //            GameObject specialSkill = Instantiate(SpecialSkillObjectList[i], transform.parent, false);
 
-                EnemySkill enemySkill = SpecialSkillObjectList[i].GetComponent<EnemySkill>();
-                if (enemySkill != null)
-                    usableSpecialSkillList.Add(enemySkill);
-                else
-                    print("enemySkill is null");
-            }
-        }
-    }
+    //            EnemySkill enemySkill = SpecialSkillObjectList[i].GetComponent<EnemySkill>();
+    //            if (enemySkill != null)
+    //                usableSpecialSkillList.Add(enemySkill);
+    //            else
+    //                print("enemySkill is null");
+    //        }
+    //    }
+    //}
 }

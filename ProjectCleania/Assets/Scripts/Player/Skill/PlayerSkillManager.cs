@@ -74,7 +74,7 @@ public class PlayerSkillManager : BaseSkillManager
     //    }
     //}
 
-    void SkillEventConnect()
+    protected override void SkillEventConnect()
     {
         skillStorage.GetSkill(PlayerSkill.SkillID.RefreshingLeapForward).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
     }
