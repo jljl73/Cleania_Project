@@ -76,8 +76,10 @@ public class DustySkillSuicide : EnemySkill
 
         isFlying = true;
         enemyMove.StopMoving(false);
-        enemyMove.SetOnlyChasePositionMode(true, enemyMove.TargetObject.transform.position);
+        if(enemyMove.TargetObject != null)
+            enemyMove.SetOnlyChasePositionMode(true, enemyMove.TargetObject.transform.position);
     }
+
     public override void Activate()
     {
         bombCollider.enabled = true;

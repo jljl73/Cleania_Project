@@ -5,96 +5,63 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour
 {
-    public GameObject[] slots;
     public GameObject slotParent;
+    public GameObject[] slots;
     public Transform ItemList;
-    public int nColumn = 10;
-    int sizeSlots;
 
-    List<int> emptySlots = new List<int>();
-    List<int> filledSlots = new List<int>();
-    List<int> tempSlots = new List<int>();
+    [SerializeField]
+    Storage otherStorage;
+    //public int nSize = 10;
+    int nSize;
+
+    [SerializeField]
+    GameObject[] items;
 
     void Awake()
     {
-        sizeSlots = slotParent.transform.childCount;
-        for (int i = 0; i < sizeSlots; ++i)
+        nSize = slotParent.transform.childCount;
+        items = new GameObject[nSize];
+
+        for (int i = 0; i < nSize; ++i)
         {
-            emptySlots.Add(i);
-            slots[i] = slotParent.transform.GetChild(i).gameObject;
+            items[i] = null;
         }
+        //gameObject.SetActive(false);
     }
-
-    
-    bool isEmptySlot()
-    {
-        foreach (int i in tempSlots)
-            if (filledSlots.Contains(i)) return false;
-
-        return true;
-    }
-
-    void SetItemToSlot(int index, int height, int width)
-    {
-        filledSlots.AddRange(tempSlots);
-        emptySlots = emptySlots.Except(tempSlots).ToList();
-    }
-
+        
     // 자동 추가
-    public GameObject Add(GameObject item, out int index)
+    public void Add(GameObject item, out int index)
     {
-        tempSlots.Clear();
-        ItemController_v2 controller = item.GetComponent<ItemController_v2>();
-        int width = controller.w;
-        int height = controller.h;
-
-        for (int i = 0; i < emptySlots.Count; ++i)
+        for (int i = 0; i < items.Length; ++i)
         {
-            MakeSlotList(i, height, width);
-            if (isEmptySlot())
+            if (items[i] == null)
             {
-                SetItemToSlot(i, height, width);
-                index = tempSlots[0];
+                items[i] = item;
                 ChangeParent(item);
-                return slots[tempSlots[0]];
+                index = i;
+                items[i].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(i).position);
+                return;
             }
         }
         index = -1;
-        return null;
     }
 
-    // 드래그 추가
-    public GameObject Add(GameObject item, int index)
+    public void Move(int src, int dest)
     {
-        tempSlots.Clear();
-        ItemController_v2 controller = item.GetComponent<ItemController_v2>();
-        int width = controller.w;
-        int height = controller.h;
-        MakeSlotList(index, height, width);
-
-        if (isEmptySlot())
+        GameObject temp = items[dest];
+        items[dest] = items[src];
+        items[src] = temp;
+        items[dest].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(dest).position);
+        if (items[src] != null)
         {
-            SetItemToSlot(index, height, width);
-            ChangeParent(item);
-            return slots[tempSlots[0]];
+            items[src].GetComponent<ItemController_v2>().MoveTo(slotParent.transform.GetChild(src).position);
+            items[src].GetComponent<ItemController_v2>().prevIndex = src;
         }
-
-        return null;
     }
 
-    public void Remove(int index, int height, int width)
+    public void Remove(int index)
     {
-        MakeSlotList(index, height, width);
-        emptySlots.AddRange(tempSlots);
-        filledSlots = filledSlots.Except(tempSlots).ToList();
-    }
-
-    void MakeSlotList(int index, int height, int width)
-    {
-        tempSlots.Clear();
-        for (int w = 0; w < width; w++)
-            for (int h = 0; h < height; h++)
-                tempSlots.Add(index + h * nColumn + w);
+        items[index] = null;
     }
 
     void ChangeParent(GameObject item)

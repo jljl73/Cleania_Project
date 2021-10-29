@@ -7,25 +7,21 @@ public class UIManager : MonoBehaviour
 {
     bool isActiveItemPanel;
 
-    public GameObject itemPanel;
-    public GameObject ItemPanel { get { return itemPanel; } }
-
-    public ItemInventory itemInventory_;
-    public ItemInventory GetItemInventory { get { return itemInventory_; } }
-
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
+    public GameObject InventoryPanel;
     public GameObject SkillPanel;
     public GameObject ExpandMapPanel;
     public GameObject QuestPanel;
     public GameObject RepairPanel;
-    public GameObject BuyPanel;
-    public GameObject SellPanel;
+    public GameObject MarketPanel;
     public GameObject EnchantPanel;
     public GameObject StoragePanel;
+    public GameObject MenuPanel;
+    public GameObject SettingPanel;
 
-    Stack<GameObject> sPanels = new Stack<GameObject>();
+    List<GameObject> sPanels = new List<GameObject>();
 
     GameObject currentPanel;
 
@@ -60,22 +56,13 @@ public class UIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            //OffAllPanels();
-            CloseLastPanel();
+            OffAllPanels();
         }
     }
 
     public void ShowInventory()
     {
-        ShowPanel(itemPanel);
-        //if (isActiveItemPanel)
-        //    itemPanel.transform.Translate(new Vector3(20000, 0, 0));
-        //else
-        //    itemPanel.transform.Translate(new Vector3(-20000, 0, 0));
-
-        //isActiveItemPanel = !isActiveItemPanel;
-        //if (isActiveItemPanel)
-        //    itemPanel.transform.SetAsLastSibling();
+        ShowPanel(InventoryPanel);
     }
 
     public void ShowSkillPanel()
@@ -93,16 +80,11 @@ public class UIManager : MonoBehaviour
         ShowPanel(RepairPanel);
     }
 
-    public void ShowBuyPanel()
+    public void ShowMarketPanel()
     {
-        ShowPanel(BuyPanel);
+        ShowPanel(MarketPanel);
     }
-
-    public void ShowSellPanel()
-    {
-        ShowPanel(SellPanel);
-    }
-
+    
     public void ShowEnchantPanel()
     {
         ShowPanel(EnchantPanel);
@@ -113,15 +95,29 @@ public class UIManager : MonoBehaviour
         ShowPanel(StoragePanel);
     }
 
+    public void ShowMenuPanel()
+    {
+        ShowPanel(MenuPanel);
+    }
+
+    public NPC.TYPE GetCurrentNPC()
+    {
+        if (StoragePanel.activeSelf) return NPC.TYPE.Storage;
+        else if (MarketPanel.activeSelf) return NPC.TYPE.Market;
+        else if (EnchantPanel.activeSelf) return NPC.TYPE.Enchant;
+        else if (RepairPanel.activeSelf) return NPC.TYPE.Repair;
+        else return NPC.TYPE.None;
+    }
+
     void OffAllPanels()
     {
-        if (isActiveItemPanel) ShowInventory();
+        //if (isActiveItemPanel) ShowInventory();
+        this.InventoryPanel.SetActive(false);
         this.SkillPanel.SetActive(false);
         this.ExpandMapPanel.SetActive(false);
         this.QuestPanel.SetActive(false);
         this.RepairPanel.SetActive(false);
-        this.BuyPanel.SetActive(false);
-        this.SellPanel.SetActive(false);
+        this.MarketPanel.SetActive(false);
         this.EnchantPanel.SetActive(false);
         this.StoragePanel.SetActive(false);
     }
@@ -129,25 +125,32 @@ public class UIManager : MonoBehaviour
     public void OffNPCPanels()
     {
         this.RepairPanel.SetActive(false);
-        this.BuyPanel.SetActive(false);
-        this.SellPanel.SetActive(false);
+        this.MarketPanel.SetActive(false);
         this.EnchantPanel.SetActive(false);
         this.StoragePanel.SetActive(false);
     }
 
-    void ShowPanel(GameObject panel)
+    public void ShowPanel(GameObject panel)
     {
+        Debug.Log(panel.name);
         panel.SetActive(!panel.activeSelf);
+
+
         if (panel.activeSelf)
         {
             panel.transform.SetAsLastSibling();
-            sPanels.Push(panel);
+            sPanels.Add(panel);
         }
+        else
+            sPanels.Remove(panel);
+
     }
 
     void CloseLastPanel()
     {
         if (sPanels.Count > 0)
-            sPanels.Pop().SetActive(false);
+            ShowPanel(sPanels[sPanels.Count - 1]);
+        else
+            ShowPanel(MenuPanel);
     }
 }

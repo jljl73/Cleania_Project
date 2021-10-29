@@ -41,7 +41,7 @@ public class ItemController : MonoBehaviour
     {
         UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         // 변수 초기화
-        _itemInventory = uiManager.ItemPanel.GetComponent<ItemInventory>(); 
+        _itemInventory = uiManager.InventoryPanel.GetComponent<ItemInventory>(); 
         // 다른 방법은 나중에
         _inventory = _itemInventory.transform.Find("Inventory").gameObject;
         _clicked = _itemInventory.transform.Find("Clicked").gameObject;
@@ -293,7 +293,7 @@ public class ItemController : MonoBehaviour
         slots.Add(slot);
         ActivateSlot();
         isEquipped = true;
-        _equipmentManager.WearEquipment(_type, _option);
+        //_equipmentManager.WearEquipment(_type, _option);
     }
 
     public void TakeOff(int index)
@@ -303,7 +303,7 @@ public class ItemController : MonoBehaviour
         else SetSlot(index);
         ActivateSlot();
         isEquipped = false;
-        _equipmentManager.TakeOffEquipment(_type);
+        //_equipmentManager.TakeOffEquipment(_type);
     }
 
     public void OnButtonClicked(BaseEventData eventData)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCTrigger : MonoBehaviour
 {
     public DialogManager dialogManager;
-    public UIManager ui;
+    public UIManager uiManager;
     List<GameObject> npcs = new List<GameObject>();
 
     GameObject npc;
@@ -19,20 +19,19 @@ public class NPCTrigger : MonoBehaviour
             switch (npc.GetComponent<NPC>().NPCType)
             {
                 case NPC.TYPE.Repair:
-                    ui.ShowRepairPanel();
+                    dialogManager.ShowRepairDialog();
                     break;
-                case NPC.TYPE.Buy:
-                    //ui.ShowBuyPanel();
+                case NPC.TYPE.Market:
                     dialogManager.ShowMarketDialog();
                     break;
-                case NPC.TYPE.Sell:
-                    ui.ShowSellPanel();
-                    break;
                 case NPC.TYPE.Enchant:
-                    ui.ShowEnchantPanel();
+                    dialogManager.ShowEnchantDialog();
                     break;
                 case NPC.TYPE.Storage:
-                    ui.ShowStoragePanel();
+                    dialogManager.ShowStorageDialog();
+                    break;
+                case NPC.TYPE.Portal:
+                    GameManager.Instance.ChangeScene(npc.GetComponent<NPC>().Value);
                     break;
             }
         }
@@ -72,7 +71,8 @@ public class NPCTrigger : MonoBehaviour
     {
         if (other.CompareTag("NPC"))
         {
-            ui.OffNPCPanels();
+            uiManager.OffNPCPanels();
+            dialogManager.OffDialog();
             npcs.Remove(other.gameObject);
             other.GetComponent<NPC>().ShowName(false);
         }

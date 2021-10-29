@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public Player player;
     public ChatManager chatManager;
     public UIManager uiManager;
+    public NPCManager npcManager;
     public string nextSceneName;
 
     public InputField IF_Chat;
