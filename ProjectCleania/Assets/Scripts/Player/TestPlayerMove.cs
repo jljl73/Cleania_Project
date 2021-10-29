@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class TestPlayerMove : MonoBehaviour 
 {
+    [Header("움직임 사용 스킬")]
+    public PlayerSkillRefreshingLeapForward LeapForwardSkill;
+
     GameObject playerObject;
     Player player;
     Animator playerAnimator;            // 애니메이터 컴포넌트
@@ -15,6 +18,7 @@ public class TestPlayerMove : MonoBehaviour
     Vector3 targetPos;                 // 목표 위치
     RaycastHit hit;
 
+    [Header("회전 계수")]
     public float rotateCoef = 360f;
     // public PlayerSkillL skillL;
     // public bool bAttacking = false;
@@ -25,9 +29,9 @@ public class TestPlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        playerObject = transform.parent.gameObject;
-        player = playerObject.GetComponent<Player>();
-        playerAnimator = playerObject.GetComponent<Animator>();
+        playerObject = transform.gameObject;
+        player = GetComponent<Player>();
+        playerAnimator = GetComponent<Animator>();
         targetPos = transform.position;
     }
 
@@ -36,7 +40,11 @@ public class TestPlayerMove : MonoBehaviour
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
             player.stateMachine.CompareState(StateMachine.enumState.Attacking)) return;
 
-        if (!isOrderedToMove) return;
+        if (!isOrderedToMove)
+        {
+            targetPos = transform.position;
+            return;
+        }
 
         if (Vector3.Distance(targetPos, transform.position) < 0.2f)
         {
@@ -86,7 +94,7 @@ public class TestPlayerMove : MonoBehaviour
         int layerMask = 0;
         layerMask = 1 << 5 | 1 << 7;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(MousePosition);
 
         if (Physics.Raycast(ray, out hit, 500.0f, layerMask))
         {
@@ -110,11 +118,6 @@ public class TestPlayerMove : MonoBehaviour
         targetPos = transform.position;
     }
 
-    public void JumpForward(float dist)
-    {
-        targetPos = transform.position + transform.forward * dist;
-    }
-
     void Targetting()
     {
         RaycastHit raycastHit;
@@ -134,13 +137,48 @@ public class TestPlayerMove : MonoBehaviour
                 // bChasing = true;
             }
         }
-  
     }
 
-    private void OnTriggerStay(Collider other)
+    public void ImmediateLookAtMouse()
     {
-      
+        RaycastHit rayhitInfo;
+        if (CanBeTriggerd("Ground", out rayhitInfo))
+        {
+            player.gameObject.transform.LookAt(rayhitInfo.point);
+        }
+    }
+
+    bool CanBeTriggerd(string collideTag, out RaycastHit rayhitInfo)
+    {
+        bool result = false;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit raycastHit;
+        if (Physics.Raycast(ray, out raycastHit))
+        {
+            if (raycastHit.collider.CompareTag(collideTag))
+                result = true;
+        }
+        rayhitInfo = raycastHit;
+
+        return result;
     }
 
 
+    //public void JumpForward(float value)
+    //{
+    //    float dist = value;
+    //    isOrderedToMove = true;
+    //    targetPos = transform.position + transform.forward * dist;
+    //}
+
+    public void LeapForwardSkillJumpForward()
+    {
+        print("LeapForwardSkillJumpForward!");
+        if (LeapForwardSkill == null)
+            throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
+        float dist = LeapForwardSkill.GetJumpDistance();
+        isOrderedToMove = true;
+        targetPos = transform.position + transform.forward * dist;
+    }
 }

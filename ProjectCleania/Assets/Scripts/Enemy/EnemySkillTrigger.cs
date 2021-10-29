@@ -12,6 +12,7 @@ public class EnemySkillTrigger : MonoBehaviour
     {
         enemySkillManager = GetComponent<EnemySkillManager>();
     }
+
     //protected bool IsSkillAvailable()
     //{
     //    if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) && !animator.IsInTransition(0))

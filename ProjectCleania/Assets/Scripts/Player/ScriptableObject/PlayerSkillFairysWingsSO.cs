@@ -35,8 +35,8 @@ public class PlayerSkillFairysWingsSO : ScriptableObject
     }
 
     [Header("작동 키")]
-    public string TriggerKey;
-    public string GetTriggerKey() { return TriggerKey; }
+    public KeyCode TriggerKey;
+    public KeyCode GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]
@@ -54,6 +54,16 @@ public class PlayerSkillFairysWingsSO : ScriptableObject
     [Header("전체 애니메이션 배속")]
     public float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
+
+    [Header("부분 애니메이션 배속")]
+    public float HandsUpReadyMultiplier = 1.0f;
+    public float GetHandsUpReadyMultiplier() { return HandsUpReadyMultiplier; }
+
+    public float HandsUpAndDownMultiplier = 1.0f;
+    public float GetHandsUpAndDownMultiplier() { return HandsUpAndDownMultiplier; }
+
+    public float PostDelayMultiplier = 1.0f;
+    public float GetPostDelayMultiplier() { return PostDelayMultiplier; }
 
     [Header("지속 시간")]
     public float Duration = 5f;

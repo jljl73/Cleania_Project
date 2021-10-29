@@ -4,12 +4,41 @@ using UnityEngine;
 
 public class WildIntiSkillTrigger : EnemySkillTrigger
 {
-    private void OnTriggerStay(Collider other)
+    public EnemyStateMachine stateMachine;
+    Collider[] overlappedColliders;
+
+    public float TriggerRange = 2f;
+
+    private new void Awake()
     {
-        if (other.CompareTag("Player"))
+        base.Awake();
+
+        if (stateMachine == null)
+            throw new System.Exception("WildIntiSkillTrigger doesnt have stateMachine");
+    }
+
+    private void Update()
+    {
+        if (stateMachine.CompareState(EnemyStateMachine.enumState.Dead))
+            return;
+
+        overlappedColliders = Physics.OverlapSphere(transform.position, TriggerRange);
+        foreach (Collider collider in overlappedColliders)
         {
-            print("Player in WildIntiSkillTrigger");
-            enemySkillManager.PlaySkill(0);
+            if (collider.CompareTag("Player"))
+            {
+                // if (!IsSkillAvailable()) return;
+                enemySkillManager.PlaySkill(0);
+            }
         }
     }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        print("Player in WildIntiSkillTrigger");
+    //        enemySkillManager.PlaySkill(0);
+    //    }
+    //}
 }

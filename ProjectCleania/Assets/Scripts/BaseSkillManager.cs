@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseSkillManager : MonoBehaviour
+public abstract class BaseSkillManager : MonoBehaviour, IStunned
 {
     // public StateMachine stateMachine;
     public AbilityStatus abilityStatus;
     public Animator animator;
-    public Skill[] skills;              // 인스펙터에서 할당
+    protected Skill[] skills;              
+    public int SkillSlotCount = 1;
     // Skill skill;
 
     protected float[] coolTimePassed;
@@ -18,9 +19,13 @@ public class BaseSkillManager : MonoBehaviour
     protected virtual void Awake()
     {
         // abilityStatus = GetComponent<AbilityStatus>();
-        coolTimePassed = new float[skills.Length];
-        skillAvailable = new bool[skills.Length];
-        CoolTimePassedRatio = new float[skills.Length];
+        if (abilityStatus == null)
+            throw new System.Exception("BaseSkillManager doesnt have abilityStatus");
+
+        skills = new Skill[SkillSlotCount];
+        coolTimePassed = new float[SkillSlotCount];
+        skillAvailable = new bool[SkillSlotCount];
+        CoolTimePassedRatio = new float[SkillSlotCount];
     }
 
     protected void Start()
@@ -125,16 +130,7 @@ public class BaseSkillManager : MonoBehaviour
         }
     }
 
-    //public virtual void ForcePlaySkill(int index)
-    //{
-    //    // 모든 진행중인 스킬 끈 후 IDle로 전환
-    //    DeactivateAllSkill();
-    //    animator.SetBool("OnSkill", false);
-
-    //    // 스킬 실행
-    //    skills[index].AnimationActivate();
-    //    ResetSkill(index);
-    //}
+    protected abstract void SkillEventConnect();
 
     public virtual void PlaySkill(int index)
     {
@@ -154,7 +150,7 @@ public class BaseSkillManager : MonoBehaviour
         skills[type].Deactivate();
     }
 
-    protected void DeactivateAllSkill()
+    public void DeactivateAllSkill()
     {
         foreach (Skill skill in skills)
         {
@@ -221,6 +217,32 @@ public class BaseSkillManager : MonoBehaviour
 
     protected virtual void SetDefaultSkillSetting()
     {
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (skills[i] == null)
+                throw new System.Exception("SetDefaultSkillSetting (skills[i] == null");
 
+            skills[i].OwnerAbilityStatus = abilityStatus;
+            skills[i].animator = animator;
+        }
+    }
+
+    public void Stunned(bool isStunned, float stunnedTime)
+    {
+        if (isStunned)
+        {
+            StartCoroutine("StunnedFor", stunnedTime);
+        }
+        else
+        {
+            animator.speed = 1;
+        }
+    }
+
+    IEnumerator IStunned.StunnedFor(float time)
+    {
+        animator.speed = 0;
+        yield return new WaitForSeconds(time);
+        animator.speed = 1;
     }
 }

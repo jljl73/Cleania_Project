@@ -2,28 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.AI;
 
 public class EnemySkillManager : BaseSkillManager
 {
     public EnemySkillStorage skillStorage;
+    public EnemyMove enemyMove;
     public Enemy myEnemy;
+    public NavMeshAgent nav;
 
     protected override void Awake()
     {
-        if (skillStorage != null)
-        {
-            skills = new Skill[skillStorage.InherentSkillList.Count];
-            coolTimePassed = new float[skills.Length];
-            skillAvailable = new bool[skills.Length];
-            CoolTimePassedRatio = new float[skills.Length];
-        }
-        else
-        {
-            base.Awake();
-        }
-        
+        //if (skillStorage != null)
+        //{
+        //    skills = new Skill[skillStorage.InherentSkillList.Count];
+        //    coolTimePassed = new float[skills.Length];
+        //    skillAvailable = new bool[skills.Length];
+        //    CoolTimePassedRatio = new float[skills.Length];
+        //}
+        //else
+        //{
+        //    base.Awake();
+        //}
+        base.Awake();
+
+        if (nav == null)
+            throw new System.Exception("EnemySkillManager doesnt have nav");
+
+        if (enemyMove == null)
+            throw new System.Exception("EnemySkillManager doesnt have enemyMove");
+
         // abilityStatus = player.abilityStatus;
-        myEnemy = transform.parent.GetComponent<Enemy>();
+        // myEnemy = GetComponent<Enemy>();
     }
 
     new void Start()
@@ -37,8 +47,16 @@ public class EnemySkillManager : BaseSkillManager
             coolTimePassed[i] = 1f;
             skillAvailable[i] = true;
         }
-        
+
+
         myEnemy.OnDead += DeactivateAllSkill;
+        myEnemy.OnStunned += Stunned;
+    }
+
+    private new void Update()
+    {
+        base.Update();
+        animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
     }
 
     protected override void SetDefaultSkillSetting()
@@ -49,8 +67,16 @@ public class EnemySkillManager : BaseSkillManager
         {
             skills[i] = skillStorage.GetInherentSkill(i);
         }
+
+        base.SetDefaultSkillSetting();
     }
 
+    protected override void SkillEventConnect()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    #region
     // public EnemyStateMachine stateMachine;
     // private AbilityStatus playerAbilityStatus;
 
@@ -114,5 +140,5 @@ public class EnemySkillManager : BaseSkillManager
     //    else
     //        return false;
     //}
-
+    #endregion
 }

@@ -7,7 +7,6 @@ public class PlayerSkillCleaningWind : PlayerSkill
     public PlayerSkillCleaningWindSO SkillData;
 
     public GameObject hurricanePrefabs;
-    public AbilityStatus abilityStatus;
 
     GameObject newProjectile;
 
@@ -73,6 +72,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         //animator.SetInteger("Skill", 3);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill3", true);
@@ -97,7 +98,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
             newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
             Projectile proj = newProjectile.GetComponent<Projectile>();
-            proj.PitcherStatus = abilityStatus;
+            proj.PitcherStatus = OwnerAbilityStatus;
             proj.ResetSetting(maxHitPerSameObject, projectileDamageRatePerSec, projectileDuration);
         }
 

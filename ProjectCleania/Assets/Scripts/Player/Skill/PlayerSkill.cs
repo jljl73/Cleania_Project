@@ -9,10 +9,13 @@ public abstract class PlayerSkill : Skill
     public SkillID ID = SkillID.Dusting;
 
     // ¿€µø ≈∞
-    protected string SkillSlotDependency = 1.ToString();
-    public string GetSkillSlotDependency() { return SkillSlotDependency; }
+    protected KeyCode SkillSlotDependency = KeyCode.Alpha1;
+    public KeyCode GetSkillSlotDependency() { return SkillSlotDependency; }
 
-
+    protected new void Start()
+    {
+        base.Start();
+    }
 
     //public List<SkillEffectController> effectController;
 

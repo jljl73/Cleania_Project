@@ -25,7 +25,7 @@ public class PlayerSkillFairysWings : PlayerSkill
         UpdateSkillData();
     }
 
-    protected new void Start()
+    new void Start()
     {
         base.Start();
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
@@ -49,6 +49,8 @@ public class PlayerSkillFairysWings : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill1", true);
         //animator.SetInteger("Skill", 1);

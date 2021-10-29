@@ -8,7 +8,7 @@ public class PlayerSkill4 : PlayerSkill
     public AbilityStatus abilityStatus;
     public float skillScale = 1.0f;
 
-    public TestPlayerMove playerMovement;
+    // public TestPlayerMove playerMovement;
     public float jumpDistance = 7f;
 
     Ray ray;
@@ -30,7 +30,10 @@ public class PlayerSkill4 : PlayerSkill
         animator.SetBool("OnSkill4", true);
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
-        playerMovement.JumpForward(jumpDistance);
+        // playerMovement.JumpForward(jumpDistance);
+        // PlaySkillEvent.Invoke();
+        //if (OnPlaySkill != null)
+        //    OnPlaySkill();
     }
 
     override public void Activate()

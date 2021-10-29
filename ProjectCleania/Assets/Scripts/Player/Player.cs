@@ -19,7 +19,9 @@ public class Player : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+
         OnDead += RunDieAnimation;
+        OnDead += playerSkillManager.DeactivateAllSkill;
     }
 
     private void Update()
