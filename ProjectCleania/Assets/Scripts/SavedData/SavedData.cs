@@ -7,7 +7,20 @@ public class SavedData : MonoBehaviour
 {
     static private SavedData _singleton;
     static public SavedData Instance
-    { get => _singleton;}
+    {
+        get
+        {
+            if(_singleton == null)
+            {
+                GameObject go = new GameObject("_SavedData");
+                _singleton = go.AddComponent<SavedData>();
+                DontDestroyOnLoad(go);
+                _singleton.characterName = "debug";
+            }
+
+            return _singleton;
+        }
+    }
 
     public string characterName;    
     string Path

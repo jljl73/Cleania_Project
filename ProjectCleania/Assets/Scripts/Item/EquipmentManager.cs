@@ -6,7 +6,7 @@ using System;
 public class EquipmentManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] slots;
+    ItemController_v2[] slots;
 
     void Start()
     {
@@ -14,9 +14,9 @@ public class EquipmentManager : MonoBehaviour
             slots[i] = null;
     }
 
-    public void Equip(GameObject item)
+    public void Equip(ItemController_v2 item)
     {
-        ItemSO.enumSubCategory category = item.GetComponent<ItemController_v2>().itemInstance.SO.SubCategory;
+        ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
         int ct = GetIndex(category);
 
         if (ct == 0) return;
@@ -27,8 +27,8 @@ public class EquipmentManager : MonoBehaviour
         }
 
         Unequip(ct);
-        item.GetComponent<ItemController_v2>().PullInventory();
-        item.GetComponent<ItemController_v2>().MoveTo(transform.GetChild(ct).position);
+        item.PullInventory();
+        item.MoveTo(transform.GetChild(ct).position);
         slots[ct] = item;
     }
 
@@ -36,7 +36,7 @@ public class EquipmentManager : MonoBehaviour
     {
         if (slots[ct] == null) return;
 
-        slots[ct].GetComponent<ItemController_v2>().PutInventory();
+        slots[ct].PutInventory();
         slots[ct] = null;
     }
 

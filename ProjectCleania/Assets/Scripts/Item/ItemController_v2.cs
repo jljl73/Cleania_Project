@@ -38,7 +38,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public void PutInventory()
     {
-        inventory.Add(gameObject, out prevIndex);
+        inventory.Add(this, out prevIndex);
 
         //<Modified>
         if (prevIndex == -1)
@@ -55,7 +55,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     {
         if (prevIndex != -1)
             storage.Remove(prevIndex);
-        inventory.Add(gameObject, out prevIndex);
+        inventory.Add(this, out prevIndex);
         if (prevIndex != -1)
             isInStorage = false;
     }
@@ -64,7 +64,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     {
         if (prevIndex != -1)
             inventory.Remove(prevIndex);
-        storage.Add(gameObject, out prevIndex);
+        storage.Add(this, out prevIndex);
         if (prevIndex != -1)
             isInStorage = true;
     }
