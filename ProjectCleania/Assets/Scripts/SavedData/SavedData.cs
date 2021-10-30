@@ -16,6 +16,12 @@ public class SavedData : MonoBehaviour
                 _singleton = go.AddComponent<SavedData>();
                 DontDestroyOnLoad(go);
                 _singleton.characterName = "debug";
+
+                _singleton.vulnerable = GameManager.Instance.PlayerAbility;
+                _singleton.equipable = GameManager.Instance.PlayerEquipments;
+                _singleton.Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
+
+                _singleton.Load();
             }
 
             return _singleton;
@@ -118,7 +124,7 @@ public class SavedData : MonoBehaviour
         _singleton = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
         equipable = GameManager.Instance.PlayerEquipments;

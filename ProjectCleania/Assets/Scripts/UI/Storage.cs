@@ -20,6 +20,7 @@ public class Storage : MonoBehaviour
     StorageType LinkedStorage;
     ItemStorage_LocalGrid myLocalGrid;
     public GameObject ItemContollerParent;
+    GameObject controllerPrefab;
     // </Modified>
 
 
@@ -29,7 +30,8 @@ public class Storage : MonoBehaviour
     int nSize;
 
     [SerializeField]
-    ItemController_v2[] items;
+    public ItemController_v2[] items
+    { get; private set; }
 
     protected void Awake()
     {
@@ -42,7 +44,12 @@ public class Storage : MonoBehaviour
         }
         //gameObject.SetActive(false);
 
-        //<>
+        controllerPrefab = Resources.Load<GameObject>("Prefabs/ItemController_v2");
+    }
+
+    private void Start()
+    {
+
         switch(LinkedStorage)
         {
             case StorageType.Inventory:
@@ -54,9 +61,10 @@ public class Storage : MonoBehaviour
                 myLocalGrid = SavedData.Instance.Item_Storage;
                 break;
         }
-        //</>
+
+        Invoke("LoadItemControllers", 1.0f);
     }
-        
+
     // 자동 추가
     public void Add(ItemController_v2 item, out int index)
     {
@@ -80,6 +88,30 @@ public class Storage : MonoBehaviour
         index = -1;
     }
 
+    // 지정 추가
+    public bool Add(ItemController_v2 item, out int index, int HopeIndex)
+    {
+        if (items[HopeIndex] == null)
+        {
+            items[HopeIndex] = item;
+            ChangeParent(item);
+            index = HopeIndex;
+            items[HopeIndex].MoveTo(slotParent.transform.GetChild(HopeIndex).position);
+
+            //<Modified>
+            myLocalGrid.Add(item.itemInstance,
+                new System.Drawing.Point(HopeIndex % myLocalGrid.GridSize.Width, HopeIndex / myLocalGrid.GridSize.Width));
+            //</Modified>
+
+            return true;
+        }
+        else
+        {
+            index = -1;
+            return false;
+        }
+    }
+
     public void Move(int src, int dest)
     {
         ItemController_v2 temp = items[dest];
@@ -101,5 +133,30 @@ public class Storage : MonoBehaviour
     void ChangeParent(ItemController_v2 item)
     {
         item.transform.SetParent(ItemList);
+    }
+
+    void LoadItemControllers()
+    {
+        foreach(var i in items)
+        {
+            if (i != null)
+                Destroy(i.gameObject);
+        }
+
+
+        for (int i = 0; i < nSize; ++i)
+        {
+            items[i] = null;
+        }
+
+        foreach (var i in myLocalGrid.Items)
+        {
+            GameObject newControllerObject = GameObject.Instantiate(controllerPrefab);
+            newControllerObject.transform.SetParent(ItemContollerParent.transform);
+            ItemController_v2 controller = newControllerObject.GetComponent<ItemController_v2>();
+
+            controller.Initialize(i.Key);
+            //Add(controller, out controller.prevIndex, i.Value.Y * myLocalGrid.GridSize.Width + i.Value.X);
+        }
     }
 }
