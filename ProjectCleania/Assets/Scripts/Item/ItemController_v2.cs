@@ -13,6 +13,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public static ItemController_v2 clickedItem;
 
+
     public ItemInstance itemInstance { get; private set; }
 
     Vector3 prevPosition;
@@ -20,7 +21,44 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     bool isInStorage = false;
     public int prevIndex = -1;
     Storage inventory;
-    Storage storage; 
+    Storage storage;
+
+    // generator
+    static GameObject controllerPrefab;
+    static Queue<GameObject> _objectPool;
+
+    static public ItemController_v2 New(ItemInstance item)
+    {
+        ItemController_v2 controller = null;
+
+        if (_objectPool == null)
+            _objectPool = new Queue<GameObject>();
+
+        if (controllerPrefab == null)
+            controllerPrefab = Resources.Load<GameObject>("Prefabs/ItemController_v2");
+
+        if (_objectPool.Count < 1)
+        {
+            GameObject newControllerObject = GameObject.Instantiate(controllerPrefab);
+            controller = newControllerObject.GetComponent<ItemController_v2>();
+        }
+        else
+            controller = _objectPool.Dequeue().GetComponent<ItemController_v2>();
+
+        controller.Initialize(item);
+
+        controller.gameObject.SetActive(true);
+
+        return controller;
+    }
+    static public void Delete(ItemController_v2 controller)
+    {
+        controller.Initialize(null);
+        _objectPool.Enqueue(controller.gameObject);
+
+        controller.gameObject.SetActive(false);
+    }
+
 
     public void Initialize(ItemInstance item)
     {
@@ -31,8 +69,6 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         uiManager = GameManager.Instance.uiManager;
         inventory = uiManager.InventoryPanel.GetComponent<Storage>();
         storage = uiManager.StoragePanel.GetComponent<Storage>();
-
-        PutInventory();
     }
 
 
