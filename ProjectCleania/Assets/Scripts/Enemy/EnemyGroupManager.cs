@@ -30,14 +30,14 @@ public class EnemyGroupManager : MonoBehaviour
         enemies.Remove(enemy);
     }
 
-    //public void SetTarget(GameObject target)
-    //{
-    //    foreach (var e in enemies)
-    //    {
-    //        e.GetComponent<Enemy>().SetTarget(target);
-    //    }
-    //    this.target = target;
-    //}
+    public void SetTarget(GameObject target)
+    {
+        foreach (var e in enemies)
+        {
+            e.GetComponent<Enemy>().SetTarget(target);
+        }
+        this.target = target;
+    }
 
     public void ReleaseTarget()
     {

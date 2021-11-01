@@ -156,25 +156,25 @@ public class Enemy : MonoBehaviour
         enemyMove.ReleaseTarget();
     }
 
-    public void ActivateSkillEffect(AnimationEvent myEvent)
-    {
-        skillManager.ActivateSkillEffect(myEvent);
-    }
+    //public void ActivateSkillEffect(AnimationEvent myEvent)
+    //{
+    //    skillManager.ActivateSkillEffect(myEvent);
+    //}
 
-    public void DeactivateSkillEffect(AnimationEvent myEvent)
-    {
-        skillManager.DeactivateSkillEffect(myEvent);
-    }
+    //public void DeactivateSkillEffect(AnimationEvent myEvent)
+    //{
+    //    skillManager.DeactivateSkillEffect(myEvent);
+    //}
 
-    // Listener
-    public void ActivateSkill(int type)
-    {
-        skillManager.ActivateSkill(type);
-    }
+    //// Listener
+    //public void ActivateSkill(int type)
+    //{
+    //    skillManager.ActivateSkill(type);
+    //}
 
-    public void DeactivateSkill(int type)
-    {
-        skillManager.DeactivateSkill(type);
-    }
+    //public void DeactivateSkill(int type)
+    //{
+    //    skillManager.DeactivateSkill(type);
+    //}
 
 }
