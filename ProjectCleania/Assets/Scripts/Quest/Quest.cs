@@ -1,91 +1,107 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
-public struct QuestCompensation
+public struct QuestReward
 {
-    public float CleanCompensation;
-    public float XpCompensation;
-    public List<Item> ItemCompensation;
+    public enum TYPE { clean, exp, item };
+    public TYPE type;
+    public int value;
 
-    public QuestCompensation (float clean, float xp, List<Item> itemList)
+    public QuestReward(TYPE type, int value)
     {
-        CleanCompensation = clean;
-        XpCompensation = xp;
-        ItemCompensation = itemList;
+        this.type = type;
+        this.value = value;
     }
 }
 
 [System.Serializable]
-public struct QuestMission
+public struct QuestNeed
 {
-    public int EnemyCode;
-    public int RequiredCount;
-    int currentCount;
+    public enum TYPE { Monster, Item };
+    public bool IsClear { get { return targetValue >= curValue; } }
 
-    public QuestMission (int enemyCode, int requiredCount)
+    public TYPE type;
+    public int target;
+    public int targetValue;
+    public int curValue;
+
+    public QuestNeed(TYPE type, int target, int curValue, int targetValue)
     {
-        EnemyCode = enemyCode;
-        RequiredCount = requiredCount;
-        currentCount = 0;
+        this.type = type;
+        this.target = target;
+        this.curValue = curValue;
+        this.targetValue = targetValue;
     }
 
-    public void Feed(int enemyCode)
+    public void Achieve()
     {
-        if (EnemyCode == enemyCode)
-            currentCount++;
+        ++curValue;
     }
 
-    public bool IsCompleted()
+    public string Contents
     {
-        return currentCount == RequiredCount;
+        get
+        {
+            return String.Format("{0} 처치 ({1}/{2})", target, curValue, targetValue);
+        }
     }
 }
-
-public class Quest : MonoBehaviour
+[CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Object/Quest")]
+public class Quest : ScriptableObject
 {
-    public int QuestID;
-    // public int QuestID { get { return questID; } set { questID = value; } }
+    public enum STATE { Unassign, Assign, Clear };
+    public enum CATEGORY { Tutorial, Main, Sub, Sudden };
+    [SerializeField]
+    STATE state;
+    [SerializeField]
+    CATEGORY category;
+    public CATEGORY Catergory { get { return category; } }
 
-    public int NeededLevel;
-    // 추후 구현: 먼저 해결해야 하는 퀘스트도?
 
-    public QuestCompensation Compensation;
-    public List<QuestMission> missionList;
+    public string Name;
+    public string Content;
 
-    bool isFinished = false;
-    public bool IsFinished { get { return isFinished; } }
-    public void Feed(int EnemyCode)
+    [SerializeField]
+    QuestReward[] questRewards;
+    public QuestReward[] QuestRewards { get { return questRewards; } }
+    [SerializeField]
+    QuestNeed[] questNeeds;
+    public QuestNeed[] QuestNeeds { get { return questNeeds; } }
+
+    public void Assign()
     {
-        // 모든 미션을 돌며 잡은 적의 정보를 미션에게 Feed
-        foreach (QuestMission mission in missionList)
-        {
-            mission.Feed(EnemyCode);
-        }
-
-        // 하나라도 완료 안된 것 있으면 미완료!
-        bool tempIsFinished = true;
-        foreach (QuestMission mission in missionList)
-        {
-            if (!mission.IsCompleted())
-                tempIsFinished = false;
-        }
-
-        if (tempIsFinished)
-            isFinished = true;
-
-        return;
+        state = STATE.Assign;
     }
 
-    public void CompensateTo(QuestReciever QuestReciever)
+
+    // 몬스터 잡는거만 체크
+    public void Achieve(QuestNeed.TYPE type, int target)
     {
-        QuestReciever.GetReward(Compensation);
+        for (int i = 0; i < questNeeds.Length; ++i)
+        {
+            if(questNeeds[i].type == type && questNeeds[i].target == target)
+            {
+                questNeeds[i].Achieve();
+            }
+        }
     }
 
-    public bool CanBeGivenTo(QuestReciever QuestReciever)
+    public void GetReward()
     {
-        // 플레이어의 레벨을 확인 후 주어질 수 있는지 확인.
-        return true;
+        for(int i = 0; i<questRewards.Length; ++i)
+        {
+            switch (questRewards[i].type)
+            {
+                case QuestReward.TYPE.clean:
+                    break;
+                case QuestReward.TYPE.exp:
+                    break;
+                case QuestReward.TYPE.item:
+                    break;
+            }
+        }
     }
 }

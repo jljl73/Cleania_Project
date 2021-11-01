@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Storage : MonoBehaviour
 {
@@ -9,6 +10,14 @@ public class Storage : MonoBehaviour
     public GameObject[] slots;
     public Transform ItemList;
 
+
+    [SerializeField]
+    int crystal = 0;
+    public int Crystal { get { return crystal; } }
+    [SerializeField]
+    Text TextCrystal;
+
+ 
     // <Modified>
     enum StorageType
     {
@@ -42,7 +51,8 @@ public class Storage : MonoBehaviour
             items[i] = null;
         }
         //gameObject.SetActive(false);
-
+        TextCrystal.text = crystal.ToString();
+    }
         
 
     }
@@ -64,7 +74,7 @@ public class Storage : MonoBehaviour
         Invoke("LoadItemControllers", 0.2f);
     }
 
-    // ÀÚµ¿ Ãß°¡
+    // Ã€ÃšÂµÂ¿ ÃƒÃŸÂ°Â¡
     public void Add(ItemController_v2 item, out int index)
     {
         for (int i = 0; i < items.Length; ++i)
@@ -86,7 +96,7 @@ public class Storage : MonoBehaviour
         index = -1;
     }
 
-    // ÁöÁ¤ Ãß°¡
+    // ÃÃ¶ÃÂ¤ ÃƒÃŸÂ°Â¡
     public bool Add(ItemController_v2 item, out int index, int HopeIndex)
     {
         if (items[HopeIndex] == null)
@@ -149,6 +159,14 @@ public class Storage : MonoBehaviour
         item.transform.SetParent(ItemList);
     }
 
+    public void AddCrystal(int amount)
+    {
+        crystal += amount;
+        if (crystal < 0)
+            crystal = 0;
+        TextCrystal.text = crystal.ToString();
+    }
+   
     void LoadItemControllers()
     {
         for (int i = 0; i < nSize; ++i)

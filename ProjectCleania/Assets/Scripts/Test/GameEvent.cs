@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-
 public class GameEvent : ScriptableObject
 {
     List<GameEventListener> listeners = new List<GameEventListener>();

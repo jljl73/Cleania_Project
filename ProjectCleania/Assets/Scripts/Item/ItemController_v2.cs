@@ -113,7 +113,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
 
     //
-    // ÀÌº¥Æ® ¸®½º³Ê
+    // Ã€ÃŒÂºÂ¥Ã†Â® Â¸Â®Â½ÂºÂ³ÃŠ
     //
 
     public void OnPointerDown(PointerEventData eventData)
