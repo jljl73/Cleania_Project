@@ -178,7 +178,7 @@ public class Storage : MonoBehaviour
 
         foreach (var i in myLocalGrid.Items)
         {
-            ItemController_v2 controller = ItemController_v2.New(i.Key);
+            ItemController_v2 controller = ItemController_v2.New(i.Key, this);
             controller.transform.SetParent(ItemContollerParent.transform);
 
             Add(controller, out controller.prevIndex, myLocalGrid.PointToIndex(i.Value));

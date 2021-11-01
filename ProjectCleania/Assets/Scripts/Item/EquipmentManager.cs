@@ -8,6 +8,7 @@ public class EquipmentManager : MonoBehaviour
     [SerializeField]
     ItemController_v2[] slots;
     Equipable playerEquipable;
+    Storage inventoryComp;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         playerEquipable = GameManager.Instance.PlayerEquipments;
+        inventoryComp = GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>();
 
         Invoke("LoadItemControllers", 0.2f);
     }
@@ -36,8 +38,8 @@ public class EquipmentManager : MonoBehaviour
         {
             if (playerEquipable[(ItemInstance_Equipment.Type)i] != null)
             {
-                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i]);
-                item.transform.SetParent(GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().ItemContollerParent.transform);
+                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], null);
+                item.transform.SetParent(inventoryComp.ItemContollerParent.transform);
 
                 ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
                 int ct = GetIndex(category);
