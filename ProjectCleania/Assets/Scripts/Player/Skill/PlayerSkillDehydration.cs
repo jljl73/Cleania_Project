@@ -14,6 +14,7 @@ public class PlayerSkillDehydration : PlayerSkill
     float damageRate = 3.0f;
     public float GetDamageRate() { return damageRate; }
 
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
     private void Awake()
     {
         UpdateSkillData();
@@ -31,6 +32,7 @@ public class PlayerSkillDehydration : PlayerSkill
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();

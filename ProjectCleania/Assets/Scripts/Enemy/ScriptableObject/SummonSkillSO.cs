@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SummonSkill", menuName = "Scriptable Object/Enemy/SummonSkill")]
-public class SummonSkillSO : ScriptableObject
+public class SummonSkillSO : EnemySkillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }

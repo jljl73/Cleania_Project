@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TheDustySkill_1 : Skill
+public class TheDustySkill_1 : EnemySkill
 {
     public float DamageScale = 10;
-    Enemy enemy;
     Collider col;
     public UnityEvent unityEvent;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         col = GetComponent<Collider>();
-        enemy = transform.parent.parent.GetComponent<Enemy>();
     }
 
     public override void Activate()

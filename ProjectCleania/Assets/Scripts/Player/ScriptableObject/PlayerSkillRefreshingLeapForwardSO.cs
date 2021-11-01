@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerSkillRefreshingLeapForward", menuName = "Scriptable Object/PlayerSkill/PlayerSkillRefreshingLeapForward")]
-public class PlayerSkillRefreshingLeapForwardSO : ScriptableObject
+public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }

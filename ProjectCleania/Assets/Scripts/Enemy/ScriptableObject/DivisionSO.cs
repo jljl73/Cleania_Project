@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Division", menuName = "Scriptable Object/Enemy/DivisionSkill")]
-public class DivisionSO : ScriptableObject
+public class DivisionSO : EnemySkillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }

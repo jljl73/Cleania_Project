@@ -17,6 +17,8 @@ public class PlayerSkillSweeping : PlayerSkill
     float sweepRange = 2f;
     public float GetSweepRange() { return sweepRange; }
 
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+
     private void Awake()
     {
         col = GetComponent<CapsuleCollider>();
@@ -32,6 +34,7 @@ public class PlayerSkillSweeping : PlayerSkill
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();

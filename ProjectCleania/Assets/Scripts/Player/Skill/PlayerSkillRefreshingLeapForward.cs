@@ -41,12 +41,10 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     float otherSpeedMultiplier = 1.0f;
     public float GetOtherSpeedMultiplier() { return otherSpeedMultiplier; }
 
-
     Ray ray;
     RaycastHit hit;
     CapsuleCollider attackArea;
-
-    
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
 
     private void Awake()
     {
@@ -69,6 +67,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();

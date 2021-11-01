@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerSkillCleaningWind", menuName = "Scriptable Object/PlayerSkill/PlayerSkillCleaningWind")]
-public class PlayerSkillCleaningWindSO : ScriptableObject
+public class PlayerSkillCleaningWindSO : PlayerSKillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }

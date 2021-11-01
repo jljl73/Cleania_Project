@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AwakeDamage : MonoBehaviour
+public class AwakeDamage : DamagingProperty
 {
-    public AbilityStatus OwnerAbility { get; set; }
-    public float DamageScale { get; set; }
-
     Collider triggerCollider;
 
     private void Awake()
@@ -30,7 +27,10 @@ public class AwakeDamage : MonoBehaviour
         {
             AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
             if (playerAbil != null)
-                playerAbil.AttackedBy(OwnerAbility, DamageScale);
+            {
+                //playerAbil.AttackedBy(OwnerAbility, DamageScale);
+                print("순간 데미지");
+            }
 
             DeactivateCollider();
         }

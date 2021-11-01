@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DustWindSkill", menuName = "Scriptable Object/Enemy/DustWindSkill")]
-public class DustWindSO : ScriptableObject
+public class DustWindSO : EnemySkillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }

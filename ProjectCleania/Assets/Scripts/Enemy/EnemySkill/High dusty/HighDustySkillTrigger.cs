@@ -17,7 +17,22 @@ public class HighDustySkillTrigger : EnemySkillTrigger
             {
                 // if (!IsSkillAvailable()) return;
                 // enemySkillManager.PlaySkill(0);
-                enemySkillManager.PlaySkill(0);
+
+                // ¡ˆ∑⁄
+                if (enemySkillManager.PlaySkill(2910))
+                    return;
+
+                // ∫¿¿Œ
+                if (enemySkillManager.PlaySkill(2906))
+                    return;
+
+                // µ∂º∫
+                if (enemySkillManager.PlaySkill(2901))
+                    return;
+
+                // ∏’¡ˆ ≈ı√¥
+                if (enemySkillManager.PlaySkill(2301))
+                    return;
             }
         }
     }

@@ -6,69 +6,62 @@ using UnityEngine.AI;
 
 public class EnemySkillManager : BaseSkillManager
 {
-    public EnemySkillStorage skillStorage;
+    //public EnemySkillStorage skillStorage;
     public EnemyMove enemyMove;
     public Enemy myEnemy;
     public NavMeshAgent nav;
 
     protected override void Awake()
     {
-        //if (skillStorage != null)
-        //{
-        //    skills = new Skill[skillStorage.InherentSkillList.Count];
-        //    coolTimePassed = new float[skills.Length];
-        //    skillAvailable = new bool[skills.Length];
-        //    CoolTimePassedRatio = new float[skills.Length];
-        //}
-        //else
-        //{
-        //    base.Awake();
-        //}
         base.Awake();
-
+        
         if (nav == null)
             throw new System.Exception("EnemySkillManager doesnt have nav");
 
         if (enemyMove == null)
             throw new System.Exception("EnemySkillManager doesnt have enemyMove");
-
-        // abilityStatus = player.abilityStatus;
-        // myEnemy = GetComponent<Enemy>();
     }
 
     new void Start()
     {
-        base.Start();
+        // skillDict 추가
+        UploadNormalSkill();
+        UploadSpecialSkill();
 
-        SetDefaultSkillSetting();
-
-        for (int i = 0; i < skills.Length; i++)
-        {
-            coolTimePassed[i] = 1f;
-            skillAvailable[i] = true;
-        }
-
+        // skillData로 부터 쿨타임 관련 Dictionary 추가 및 초기화 & 스킬 animator 설정
+        UpdateOtherDictBySkillDict();
 
         myEnemy.OnDead += DeactivateAllSkill;
         myEnemy.OnStunned += Stunned;
     }
 
-    private new void Update()
+    new void Update()
     {
         base.Update();
-        animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
+        
     }
 
-    protected override void SetDefaultSkillSetting()
+    public override bool PlaySkill(int skillID)
     {
-        if (skillStorage == null) return;
+        if (!isSkillAvailable()) return false;
+        if (!skillAvailableDict[skillID]) return false;
+        
+        skillDict[skillID].AnimationActivate();
+        ResetSkill(skillID);
 
-        for (int i = 0; i < skills.Length; i++)
+        return true;
+    }
+
+    void UploadSpecialSkill()
+    {
+        EnemySkillStorage enemySkillStorage = skillStorage as EnemySkillStorage;
+        if (enemySkillStorage == null)
+            throw new System.Exception("EnemySkillManager's skillStorage is not EnemySkillStorage");
+
+        for (int i = 0; i < enemySkillStorage.SpecialSkillCandidates.Count; i++)
         {
-            skills[i] = skillStorage.GetInherentSkill(i);
+            skillDict.Add(enemySkillStorage.SpecialSkillCandidates[i].ID, enemySkillStorage.SpecialSkillCandidates[i]);
         }
-
-        base.SetDefaultSkillSetting();
     }
 
     protected override void SkillEventConnect()

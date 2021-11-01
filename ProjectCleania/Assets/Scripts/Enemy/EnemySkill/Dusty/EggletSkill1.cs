@@ -28,6 +28,7 @@ public class EggletSkill1 : EnemySkill
 
     public void UpdateSkillData()
     {
+        ID = skillData.ID;
         SkillName = skillData.GetSkillName();
         SkillDetails = skillData.GetSkillDetails();
         CoolTime = skillData.GetCoolTime();

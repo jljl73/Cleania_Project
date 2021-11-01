@@ -20,6 +20,8 @@ public class PlayerSkillFairysWings : PlayerSkill
     bool bSkill = false;
     int nDeadEnemy = 0;
 
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+
     private void Awake()
     {
         UpdateSkillData();
@@ -34,6 +36,7 @@ public class PlayerSkillFairysWings : PlayerSkill
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();
