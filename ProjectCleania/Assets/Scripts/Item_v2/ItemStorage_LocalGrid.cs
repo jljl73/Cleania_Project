@@ -14,7 +14,7 @@ using UnityEngine;
 [System.Serializable]
 public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
 {
-    public ItemStorage_LocalGrid(Size size) : base()
+    public ItemStorage_LocalGrid(Size size)
     {
         GridSize = size;
         _InitGrid();
