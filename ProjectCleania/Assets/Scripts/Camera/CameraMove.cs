@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public GameObject player;
+    GameObject player;
     public Vector3 cameraPosition;
 
     void Start()
     {
-        
+        player = GameManager.Instance.SinglePlayer;
     }
 
     // Update is called once per frame

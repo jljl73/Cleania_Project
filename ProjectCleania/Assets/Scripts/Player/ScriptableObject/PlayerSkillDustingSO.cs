@@ -30,13 +30,9 @@ public class PlayerSkillDustingSO : ScriptableObject
         return tempString;
     }
 
-    [Header("스킬 이팩트")]
-    public GameObject Effect;
-    public GameObject GetEffect() { return Effect; }
-
     [Header("작동 키")]
-    public string TriggerKey;
-    public string GetTriggerKey() { return TriggerKey; }
+    public KeyCode TriggerKey;
+    public KeyCode GetTriggerKey() { return TriggerKey; }
 
     // public bool isAttacking;
     [Header("쿨타임")]

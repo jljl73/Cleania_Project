@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMove : MonoBehaviour
+[RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
+public class EnemyMove : MonoBehaviour, IStunned
 {
-    Enemy enemy;
+    // Enemy enemy;
     NavMeshAgent nav;
-    StateMachine stateMachine;
+    public StateMachine stateMachine;
+    public Enemy myEnemy;
     Animator animator;
     // GameObject TargetObject = null;
     public GameObject TargetObject { get; private set; }
@@ -19,13 +21,29 @@ public class EnemyMove : MonoBehaviour
     bool isStopMoving = false;
     bool isOnlyChasePositionMode = false;
 
+    private void Awake()
+    {
+        // enemy = transform.parent.GetComponent<Enemy>();
+        animator = GetComponent<Animator>();
+        if (animator == null)
+            throw new System.Exception("EnemyMove doesnt have animator");
+
+        nav = GetComponent<NavMeshAgent>();
+        if (nav == null)
+            throw new System.Exception("EnemyMove doesnt have nav");
+        // animator = GetComponent<Animator>();
+        if (stateMachine == null)
+            throw new System.Exception("EnemyMove doesnt have stateMachine");
+
+        if (myEnemy == null)
+            throw new System.Exception("EnemyMove doesnt have myEnemy");
+    }
+
     void Start()
     {
-        enemy = transform.parent.GetComponent<Enemy>();
-        nav = transform.parent.GetComponent<NavMeshAgent>();
-        animator = transform.parent.GetComponent<Animator>();
-        stateMachine = transform.parent.GetComponent<StateMachine>();
         StartCoroutine(SetPositionToTarget());
+
+        myEnemy.OnStunned += Stunned;
     }
 
     void FixedUpdate()
@@ -85,7 +103,7 @@ public class EnemyMove : MonoBehaviour
         Vector3 limit = Vector3.Slerp(transform.forward, rotateForward, 
             360f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
 
-        enemy.transform.LookAt(transform.position + limit);
+        transform.LookAt(transform.position + limit);
     }
 
     public void SetTarget(GameObject target)
@@ -179,8 +197,6 @@ public class EnemyMove : MonoBehaviour
         Vector3 rotateForward = Vector3.zero;
         //if (TargetObject == null) return;
 
-        
-
         // 타겟 유무에 따른 회전 벡터 결정
         // rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
         if (!isRunAway)
@@ -200,5 +216,24 @@ public class EnemyMove : MonoBehaviour
     public bool ExistTarget()
     {
         return TargetObject != null;
+    }
+
+    public void Stunned(bool isStunned, float stunnedTime)
+    {
+        if (isStunned)
+        {
+            StartCoroutine("StunnedFor", stunnedTime);
+        }
+        else
+        {
+            nav.enabled = true;
+        }
+    }
+
+    public IEnumerator StunnedFor(float time)
+    {
+        nav.enabled = false;
+        yield return new WaitForSeconds(time);
+        nav.enabled = true;
     }
 }

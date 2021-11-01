@@ -12,46 +12,68 @@ public class EnemyChase : MonoBehaviour
         { 
             enemySpawner = value;
             myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
-            myGroupManager.AddMember(enemy);
+            myGroupManager.AddMember(gameObject);
 
         }
     }
-    GameObject enemy;
+    // GameObject enemy;
     EnemyGroupManager myGroupManager;
     AbilityStatus targetObjAbility;
+
+    public float CognitiveRange = 7;
+
+    Collider[] overlappedColiders;
 
     private void Awake()
     {
         // enemySpawner = transform.parent.GetComponent<Enemy>().EnemySpawner;
         // myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
-        enemy = transform.parent.gameObject;
+        // enemy = transform.parent.gameObject;
 
     }
 
     private void Update()
     {
-        if (targetObjAbility == null) return;
-        if (targetObjAbility.HP == 0)
+        overlappedColiders = Physics.OverlapSphere(transform.position, CognitiveRange);
+        foreach (Collider collider in overlappedColiders)
         {
-            if (enemySpawner != null)
-                enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            if (enemySpawner != null)
+            if (collider.CompareTag("Player"))
             {
-                enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(other.gameObject);
-                targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
+                if (targetObjAbility != null)
+                    break;
+
+                enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(collider.gameObject);
+                myGroupManager.Target = collider.gameObject;
+                targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
+                break;
             }
         }
+
+        //if (targetObjAbility == null) return;
+        //if (targetObjAbility.HP == 0)
+        //{
+        //    if (enemySpawner != null)
+        //        enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
+        //}
     }
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.CompareTag("Player"))
+    //    {
+    //        if (enemySpawner != null)
+    //        {
+    //            //enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(other.gameObject);
+    //            myGroupManager.Target = other.gameObject;
+    //            targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
+    //        }
+    //    }
+    //}
 
     void OnDestroy()
     {
-        if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(enemy);
+        if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(gameObject);
     }
+
+    
 }

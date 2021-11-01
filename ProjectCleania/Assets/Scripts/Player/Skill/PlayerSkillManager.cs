@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class PlayerSkillManager : BaseSkillManager
 {
-    Player player;
-    Dictionary<string, int> skillSlotDependencyDict = new Dictionary<string, int>();
+    // Player player;
+
+    public StateMachine playerStateMachine;
+    public TestPlayerMove playerMove;
+    public SkillStorage skillStorage;
+    // public Buffable buffable;
+
+    Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
     //public StateMachine stateMachine;
     //AbilityStatus abilityStatus;
@@ -20,24 +27,27 @@ public class PlayerSkillManager : BaseSkillManager
     //public float GetCoolTimePassedRatio(int idx) { return CoolTimePassedRatio[idx]; }
     #endregion
 
-    SkillStorage skillStorage;
-
-    public delegate void delegateEvent(int index);
-    public event delegateEvent SkillEvent;
 
     new void Awake()
     {
         base.Awake();
-        player = transform.parent.GetComponent<Player>();
-        // abilityStatus = player.abilityStatus;
 
-        SkillEvent += PlaySkill;
+        playerStateMachine = GetComponent<StateMachine>();
+        if (playerStateMachine == null)
+            throw new System.Exception("PlayerSkillManager doesnt have playerStateMachine");
+
+        playerMove = GetComponent<TestPlayerMove>();
+        if (playerMove == null)
+            throw new System.Exception("PlayerSkillManager doesnt have playerMove");
+
+        skillStorage = GetComponentInChildren<SkillStorage>();
+        if (skillStorage == null)
+            throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
     }
 
     new void Start()
     {
         base.Start();
-        skillStorage = transform.parent.GetComponentInChildren<SkillStorage>();
 
         SetskillSlotDependencyDict();
 
@@ -49,7 +59,7 @@ public class PlayerSkillManager : BaseSkillManager
             skillAvailable[i] = true;
         }
 
-        player.OnDead += DeactivateAllSkill;
+        SkillEventConnect();
     }
 
     //void DeactivateAllSkill()
@@ -64,6 +74,12 @@ public class PlayerSkillManager : BaseSkillManager
     //    }
     //}
 
+    protected override void SkillEventConnect()
+    {
+        skillStorage.GetSkill(PlayerSkill.SkillID.RefreshingLeapForward).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
+    }
+
+
     protected new bool isSkillAvailable()
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) 
@@ -75,12 +91,12 @@ public class PlayerSkillManager : BaseSkillManager
 
     void SetskillSlotDependencyDict()
     {
-        skillSlotDependencyDict.Add("1", 0);
-        skillSlotDependencyDict.Add("2", 1);
-        skillSlotDependencyDict.Add("3", 2);
-        skillSlotDependencyDict.Add("4", 3);
-        skillSlotDependencyDict.Add("C", 4);
-        skillSlotDependencyDict.Add("R", 5);
+        skillSlotDependencyDict.Add(KeyCode.Alpha1, 0);
+        skillSlotDependencyDict.Add(KeyCode.Alpha2, 1);
+        skillSlotDependencyDict.Add(KeyCode.Alpha3, 2);
+        skillSlotDependencyDict.Add(KeyCode.Alpha4, 3);
+        skillSlotDependencyDict.Add(KeyCode.C, 4);
+        skillSlotDependencyDict.Add(KeyCode.Mouse1, 5);
     }
 
     #region
@@ -126,7 +142,9 @@ public class PlayerSkillManager : BaseSkillManager
         if (!abilityStatus.ConsumeMP(skills[index].GetConsumMP()))
             return;
 
-        if (index != 3 && index != 5) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+        if (index != 3 && index != 5) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+
+        playerMove.ImmediateLookAtMouse();
 
         skills[index].AnimationActivate();
         ResetSkill(index);
@@ -189,13 +207,13 @@ public class PlayerSkillManager : BaseSkillManager
 
         if (skillEffectIndex != null)
         {
-            if (skillEffectIndex.GetSkillIndex() == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+            if (skillEffectIndex.GetSkillIndex() == 3) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
             skills[skillEffectIndex.GetSkillIndex()].Activate(skillEffectIndex.GetEffectIndex());
         }
         else
         {
-            if (myEvent.intParameter == 3) player.stateMachine.Transition(StateMachine.enumState.Attacking);
+            if (myEvent.intParameter == 3) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
             skills[myEvent.intParameter].Activate();
         }
@@ -206,7 +224,7 @@ public class PlayerSkillManager : BaseSkillManager
 
     public override void DeactivateSkill(int index)
     {
-        player.stateMachine.Transition(StateMachine.enumState.Idle);
+        playerStateMachine.Transition(StateMachine.enumState.Idle);
         skills[index].Deactivate();
     }
 
@@ -215,7 +233,7 @@ public class PlayerSkillManager : BaseSkillManager
     //                                             New Code
     // ---------------------------------------------------------------------------------------------- //
 
-    public void ChangeSkill(string skillSlot, PlayerSkill.SkillID skillNameEnum)
+    public void ChangeSkill(KeyCode skillSlot, PlayerSkill.SkillID skillNameEnum)
     {
         PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
 
@@ -223,15 +241,19 @@ public class PlayerSkillManager : BaseSkillManager
             return;
 
         skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
+        // skills[skillSlotDependencyDict[skillSlot]].OwnerAbilityStatus = abilityStatus;
+        // skills[skillSlotDependencyDict[skillSlot]].
     }
 
     protected override void SetDefaultSkillSetting()
     {
-        ChangeSkill("1", PlayerSkill.SkillID.FairysWings);
-        ChangeSkill("2", PlayerSkill.SkillID.Sweeping);
-        ChangeSkill("3", PlayerSkill.SkillID.CleaningWind);
-        ChangeSkill("4", PlayerSkill.SkillID.RefreshingLeapForward);
-        ChangeSkill("C", PlayerSkill.SkillID.Dusting);
-        ChangeSkill("R", PlayerSkill.SkillID.Dehydration);
+        ChangeSkill(KeyCode.Alpha1, PlayerSkill.SkillID.FairysWings);
+        ChangeSkill(KeyCode.Alpha2, PlayerSkill.SkillID.Sweeping);
+        ChangeSkill(KeyCode.Alpha3, PlayerSkill.SkillID.CleaningWind);
+        ChangeSkill(KeyCode.Alpha4, PlayerSkill.SkillID.RefreshingLeapForward);
+        ChangeSkill(KeyCode.C, PlayerSkill.SkillID.Dusting);
+        ChangeSkill(KeyCode.Mouse1, PlayerSkill.SkillID.Dehydration);
+
+        base.SetDefaultSkillSetting();
     }
 }

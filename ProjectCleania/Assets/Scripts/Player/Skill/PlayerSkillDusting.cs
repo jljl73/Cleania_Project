@@ -6,10 +6,6 @@ public class PlayerSkillDusting : PlayerSkill
 {
     public PlayerSkillDustingSO SkillData;
 
-    // public TestPlayerMove playerMovement;
-
-    public AbilityStatus abilityStatus;
-
     Collider attackArea;
 
     // "내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)"
@@ -49,6 +45,8 @@ public class PlayerSkillDusting : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillC", true);
         animator.SetTrigger("Dusting");
@@ -75,7 +73,7 @@ public class PlayerSkillDusting : PlayerSkill
             AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
 
             if (enemyAbil.HP != 0)
-                enemyAbil.AttackedBy(abilityStatus, damageRate);
+                enemyAbil.AttackedBy(OwnerAbilityStatus, damageRate);
         }
     }
 }

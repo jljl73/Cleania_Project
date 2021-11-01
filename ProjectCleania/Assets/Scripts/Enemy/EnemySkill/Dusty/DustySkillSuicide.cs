@@ -64,7 +64,7 @@ public class DustySkillSuicide : EnemySkill
 
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("Angry");
-        enemyMove.StopMoving(true);
+        enemyMove.StopMoving(true); 
 
         StartCoroutine("AngryToFlyForward", angryDuration);
     }

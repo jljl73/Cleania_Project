@@ -8,6 +8,10 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
     // WaitForSeconds SpinAttackWaitForSeconds;
 
     public EnemyMove enemyMove;
+    public EnemyStateMachine stateMachine;
+    Collider[] overlappedColliders;
+
+    public float TriggerRange = 5f;
 
     #region
     //[Header("소환 주기")]
@@ -42,6 +46,19 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
 
     private void Update()
     {
+        if (stateMachine.CompareState(EnemyStateMachine.enumState.Dead))
+            return;
+
+        overlappedColliders = Physics.OverlapSphere(transform.position, TriggerRange);
+        foreach (Collider collider in overlappedColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                // if (!IsSkillAvailable()) return;
+                enemySkillManager.PlaySkill(2);
+            }
+        }
+
         if (enemyMove.ExistTarget())
         {
             #region
@@ -72,21 +89,24 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
     //    yield return SpinAttackWaitForSeconds;
     //    isSpinAttackCoolTime = false;
     //}
-    #endregion
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            #region
-            //print("isSpinAttackCoolTime: " + isSpinAttackCoolTime);
-            //if (isSpinAttackCoolTime) return;
 
-            //if (IsSkillAvailable())
-            //{
-            //    StartCoroutine(SpinAttack());
-            //}
-            #endregion
-            enemySkillManager.PlaySkill(2);         // 스핀 어택 스킬 발동
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        #region
+    //        //print("isSpinAttackCoolTime: " + isSpinAttackCoolTime);
+    //        //if (isSpinAttackCoolTime) return;
+
+    //        //if (IsSkillAvailable())
+    //        //{
+    //        //    StartCoroutine(SpinAttack());
+    //        //}
+    //        #endregion
+    //        enemySkillManager.PlaySkill(2);         // 스핀 어택 스킬 발동
+    //    }
+    //}
+
+    #endregion
+
 }

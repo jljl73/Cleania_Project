@@ -14,11 +14,20 @@ using UnityEngine;
 [System.Serializable]
 public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
 {
-    public ItemStorage_LocalGrid(Size size)
+    public ItemStorage_LocalGrid(Size size) : base()
     {
         GridSize = size;
         _InitGrid();
     }
+
+    protected Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
+    /// <summary>
+    ///  You can't change storage's items with this accessor.<para></para>
+    ///  use Add() and Remove() to modify storage.<para></para>
+    ///  * created for foreach, search access
+    /// </summary>
+    public Dictionary<ItemInstance, Point> Items
+    { get => new Dictionary<ItemInstance, Point>(_items); }
 
     int gridSizeX;
     int gridSizeY;
@@ -32,14 +41,6 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
         }
     }
 
-    Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
-    /// <summary>
-    ///  You can't change storage's items with this accessor.<para></para>
-    ///  use Add() and Remove() to modify storage.<para></para>
-    ///  * created for foreach, search access
-    /// </summary>
-    public Dictionary<ItemInstance, Point> Items
-    { get => new Dictionary<ItemInstance, Point>(_items); }
     public Point this[ItemInstance item]
     {
         get
@@ -70,6 +71,15 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
                 return null;
         }
     }
+    public ItemInstance this[Point pos]
+    {
+        get => this[pos.Y, pos.X];
+    }
+    public ItemInstance this[int index]
+    {
+        get => this[IndexToPoint(index)];
+    }
+
 
     /// <summary>
     /// Default Add function.<para></para>
@@ -95,52 +105,53 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
         return false;
     }
     /// <summary>
+    /// Warper of Add(ItemInstance, Point)
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public bool Add(ItemInstance item, int index)
+    {
+        return Add(item, IndexToPoint(index));
+    }
+    /// <summary>
     /// You can store item in wanted location with this function.<para></para>
     /// Returns true if that location was not reserved.<para></para>
     /// Returns false if that place(s) has owner already.
     /// </summary>
     /// <param name="item"></param>
-    /// <param name="location"></param>
+    /// <param name="position"></param>
     /// <returns></returns>
-    public bool Add(ItemInstance item, Point location)
+    public bool Add(ItemInstance item, Point position)
     {
         if(item == null)
             return false;
 
         // index range check
-        if (location.X + item.SO.GridSize.Width > gridSizeX ||
-            location.Y + item.SO.GridSize.Height > gridSizeY ||
-            location.X < 0 || location.Y < 0)
+        if (position.X + item.SO.GridSize.Width > gridSizeX ||
+            position.Y + item.SO.GridSize.Height > gridSizeY ||
+            position.X < 0 || position.Y < 0)
             return false;
 
         // grid reservation check
-        if (_IsAreaEmpty(item.SO.GridSize, location) == false)
+        if (_IsAreaEmpty(item.SO.GridSize, position) == false)
             return false;
 
-        _Add(item, location);
+        _Add(item, position);
 
         return true;
     }
-    void _Add(ItemInstance item, Point location)
+    void _Add(ItemInstance item, Point position)
     {
         item.CurrentStorage = this;
 
         // reserve grid
         for (int y = 0; y < item.SO.GridSize.Height; ++y)
             for (int x = 0; x < item.SO.GridSize.Width; ++x)
-                _referenceGrid[y + location.Y][x + location.X] = item;
+                _referenceGrid[y + position.Y][x + position.X] = item;
 
         // add
-        _items.Add(item, location);
-    }
-    bool _IsAreaEmpty(Size area, Point location)
-    {
-        for (int y = 0; y < area.Height; ++y)
-            for (int x = 0; x < area.Width; ++x)
-                if (_referenceGrid[y + location.Y][x + location.X] != null)
-                    return false;
-
-        return true;
+        _items.Add(item, position);
     }
 
     /// <summary>
@@ -153,6 +164,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     /// <returns></returns>
     public override bool Remove(ItemInstance item)
     {
+        if (item == null)
+            return false;
+
         // item check
         if (!_items.ContainsKey(item))
             return false;
@@ -160,6 +174,15 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
         _Remove(item);
 
         return true;
+    }
+    /// <summary>
+    /// Warper of Remove(Point)
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public bool Remove(int index)
+    {
+        return Remove(IndexToPoint(index));
     }
     /// <summary>
     /// Pinpoint Removing.<para></para>
@@ -199,12 +222,115 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     }
 
 
+    public bool SwapSameSize(ItemInstance a, ItemInstance b)
+    {
+        if (!_items.TryGetValue(a, out Point aPos) ||
+            !_items.TryGetValue(b, out Point bPos))
+            return false;
+
+        _Remove(a);
+        _Remove(b);
+        _Add(a, bPos);
+        _Add(b, aPos);
+
+        return true;
+    }
+    public bool Swap(ItemInstance a, ItemInstance b)
+    {
+        if (a == null || b == null)
+            return false;
+
+        // check existance : both a and b should exist in localgrid
+        if (!_items.TryGetValue(a, out Point aPos) ||
+            !_items.TryGetValue(b, out Point bPos))
+            return false;
+
+        // swap start
+        _Remove(a);
+        _Remove(b);
+
+        // check size
+        if ((!_IsAreaEmpty(a.SO.GridSize, bPos)) ||
+            (!_IsAreaEmpty(b.SO.GridSize, aPos)))
+        {
+            _Add(a, aPos);
+            _Add(b, bPos);
+            return false;
+        }
+
+        _Add(a, bPos);
+        _Add(b, aPos);
+
+        return true;
+    }
+    public bool Swap(int aIndex, int bIndex)
+    {
+        return Swap(IndexToPoint(aIndex), IndexToPoint(bIndex));
+    }
+    public bool Swap(Point aPos, Point bPos)
+    {
+        // check index out of range
+        if (aPos.X >= gridSizeX || aPos.X < 0 || aPos.Y >= gridSizeY || aPos.Y < 0 ||
+            bPos.X >= gridSizeX || bPos.X < 0 || bPos.Y >= gridSizeY || bPos.Y < 0)
+            return false;
+
+        ItemInstance a = _referenceGrid[aPos.Y][aPos.X];
+        ItemInstance b = _referenceGrid[bPos.Y][bPos.X];
+
+        // correct index & check existance
+        bool aExists = false;
+        bool bExists = false;
+        if (a != null) aExists = _items.TryGetValue(a, out aPos);
+        if (b != null) bExists = _items.TryGetValue(b, out bPos);
+
+        // swap start
+        if (aExists) _Remove(a);
+        if (bExists) _Remove(b);
+
+        // check size
+        if ((aExists && !_IsAreaEmpty(a.SO.GridSize, bPos)) ||
+            (bExists && !_IsAreaEmpty(b.SO.GridSize, aPos)))
+        {
+            if (aExists) _Add(a, aPos);
+            if (bExists) _Add(b, bPos);
+            return false;
+        }
+
+        if (aExists) _Add(a, bPos);
+        if (bExists) _Add(b, aPos);
+
+        return true;
+    }
+
+    public int PointToIndex(Point point)
+    {
+        return point.Y * gridSizeX + point.X;
+    }
+
+    public Point IndexToPoint(int index)
+    {
+        return new Point(index % gridSizeX, index / gridSizeX);
+    }
+
+
+    bool _IsAreaEmpty(Size area, Point location)
+    {
+        for (int y = 0; y < area.Height; ++y)
+            for (int x = 0; x < area.Width; ++x)
+                if (_referenceGrid[y + location.Y][x + location.X] != null)
+                    return false;
+
+        return true;
+    }
+
     void _InitGrid()
     {
         _referenceGrid = new ItemInstance[gridSizeY][];
         for (int i = 0; i < gridSizeY; ++i)
             _referenceGrid[i] = new ItemInstance[gridSizeX];
     }
+
+
 
 
 

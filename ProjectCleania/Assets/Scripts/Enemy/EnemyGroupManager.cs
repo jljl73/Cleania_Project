@@ -6,6 +6,18 @@ public class EnemyGroupManager : MonoBehaviour
 {
     List<GameObject> enemies = new List<GameObject>();
     GameObject target;
+    public GameObject Target
+    {
+        get { return target; }
+        set
+        {
+            foreach (var e in enemies)
+            {
+                e.GetComponent<Enemy>().SetTarget(value);
+            }
+            this.target = value;
+        }
+    }
     const float chasingDistance = 10.0f;
 
     public void AddMember(GameObject enemy)

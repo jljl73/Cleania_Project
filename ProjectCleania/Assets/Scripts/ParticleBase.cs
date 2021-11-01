@@ -13,6 +13,7 @@ public class ParticleBase : MonoBehaviour
     protected MeshRenderer ParticleObjectWithMR;
 
     public float Scale = 1f;
+    public bool IsEnabledOnAwake = false;
 
     protected virtual void Awake()
     {
@@ -25,9 +26,12 @@ public class ParticleBase : MonoBehaviour
         ParticleObjectWithPS = ParticleObject.GetComponent<ParticleSystem>();
         ParticleObjectWithMR = ParticleObject.GetComponent<MeshRenderer>();
 
-        ResetSetting();
+        if (!IsEnabledOnAwake)
+        {
+            ResetSetting();
+            ParticleObject.SetActive(false);
+        }
         ChangeScale(Scale);
-
     }
 
     protected virtual void Start()
@@ -36,7 +40,7 @@ public class ParticleBase : MonoBehaviour
             ParticleObjectWithMR.enabled = false;
 
         ChangeScalingMode(ParticleSystemScalingMode.Local);
-        ParticleObject.SetActive(false);
+        
     }
 
     private void ResetSetting()

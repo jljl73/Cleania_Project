@@ -4,20 +4,21 @@ using UnityEngine;
 
 public abstract class EnemySkill : Skill
 {
-    protected Enemy enemy;
+    public enum SkillID
+    {
+
+    }
+
+    public Enemy enemy;
     protected EnemyMove enemyMove;
     protected EnemyChase enemyChase;
 
     protected void Awake()
     {
-        enemy = transform.parent.parent.GetComponent<Enemy>();
+        if (enemy == null)
+            throw new System.Exception("EnemySkill doesnt have enemy");
         enemyMove = enemy.enemyMove;
         enemyChase = enemy.GetComponentInChildren<EnemyChase>();
-    }
-
-    protected new void Start()
-    {
-        base.Start();
     }
 
     //public override void AnimationActivate()

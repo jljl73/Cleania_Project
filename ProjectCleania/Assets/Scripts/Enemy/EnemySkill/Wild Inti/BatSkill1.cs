@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatSkill1 : Skill
+public class BatSkill1 : EnemySkill
 {
     float DamageScale = 10;
     float bloodChance = 0.3f;
     float bloodTime = 5.0f;
 
     Collider col;
-    Enemy enemy;
+    // Enemy enemy;
 
     [SerializeField]
     WildIntiSpearSO skillData;
@@ -17,7 +17,7 @@ public class BatSkill1 : Skill
     private new void Start()
     {
         base.Start();
-        enemy = transform.parent.parent.GetComponent<Enemy>();
+        // enemy = transform.parent.parent.GetComponent<Enemy>();
         col = GetComponent<Collider>();
 
         UpdateSkillData();
@@ -57,7 +57,9 @@ public class BatSkill1 : Skill
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
+            Player player = other.gameObject.GetComponent<Player>();
+            if (player != null)
+                player.abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
         }
     }
 

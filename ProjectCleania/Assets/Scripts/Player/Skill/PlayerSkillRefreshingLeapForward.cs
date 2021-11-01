@@ -7,10 +7,10 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 {
     public PlayerSkillRefreshingLeapForwardSO SkillData;
 
-    public AbilityStatus abilityStatus;
+    //public AbilityStatus abilityStatus;
     // public float skillScale = 1.0f;
 
-    public TestPlayerMove playerMovement;
+    // public TestPlayerMove playerMovement;
 
     float jumpDistance = 7f;
     public float GetJumpDistance() { return jumpDistance; }
@@ -97,13 +97,18 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     public override void AnimationActivate()
     {
+        base.AnimationActivate();
+
         //animator.SetInteger("Skill", 4);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill4", true);
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
 
-        playerMovement.JumpForward(jumpDistance);
+        // playerMovement.JumpForward(jumpDistance);
+        // PlaySkillEvent.Invoke();
+        //if (OnPlaySkill != null)
+        //    OnPlaySkill();
     }
 
     override public void Activate()
@@ -128,8 +133,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
             AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
             if (enemyAbil.HP != 0)
             {
-                enemyAbil.AttackedBy(abilityStatus, smashDamageRate);
-                enemy.Stunned(true, stunTime);
+                enemyAbil.AttackedBy(OwnerAbilityStatus, smashDamageRate);
+                enemy.OnStunned(true, stunTime);
             }
         }
     }
