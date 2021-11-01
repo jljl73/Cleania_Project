@@ -27,7 +27,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     static GameObject controllerPrefab;
     static Queue<GameObject> _objectPool;
 
-    static public ItemController_v2 New(ItemInstance item)
+    static public ItemController_v2 New(ItemInstance item, Storage inStroage)
     {
         ItemController_v2 controller = null;
 
@@ -45,7 +45,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         else
             controller = _objectPool.Dequeue().GetComponent<ItemController_v2>();
 
-        controller.Initialize(item);
+        controller.Initialize(item, inStroage);
 
         controller.gameObject.SetActive(true);
 
@@ -60,7 +60,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     }
 
 
-    public void Initialize(ItemInstance item)
+    public void Initialize(ItemInstance item, Storage inStorage = null)
     {
         itemInstance = item;
 
@@ -69,6 +69,12 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         uiManager = GameManager.Instance.uiManager;
         inventory = uiManager.InventoryPanel.GetComponent<Storage>();
         storage = uiManager.StoragePanel.GetComponent<Storage>();
+
+        if (inStorage == null) { }
+        else if (inStorage == storage)
+            isInStorage = true;
+        else if (inStorage == inventory)
+            isInStorage = false;
     }
 
 
