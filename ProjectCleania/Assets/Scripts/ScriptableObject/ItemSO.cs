@@ -36,22 +36,22 @@ public class ItemSO : ScriptableObject
     }
 
     [SerializeField]
-    enumMainCategory mainCategory;
+    enumMainCategory mainCategory = enumMainCategory.Etc;
     public enumMainCategory MainCategory
     { get => mainCategory; }
     
     [SerializeField]
-    enumSubCategory subCategory;
+    enumSubCategory subCategory = enumSubCategory.Etc;
     public enumSubCategory SubCategory
     { get => subCategory; }
     
     [SerializeField]
-    enumRank rank;
+    enumRank rank = enumRank.Common;
     public enumRank Rank
     { get => rank; }
 
     [Range(0, 99), SerializeField]
-    int customID;
+    int customID = 1;
     public int CustomID
     { get => customID; }
 
@@ -68,7 +68,7 @@ public class ItemSO : ScriptableObject
     }
 
     [SerializeField]
-    string itemName;
+    string itemName = "-";
     public string ItemName
     { get => itemName; }
 
@@ -81,39 +81,46 @@ public class ItemSO : ScriptableObject
     //Equipment Option;
 
     [SerializeField]
-    string toolTip;
+    string toolTip = "-";
     public string ToolTip
     { get => toolTip; }
 
     [SerializeField]
-    int gridSizeX;
+    int gridSizeX = 1;
     [SerializeField]
-    int gridSizeY;
+    int gridSizeY = 1;
     public Size GridSize
     { get => new Size(gridSizeX, gridSizeY); }
 
     [SerializeField]
-    bool disassemble;
+    int durability = 0;
+    public int Durability
+    { get => durability; }
+
+    [SerializeField]
+    int price = 1;
+    public int Price
+    { get => price; }
+
+
+    [SerializeField]
+    bool disassemble = true;
     public bool Disassemble
     { get => disassemble; }
 
     [SerializeField]
-    bool tradable;
+    bool tradable = true;
     public bool Tradable
     { get => tradable; }
 
     [SerializeField]
-    int price;
-    public int Price
-    { get => price; }
-
-    [SerializeField]
-    bool droppable;
+    bool droppable = true;
     public bool Droppable
     { get => droppable; }
 
+
     [SerializeField]
-    EquipmentOptionSO optionTable;
+    EquipmentOptionSO optionTable = null;
     public EquipmentOptionSO OptionTable
     { get => optionTable; }
 
