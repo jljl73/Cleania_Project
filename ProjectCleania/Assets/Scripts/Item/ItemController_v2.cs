@@ -19,6 +19,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     UIManager uiManager;
     bool isInStorage = false;
     public int prevIndex = -1;
+
     public Storage inventory;
     public Storage storage; 
 
@@ -29,7 +30,6 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         subCat = itemInstance.SO.SubCategory;
         image.sprite = itemInstance.SO.ItemImage;
         uiManager = GameManager.Instance.uiManager;
-
         PutInventory();
     }
 

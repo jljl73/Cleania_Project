@@ -2,12 +2,22 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Storage : MonoBehaviour
 {
     public GameObject slotParent;
     public GameObject[] slots;
     public Transform ItemList;
+
+
+    [SerializeField]
+    int crystal = 0;
+    public int Crystal { get { return crystal; } }
+    [SerializeField]
+    Text TextCrystal;
+
+ 
 
     [SerializeField]
     Storage otherStorage;
@@ -27,6 +37,7 @@ public class Storage : MonoBehaviour
             items[i] = null;
         }
         //gameObject.SetActive(false);
+        TextCrystal.text = crystal.ToString();
     }
         
     // 자동 추가
@@ -68,4 +79,14 @@ public class Storage : MonoBehaviour
     {
         item.transform.SetParent(ItemList);
     }
+
+    public void AddCrystal(int amount)
+    {
+        crystal += amount;
+        if (crystal < 0)
+            crystal = 0;
+        TextCrystal.text = crystal.ToString();
+    }
+   
+
 }
