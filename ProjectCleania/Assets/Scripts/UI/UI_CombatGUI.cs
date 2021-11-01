@@ -70,14 +70,14 @@ public class UI_CombatGUI : MonoBehaviour
             P1Portrait.fillAmount = HPBall.fillAmount;
         }
         XP_Bar.fillAmount = XP_BarPercent;
-        for(int i = 0; i < Skills.Length; ++i)
-        {
-            Skills[i].fillAmount = SkillManager.GetCoolTimePassedRatio(i); // Skills_CoolPercent[i];
-            if (Skills[i].fillAmount < 1.0f)
-                Skills[i].color = Color.gray;
-            else
-                Skills[i].color = Color.white;
-        }
+        //for(int i = 0; i < Skills.Length; ++i)
+        //{
+        //    Skills[i].fillAmount = SkillManager.GetCoolTimePassedRatio(i); // Skills_CoolPercent[i];
+        //    if (Skills[i].fillAmount < 1.0f)
+        //        Skills[i].color = Color.gray;
+        //    else
+        //        Skills[i].color = Color.white;
+        //}
 
         if (Input.GetKeyDown(KeyCode.M))
             HugeMap.SetActive(!HugeMap.activeSelf);

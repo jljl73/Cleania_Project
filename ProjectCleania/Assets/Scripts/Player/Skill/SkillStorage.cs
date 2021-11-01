@@ -4,54 +4,32 @@ using UnityEngine;
 
 public class SkillStorage : MonoBehaviour
 {
-    public List<PlayerSkill> Skill1List;
-    public List<PlayerSkill> Skill2List;
-    public List<PlayerSkill> Skill3List;
-    public List<PlayerSkill> Skill4List;
-    public List<PlayerSkill> SkillCList;
-    public List<PlayerSkill> SkillRList;
+    [SerializeField]
+    List<Skill> SkillList;
 
-    Dictionary<PlayerSkill.SkillID, PlayerSkill> skillDictionary;
-    public PlayerSkill GetSkill(PlayerSkill.SkillID skillNameEnum)
+    Dictionary<int, Skill> skillDictionary = new Dictionary<int, Skill>();
+
+    public Skill GetNormalSkill(int id)
     {
-        return skillDictionary[skillNameEnum];
+        return skillDictionary[id];
+    }
+
+    public void CopyNormalSkillDictTo(Dictionary<int, Skill> dict)
+    {
+        foreach (KeyValuePair<int, Skill> pair in skillDictionary)
+        {
+            dict.Add(pair.Key, pair.Value);
+        }
     }
 
     void Awake()
     {
-        skillDictionary = new Dictionary<PlayerSkill.SkillID, PlayerSkill>();
-        uploadSkills();
+        UploadSkills();
     }
 
-
-    void uploadSkills()
+    protected virtual void UploadSkills()
     {
-        foreach (PlayerSkill skill in Skill1List)
-        {
-            skillDictionary.Add(skill.ID, skill);
-        }
-
-        foreach (PlayerSkill skill in Skill2List)
-        {
-            skillDictionary.Add(skill.ID, skill);
-        }
-
-        foreach (PlayerSkill skill in Skill3List)
-        {
-            skillDictionary.Add(skill.ID, skill);
-        }
-
-        foreach (PlayerSkill skill in Skill4List)
-        {
-            skillDictionary.Add(skill.ID, skill);
-        }
-
-        foreach (PlayerSkill skill in SkillCList)
-        {
-            skillDictionary.Add(skill.ID, skill);
-        }
-
-        foreach (PlayerSkill skill in SkillRList)
+        foreach (Skill skill in SkillList)
         {
             skillDictionary.Add(skill.ID, skill);
         }

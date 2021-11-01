@@ -12,6 +12,8 @@ public class PlayerSkillDusting : PlayerSkill
     float damageRate = 5.4f;
     public float GetDamageRate() { return damageRate; }
 
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+
     private void Awake()
     {
         UpdateSkillData();
@@ -29,6 +31,7 @@ public class PlayerSkillDusting : PlayerSkill
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();

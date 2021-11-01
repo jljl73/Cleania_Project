@@ -4,36 +4,34 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class EnemySkillStorage : MonoBehaviour
+public class EnemySkillStorage : SkillStorage
 {
-    public List<EnemySkill> InherentSkillList;
-    public List<EnemySkill> usableSpecialSkillList;
+    public List<Skill> SpecialSkillCandidates;
+    Dictionary<int, Skill> specialSkillDictionary = new Dictionary<int, Skill>();
 
-    List<GameObject> SpecialSkillObjectList;
+    //public int SpecialSkillCount = 4;
 
-    Enemy myEnemy;
-    public int SpecialSkillCount = 4;
-
-    public EnemySkill GetInherentSkill(int idx)
+    public Skill GetSpeacialSkill(int id)
     {
-        return InherentSkillList[idx];
+        return specialSkillDictionary[id];
     }
-
-    //Dictionary<EnemySkill.SkillID, EnemySkill> skillDictionary;
-    //public EnemySkill GetSkill(EnemySkill.SkillID skillNameEnum)
-    //{
-    //    return skillDictionary[skillNameEnum];
-    //}
 
     void Awake()
     {
-        myEnemy = transform.parent.GetComponent<Enemy>();
-        // skillDictionary = new Dictionary<EnemySkill.SkillID, EnemySkill>();
+        UploadSkills();
     }
-
-    private void Start()
+  
+    protected override void UploadSkills()
     {
-        // uploadSpecialSkills();
+        base.UploadSkills();
+        UploadSpecialSkill();
+    }
+    void UploadSpecialSkill()
+    {
+        foreach (Skill skill in SpecialSkillCandidates)
+        {
+            specialSkillDictionary.Add(skill.ID, skill);
+        }
     }
 
 

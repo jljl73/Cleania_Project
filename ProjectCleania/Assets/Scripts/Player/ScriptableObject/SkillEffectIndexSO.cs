@@ -5,11 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillEffectIndex", menuName = "Scriptable Object/PlayerSkill/Effect/SkillEffect")]
 public class SkillEffectIndexSO : ScriptableObject
 {
-    [Header("Skill1 = index0")]
-    public int SkillIndex;
-    public int GetSkillIndex() { return SkillIndex; }
+    public int SkillID;
+    public int GetSkillID() { return SkillID; }
 
-    [Header("Effect1 = index0")]
-    public int EffectIndex;
-    public int GetEffectIndex() { return EffectIndex; }
+    public int EffectID;
+    public int GetEffectID() { return EffectID; }
 }

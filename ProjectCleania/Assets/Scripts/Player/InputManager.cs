@@ -38,28 +38,27 @@ public class InputManager : MonoBehaviour
         // 키보드 >>>>>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            player.PlaySkill(0);
+            player.PlaySkill(1103);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            player.PlaySkill(1);
+            player.PlaySkill(1104);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            player.PlaySkill(2);
+            player.PlaySkill(1105);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            player.PlaySkill(3);
+            player.PlaySkill(1106);
         }
         if (Input.GetKey(KeyCode.C))
         {
-            player.PlaySkill(4);
-            print("C downed");
+            player.PlaySkill(1101);
         }
         if (Input.GetMouseButton(1))
         {
-            player.PlaySkill(5);
+            player.PlaySkill(1102);
         }
         // 키보드 <<<<<
     }

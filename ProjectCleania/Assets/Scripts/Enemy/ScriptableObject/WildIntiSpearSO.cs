@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WildIntiSpear", menuName = "Scriptable Object/Enemy/WildIntiSpearSkill")]
-public class WildIntiSpearSO : ScriptableObject
+public class WildIntiSpearSO : EnemySkillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }

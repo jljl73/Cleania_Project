@@ -31,6 +31,7 @@ public class DustySkillHittingByBody : EnemySkill
         if (skillData == null)
             throw new System.Exception("BatSkill1 no skillData");
 
+        ID = skillData.ID;
         SkillName = skillData.GetSkillName();
         SkillDetails = skillData.GetSkillDetails();
         CoolTime = skillData.GetCoolTime();

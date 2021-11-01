@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class PondDamage : MonoBehaviour
 {
-    public AwakeDamage awakeDamage;
-    public ContactDamage contactDamage;
+    public AwakeDamage AwakeDamageCompo;
+    public ContactStayDamage ContactStayDamageCompo;
+    public DestroyDamage DestroyDamageCompo;
 
     public void SetProperty(AbilityStatus abil, float damageScale)
     {
-        awakeDamage.OwnerAbility = abil;
-        awakeDamage.DamageScale = damageScale;
+        if (AwakeDamageCompo != null)
+        {
+            AwakeDamageCompo.OwnerAbility = abil;
+            AwakeDamageCompo.DamageScale = damageScale;
+        }
 
-        contactDamage.OwnerAbility = abil;
-        contactDamage.DamageScale = damageScale;
+        if (ContactStayDamageCompo != null)
+        {
+            ContactStayDamageCompo.OwnerAbility = abil;
+            ContactStayDamageCompo.DamageScale = damageScale;
+        }
+
+        if (DestroyDamageCompo != null)
+        {
+            DestroyDamageCompo.OwnerAbility = abil;
+            DestroyDamageCompo.DamageScale = damageScale;
+        }
     }
 }

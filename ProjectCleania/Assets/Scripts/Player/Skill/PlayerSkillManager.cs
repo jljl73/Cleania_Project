@@ -6,12 +6,8 @@ using UnityEngine.Events;
 
 public class PlayerSkillManager : BaseSkillManager
 {
-    // Player player;
-
     public StateMachine playerStateMachine;
     public TestPlayerMove playerMove;
-    public SkillStorage skillStorage;
-    // public Buffable buffable;
 
     Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
@@ -39,10 +35,6 @@ public class PlayerSkillManager : BaseSkillManager
         playerMove = GetComponent<TestPlayerMove>();
         if (playerMove == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerMove");
-
-        skillStorage = GetComponentInChildren<SkillStorage>();
-        if (skillStorage == null)
-            throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
     }
 
     new void Start()
@@ -51,32 +43,13 @@ public class PlayerSkillManager : BaseSkillManager
 
         SetskillSlotDependencyDict();
 
-        SetDefaultSkillSetting();
-
-        for (int i = 0; i < skills.Length; i++)
-        {
-            coolTimePassed[i] = 1f;
-            skillAvailable[i] = true;
-        }
-
         SkillEventConnect();
     }
 
-    //void DeactivateAllSkill()
-    //{
-    //    foreach (Skill skill in skills)
-    //    {
-    //        skill.Deactivate();
-    //        for (int i = 0; i < skill.effectController.Count; i++)
-    //        {
-    //            skill.StopEffects(i);
-    //        }
-    //    }
-    //}
-
     protected override void SkillEventConnect()
     {
-        skillStorage.GetSkill(PlayerSkill.SkillID.RefreshingLeapForward).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
+        // 1106 = 상쾌한 도약
+        skillStorage.GetNormalSkill(1106).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
     }
 
 
@@ -132,22 +105,25 @@ public class PlayerSkillManager : BaseSkillManager
     //    skillAvailable[index] = false;
     //}
     #endregion
-    public override void PlaySkill(int index)
+    public override bool PlaySkill(int id)
     {
-        if (!skillAvailable[index]) return;
+        if (!skillAvailableDict[id]) return false;
 
-        if (!isSkillAvailable()) return;
+        if (!isSkillAvailable()) return false;
 
         // MP가 없으면 실행 불가
-        if (!abilityStatus.ConsumeMP(skills[index].GetConsumMP()))
-            return;
+        if (!abilityStatus.ConsumeMP(skillDict[id].GetConsumMP()))
+            return false;
 
-        if (index != 3 && index != 5) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번)
+        if (id != 1106 && id != 1102) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
         playerMove.ImmediateLookAtMouse();
 
-        skills[index].AnimationActivate();
-        ResetSkill(index);
+        skillDict[id].AnimationActivate();
+        ResetSkill(id);
+
+        return true;
     }
 
     #region
@@ -207,53 +183,57 @@ public class PlayerSkillManager : BaseSkillManager
 
         if (skillEffectIndex != null)
         {
-            if (skillEffectIndex.GetSkillIndex() == 3) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+            // 1106 = 상쾌한 도약(4번 스킬) 
+            if (skillEffectIndex.GetSkillID() == 1106) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
-            skills[skillEffectIndex.GetSkillIndex()].Activate(skillEffectIndex.GetEffectIndex());
+            skillDict[skillEffectIndex.GetSkillID()].Activate(skillEffectIndex.GetEffectID());
         }
         else
         {
-            if (myEvent.intParameter == 3) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+            // 1106 = 상쾌한 도약(4번 스킬)
+            if (myEvent.intParameter == 1106) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
-            skills[myEvent.intParameter].Activate();
+            skillDict[myEvent.intParameter].Activate();
         }
 
         // R스킬 때문인 것으로 추정되지만, 스킬 사용하자마자 하는게 좋으므로 Obsolete
         // abilityStatus.ConsumeMP(skills[index].ConsumMP);
     }
 
-    public override void DeactivateSkill(int index)
+    public override void DeactivateSkill(int id)
     {
         playerStateMachine.Transition(StateMachine.enumState.Idle);
-        skills[index].Deactivate();
+        skillDict[id].Deactivate();
     }
 
-
+    #region
     // ---------------------------------------------------------------------------------------------- //
     //                                             New Code
     // ---------------------------------------------------------------------------------------------- //
 
-    public void ChangeSkill(KeyCode skillSlot, PlayerSkill.SkillID skillNameEnum)
-    {
-        PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
+    //public void ChangeSkill(KeyCode skillSlot, PlayerSkill.SkillID skillNameEnum)
+    //{
+    //    PlayerSkill playerSkill = skillStorage.GetSkill(skillNameEnum);
 
-        if (playerSkill.GetSkillSlotDependency() != skillSlot)
-            return;
+    //    if (playerSkill.GetSkillSlotDependency() != skillSlot)
+    //        return;
 
-        skills[skillSlotDependencyDict[skillSlot]] = playerSkill;
-        // skills[skillSlotDependencyDict[skillSlot]].OwnerAbilityStatus = abilityStatus;
-        // skills[skillSlotDependencyDict[skillSlot]].
-    }
+    //    skillDict[skillSlotDependencyDict[skillSlot]] = playerSkill;
+    //    // skills[skillSlotDependencyDict[skillSlot]].OwnerAbilityStatus = abilityStatus;
+    //    // skills[skillSlotDependencyDict[skillSlot]].
+    //}
 
-    protected override void SetDefaultSkillSetting()
-    {
-        ChangeSkill(KeyCode.Alpha1, PlayerSkill.SkillID.FairysWings);
-        ChangeSkill(KeyCode.Alpha2, PlayerSkill.SkillID.Sweeping);
-        ChangeSkill(KeyCode.Alpha3, PlayerSkill.SkillID.CleaningWind);
-        ChangeSkill(KeyCode.Alpha4, PlayerSkill.SkillID.RefreshingLeapForward);
-        ChangeSkill(KeyCode.C, PlayerSkill.SkillID.Dusting);
-        ChangeSkill(KeyCode.Mouse1, PlayerSkill.SkillID.Dehydration);
+    //protected override void SetDefaultSkillSetting()
+    //{
+    //    ChangeSkill(KeyCode.Alpha1, PlayerSkill.SkillID.FairysWings);
+    //    ChangeSkill(KeyCode.Alpha2, PlayerSkill.SkillID.Sweeping);
+    //    ChangeSkill(KeyCode.Alpha3, PlayerSkill.SkillID.CleaningWind);
+    //    ChangeSkill(KeyCode.Alpha4, PlayerSkill.SkillID.RefreshingLeapForward);
+    //    ChangeSkill(KeyCode.C, PlayerSkill.SkillID.Dusting);
+    //    ChangeSkill(KeyCode.Mouse1, PlayerSkill.SkillID.Dehydration);
 
-        base.SetDefaultSkillSetting();
-    }
+    //    base에 추가했음
+    //    base.SetDefaultSkillSetting();
+    //}
+    #endregion
 }

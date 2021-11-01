@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1769730681473782531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6737709018206058472}
+  m_Layer: 0
+  m_Name: Normal Skill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6737709018206058472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769730681473782531}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7717416708449175450}
+  - {fileID: 8422962718758517540}
+  m_Father: {fileID: 7717416709810612296}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4619993477941017753
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,14 +60,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4619993477941017753}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2121786217680972033}
   - {fileID: 6416840719398894039}
   - {fileID: 7539565309999915902}
-  m_Father: {fileID: 7717416709810612296}
+  m_Father: {fileID: 6737709018206058472}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4918299493791087085
@@ -51,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7717416709024651364}
-  OwnerAbilityStatus: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 6824819401899668243}
   effectController:
   - {fileID: 6008768842996009720}
   - {fileID: 4755104038347188109}
@@ -143,12 +175,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7717416708449175445}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.335}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7502960732922393593}
-  m_Father: {fileID: 7717416709810612296}
+  m_Father: {fileID: 6737709018206058472}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5920054466618732198
@@ -419,7 +451,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatus: {fileID: 6824819401899668243}
   animator: {fileID: 7717416709024651364}
-  SkillSlotCount: 2
   skillStorage: {fileID: 1209345108155595449}
   enemyMove: {fileID: 7515162526521476993}
   myEnemy: {fileID: 3404450377915123936}
@@ -534,8 +565,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7717416708449175450}
-  - {fileID: 8422962718758517540}
+  - {fileID: 6737709018206058472}
   m_Father: {fileID: 7717416709024651365}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -551,11 +581,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19b2923ed5c9154fa40b22d88a0c9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InherentSkillList:
+  SkillList:
   - {fileID: 2533120371948066580}
   - {fileID: 4918299493791087085}
-  usableSpecialSkillList: []
-  SpecialSkillCount: 0
+  SpecialSkillCandidates: []
 --- !u!1001 &3184716119430046303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -956,13 +985,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1632271f86fdf3d4ca8b97509aeb2d5e, type: 3}
---- !u!4 &2121786217680972033 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7012177964711609421, guid: 1632271f86fdf3d4ca8b97509aeb2d5e, type: 3}
-  m_PrefabInstance: {fileID: 8944812854155193676}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2121786217681153539 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7012177964711330639, guid: 1632271f86fdf3d4ca8b97509aeb2d5e, type: 3}
+  m_PrefabInstance: {fileID: 8944812854155193676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2121786217680972033 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7012177964711609421, guid: 1632271f86fdf3d4ca8b97509aeb2d5e, type: 3}
   m_PrefabInstance: {fileID: 8944812854155193676}
   m_PrefabAsset: {fileID: 0}

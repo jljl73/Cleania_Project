@@ -16,6 +16,8 @@ public class HighDustySkill1 : EnemySkill
 
     int skillCount = 0;
 
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     private new void Start()
     {
         base.Start();
@@ -25,6 +27,7 @@ public class HighDustySkill1 : EnemySkill
 
     public void UpdateSkillData()
     {
+        ID = skillData.ID;
         SkillName = skillData.GetSkillName();
         SkillDetails = skillData.GetSkillDetails();
         CoolTime = skillData.GetCoolTime();

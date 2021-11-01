@@ -38,6 +38,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
     float projectilePositionY = 0.5f;
     float GetprojectilePositionY() { return projectilePositionY; }
 
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+
     private void Awake()
     {
         UpdateSkillData();
@@ -52,6 +54,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();
