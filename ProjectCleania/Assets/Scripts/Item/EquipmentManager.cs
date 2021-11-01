@@ -18,7 +18,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         playerEquipable = GameManager.Instance.PlayerEquipments;
-        inventoryComp = GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>();
+        inventoryComp = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>();
 
         Invoke("LoadItemControllers", 0.2f);
     }
@@ -38,8 +38,7 @@ public class EquipmentManager : MonoBehaviour
         {
             if (playerEquipable[(ItemInstance_Equipment.Type)i] != null)
             {
-                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], null);
-                item.transform.SetParent(inventoryComp.ItemContollerParent.transform);
+                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], inventoryComp);
 
                 ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
                 int ct = GetIndex(category);
