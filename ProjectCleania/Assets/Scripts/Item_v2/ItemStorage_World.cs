@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class ItemStorage_World : ItemStorage, iSavedData
 {
-    public ItemStorage_World() : base()
+    public ItemStorage_World()
     { }
 
     protected Dictionary<ItemInstance, GameObject> _items = new Dictionary<ItemInstance,GameObject>();
