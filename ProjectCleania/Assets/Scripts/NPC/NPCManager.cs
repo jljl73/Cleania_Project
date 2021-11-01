@@ -67,6 +67,6 @@ public class NPCManager : MonoBehaviour
 
     void Equip(GameObject item)
     {
-        equpiments.Equip(item);
+        equpiments.Equip(item.GetComponent<ItemController_v2>());
     }
 }

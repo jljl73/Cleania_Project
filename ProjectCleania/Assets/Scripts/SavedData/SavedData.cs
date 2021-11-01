@@ -7,7 +7,26 @@ public class SavedData : MonoBehaviour
 {
     static private SavedData _singleton;
     static public SavedData Instance
-    { get => _singleton;}
+    {
+        get
+        {
+            if(_singleton == null)
+            {
+                GameObject go = new GameObject("_SavedData");
+                _singleton = go.AddComponent<SavedData>();
+                DontDestroyOnLoad(go);
+                _singleton.characterName = "debug";
+
+                _singleton.vulnerable = GameManager.Instance.PlayerAbility;
+                _singleton.equipable = GameManager.Instance.PlayerEquipments;
+                _singleton.Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
+
+                _singleton.Load();
+            }
+
+            return _singleton;
+        }
+    }
 
     public string characterName;    
     string Path
@@ -105,7 +124,7 @@ public class SavedData : MonoBehaviour
         _singleton = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         vulnerable = GameManager.Instance.PlayerAbility;
         equipable = GameManager.Instance.PlayerEquipments;
