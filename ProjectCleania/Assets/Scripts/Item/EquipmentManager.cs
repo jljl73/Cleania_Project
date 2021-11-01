@@ -6,17 +6,52 @@ using System;
 public class EquipmentManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] slots;
+    ItemController_v2[] slots;
+    Equipable playerEquipable;
 
     void Start()
     {
         for (int i = 0; i < slots.Length; ++i)
+        {
             slots[i] = null;
+        }
+
+        playerEquipable = GameManager.Instance.PlayerEquipments;
+
+        Invoke("LoadItemControllers", 0.2f);
     }
 
-    public void Equip(GameObject item)
+    void LoadItemControllers()
     {
-        ItemSO.enumSubCategory category = item.GetComponent<ItemController_v2>().itemInstance.SO.SubCategory;
+        for (int i = 0; i < slots.Length; ++i)
+        {
+            if (slots[i] != null)
+                ItemController_v2.Delete(slots[i]);
+
+            slots[i] = null;
+        }
+
+
+        for (int i = 0; i < (int)ItemInstance_Equipment.Type.EnumTotal; ++i)
+        {
+            if (playerEquipable[(ItemInstance_Equipment.Type)i] != null)
+            {
+                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i]);
+                item.transform.SetParent(GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().ItemContollerParent.transform);
+
+                ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
+                int ct = GetIndex(category);
+
+                item.MoveTo(transform.GetChild(ct).position);
+                slots[ct] = item;
+            }
+        }
+    }
+
+
+    public void Equip(ItemController_v2 item)
+    {
+        ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
         int ct = GetIndex(category);
 
         if (ct == 0) return;
@@ -27,16 +62,23 @@ public class EquipmentManager : MonoBehaviour
         }
 
         Unequip(ct);
-        item.GetComponent<ItemController_v2>().PullInventory();
-        item.GetComponent<ItemController_v2>().MoveTo(transform.GetChild(ct).position);
+        item.PullInventory();
+        item.MoveTo(transform.GetChild(ct).position);
         slots[ct] = item;
+
+        //<Modified>
+        playerEquipable.Equip((ItemInstance_Equipment)item.itemInstance);
+        //</Modified>
     }
 
     void Unequip(int ct)
     {
         if (slots[ct] == null) return;
 
-        slots[ct].GetComponent<ItemController_v2>().PutInventory();
+        slots[ct].PutInventory();
+        //<Modified>
+        playerEquipable.Unequip(((ItemInstance_Equipment)slots[ct].itemInstance).EquipmentType);
+        //</Modified>
         slots[ct] = null;
     }
 

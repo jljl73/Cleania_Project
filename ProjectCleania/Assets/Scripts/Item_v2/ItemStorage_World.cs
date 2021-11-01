@@ -6,17 +6,20 @@ using UnityEngine;
 public class ItemStorage_World : ItemStorage, iSavedData
 {
     public ItemStorage_World()
-    {
-        
-    }
+    { }
+
+    protected Dictionary<ItemInstance, GameObject> _items = new Dictionary<ItemInstance,GameObject>();
+    /// <summary>
+    ///  You can't change storage's items with this accessor.<para></para>
+    ///  use Add() and Remove() to modify storage.<para></para>
+    ///  * created for foreach, search access
+    /// </summary>
+    public Dictionary<ItemInstance, GameObject> Items
+    { get => new Dictionary<ItemInstance, GameObject>(_items); }
 
     [System.NonSerialized]
     public GameObject ItemObjectPrefab;
     Queue<GameObject> _objectPool = new Queue<GameObject>();
-    Dictionary<ItemInstance, GameObject> _items = new Dictionary<ItemInstance, GameObject>();
-    public Dictionary<ItemInstance, GameObject> Items
-    { get => new Dictionary<ItemInstance, GameObject>(_items); }
-
 
     /// <summary>
     /// Default Add function.<para></para>

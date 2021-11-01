@@ -36,4 +36,8 @@ public class NPCEnchant : MonoBehaviour
 
     }
 
+    // public Change Option
+    //
+    // 
+
 }
