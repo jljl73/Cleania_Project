@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContactOnceDamage : DamagingProperty
+public class Mine : DamagingProperty
 {
     Collider triggerCollider;
     public float ColliderEnableTime = 1;

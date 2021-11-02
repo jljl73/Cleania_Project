@@ -14,6 +14,8 @@ public class BatSkill1 : EnemySkill
     [SerializeField]
     WildIntiSpearSO skillData;
 
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     private new void Start()
     {
         base.Start();

@@ -66,7 +66,7 @@ public class SpecialAbilityMine : EnemySkill
         {
             GameObject initiatedPond = Instantiate(MinePond, transform.position, transform.rotation);
             initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            ContactOnceDamage contactOnceDamage = MinePond.GetComponent<ContactOnceDamage>();
+            Mine contactOnceDamage = MinePond.GetComponent<Mine>();
             //if (pondDamage != null)
             //{
             //    print("Pond not null");

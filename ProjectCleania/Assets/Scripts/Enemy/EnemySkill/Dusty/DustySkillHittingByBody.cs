@@ -9,6 +9,8 @@ public class DustySkillHittingByBody : EnemySkill
     [SerializeField]
     EnemySkillSO skillData;
 
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     Collider col;
     // Enemy enemy;
 

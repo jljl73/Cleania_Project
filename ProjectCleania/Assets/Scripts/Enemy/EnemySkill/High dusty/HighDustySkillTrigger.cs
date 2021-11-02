@@ -18,21 +18,29 @@ public class HighDustySkillTrigger : EnemySkillTrigger
                 // if (!IsSkillAvailable()) return;
                 // enemySkillManager.PlaySkill(0);
 
-                // Áö·Ú
-                if (enemySkillManager.PlaySkill(2910))
+                // ÅÍ·¿
+                if (enemySkillManager.PlaySkill(2912))
                     return;
 
-                // ºÀÀÎ
-                if (enemySkillManager.PlaySkill(2906))
-                    return;
+                //// µ¹Ç³
+                //if (enemySkillManager.PlaySkill(2902))
+                //    return;
 
-                // µ¶¼º
-                if (enemySkillManager.PlaySkill(2901))
-                    return;
+                //// Áö·Ú
+                //if (enemySkillManager.PlaySkill(2910))
+                //    return;
 
-                // ¸ÕÁö ÅõÃ´
-                if (enemySkillManager.PlaySkill(2301))
-                    return;
+                //// ºÀÀÎ
+                //if (enemySkillManager.PlaySkill(2906))
+                //    return;
+
+                //// µ¶¼º
+                //if (enemySkillManager.PlaySkill(2901))
+                //    return;
+
+                //// ¸ÕÁö ÅõÃ´
+                //if (enemySkillManager.PlaySkill(2301))
+                //    return;
             }
         }
     }

@@ -12,7 +12,7 @@ public class ContactStayDamage : DamagingProperty
         //    throw new System.Exception("ContactDamage DamageScale is zero");
     }
 
-    private void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {

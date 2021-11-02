@@ -15,6 +15,8 @@ public class DustySkillSuicide : EnemySkill
     [SerializeField]
     DustySuicideSO skillData;
 
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     private new void Awake()
     {
         base.Awake();
