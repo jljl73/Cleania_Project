@@ -153,7 +153,7 @@ public class Storage : MonoBehaviour
         //</Modified>
     }
 
-    void ChangeParent(ItemController_v2 item)
+    public void ChangeParent(ItemController_v2 item)
     {
         item.transform.SetParent(ItemList);
     }

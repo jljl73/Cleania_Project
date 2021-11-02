@@ -21,7 +21,7 @@ public struct QuestReward
 public struct QuestNeed
 {
     public enum TYPE { Monster, Item };
-    public bool IsClear { get { return targetValue >= curValue; } }
+    public bool IsClear { get { return targetValue <= curValue; } }
 
     public TYPE type;
     public int target;
@@ -52,10 +52,13 @@ public struct QuestNeed
 [CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Object/Quest")]
 public class Quest : ScriptableObject
 {
-    public enum STATE { Unassign, Assign, Clear };
+    public enum STATE { Unassign, Assign, Clear, Reward };
     public enum CATEGORY { Tutorial, Main, Sub, Sudden };
+
     [SerializeField]
     STATE state;
+    public STATE State { get { return state; } }
+
     [SerializeField]
     CATEGORY category;
     public CATEGORY Catergory { get { return category; } }
@@ -67,6 +70,7 @@ public class Quest : ScriptableObject
     [SerializeField]
     QuestReward[] questRewards;
     public QuestReward[] QuestRewards { get { return questRewards; } }
+
     [SerializeField]
     QuestNeed[] questNeeds;
     public QuestNeed[] QuestNeeds { get { return questNeeds; } }
@@ -76,32 +80,35 @@ public class Quest : ScriptableObject
         state = STATE.Assign;
     }
 
+    public void GetReward()
+    {
+        state = STATE.Reward;
+    }
 
     // 몬스터 잡는거만 체크
     public void Achieve(QuestNeed.TYPE type, int target)
     {
         for (int i = 0; i < questNeeds.Length; ++i)
         {
-            if(questNeeds[i].type == type && questNeeds[i].target == target)
+            if (questNeeds[i].type == type && questNeeds[i].target == target)
             {
                 questNeeds[i].Achieve();
             }
         }
+        if(IsClear())
+            state = STATE.Clear;
     }
 
-    public void GetReward()
+    
+
+    public bool IsClear()
     {
-        for(int i = 0; i<questRewards.Length; ++i)
+        for (int i = 0; i < questNeeds.Length; ++i)
         {
-            switch (questRewards[i].type)
-            {
-                case QuestReward.TYPE.clean:
-                    break;
-                case QuestReward.TYPE.exp:
-                    break;
-                case QuestReward.TYPE.item:
-                    break;
-            }
+            if (!questNeeds[i].IsClear)
+                return false;
         }
+        
+        return true;
     }
 }
