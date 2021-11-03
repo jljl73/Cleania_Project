@@ -22,7 +22,6 @@ public class StormWind : MonoBehaviour
     void MakeWindRotateAroundMe()
     {
         if (rotatePivot == null) return;
-        print("rotateSpeed * Time.deltaTime: " + rotateSpeed * Time.deltaTime);
         transform.RotateAround(rotatePivot.transform.position, rotatePivot.transform.up, rotateSpeed * Time.deltaTime);
     }
 }
