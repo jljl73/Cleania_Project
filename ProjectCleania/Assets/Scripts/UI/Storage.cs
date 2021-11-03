@@ -73,7 +73,29 @@ public class Storage : MonoBehaviour
                 break;
         }
 
+
         Invoke("LoadItemControllers", 0.2f);
+    }
+
+    void LoadItemControllers()
+    {
+        for (int i = 0; i < nSize; ++i)
+        {
+            if (items[i] != null)
+                ItemController_v2.Delete(items[i]);
+
+            items[i] = null;
+        }
+
+        foreach (var i in myLocalGrid.Items)
+        {
+            ItemController_v2 controller = ItemController_v2.New(i.Key, this);
+            controller.transform.SetParent(ItemContollerParent.transform);
+
+            Add(controller, out controller.prevIndex, myLocalGrid.PointToIndex(i.Value));
+        }
+
+        gameObject.SetActive(false);
     }
 
     public void Add(ItemController_v2 item, out int index)
@@ -178,24 +200,6 @@ public class Storage : MonoBehaviour
         TextCrystal.text = crystal.ToString();
     }
    
-    void LoadItemControllers()
-    {
-        for (int i = 0; i < nSize; ++i)
-        {
-            if (items[i] != null)
-                ItemController_v2.Delete(items[i]);
-
-            items[i] = null;
-        }
-
-        foreach (var i in myLocalGrid.Items)
-        {
-            ItemController_v2 controller = ItemController_v2.New(i.Key, this);
-            controller.transform.SetParent(ItemContollerParent.transform);
-
-            Add(controller, out controller.prevIndex, myLocalGrid.PointToIndex(i.Value));
-        }
-    }
 
     public int GetNumberItem(int itemCode)
     {

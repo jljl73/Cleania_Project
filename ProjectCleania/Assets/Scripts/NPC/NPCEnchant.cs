@@ -11,10 +11,10 @@ public class NPCEnchant : MonoBehaviour
     public GameObject[] options;
 
     GameObject Image = null;
-    GameObject selectedItem;
+    ItemController_v2 selectedItem;
     ItemInstance instance;
 
-    public void SelectItem(GameObject item)
+    public void SelectItem(ItemController_v2 item)
     {
         if (Image != null) Destroy(Image);
         selectedItem = item;
