@@ -23,7 +23,7 @@ public class ItemInstance_Etc : ItemInstance
     /// <returns></returns>
     new static public ItemInstance_Etc Instantiate(ItemSO itemSO, int count = 1)
     {
-        if (itemSO.OptionTable != null)
+        if (itemSO.OptionTable == null)
             switch (itemSO.MainCategory)
             {
                 case ItemSO.enumMainCategory.Equipment:
@@ -31,7 +31,8 @@ public class ItemInstance_Etc : ItemInstance
                 default:
                     return new ItemInstance_Etc(itemSO, count);
             }
-        else return null;
+        else
+            return null;
     }
     /// <summary>
     /// Used instead of Constructor.<para></para>

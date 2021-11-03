@@ -1,23 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dialog : MonoBehaviour
 {
-    public Transform Pages;
+    Transform pages;
     int index = 0;
 
-    public void NextPage()
+    void Awake()
     {
-        Pages.GetChild(index++).gameObject.SetActive(false);
-        if (index == Pages.childCount) index = 0;
-        Pages.GetChild(index).gameObject.SetActive(true);
+        pages = transform.GetChild(transform.childCount - 1);
+        pages.GetChild(0).gameObject.SetActive(true);
     }
 
-    void OnDisable()
+    public void NextPage(int nextIdx)
     {
-        Pages.GetChild(index).gameObject.SetActive(false);
-        index = 0;
-        Pages.GetChild(index).gameObject.SetActive(true);
+        pages.GetChild(index).gameObject.SetActive(false);
+        pages.GetChild(nextIdx).gameObject.SetActive(true);
+        index = nextIdx;
+    }
+
+
+    void OnEnable()
+    {
+        NextPage(0);
     }
 }

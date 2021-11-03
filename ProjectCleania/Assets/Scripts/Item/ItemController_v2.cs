@@ -48,7 +48,6 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
         controller.gameObject.SetActive(true);
         //controller.transform.localScale *= CanvasScaler.;
-
         return controller;
     }
     static public void Delete(ItemController_v2 controller)

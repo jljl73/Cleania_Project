@@ -136,7 +136,7 @@ public class ItemSO : ScriptableObject
 
     static public ItemSO Load(int id)
     {
-        ItemSO item;
+        ItemSO item = null;
         if (!_dictionary.TryGetValue(id, out item) && _loadedAll == false)
         {
             item = Resources.Load<ItemSO>($"ScriptableObject/ItemTable/{id.ToString()}");

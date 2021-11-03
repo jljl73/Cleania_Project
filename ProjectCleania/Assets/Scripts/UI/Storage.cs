@@ -76,7 +76,6 @@ public class Storage : MonoBehaviour
         Invoke("LoadItemControllers", 0.2f);
     }
 
-    // ÀÚµ¿ Ãß°¡
     public void Add(ItemController_v2 item, out int index)
     {
         for (int i = 0; i < items.Length; ++i)
@@ -130,6 +129,7 @@ public class Storage : MonoBehaviour
         }
     }
 
+    
     public void Move(int src, int dest)
     {
         // swap object
@@ -165,7 +165,7 @@ public class Storage : MonoBehaviour
         //</Modified>
     }
 
-    void ChangeParent(ItemController_v2 item)
+    public void ChangeParent(ItemController_v2 item)
     {
         item.transform.SetParent(ItemContollerParent.transform);
     }
@@ -195,6 +195,21 @@ public class Storage : MonoBehaviour
 
             Add(controller, out controller.prevIndex, myLocalGrid.PointToIndex(i.Value));
         }
+    }
+
+    public int GetNumberItem(int itemCode)
+    {
+        int sum = 0;
+        for(int i = 0; i < items.Length;++i)
+        {
+            if (items[i] != null && items[i].itemInstance.SO.ID == itemCode)
+            {
+                Debug.Log(items[i].itemInstance.SO.ItemName);
+                sum += items[i].itemInstance.Count;
+            }
+        }
+        Debug.Log(sum);
+        return sum;
     }
 
 }
