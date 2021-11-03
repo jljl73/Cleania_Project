@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine : StateMachine
+public class EnemyProperty : MonoBehaviour
 {
     public enum MonsterType
     {
@@ -25,6 +25,16 @@ public class EnemyStateMachine : StateMachine
     public enumRank rank = enumRank.Normal;
     public enumRank Rank { get { return rank; } set { rank = value; } }
 
+    public void Transition(enumRank nextState)
+    {
+        rank = nextState;
+    }
+
+    public bool CompareState(enumRank state)
+    {
+        return this.rank == state;
+    }
+
     public int ID
     {
         get
@@ -34,20 +44,5 @@ public class EnemyStateMachine : StateMachine
             return int.Parse(temp);
 
         }
-    }
-
-    new void Awake()
-    {
-        base.Awake();
-    }
-
-    public bool CompareState(enumRank state)
-    {
-        return this.rank == state;
-    }
-
-    public void Transition(enumRank nextState)
-    {
-        rank = nextState;
     }
 }

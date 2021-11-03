@@ -46,7 +46,14 @@ public class EnemySpawner : MonoBehaviour
                 throw new System.Exception("newMonster doesnt have enemySkillManager");
 
             if (i == 0)
+            {
                 ResetSpecialSkillIDs(enemySkillManager);
+
+                foreach (int id in SpecialSkillIDs)
+                {
+                    print("id: " + id);
+                }
+            }
 
             SetSpecialSkillTo(enemySkillManager);
         }

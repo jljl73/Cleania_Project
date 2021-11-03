@@ -16,6 +16,17 @@ public class EnemySkillStorage : SkillStorage
         return specialSkillDictionary[id];
     }
 
+    public Skill GetSpecialSkillFromList(int id)
+    {
+        for (int i = 0; i < SpecialSkillCandidates.Count; i++)
+        {
+            if (id == SpecialSkillCandidates[i].ID)
+                return SpecialSkillCandidates[i];
+        }
+
+        return null;
+    }
+
     void Awake()
     {
         UploadSkills();

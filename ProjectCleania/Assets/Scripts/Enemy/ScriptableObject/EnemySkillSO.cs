@@ -28,6 +28,10 @@ public class EnemySkillSO : EnemySkillIDSO
         return tempString;
     }
 
+    [Header("패시브 스킬")]
+    public bool IsPassiveSkill = false;  // 추후 private 처리
+    public bool GetIsPassiveSkill() { return IsPassiveSkill; }
+
     // public bool isAttacking;
     [Header("쿨타임")]
     public float CoolTime;  // 추후 private 처리

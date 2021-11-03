@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class SpecialAbilityIngrainedDirt : EnemySkill
+public class SpecialAbilityPollution : EnemySkill
 {
-    float hPIncreaseRate = 10;
+    float pollutionDuration = 3;
+    float damageRate;
+
+    bool abilityActivate = false;
 
     [SerializeField]
-    SpecialAbilityIngrainedDirtSO skillData;
+    GameObject pollutionPrefab;
+
+    [SerializeField]
+    SpecialAbilityPollutionSO skillData;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -25,6 +30,16 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
         UpdateSkillData();
     }
 
+    private void FixedUpdate()
+    {
+        if (!abilityActivate) return;
+        GameObject obj = Instantiate(pollutionPrefab, transform.position, transform.rotation);
+        ContactStayDamage contactStayDamage = obj.GetComponent<ContactStayDamage>();
+        contactStayDamage.SetUp(OwnerAbilityStatus, damageRate);
+
+        Destroy(obj, pollutionDuration);
+    }
+
     public void UpdateSkillData()
     {
         if (skillData == null)
@@ -32,18 +47,16 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
 
         base.UpdateSkillData(skillData);
 
-        hPIncreaseRate = skillData.GetHPIncreaseRate();
-        //stainRadius = skillData.GetStainRadius();
-        //stainAvailableAreaRadius = skillData.GetCreationRadius();
-        //stainCount = skillData.GetCount();
-        //stopTime = skillData.GetStopTime();
-        //projFlightTime = skillData.GetProjFlightTime();
+        damageRate = skillData.GetDamageRate();
+        pollutionDuration = skillData.GetDuration();
     }
 
     public override void AnimationActivate()
     {
+        UpdateSkillData();
+
+        abilityActivate = true;
         // 체력 증가
-        print("체력 증가!");
         //enemy.buff
     }
 

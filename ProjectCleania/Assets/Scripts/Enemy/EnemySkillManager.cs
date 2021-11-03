@@ -107,12 +107,28 @@ public class EnemySkillManager : BaseSkillManager
 
     public void MakeSpecialSkillAvailable(int id)
     {
+        // 패시브 속성이면 적용, 추가X
+        Skill skill = enemySkillStorage.GetSpecialSkillFromList(id);
+        if (skill == null) return;
+
+        if (skill.IsPassiveSkill)
+        {
+            skill.AnimationActivate();
+            return;
+        }
+
         selectedSpecialSkillID.Add(id, true);
     }
 
+    //IEnumerator invokePassiveSkill(int id)
+    //{
+    //    yield return new WaitForSeconds(1);
+    //    skillDict[id].AnimationActivate();
+    //}
+
     protected override void SkillEventConnect()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public int GetRandomSpecialSkillAvailableID()

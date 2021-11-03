@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class SpecialAbilityIngrainedDirt : EnemySkill
+public class SpecialAbilityFastFeet : EnemySkill
 {
-    float hPIncreaseRate = 10;
+    float speedIncreaseRate = 10;
 
     [SerializeField]
-    SpecialAbilityIngrainedDirtSO skillData;
+    SpecialAbilityFastFeetSO skillData;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -32,18 +31,13 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
 
         base.UpdateSkillData(skillData);
 
-        hPIncreaseRate = skillData.GetHPIncreaseRate();
-        //stainRadius = skillData.GetStainRadius();
-        //stainAvailableAreaRadius = skillData.GetCreationRadius();
-        //stainCount = skillData.GetCount();
-        //stopTime = skillData.GetStopTime();
-        //projFlightTime = skillData.GetProjFlightTime();
+        speedIncreaseRate = skillData.GetSpeedIncreaseRate();
     }
 
     public override void AnimationActivate()
     {
         // 체력 증가
-        print("체력 증가!");
+        print("공속 & 이속 증가!");
         //enemy.buff
     }
 

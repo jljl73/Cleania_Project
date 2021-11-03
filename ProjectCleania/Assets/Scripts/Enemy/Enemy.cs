@@ -94,6 +94,8 @@ public class Enemy : MonoBehaviour
     {
         if (enemyStateMachine.CompareState(EnemyStateMachine.enumState.Dead)) return;
 
+
+
         // 네비게이션 Off
         navMeshAgent.enabled = false;
 

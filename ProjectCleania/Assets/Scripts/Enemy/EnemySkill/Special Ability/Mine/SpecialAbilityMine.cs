@@ -14,7 +14,9 @@ public class SpecialAbilityMine : EnemySkill
     [SerializeField]
     SpecialAbilityMineSO skillData;
 
+    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     private new void Awake()
     {
         base.Awake();
@@ -34,13 +36,7 @@ public class SpecialAbilityMine : EnemySkill
         if (skillData == null)
             throw new System.Exception("BatSkill1 no skillData");
 
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        CreatedMP = skillData.GetCreatedMP();
-        ConsumMP = skillData.GetConsumMP();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
         triggerRadius = skillData.GetRadius();
