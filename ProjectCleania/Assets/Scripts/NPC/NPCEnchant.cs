@@ -5,33 +5,54 @@ using UnityEngine.UI;
 
 public class NPCEnchant : MonoBehaviour
 {
-    public GameObject ItemImage;
-    public Text ItemName;
-    public Text ItemDetail;
-    public GameObject[] options;
+    [SerializeField]
+    Image backgroundImage;
+    [SerializeField]
+    Image itemImage;
+    [SerializeField]
+    Text itemName;
+    [SerializeField]
+    Text itemDetail;
+    [SerializeField]
+    Text[] options; 
 
-    GameObject Image = null;
     ItemController_v2 selectedItem;
-    ItemInstance instance;
+    ItemInstance_Equipment equipment;
+
+    private void OnEnable()
+    {
+        selectedItem = null;
+        equipment = null;
+        itemImage.enabled = false;
+        backgroundImage.enabled = false;
+        itemName.enabled = false;
+        itemDetail.enabled = false;
+
+        foreach (var v in options)
+            v.transform.parent.gameObject.SetActive(false);
+    }
 
     public void SelectItem(ItemController_v2 item)
     {
-        if (Image != null) Destroy(Image);
+        if (!(item.itemInstance is ItemInstance_Equipment))
+            return;
+        
         selectedItem = item;
-        // Image 불러오기 수정 필요할수도
-        Image = Instantiate(selectedItem.transform.GetChild(0).gameObject, ItemImage.transform);
-
-        instance = item.GetComponent<ItemController_v2>().itemInstance;
-        ItemName.text = instance.SO.ItemName;
-        ItemDetail.text = instance.SO.ToolTip;
-
-        ItemInstance_Equipment ie = (ItemInstance_Equipment)instance;
+        equipment = (ItemInstance_Equipment)item.itemInstance;
+        itemImage.enabled = true;
+        itemImage.sprite = selectedItem.itemInstance.SO.ItemImage;
+        itemName.enabled = true;
+        itemName.text = equipment.SO.ItemName;
+        itemDetail.enabled = true;
+        itemDetail.text = equipment.SO.ToolTip;
+        backgroundImage.enabled = true;
+        //backgroundImage.sprite = ;
 
         int ct = 0;
-        foreach(var v in ie.DynamicProperties_ToString())
+        foreach(var v in equipment.DynamicProperties_ToString())
         {
-            options[ct].SetActive(true);
-            options[ct++].transform.GetComponentInChildren<Text>().text = v;
+            options[ct].transform.parent.gameObject.SetActive(true);
+            options[ct++].text = v;
         }
 
     }
