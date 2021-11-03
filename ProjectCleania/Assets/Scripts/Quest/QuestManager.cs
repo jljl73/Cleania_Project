@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Text;
 
 public class QuestManager : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class QuestManager : MonoBehaviour
     [SerializeField]
     Quest[] quests_All;
         
-    UnityEvent addEvent = new UnityEvent();
 
     // UI
     public Button[] buttons;
@@ -42,6 +42,7 @@ public class QuestManager : MonoBehaviour
         }
 
         SetListHeight();
+        ExpManager.Initailize(0);
     }
 
     void Update()
@@ -49,6 +50,10 @@ public class QuestManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             Acheive(QuestNeed.TYPE.Monster, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ExpManager.Acquire(100);
         }
     }
 
@@ -67,7 +72,7 @@ public class QuestManager : MonoBehaviour
             quests[i].Achieve(type, target);
             Debug.Log(type.ToString() + " " + target);
         }
-        addEvent.Invoke();
+        SetMiniList();
     }
 
     #region UI
@@ -98,11 +103,36 @@ public class QuestManager : MonoBehaviour
         {
             details[i].GetComponent<RectTransform>().sizeDelta = new Vector2(250, 41 * details[i].transform.childCount);
         }
+        SetMiniList();
     }
     #endregion
 
     #region MINI UI
+    [SerializeField]
+    Transform miniLists;
+    void SetMiniList()
+    {
+        StringBuilder sb = new StringBuilder();
+        int q = 0;
+        for(; q < miniLists.childCount && q < quests.Count; ++q)
+        {
+            sb.Clear();
+            sb.Append(quests[q].name);
+            sb.Append("\n");
+            miniLists.GetChild(q).gameObject.SetActive(true);
+            for (int i = 0; i < quests[q].QuestNeeds.Length; ++i)
+            {
+                sb.Append(quests[q].QuestNeeds[i].Contents);
+                sb.Append("\n");
+            }
+            miniLists.GetChild(q).GetChild(0).GetComponent<Text>().text = sb.ToString();
+        }
 
+        for(; q < miniLists.childCount; ++q)
+        {
+            miniLists.GetChild(q).gameObject.SetActive(false);
+        }
+    }
 
     #endregion
 }

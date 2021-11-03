@@ -15,16 +15,18 @@ public class UI_CombatGUI : MonoBehaviour
     public Image[] Skills;
     public GameObject HugeMap;
 
+    public Text Level;
+
     GameObject player;
     AbilityStatus playerStatus;
 
     [Range(0.0f, 1.0f)]
     public float XP_BarPercent = 1.0f;
+
     PlayerSkillManager SkillManager;
     [Range(0.0f, 1.0f)]
     public float[] Skills_CoolPercent;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameManager.Instance.SinglePlayer;
@@ -34,14 +36,8 @@ public class UI_CombatGUI : MonoBehaviour
         playerStatus = player.GetComponent<Player>().abilityStatus;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            playerStatus.AttackedBy(playerStatus, 5.0f);
-        }
-
         if (playerStatus != null)
         {
             // 체력 구슬
@@ -69,17 +65,8 @@ public class UI_CombatGUI : MonoBehaviour
             // 초상화
             P1Portrait.fillAmount = HPBall.fillAmount;
         }
-        XP_Bar.fillAmount = XP_BarPercent;
-        //for(int i = 0; i < Skills.Length; ++i)
-        //{
-        //    Skills[i].fillAmount = SkillManager.GetCoolTimePassedRatio(i); // Skills_CoolPercent[i];
-        //    if (Skills[i].fillAmount < 1.0f)
-        //        Skills[i].color = Color.gray;
-        //    else
-        //        Skills[i].color = Color.white;
-        //}
-
-        if (Input.GetKeyDown(KeyCode.M))
-            HugeMap.SetActive(!HugeMap.activeSelf);
+        XP_Bar.fillAmount = ExpManager.Percent;
+        Level.text = ExpManager.Level.ToString();
     }
+
 }

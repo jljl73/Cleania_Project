@@ -38,7 +38,12 @@ public struct QuestNeed
 
     public void Achieve()
     {
-        ++curValue;
+        if(this.type == TYPE.Monster)
+            ++curValue;
+        else
+        {
+            curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().GetNumberItem(this.target);
+        }
     }
 
     public string Contents
@@ -94,12 +99,12 @@ public class Quest : ScriptableObject
             {
                 questNeeds[i].Achieve();
             }
+            else if (questNeeds[i].type == QuestNeed.TYPE.Item)
+                questNeeds[i].Achieve();
         }
-        if(IsClear())
+        if (IsClear())
             state = STATE.Clear;
     }
-
-    
 
     public bool IsClear()
     {

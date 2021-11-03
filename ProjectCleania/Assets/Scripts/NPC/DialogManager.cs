@@ -9,6 +9,7 @@ public class DialogManager : MonoBehaviour
     public GameObject RepairDialog;
     public GameObject EnchantDialog;
     public GameObject StorageDialog;
+    GameObject QuestDialog = null;
 
     public void ShowMarketDialog()
     {
@@ -30,6 +31,12 @@ public class DialogManager : MonoBehaviour
         ShowDialog(StorageDialog);
     }
 
+    public void ShowQuestDialog(string dialogName)
+    {
+        QuestDialog = transform.Find(dialogName).gameObject; ;
+        ShowDialog(QuestDialog);
+    }
+
     void ShowDialog(GameObject dialog)
     {
         dialog.SetActive(!dialog.activeSelf);
@@ -41,5 +48,7 @@ public class DialogManager : MonoBehaviour
         RepairDialog.SetActive(false);
         EnchantDialog.SetActive(false);
         StorageDialog.SetActive(false);
+        if(QuestDialog != null)
+            QuestDialog.SetActive(false);
     }
 }

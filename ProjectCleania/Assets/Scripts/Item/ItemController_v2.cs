@@ -48,7 +48,6 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         controller.Initialize(item, inStroage);
 
         controller.gameObject.SetActive(true);
-
         return controller;
     }
     static public void Delete(ItemController_v2 controller)
