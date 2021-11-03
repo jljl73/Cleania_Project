@@ -14,6 +14,9 @@ public abstract class Skill : MonoBehaviour
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
 
+    protected bool isPassiveSkill = false;
+    public virtual bool IsPassiveSkill { get { return isPassiveSkill; } }
+
     protected int id;
     public virtual int ID { get { return id; } protected set { id = value; } }
 
@@ -46,7 +49,7 @@ public abstract class Skill : MonoBehaviour
             OnPlaySkill();
     }
 
-    public abstract void Deactivate();
+    public virtual void Deactivate() { }
 
     public List<SkillEffectController> effectController;
 

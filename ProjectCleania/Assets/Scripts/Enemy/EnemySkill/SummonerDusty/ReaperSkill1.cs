@@ -16,6 +16,7 @@ public class ReaperSkill1 : EnemySkill
     [SerializeField]
     SummonSkillSO skillData;
 
+    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Start()
@@ -26,13 +27,7 @@ public class ReaperSkill1 : EnemySkill
 
     public void UpdateSkillData()
     {
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        CreatedMP = skillData.GetCreatedMP();
-        ConsumMP = skillData.GetConsumMP();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
         highDusty = skillData.GetHighDustyForSummon();
         normalDusty = skillData.GetNormalDustyForSummon();

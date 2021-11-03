@@ -53,7 +53,7 @@ public class PlayerSkillManager : BaseSkillManager
     }
 
 
-    protected new bool isSkillAvailable()
+    protected new bool IsSkillAvailable()
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) 
                 && !animator.IsInTransition(0))
@@ -107,14 +107,15 @@ public class PlayerSkillManager : BaseSkillManager
     #endregion
     public override bool PlaySkill(int id)
     {
-        if (!skillAvailableDict[id]) return false;
-
-        if (!isSkillAvailable()) return false;
-
+        print("a");
+        if (!IsSpecificSkillAvailable(id)) return false;
+        print("b");
+        if (!IsSkillAvailable()) return false;
+        print("c");
         // MP가 없으면 실행 불가
         if (!abilityStatus.ConsumeMP(skillDict[id].GetConsumMP()))
             return false;
-
+        print("d");
         // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번)
         if (id != 1106 && id != 1102) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 

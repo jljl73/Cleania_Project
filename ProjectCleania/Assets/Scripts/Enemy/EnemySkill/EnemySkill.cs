@@ -16,13 +16,28 @@ public abstract class EnemySkill : Skill
         enemyChase = enemy.GetComponentInChildren<EnemyChase>();
     }
 
-    //public override void AnimationActivate()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
+    public void UpdateSkillData(EnemySkillSO skillData)
+    {
+        if (skillData == null)
+            throw new System.Exception("SpecialAbilityIngrainedDirt no skillData");
 
-    //public override void Deactivate()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
-}
+        isPassiveSkill = skillData.GetIsPassiveSkill();
+        ID = skillData.ID;
+        SkillName = skillData.GetSkillName();
+        SkillDetails = skillData.GetSkillDetails();
+        CoolTime = skillData.GetCoolTime();
+        CreatedMP = skillData.GetCreatedMP();
+        ConsumMP = skillData.GetConsumMP();
+        SpeedMultiplier = skillData.GetSpeedMultiplier();
+    }
+
+        //public override void AnimationActivate()
+        //{
+        //    throw new System.NotImplementedException();
+        //}
+
+        //public override void Deactivate()
+        //{
+        //    throw new System.NotImplementedException();
+        //}
+    }

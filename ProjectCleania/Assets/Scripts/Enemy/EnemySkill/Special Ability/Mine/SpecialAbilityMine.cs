@@ -1,27 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class SpecialAbilitySeal : EnemySkill
+public class SpecialAbilityMine : EnemySkill
 {
     float damageScale = 10;
-    float duration;
-    float radius;
-    float CreationRadius;           // ª˝º∫ π›∞Ê
-    float pondCount;
-    // ƒßπ¨ ªÛ≈¬ ¿ÃªÛ
+    float triggerRadius;
+    float CreationRadius;           // ÏÉùÏÑ± Î∞òÍ≤Ω
+    float mineCount;
 
-    public GameObject SealPond;
+    public GameObject MinePond;
 
     [SerializeField]
-    SpecialAbilitySealSO skillData;
+    SpecialAbilityMineSO skillData;
 
+    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     private new void Awake()
     {
         base.Awake();
-        if (SealPond == null)
+        if (MinePond == null)
             throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
 
@@ -37,39 +36,33 @@ public class SpecialAbilitySeal : EnemySkill
         if (skillData == null)
             throw new System.Exception("BatSkill1 no skillData");
 
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        CreatedMP = skillData.GetCreatedMP();
-        ConsumMP = skillData.GetConsumMP();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        duration = skillData.GetDuration();
-        radius = skillData.GetRadius();
+        damageScale = skillData.GetDamageRate();
+        triggerRadius = skillData.GetRadius();
         CreationRadius = skillData.GetCreationRadius();
-        pondCount = skillData.GetCount();
+        mineCount = skillData.GetCount();
     }
 
     public override void AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
-        animator.SetTrigger("Seal");
+        animator.SetTrigger("Mine");
     }
 
     override public void Activate()
     {
-        MakePonds();
+        MakeMines();
     }
 
-    void MakePonds()
+    void MakeMines()
     {
-        for (int i = 1; i <= pondCount; i++)
+        for (int i = 1; i <= mineCount; i++)
         {
-            GameObject initiatedPond = Instantiate(SealPond, transform.position, transform.rotation);
+            GameObject initiatedPond = Instantiate(MinePond, transform.position, transform.rotation);
             initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            PondDamage pondDamage = SealPond.GetComponent<PondDamage>();
+            Mine contactOnceDamage = MinePond.GetComponent<Mine>();
             //if (pondDamage != null)
             //{
             //    print("Pond not null");
@@ -81,16 +74,14 @@ public class SpecialAbilitySeal : EnemySkill
             //}
             //else
             //    print("Pond null");
-
-            Destroy(initiatedPond, duration);
         }
     }
 
     Vector3 GetRandomPointInCircle(Vector3 center, float distance)
     {
         Vector3 randomPos = Random.insideUnitSphere * distance + center;
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPos, out hit, distance, NavMesh.AllAreas))
+        UnityEngine.AI.NavMeshHit hit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(randomPos, out hit, distance, UnityEngine.AI.NavMesh.AllAreas))
             return hit.position;
         else
             return center;

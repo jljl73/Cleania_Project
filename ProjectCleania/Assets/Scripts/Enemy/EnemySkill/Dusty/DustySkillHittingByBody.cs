@@ -9,6 +9,9 @@ public class DustySkillHittingByBody : EnemySkill
     [SerializeField]
     EnemySkillSO skillData;
 
+    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
     Collider col;
     // Enemy enemy;
 
@@ -31,13 +34,7 @@ public class DustySkillHittingByBody : EnemySkill
         if (skillData == null)
             throw new System.Exception("BatSkill1 no skillData");
 
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        CreatedMP = skillData.GetCreatedMP();
-        ConsumMP = skillData.GetConsumMP();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
     }
