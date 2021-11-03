@@ -39,8 +39,12 @@ public class AbilityStatus : MonoBehaviour, iSavedData
         {
             RefreshStat(i);
         }
-        FullHP();
-        FullMP();
+    }
+
+    private void Start()
+    {
+        Invoke("FullHP", 0.01f);
+        Invoke("FullMP", 0.01f);
     }
 
 

@@ -5,10 +5,10 @@ using UnityEngine;
 public class Vulnerable : AbilityStatus, iSavedData
 {
     [SerializeField]
-    StatusSO status;          // status is essential unlike equips or buffs
+    StatusSO status = null;          // status is essential unlike equips or buffs
     [SerializeField]
-    Equipable equipments;
-    Buffable buffs;
+    Equipable equipments = null;
+    Buffable buffs = null;
 
 
     override public float this[Ability.Stat stat]
