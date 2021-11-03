@@ -25,6 +25,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     {
         Level = level;
         EquipmentType = CategoryToType(itemSO.SubCategory);
+        this.Durability = itemSO.Durability;
     }
 
     /// <summary>

@@ -58,6 +58,8 @@ public class SavedData : MonoBehaviour
     Vector3 playerPosition;
     //
 
+        // Exp int
+        //      Init level by total xp
 
     /// <summary>
     /// Load saved game to primary memory.
