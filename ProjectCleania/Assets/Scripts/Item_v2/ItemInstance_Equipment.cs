@@ -76,7 +76,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     public float Durability;
     [SerializeField]
     public Ability.DynamicOption ChangedOption
-        = new Ability.DynamicOption(0, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
+        = new Ability.DynamicOption(float.NaN, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
 
     Dictionary<Ability.Stat, float> _statics = new Dictionary<Ability.Stat, float>();
 
