@@ -10,9 +10,12 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     public SkillStorage skillStorage;
 
     protected Dictionary<int, Skill> skillDict = new Dictionary<int, Skill>();
+    protected Dictionary<int, Skill> needCoolTimePassedSkillDict = new Dictionary<int, Skill>();
     protected Dictionary<int, float> coolTimePassedDict = new Dictionary<int, float>();
     protected Dictionary<int, bool> skillAvailableDict = new Dictionary<int, bool>();
     protected Dictionary<int, float> CoolTimePassedRatioDict = new Dictionary<int, float>();
+
+    // protected Dictionary<int, Skill> availableSkillDict = new Dictionary<int, Skill>();
 
     public float GetCoolTimePassedRatio(int id) { return CoolTimePassedRatioDict[id]; }
 
@@ -24,6 +27,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         skillStorage = GetComponentInChildren<SkillStorage>();
         if (skillStorage == null)
             throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
+
     }
 
     protected void Start()
@@ -121,30 +125,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         float cooldownSpeed = abilityStatus[Ability.Stat.SkillCooldown];
 
-        #region
-        //for (int i = 0; i < coolTimePassed.Length; i++)
-        //{
-        //    // 쿨타임 업데이트
-        //    if (skills[i] == null)
-        //    {
-        //        print("coolTimePassed.Length: " + coolTimePassed.Length);
-        //        print("Skill " + i + " is null!");
-        //    }
-        //    coolTimePassed[i] += Time.deltaTime;
-        //    if (skills[i].GetCoolTime() < 0.01f)
-        //        CoolTimePassedRatio[i] = 1f;
-        //    else
-        //        CoolTimePassedRatio[i] = coolTimePassed[i] / (skills[i].GetCoolTime() * cooldownSpeed);
-
-        //    // 업데이트가 됬으면 스킬 가능 설정
-        //    if (CoolTimePassedRatio[i] >= 1f)
-        //    {
-        //        CoolTimePassedRatio[i] = 1f;
-        //        skillAvailable[i] = true;
-        //    }
-        //}
-        #endregion
-
         foreach (int id in skillDict.Keys)
         {
             if (skillAvailableDict[id])
@@ -167,6 +147,9 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             {
                 CoolTimePassedRatioDict[id] = 1f;
                 skillAvailableDict[id] = true;
+
+                skillDict.Add(id, needCoolTimePassedSkillDict[id]);
+                needCoolTimePassedSkillDict.Remove(id);
             }
         }
     }
@@ -176,7 +159,8 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     public virtual bool PlaySkill(int id)
     {
         if (!isSkillAvailable()) return false;
-        if (!skillAvailableDict[id]) return false;
+        //if (!skillAvailableDict[id]) return false;
+        if (!isSpecificSkillAvailable(id)) return false;
         skillDict[id].AnimationActivate();
         ResetSkill(id);
 
@@ -260,12 +244,20 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             return false;
     }
 
+    public bool isSpecificSkillAvailable(int id)
+    {
+        return skillDict.ContainsKey(id);
+    }
+
     protected void ResetSkill(int skillID)
     {
         //coolTimePassed[index] = 0f;
         //skillAvailable[index] = false;
         coolTimePassedDict[skillID] = 0f;
         skillAvailableDict[skillID] = false;
+
+        needCoolTimePassedSkillDict.Add(skillID, skillDict[skillID]);
+        skillDict.Remove(skillID);
     }
 
     protected virtual void SetDefaultSkillSetting()

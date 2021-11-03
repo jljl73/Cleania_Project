@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
@@ -52,6 +53,23 @@ public class EnemySkillManager : BaseSkillManager
         return true;
     }
 
+    public void PlayRandomSpecialSkill()
+    {
+        while (true)
+        {
+            int availableSpecialSkillCount = skillDict.Count;
+            int index = Random.Range(0, availableSpecialSkillCount);
+            KeyValuePair<int, Skill> pair = skillDict.ElementAt(index);
+
+            if (!isSkillAvailable()) break;
+            if (!skillAvailableDict[index]) continue;
+
+            skillDict[index].AnimationActivate();
+            ResetSkill(index);
+            break;
+        }
+    }
+
     void UploadSpecialSkill()
     {
         EnemySkillStorage enemySkillStorage = skillStorage as EnemySkillStorage;
@@ -68,7 +86,6 @@ public class EnemySkillManager : BaseSkillManager
     {
         throw new System.NotImplementedException();
     }
-
     #region
     // public EnemyStateMachine stateMachine;
     // private AbilityStatus playerAbilityStatus;
