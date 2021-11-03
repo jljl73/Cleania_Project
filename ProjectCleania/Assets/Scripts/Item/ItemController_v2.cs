@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    public int ItemCode = 1101001;
     [SerializeField]
     Image image;
+    Image background;
     ItemSO.enumSubCategory subCat;
 
     public static ItemController_v2 clickedItem;
@@ -17,11 +17,10 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     public ItemInstance itemInstance { get; private set; }
 
     Vector3 prevPosition;
-    UIManager uiManager;
-    bool isInStorage = false;
     public int prevIndex = -1;
-    Storage inventory;
-    Storage storage;
+    UIManager uiManager;
+    Storage parentStroage;
+    public bool wearing = false;
 
     // generator
     static GameObject controllerPrefab;
@@ -48,39 +47,36 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         controller.Initialize(item, inStroage);
 
         controller.gameObject.SetActive(true);
-
+        //controller.transform.localScale *= CanvasScaler.;
         return controller;
     }
     static public void Delete(ItemController_v2 controller)
     {
-        controller.Initialize(null);
+        controller.Initialize(null, null);
         _objectPool.Enqueue(controller.gameObject);
 
         controller.gameObject.SetActive(false);
     }
 
 
-    public void Initialize(ItemInstance item, Storage inStorage = null)
+    public void Initialize(ItemInstance item, Storage inStorage)
     {
         itemInstance = item;
+        parentStroage = inStorage;
 
-        subCat = itemInstance.SO.SubCategory;
-        image.sprite = itemInstance.SO.ItemImage;
-        uiManager = GameManager.Instance.uiManager;
-        inventory = uiManager.InventoryPanel.GetComponent<Storage>();
-        storage = uiManager.StoragePanel.GetComponent<Storage>();
-
-        if (inStorage == null) { }
-        else if (inStorage == storage)
-            isInStorage = true;
-        else if (inStorage == inventory)
-            isInStorage = false;
+        if (item != null && inStorage != null)
+        {
+            subCat = itemInstance.SO.SubCategory;
+            image.sprite = itemInstance.SO.ItemImage;
+            uiManager = GameManager.Instance.uiManager;
+            transform.SetParent(inStorage.ItemContollerParent.transform);
+        }
     }
 
 
     public void PutInventory()
     {
-        inventory.Add(this, out prevIndex);
+        GameManager.Instance.uiManager.InventoryPanel.Add(this, out prevIndex);
 
         //<Modified>
         if (prevIndex == -1)
@@ -90,25 +86,34 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public void PullInventory()
     {
-        inventory.Remove(prevIndex);
+        GameManager.Instance.uiManager.InventoryPanel.Remove(prevIndex);
     }
 
     void MoveToInventory()
     {
         if (prevIndex != -1)
-            storage.Remove(prevIndex);
-        inventory.Add(this, out prevIndex);
+            GameManager.Instance.uiManager.StoragePanel.Remove(prevIndex);
+        GameManager.Instance.uiManager.InventoryPanel.Add(this, out prevIndex);
         if (prevIndex != -1)
-            isInStorage = false;
+            parentStroage = GameManager.Instance.uiManager.InventoryPanel;
     }
 
     void MoveToStorage()
     {
         if (prevIndex != -1)
-            inventory.Remove(prevIndex);
-        storage.Add(this, out prevIndex);
+            GameManager.Instance.uiManager.InventoryPanel.Remove(prevIndex);
+        GameManager.Instance.uiManager.StoragePanel.Add(this, out prevIndex);
         if (prevIndex != -1)
-            isInStorage = true;
+            parentStroage = GameManager.Instance.uiManager.StoragePanel;
+    }
+
+    void MoveFromParentTo(Storage to)
+    {
+        if (prevIndex != -1)
+            parentStroage.Remove(prevIndex);
+        to.Add(this, out prevIndex);
+        if (prevIndex != -1)
+            parentStroage = to;
     }
 
     public void MoveTo(Vector3 position)
@@ -150,10 +155,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
             if (results[i].gameObject.tag == "Slot")
             {
                 int index = results[i].gameObject.transform.GetSiblingIndex();
-                if (isInStorage)
-                    storage.Move(prevIndex, index);
-                else
-                    inventory.Move(prevIndex, index);
+                parentStroage.Move(prevIndex, index);
 
                 prevIndex = index;
                 prevPosition = transform.position;
@@ -170,8 +172,12 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
         if(uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
         {
-            if (isInStorage) MoveToInventory();
-            else MoveToStorage();
+            if (parentStroage == GameManager.Instance.uiManager.StoragePanel)
+                MoveToInventory();
+            else if (wearing == true)
+                GameManager.Instance.npcManager.equpiments.Equip(this);
+            else
+                MoveToStorage();
         }
         else
             GameManager.Instance.npcManager.Dosmth(gameObject);

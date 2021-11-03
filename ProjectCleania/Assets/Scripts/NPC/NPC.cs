@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class NPC : MonoBehaviour
 {
-    public enum TYPE { None, Repair, Market, Enchant, Storage, Portal };
+    public enum TYPE { None, Repair, Market, Enchant, Storage, Portal, Quest };
 
     public GameObject fieldName;
     public TextMesh textMesh;

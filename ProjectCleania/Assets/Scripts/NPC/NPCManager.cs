@@ -16,7 +16,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField]
     Storage inventory;
     [SerializeField]
-    EquipmentManager equpiments;
+    public EquipmentManager equpiments;
 
     void Awake()
     {
@@ -41,6 +41,9 @@ public class NPCManager : MonoBehaviour
                 break;
             case NPC.TYPE.Storage:
                 Store(item);
+                break;
+            case NPC.TYPE.Quest:
+
                 break;
         }
     }
@@ -69,4 +72,5 @@ public class NPCManager : MonoBehaviour
     {
         equpiments.Equip(item.GetComponent<ItemController_v2>());
     }
+    
 }

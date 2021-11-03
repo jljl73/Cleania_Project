@@ -18,7 +18,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         playerEquipable = GameManager.Instance.PlayerEquipments;
-        inventoryComp = GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>();
+        inventoryComp = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>();
 
         Invoke("LoadItemControllers", 0.2f);
     }
@@ -38,14 +38,14 @@ public class EquipmentManager : MonoBehaviour
         {
             if (playerEquipable[(ItemInstance_Equipment.Type)i] != null)
             {
-                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], null);
-                item.transform.SetParent(inventoryComp.ItemContollerParent.transform);
+                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], inventoryComp);
 
                 ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
                 int ct = GetIndex(category);
 
                 item.MoveTo(transform.GetChild(ct).position);
                 slots[ct] = item;
+                item.wearing = true;
             }
         }
     }
@@ -56,7 +56,7 @@ public class EquipmentManager : MonoBehaviour
         ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
         int ct = GetIndex(category);
 
-        if (ct == 0) return;
+        if (ct<0 || ct >= slots.Length) return;
         else if (item.Equals(slots[ct]))
         {
             Unequip(ct);
@@ -67,6 +67,7 @@ public class EquipmentManager : MonoBehaviour
         item.PullInventory();
         item.MoveTo(transform.GetChild(ct).position);
         slots[ct] = item;
+        item.wearing = true;
 
         //<Modified>
         playerEquipable.Equip((ItemInstance_Equipment)item.itemInstance);
@@ -77,6 +78,7 @@ public class EquipmentManager : MonoBehaviour
     {
         if (slots[ct] == null) return;
 
+        slots[ct].wearing = false;
         slots[ct].PutInventory();
         //<Modified>
         playerEquipable.Unequip(((ItemInstance_Equipment)slots[ct].itemInstance).EquipmentType);
@@ -87,7 +89,7 @@ public class EquipmentManager : MonoBehaviour
     int GetIndex(ItemSO.enumSubCategory category)
     {
         var list = Enum.GetValues(typeof(ItemSO.enumSubCategory));
-        int index = 1;
+        int index = 0;
         foreach(ItemSO.enumSubCategory e in list)
         {
             if (e == category)

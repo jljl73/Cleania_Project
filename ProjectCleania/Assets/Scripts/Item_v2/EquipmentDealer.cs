@@ -43,4 +43,21 @@ public class EquipmentDealer
         return equipment;
     }
 
+    static public int GetRepairCost(ItemInstance_Equipment equipment)
+    {
+        return (equipment.SO.Durability - (int)equipment.Durability);
+    }
+
+    static public bool TryRepair(ItemInstance_Equipment equipment, Storage inventory)
+    {
+        if (inventory.Crystal >= GetRepairCost(equipment))
+        {
+            inventory.AddCrystal(-GetRepairCost(equipment));
+            equipment.Durability = equipment.SO.Durability;
+            return true;
+        }
+        else
+            return false;
+    }
+
 }

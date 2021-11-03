@@ -39,7 +39,7 @@ public class SavedData : MonoBehaviour
 
 
     // save data 
-
+    [System.NonSerialized]
     public ItemStorage_World Item_World = new ItemStorage_World();
     public ItemStorage_LocalGrid Item_Inventory = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 6));
     public ItemStorage_LocalGrid Item_Storage = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 10));
@@ -49,13 +49,17 @@ public class SavedData : MonoBehaviour
     string equipableStirng;
 
     AbilityStatus vulnerable;
-    [SerializeField]
+    //[SerializeField]
+    [System.NonSerialized]
     string vulnerableString;
 
-    [SerializeField]
+    //[SerializeField]
+    [System.NonSerialized]
     Vector3 playerPosition;
     //
 
+        // Exp int
+        //      Init level by total xp
 
     /// <summary>
     /// Load saved game to primary memory.

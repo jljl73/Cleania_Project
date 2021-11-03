@@ -10,14 +10,14 @@ public class UIManager : MonoBehaviour
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
-    public GameObject InventoryPanel;
+    public Storage InventoryPanel;
+    public Storage StoragePanel;
     public GameObject SkillPanel;
     public GameObject ExpandMapPanel;
     public GameObject QuestPanel;
     public GameObject RepairPanel;
     public GameObject MarketPanel;
     public GameObject EnchantPanel;
-    public GameObject StoragePanel;
     public GameObject MenuPanel;
     public GameObject SettingPanel;
 
@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowInventory()
     {
-        ShowPanel(InventoryPanel);
+        ShowPanel(InventoryPanel.gameObject);
     }
 
     public void ShowSkillPanel()
@@ -92,7 +92,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowStoragePanel()
     {
-        ShowPanel(StoragePanel);
+        ShowPanel(StoragePanel.gameObject);
     }
 
     public void ShowMenuPanel()
@@ -102,7 +102,7 @@ public class UIManager : MonoBehaviour
 
     public NPC.TYPE GetCurrentNPC()
     {
-        if (StoragePanel.activeSelf) return NPC.TYPE.Storage;
+        if (StoragePanel.gameObject.activeSelf) return NPC.TYPE.Storage;
         else if (MarketPanel.activeSelf) return NPC.TYPE.Market;
         else if (EnchantPanel.activeSelf) return NPC.TYPE.Enchant;
         else if (RepairPanel.activeSelf) return NPC.TYPE.Repair;
@@ -112,14 +112,14 @@ public class UIManager : MonoBehaviour
     void OffAllPanels()
     {
         //if (isActiveItemPanel) ShowInventory();
-        this.InventoryPanel.SetActive(false);
+        this.InventoryPanel.gameObject.SetActive(false);
+        this.StoragePanel.gameObject.SetActive(false);
         this.SkillPanel.SetActive(false);
         this.ExpandMapPanel.SetActive(false);
         this.QuestPanel.SetActive(false);
         this.RepairPanel.SetActive(false);
         this.MarketPanel.SetActive(false);
         this.EnchantPanel.SetActive(false);
-        this.StoragePanel.SetActive(false);
     }
 
     public void OffNPCPanels()
@@ -127,7 +127,7 @@ public class UIManager : MonoBehaviour
         this.RepairPanel.SetActive(false);
         this.MarketPanel.SetActive(false);
         this.EnchantPanel.SetActive(false);
-        this.StoragePanel.SetActive(false);
+        this.StoragePanel.gameObject.SetActive(false);
     }
 
     public void ShowPanel(GameObject panel)
