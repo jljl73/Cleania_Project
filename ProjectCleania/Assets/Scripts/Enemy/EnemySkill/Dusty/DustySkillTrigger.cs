@@ -56,7 +56,7 @@ public class DustySkillTrigger : EnemySkillTrigger
 
         if (!isHittingByBodySkillTriggered && (ability.HP < ability.GetStat(Ability.Stat.MaxHP) * 0.1f))
         {
-            if (!enemySkillManager.isSkillAvailable())
+            if (!enemySkillManager.IsSkillAvailable())
                 return;
 
             enemySkillManager.PlaySkill(2102);

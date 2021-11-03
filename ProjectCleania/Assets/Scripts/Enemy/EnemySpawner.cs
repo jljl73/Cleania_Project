@@ -13,6 +13,12 @@ public class EnemySpawner : MonoBehaviour
 
     public float SpawnRadius = 10f;
 
+    [Header("특수 능력 부여 갯수")]
+    [SerializeField]
+    int SpecialSkillCount = 3;
+
+    List<int> SpecialSkillIDs = new List<int>();
+
     float weight;
     int rareMonsterCount = 1;
 
@@ -22,8 +28,9 @@ public class EnemySpawner : MonoBehaviour
     public void Spawn()
     {
         float tempTotalWeight = weight;
-        // print("rareMonsterCount: " + rareMonsterCount);
-        // float tempRareMosterCount = rareMonsterCount;
+
+        //SelectRandomSkillID();
+
         for (int i = 0; i < rareMonsterCount; i++)
         {
             if (tempTotalWeight < 0)
@@ -33,6 +40,15 @@ public class EnemySpawner : MonoBehaviour
 
             newMonster.GetComponentInChildren<EnemyChase>().EnemySpawner = gameObject;
             tempTotalWeight -= RareMonsterWeight;
+
+            EnemySkillManager enemySkillManager = newMonster.GetComponent<EnemySkillManager>();
+            if (enemySkillManager == null)
+                throw new System.Exception("newMonster doesnt have enemySkillManager");
+
+            if (i == 0)
+                ResetSpecialSkillIDs(enemySkillManager);
+
+            SetSpecialSkillTo(enemySkillManager);
         }
 
         while (tempTotalWeight > 0)
@@ -44,6 +60,8 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+
+
     Vector3 GetRandomPointInCircle(Vector3 center, float distance)
     {
         Vector3 randomPos = Random.insideUnitSphere * distance + center;
@@ -52,5 +70,27 @@ public class EnemySpawner : MonoBehaviour
             return hit.position;
         else
             return center;
+    }
+
+    void ResetSpecialSkillIDs(EnemySkillManager enemySkillManager)
+    {
+        SpecialSkillIDs.Clear();
+        int selectedCount = 0;
+        while (selectedCount < SpecialSkillCount)
+        {
+            int candidateID = enemySkillManager.GetRandomSpecialSkillAvailableID();
+            if (SpecialSkillIDs.Contains(candidateID)) continue;
+
+            SpecialSkillIDs.Add(candidateID);
+            selectedCount++;
+        }
+    }
+
+    void SetSpecialSkillTo(EnemySkillManager enemySkillManager)
+    {
+        for (int i = 0; i < SpecialSkillIDs.Count; i++)
+        {
+            enemySkillManager.MakeSpecialSkillAvailable(SpecialSkillIDs[i]);
+        }
     }
 }

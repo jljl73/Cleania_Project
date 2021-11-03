@@ -26,9 +26,11 @@ public class HighDustySkillTrigger : EnemySkillTrigger
                 //if (enemySkillManager.PlaySkill(2907))
                 //    return;
 
-                // 부패
-                if (enemySkillManager.PlaySkill(2908))
-                    return;
+                enemySkillManager.PlayRandomSpecialSkill();
+
+                //// 부패
+                //if (enemySkillManager.PlaySkill(2908))
+                //    return;
 
                 //if (enemySkillManager.PlayRandomSpecialSkill())
                 //    return;

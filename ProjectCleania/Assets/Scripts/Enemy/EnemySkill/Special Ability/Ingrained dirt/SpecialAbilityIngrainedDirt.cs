@@ -6,23 +6,14 @@ using UnityEngine.AI;
 public class SpecialAbilityIngrainedDirt : EnemySkill
 {
     float damageScale = 10;
-    float stainRadius;
-    float stainAvailableAreaRadius;           // 생성 반경
-    float stainCount;
-    float stopTime;
-    float projFlightTime;
-
-    public GameObject StainProjectilePrefab;
 
     [SerializeField]
-    SpecialAbilityStainSO skillData;
+    SpecialAbilityIngrainedDirtSO skillData;
 
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
     private new void Awake()
     {
         base.Awake();
-        if (StainProjectilePrefab == null)
-            throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
 
     private new void Start()
@@ -35,7 +26,7 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
     public void UpdateSkillData()
     {
         if (skillData == null)
-            throw new System.Exception("BatSkill1 no skillData");
+            throw new System.Exception("SpecialAbilityIngrainedDirt no skillData");
 
         ID = skillData.ID;
         SkillName = skillData.GetSkillName();
@@ -45,11 +36,11 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
         ConsumMP = skillData.GetConsumMP();
         SpeedMultiplier = skillData.GetSpeedMultiplier();
 
-        stainRadius = skillData.GetStainRadius();
-        stainAvailableAreaRadius = skillData.GetCreationRadius();
-        stainCount = skillData.GetCount();
-        stopTime = skillData.GetStopTime();
-        projFlightTime = skillData.GetProjFlightTime();
+        //stainRadius = skillData.GetStainRadius();
+        //stainAvailableAreaRadius = skillData.GetCreationRadius();
+        //stainCount = skillData.GetCount();
+        //stopTime = skillData.GetStopTime();
+        //projFlightTime = skillData.GetProjFlightTime();
     }
 
     public override void AnimationActivate()
@@ -66,10 +57,6 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
 
     void ShotStain()
     {
-        for (int i = 1; i <= stainCount; i++)
-        {
-            Shot();
-        }
     }
 
     Vector3 GetRandomPointInCircle(Vector3 center, float distance)
@@ -86,23 +73,6 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
     {
         animator.SetBool("OnSpecialSkill", false);
         animator.SetBool("OnSkill", false);
-    }
-
-    void Shot()
-    {
-        GameObject obj = Instantiate(StainProjectilePrefab, this.transform.position, Quaternion.identity);
-        if (obj == null) return;
-
-        StainProjectile stainProj = obj.GetComponent<StainProjectile>();
-        if (stainProj == null) return;
-
-        Rigidbody rigidbody = obj.GetComponent<Rigidbody>(); ;
-        if (rigidbody != null)
-        {
-            Vector3 targetPos = GetRandomPointInCircle(transform.position, stainAvailableAreaRadius);
-            rigidbody.velocity = CaculateVelocity(targetPos, transform.position, projFlightTime);
-            stainProj.SetUp(stopTime, projFlightTime * 0.5f);
-        }
     }
 
     Vector3 CaculateVelocity(Vector3 target, Vector3 origin, float time)

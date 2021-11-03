@@ -12,6 +12,10 @@ public class EnemySkillManager : BaseSkillManager
     public Enemy myEnemy;
     public NavMeshAgent nav;
 
+    EnemySkillStorage enemySkillStorage;
+
+    Dictionary<int, bool> selectedSpecialSkillID = new Dictionary<int, bool>();
+
     protected override void Awake()
     {
         base.Awake();
@@ -21,6 +25,10 @@ public class EnemySkillManager : BaseSkillManager
 
         if (enemyMove == null)
             throw new System.Exception("EnemySkillManager doesnt have enemyMove");
+
+        enemySkillStorage = skillStorage as EnemySkillStorage;
+        if (enemySkillStorage == null)
+            throw new System.Exception("EnemySkillManager's skillStorage is not EnemySkillStorage");
     }
 
     new void Start()
@@ -44,47 +52,73 @@ public class EnemySkillManager : BaseSkillManager
 
     public override bool PlaySkill(int skillID)
     {
-        if (!isSkillAvailable()) return false;
-        if (!skillAvailableDict[skillID]) return false;
-        
+        if (!IsSkillAvailable()) return false;
+        if (!IsSpecificSkillAvailable(skillID)) return false;
+
         skillDict[skillID].AnimationActivate();
         ResetSkill(skillID);
 
         return true;
     }
 
-    public void PlayRandomSpecialSkill()
+    public bool PlayRandomSpecialSkill()
     {
+        if (!IsSkillAvailable()) return false;
+
+        int availableSpecialSkillCount = 0;
+        int selectedSpecialSkillCount = selectedSpecialSkillID.Count;
+
+        // 현재 실행가능한 선택된 특수 능력이 있는지 확인
+        for (int i = 0; i < selectedSpecialSkillCount; i++)
+        {
+            KeyValuePair<int, bool> pair = selectedSpecialSkillID.ElementAt(i);
+            if (availableSkillDict.ContainsKey(pair.Key))
+            {
+                availableSpecialSkillCount++;
+                break;
+            }
+        }
+
+        if (availableSpecialSkillCount == 0)
+            return false;
+
         while (true)
         {
-            int availableSpecialSkillCount = skillDict.Count;
-            int index = Random.Range(0, availableSpecialSkillCount);
-            KeyValuePair<int, Skill> pair = skillDict.ElementAt(index);
+            int index = Random.Range(0, selectedSpecialSkillCount);
+            KeyValuePair<int, bool> pair = selectedSpecialSkillID.ElementAt(index);
 
-            if (!isSkillAvailable()) break;
-            if (!skillAvailableDict[index]) continue;
+            if (!IsSpecificSkillAvailable(pair.Key)) continue;
 
-            skillDict[index].AnimationActivate();
-            ResetSkill(index);
+            availableSkillDict[pair.Key].AnimationActivate();
+            ResetSkill(pair.Key);
             break;
         }
+
+        return true;
     }
 
     void UploadSpecialSkill()
     {
-        EnemySkillStorage enemySkillStorage = skillStorage as EnemySkillStorage;
-        if (enemySkillStorage == null)
-            throw new System.Exception("EnemySkillManager's skillStorage is not EnemySkillStorage");
-
         for (int i = 0; i < enemySkillStorage.SpecialSkillCandidates.Count; i++)
         {
             skillDict.Add(enemySkillStorage.SpecialSkillCandidates[i].ID, enemySkillStorage.SpecialSkillCandidates[i]);
         }
     }
 
+    public void MakeSpecialSkillAvailable(int id)
+    {
+        selectedSpecialSkillID.Add(id, true);
+    }
+
     protected override void SkillEventConnect()
     {
         throw new System.NotImplementedException();
+    }
+
+    public int GetRandomSpecialSkillAvailableID()
+    {
+        int idx = Random.Range(0, enemySkillStorage.SpecialSkillCandidates.Count);
+        return enemySkillStorage.SpecialSkillCandidates[idx].ID;
     }
     #region
     // public EnemyStateMachine stateMachine;

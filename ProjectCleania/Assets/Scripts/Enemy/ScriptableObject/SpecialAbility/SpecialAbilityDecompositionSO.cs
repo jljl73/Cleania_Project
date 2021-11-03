@@ -5,11 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SpecialAbilityDecomposition", menuName = "Scriptable Object/Enemy/SpecialAbilityDecomposition")]
 public class SpecialAbilityDecompositionSO : EnemySkillSO
 {
-    float speed = 0.5f;
-    float explodeWaitTime = 3f;
-    float explodeDamageRange = 5f;
-    float stunTime = 2f;
-
     [Header("지속 시간")]
     public float ExistTime;
     public float GetExistTime() { return ExistTime; }
