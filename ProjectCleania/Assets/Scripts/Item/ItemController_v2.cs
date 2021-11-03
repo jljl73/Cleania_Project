@@ -180,6 +180,6 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
                 MoveToStorage();
         }
         else
-            GameManager.Instance.npcManager.Dosmth(gameObject);
+            GameManager.Instance.npcManager.Dosmth(this);
     }
 }

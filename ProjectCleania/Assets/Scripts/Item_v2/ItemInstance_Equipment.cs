@@ -74,6 +74,9 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     public int Xp;
     public int NextXP;
     public float Durability;
+    [SerializeField]
+    public Ability.DynamicOption ChangedOption
+        = new Ability.DynamicOption(0, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
 
     Dictionary<Ability.Stat, float> _statics = new Dictionary<Ability.Stat, float>();
 
@@ -290,7 +293,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
     void iSavedData.AfterLoad()
     {
-        Debug.Log("Equipment al");
+        //Debug.Log("Equipment al");
         so = ItemSO.Load(id);
 
         foreach(var en in SD_staticOption)
@@ -308,7 +311,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
     void iSavedData.BeforeSave()
     {
-        Debug.Log("Equipment bs");
+        //Debug.Log("Equipment bs");
         id = so.ID;
 
         SD_staticOption.Clear();

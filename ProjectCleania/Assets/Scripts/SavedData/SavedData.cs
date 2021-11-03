@@ -93,34 +93,34 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        ((iSavedData)Item_World).AfterLoad();
+        //((iSavedData)Item_World).AfterLoad();
         ((iSavedData)Item_Inventory).AfterLoad();
         ((iSavedData)Item_Storage).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(equipableStirng, equipable);
         ((iSavedData)equipable).AfterLoad();
 
-        JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
-        ((iSavedData)vulnerable).AfterLoad();
+        //JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
+        //((iSavedData)vulnerable).AfterLoad();
 
-        GameManager.Instance.SinglePlayer.transform.position = playerPosition;
-        GameManager.Instance.SinglePlayer.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
-        GameManager.Instance.player.playerMove.StopMoving();
+        //GameManager.Instance.SinglePlayer.transform.position = playerPosition;
+        //GameManager.Instance.SinglePlayer.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+        //GameManager.Instance.player.playerMove.StopMoving();
     }
 
     void BeforeSave()
     {
-        ((iSavedData)Item_World).BeforeSave();
+        //((iSavedData)Item_World).BeforeSave();
         ((iSavedData)Item_Inventory).BeforeSave();
         ((iSavedData)Item_Storage).BeforeSave();
 
         ((iSavedData)equipable).BeforeSave();
         equipableStirng = JsonUtility.ToJson(equipable);
 
-        ((iSavedData)vulnerable).BeforeSave();
-        vulnerableString = JsonUtility.ToJson(vulnerable);
+        //((iSavedData)vulnerable).BeforeSave();
+        //vulnerableString = JsonUtility.ToJson(vulnerable);
 
-        playerPosition = GameManager.Instance.SinglePlayer.transform.position;
+        //playerPosition = GameManager.Instance.SinglePlayer.transform.position;
     }
 
     private void Awake()

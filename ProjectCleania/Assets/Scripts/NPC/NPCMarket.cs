@@ -36,11 +36,11 @@ public class NPCMarket : MonoBehaviour
         items.Add(item);
     }
 
-    public void SellItem(GameObject item)
+    public void SellItem(ItemController_v2 item)
     {
         ShowPage(2);
         GameObject newItem = Instantiate(prefab_Item, pages[2].transform);
-        newItem.GetComponent<ItemInMarket>().Initialize(item.GetComponent<ItemController_v2>().itemInstance);
+        newItem.GetComponent<ItemInMarket>().Initialize(item.itemInstance);
         sellItems.Enqueue(newItem);
 
         //item.GetComponent<ItemController_v2>().itemInstance.SO.Price
