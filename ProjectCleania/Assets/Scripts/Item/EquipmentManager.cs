@@ -45,6 +45,7 @@ public class EquipmentManager : MonoBehaviour
 
                 item.MoveTo(transform.GetChild(ct).position);
                 slots[ct] = item;
+                item.wearing = true;
             }
         }
     }
@@ -66,6 +67,7 @@ public class EquipmentManager : MonoBehaviour
         item.PullInventory();
         item.MoveTo(transform.GetChild(ct).position);
         slots[ct] = item;
+        item.wearing = true;
 
         //<Modified>
         playerEquipable.Equip((ItemInstance_Equipment)item.itemInstance);
@@ -76,6 +78,7 @@ public class EquipmentManager : MonoBehaviour
     {
         if (slots[ct] == null) return;
 
+        slots[ct].wearing = false;
         slots[ct].PutInventory();
         //<Modified>
         playerEquipable.Unequip(((ItemInstance_Equipment)slots[ct].itemInstance).EquipmentType);

@@ -20,7 +20,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     public int prevIndex = -1;
     UIManager uiManager;
     Storage parentStroage;
-    bool wearing = false;
+    public bool wearing = false;
 
     // generator
     static GameObject controllerPrefab;
@@ -175,6 +175,8 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
         {
             if (parentStroage == GameManager.Instance.uiManager.StoragePanel)
                 MoveToInventory();
+            else if (wearing == true)
+                GameManager.Instance.npcManager.equpiments.Equip(this);
             else
                 MoveToStorage();
         }

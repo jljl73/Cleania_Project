@@ -16,7 +16,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField]
     Storage inventory;
     [SerializeField]
-    EquipmentManager equpiments;
+    public EquipmentManager equpiments;
 
     void Awake()
     {
