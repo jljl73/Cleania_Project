@@ -55,7 +55,7 @@ public class EquipmentManager : MonoBehaviour
         ItemSO.enumSubCategory category = item.itemInstance.SO.SubCategory;
         int ct = GetIndex(category);
 
-        if (ct == 0) return;
+        if (ct<0 || ct >= slots.Length) return;
         else if (item.Equals(slots[ct]))
         {
             Unequip(ct);
@@ -86,7 +86,7 @@ public class EquipmentManager : MonoBehaviour
     int GetIndex(ItemSO.enumSubCategory category)
     {
         var list = Enum.GetValues(typeof(ItemSO.enumSubCategory));
-        int index = 1;
+        int index = 0;
         foreach(ItemSO.enumSubCategory e in list)
         {
             if (e == category)
