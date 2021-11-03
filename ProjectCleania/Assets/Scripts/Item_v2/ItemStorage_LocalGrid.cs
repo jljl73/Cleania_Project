@@ -143,7 +143,10 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     }
     void _Add(ItemInstance item, Point position)
     {
-        item.CurrentStorage = this;
+        if (item.CurrentStorage == null)
+            item.CurrentStorage = this;
+        else
+            Debug.LogError("Logic error in ItemStorage_LocalGrid : _Add");
 
         // reserve grid
         for (int y = 0; y < item.SO.GridSize.Height; ++y)
@@ -210,6 +213,8 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     {
         if (item.CurrentStorage == this)
             item.CurrentStorage = null;
+        else
+            Debug.LogError("Logic error in ItemStorage_LocalGrid : _Remove");
 
         // checkout reserve
         Point location = _items[item];

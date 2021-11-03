@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class Storage : MonoBehaviour
 {
-    public GameObject slotParent;
-    public GameObject[] slots;
-    public Transform ItemList;
+    [SerializeField]
+    GameObject slotParent;
+    [SerializeField]
+    public GameObject ItemContollerParent;
+    int nSize;
 
+    [SerializeField]
+    public ItemController_v2[] items
+    { get; private set; }
 
     [SerializeField]
     int crystal = 0;
@@ -22,24 +27,17 @@ public class Storage : MonoBehaviour
     enum StorageType
     {
         Inventory,
-        Storage
+        Storage,
+        Equipment
     }
 
     [SerializeField]
     StorageType LinkedStorage;
     ItemStorage_LocalGrid myLocalGrid;
-    public GameObject ItemContollerParent;
+    Equipable playerEquipable;
     // </Modified>
 
 
-    [SerializeField]
-    Storage otherStorage;
-    //public int nSize = 10;
-    int nSize;
-
-    [SerializeField]
-    public ItemController_v2[] items
-    { get; private set; }
 
     protected void Awake()
     {
@@ -50,8 +48,9 @@ public class Storage : MonoBehaviour
         {
             items[i] = null;
         }
-        //gameObject.SetActive(false);
-        TextCrystal.text = crystal.ToString();
+        
+        if (TextCrystal != null)
+            TextCrystal.text = crystal.ToString();
     }
         
 
@@ -61,12 +60,16 @@ public class Storage : MonoBehaviour
         switch(LinkedStorage)
         {
             case StorageType.Inventory:
-                GameManager.Instance.uiManager.InventoryPanel = gameObject;
+                GameManager.Instance.uiManager.InventoryPanel = this;
                 myLocalGrid = SavedData.Instance.Item_Inventory;
                 break;
             case StorageType.Storage:
-                GameManager.Instance.uiManager.StoragePanel = gameObject;
+                GameManager.Instance.uiManager.StoragePanel = this;
                 myLocalGrid = SavedData.Instance.Item_Storage;
+                break;
+            case StorageType.Equipment:
+                //GameManager.Instance.uiManager.EqupmentPanel = this;
+                //myLocalGrid = SavedData.Instance.Item_Storage;
                 break;
         }
 
@@ -85,7 +88,16 @@ public class Storage : MonoBehaviour
                 items[i].MoveTo(slotParent.transform.GetChild(i).position);
 
                 //<Modified>
-                myLocalGrid.Add(item.itemInstance, i);
+                switch (LinkedStorage)
+                {
+                    case StorageType.Inventory:
+                    case StorageType.Storage:
+                        myLocalGrid.Add(item.itemInstance, i);
+                        break;
+                    case StorageType.Equipment:
+
+                        break;
+                }
                 //</Modified>
 
                 return;
@@ -155,7 +167,7 @@ public class Storage : MonoBehaviour
 
     public void ChangeParent(ItemController_v2 item)
     {
-        item.transform.SetParent(ItemList);
+        item.transform.SetParent(ItemContollerParent.transform);
     }
 
     public void AddCrystal(int amount)
