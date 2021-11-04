@@ -124,7 +124,7 @@ public class Equipable : MonoBehaviour, iSavedData
             if (_equipments[i] != null)
             {
                 // static properties
-                foreach (var key_value in _equipments[i].StaticProperties)
+                foreach (var key_value in _equipments[i].StaticDictionary)
                 {
                     if (!_stats.ContainsKey(key_value.Key))
                         _stats[key_value.Key] = 0;
@@ -136,7 +136,7 @@ public class Equipable : MonoBehaviour, iSavedData
                 }
 
                 // dynamic properties
-                foreach (var key_value in _equipments[i].DynamicProperties)
+                foreach (var key_value in _equipments[i].DynamicDictionary)
                 {
                     switch (key_value.Key.Value)
                     {
