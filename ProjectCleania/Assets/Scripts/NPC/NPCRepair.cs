@@ -23,6 +23,9 @@ public class NPCRepair : MonoBehaviour
 
     public void SelectItem(ItemController_v2 item)
     {
+        if (item == null || item.itemInstance == null)
+            return;
+
         selectedItem = item;
         itemImage.enabled = true;
         itemImage.sprite = selectedItem.itemInstance.SO.ItemImage;
@@ -77,11 +80,11 @@ public class NPCRepair : MonoBehaviour
             }
         }
 
-        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.Crystal)
+        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal)
         {
             foreach(var i in toRepair)
             {
-                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel);
+                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
             }
             SelectItem(selectedItem);   // refresh
             Debug.Log("Repaired all items");
@@ -107,11 +110,11 @@ public class NPCRepair : MonoBehaviour
             }
         }
 
-        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.Crystal)
+        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal)
         {
             foreach (var i in toRepair)
             {
-                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel);
+                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
             }
             SelectItem(selectedItem);   // refresh
             Debug.Log("Repaired equiped items");

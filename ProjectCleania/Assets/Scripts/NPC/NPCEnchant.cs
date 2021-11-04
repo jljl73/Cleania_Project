@@ -116,7 +116,7 @@ public class NPCEnchant : MonoBehaviour
         {
             default:
                 OnEnable(); // reset panel
-                Debug.Log($"enchant fail : {reason.ToString()}");
+                UI_MessageBox.Message($"enchant fail : {reason.ToString()}");
                 break;
         }
     }
