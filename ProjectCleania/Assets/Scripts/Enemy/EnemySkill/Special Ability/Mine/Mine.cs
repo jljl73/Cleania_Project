@@ -7,6 +7,12 @@ public class Mine : DamagingProperty
     Collider triggerCollider;
     public float ColliderEnableTime = 1;
 
+    [SerializeField]
+    SkillEffectController bombObjectController;
+
+    [SerializeField]
+    SkillEffectController bombEffectController;
+
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
@@ -24,12 +30,17 @@ public class Mine : DamagingProperty
             //AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
             //if (playerAbil != null)
             //    playerAbil.AttackedBy(OwnerAbility, DamageScale);
-            Destroy(this.gameObject);
+            bombEffectController.PlaySkillEffect();
+            bombObjectController.StopSKillEffect();
+
+            EnableCollider(false);
+
+            Destroy(this.gameObject, 2f);
         }
     }
 
-    void EnableCollider()
+    void EnableCollider(bool value)
     {
-        triggerCollider.enabled = true;
+        triggerCollider.enabled = value;
     }
 }
