@@ -134,4 +134,5 @@ public class NPCEnchant : MonoBehaviour
         }
     }
 
+    // 한글 확인
 }
