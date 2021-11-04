@@ -12,6 +12,7 @@ public class EnemySkillManager : BaseSkillManager
     public Enemy myEnemy;
     public NavMeshAgent nav;
 
+    EnemyStateMachine enemyStateMachine;
     EnemySkillStorage enemySkillStorage;
 
     Dictionary<int, bool> selectedSpecialSkillID = new Dictionary<int, bool>();
@@ -29,6 +30,10 @@ public class EnemySkillManager : BaseSkillManager
         enemySkillStorage = skillStorage as EnemySkillStorage;
         if (enemySkillStorage == null)
             throw new System.Exception("EnemySkillManager's skillStorage is not EnemySkillStorage");
+
+        enemyStateMachine = GetComponent<EnemyStateMachine>();
+        if (enemyStateMachine == null)
+            throw new System.Exception("EnemySkillManager's skillStorage is not enemyStateMachine");
     }
 
     new void Start()
@@ -107,6 +112,8 @@ public class EnemySkillManager : BaseSkillManager
 
     public void MakeSpecialSkillAvailable(int id)
     {
+        enemyStateMachine.Transition(EnemyStateMachine.enumRank.Rare);
+
         // 패시브 속성이면 적용, 추가X
         Skill skill = enemySkillStorage.GetSpecialSkillFromList(id);
         if (skill == null) return;
@@ -119,12 +126,6 @@ public class EnemySkillManager : BaseSkillManager
 
         selectedSpecialSkillID.Add(id, true);
     }
-
-    //IEnumerator invokePassiveSkill(int id)
-    //{
-    //    yield return new WaitForSeconds(1);
-    //    skillDict[id].AnimationActivate();
-    //}
 
     protected override void SkillEventConnect()
     {
