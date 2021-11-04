@@ -8,7 +8,7 @@ public class EquipmentDealer
     static public ItemInstance_Equipment ShuffleStatics (ItemInstance_Equipment equipment)
     {
         // remove all stats
-        foreach (var keyval in equipment.StaticProperties)
+        foreach (var keyval in equipment.StaticDictionary)
             equipment[keyval.Key] = float.NaN;
 
         // add stats again
@@ -21,7 +21,7 @@ public class EquipmentDealer
     static public ItemInstance_Equipment ShuffleDynamics(ItemInstance_Equipment equipment, int number = 3)
     {
         // remove all options
-        foreach (var keyval in equipment.DynamicProperties)
+        foreach (var keyval in equipment.DynamicDictionary)
             equipment[keyval.Key] = float.NaN;
 
         // add options again

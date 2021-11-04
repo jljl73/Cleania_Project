@@ -7,11 +7,11 @@ public class NPCRepair : MonoBehaviour
 {
     ItemController_v2 selectedItem;
     [SerializeField]
-    Text selectedCost;
-    [SerializeField]
     Image backgroundImage;
     [SerializeField]
     Image itemImage;
+    [SerializeField]
+    Text selectedCost;
 
     private void OnEnable()
     {
