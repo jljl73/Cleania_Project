@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3783792633871469597}
   - component: {fileID: 3783792633871469594}
+  - component: {fileID: 776187425}
+  - component: {fileID: 776187426}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: Untagged
@@ -48,7 +50,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6481bd10ca25449a350a4c13418251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPanel: {fileID: 0}
-  itemInventory_: {fileID: 0}
   canvas_: {fileID: 0}
-  skillPanel: {fileID: 0}
+  InventoryPanel: {fileID: 0}
+  SkillPanel: {fileID: 0}
+  ExpandMapPanel: {fileID: 0}
+  QuestPanel: {fileID: 0}
+  RepairPanel: {fileID: 0}
+  MarketPanel: {fileID: 0}
+  EnchantPanel: {fileID: 0}
+  StoragePanel: {fileID: 0}
+  MenuPanel: {fileID: 0}
+  SettingPanel: {fileID: 0}
+--- !u!114 &776187425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783792633871469596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e171efc18e6132f4696925c8a21dbb97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  market: {fileID: 0}
+  repair: {fileID: 0}
+  enchant: {fileID: 0}
+  storage: {fileID: 0}
+  inventory: {fileID: 0}
+  equpiments: {fileID: 0}
+--- !u!114 &776187426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783792633871469596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1484488d0e409c43bd4af9b2e1e15e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quests: []
+  quests_All:
+  - {fileID: 11400000, guid: 321c6c85c21dfca4895cfa3dcaa51a1d, type: 2}
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  details:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  TextPrefab: {fileID: 1473115851529185394, guid: 207536324127de640a860f924a93c34a, type: 3}
+  QuestName: {fileID: 0}
+  QuestDetail: {fileID: 0}
+  miniLists: {fileID: 0}

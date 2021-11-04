@@ -13,25 +13,24 @@ public class ReaperSkill1 : EnemySkill
     // [Header("소환 주기")]
     // public float timeInterval = 10.0f;
 
-    public SummonSkillSO SkillData;
+    [SerializeField]
+    SummonSkillSO skillData;
 
-    private new void Awake()
+    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
+    private new void Start()
     {
-        base.Awake();
+        base.Start();
         UpdateSkillData();
     }
 
     public void UpdateSkillData()
     {
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        highDusty = SkillData.GetHighDustyForSummon();
-        normalDusty = SkillData.GetNormalDustyForSummon();
+        highDusty = skillData.GetHighDustyForSummon();
+        normalDusty = skillData.GetNormalDustyForSummon();
     }
 
     //new void Start()

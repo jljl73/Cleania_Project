@@ -73,10 +73,31 @@ public class Storage : MonoBehaviour
                 break;
         }
 
+
         Invoke("LoadItemControllers", 0.2f);
     }
 
-    // ÀÚµ¿ Ãß°¡
+    void LoadItemControllers()
+    {
+        for (int i = 0; i < nSize; ++i)
+        {
+            if (items[i] != null)
+                ItemController_v2.Delete(items[i]);
+
+            items[i] = null;
+        }
+
+        foreach (var i in myLocalGrid.Items)
+        {
+            ItemController_v2 controller = ItemController_v2.New(i.Key, this);
+            controller.transform.SetParent(ItemContollerParent.transform);
+
+            Add(controller, out controller.prevIndex, myLocalGrid.PointToIndex(i.Value));
+        }
+
+        gameObject.SetActive(false);
+    }
+
     public void Add(ItemController_v2 item, out int index)
     {
         for (int i = 0; i < items.Length; ++i)
@@ -130,6 +151,7 @@ public class Storage : MonoBehaviour
         }
     }
 
+    
     public void Move(int src, int dest)
     {
         // swap object
@@ -165,7 +187,7 @@ public class Storage : MonoBehaviour
         //</Modified>
     }
 
-    void ChangeParent(ItemController_v2 item)
+    public void ChangeParent(ItemController_v2 item)
     {
         item.transform.SetParent(ItemContollerParent.transform);
     }
@@ -178,23 +200,20 @@ public class Storage : MonoBehaviour
         TextCrystal.text = crystal.ToString();
     }
    
-    void LoadItemControllers()
+
+    public int GetNumberItem(int itemCode)
     {
-        for (int i = 0; i < nSize; ++i)
+        int sum = 0;
+        for(int i = 0; i < items.Length;++i)
         {
-            if (items[i] != null)
-                ItemController_v2.Delete(items[i]);
-
-            items[i] = null;
+            if (items[i] != null && items[i].itemInstance.SO.ID == itemCode)
+            {
+                Debug.Log(items[i].itemInstance.SO.ItemName);
+                sum += items[i].itemInstance.Count;
+            }
         }
-
-        foreach (var i in myLocalGrid.Items)
-        {
-            ItemController_v2 controller = ItemController_v2.New(i.Key, this);
-            controller.transform.SetParent(ItemContollerParent.transform);
-
-            Add(controller, out controller.prevIndex, myLocalGrid.PointToIndex(i.Value));
-        }
+        Debug.Log(sum);
+        return sum;
     }
 
 }

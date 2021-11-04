@@ -53,12 +53,12 @@ public class Player : MonoBehaviour
     }
 
 
-    public void PlaySkill(int index)
+    public void PlaySkill(int id)
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
             && !animator.IsInTransition(0))
         {
-            playerSkillManager.PlaySkill(index);
+            playerSkillManager.PlaySkill(id);
         }
     }
 

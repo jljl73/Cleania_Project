@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemySkill", menuName = "Scriptable Object/Enemy/EnemySkill")]
-public class EnemySkillSO : ScriptableObject
+public class EnemySkillSO : EnemySkillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }
@@ -27,6 +27,10 @@ public class EnemySkillSO : ScriptableObject
 
         return tempString;
     }
+
+    [Header("패시브 스킬")]
+    public bool IsPassiveSkill = false;  // 추후 private 처리
+    public bool GetIsPassiveSkill() { return IsPassiveSkill; }
 
     // public bool isAttacking;
     [Header("쿨타임")]

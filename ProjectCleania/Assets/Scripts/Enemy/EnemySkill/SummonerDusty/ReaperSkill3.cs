@@ -9,33 +9,30 @@ public class ReaperSkill3 : EnemySkill
 
     Collider col;
 
-    public DustWindSO SkillData;
+    [SerializeField]
+    public DustWindSO skillData;
+
+    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
     }
 
     private new void Start()
     {
         base.Start();
-
         col = GetComponent<Collider>();
+        UpdateSkillData();
     }
 
     public void UpdateSkillData()
     {
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        DamageScale = SkillData.GetDamageRate();
-        hitForce = SkillData.GetHitForce();
-
+        DamageScale = skillData.GetDamageRate();
+        hitForce = skillData.GetHitForce();
     }
 
     public override void AnimationActivate()

@@ -33,6 +33,12 @@ public class NPCTrigger : MonoBehaviour
                 case NPC.TYPE.Portal:
                     GameManager.Instance.ChangeScene(npc.GetComponent<NPC>().Value);
                     break;
+                case NPC.TYPE.Quest:
+                    dialogManager.ShowQuestDialog(npc.GetComponent<NPC>().Value);
+                    break;
+                case NPC.TYPE.Dungeon:
+                    
+                    break;
             }
         }
     }

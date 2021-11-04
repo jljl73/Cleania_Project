@@ -17,8 +17,14 @@ public class PlayerSkillFairysWings : PlayerSkill
     float speedUpRate = 1.4f;
     public float GetSpeedUpRate() { return speedUpRate; }
 
+   float HandsUpReadyMultiplier = 1.0f;
+   float HandsUpAndDownMultiplier = 1.0f;
+   float PostDelayMultiplier = 1.0f;
+
     bool bSkill = false;
     int nDeadEnemy = 0;
+
+    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
 
     private void Awake()
     {
@@ -30,16 +36,24 @@ public class PlayerSkillFairysWings : PlayerSkill
         base.Start();
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
         animator.SetFloat("FairysWings multiplier", SpeedMultiplier);
+
+        animator.SetFloat("FairysWings_HandsUpReady multiplier", HandsUpReadyMultiplier);
+        animator.SetFloat("FairysWings_HandsUpDown multiplier", HandsUpAndDownMultiplier);
+        animator.SetFloat("FairysWings_PostDelay multiplier", PostDelayMultiplier);
     }
 
     public void UpdateSkillData()
     {
+        ID = SkillData.ID;
         SkillName = SkillData.GetSkillName();
         SkillDetails = SkillData.GetSkillDetails();
         CoolTime = SkillData.GetCoolTime();
         CreatedMP = SkillData.GetCreatedMP();
         ConsumMP = SkillData.GetConsumMP();
         SpeedMultiplier = SkillData.GetSpeedMultiplier();
+        HandsUpReadyMultiplier = SkillData.GetHandsUpReadyMultiplier();
+        HandsUpAndDownMultiplier = SkillData.GetHandsUpAndDownMultiplier();
+        PostDelayMultiplier = SkillData.GetPostDelayMultiplier();
 
         SkillSlotDependency = SkillData.GetTriggerKey();
 

@@ -14,25 +14,31 @@ public abstract class Skill : MonoBehaviour
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
 
+    protected bool isPassiveSkill = false;
+    public virtual bool IsPassiveSkill { get { return isPassiveSkill; } }
+
+    protected int id;
+    public virtual int ID { get { return id; } protected set { id = value; } }
+
     protected string SkillName;
-    public string GetSkillName() { return SkillName; }
+    public virtual string GetSkillName() { return SkillName; }
     [TextArea]
     protected string SkillDetails;
-    public string GetSkillDetails() { return SkillDetails; }
+    public virtual string GetSkillDetails() { return SkillDetails; }
 
     // public bool isAttacking;
     protected float CoolTime;  // 추후 private 처리
-    public float GetCoolTime() { return CoolTime; }
+    public virtual float GetCoolTime() { return CoolTime; }
     protected float CreatedHP = 0f;
-    public float GetCreatedHP() { return CreatedHP; }
+    public virtual float GetCreatedHP() { return CreatedHP; }
 
     protected float CreatedMP = 0f;
-    public float GetCreatedMP() { return CreatedMP; }
+    public virtual float GetCreatedMP() { return CreatedMP; }
     protected float ConsumMP = 0f;
-    public float GetConsumMP() { return ConsumMP; }
+    public virtual float GetConsumMP() { return ConsumMP; }
 
     protected float SpeedMultiplier = 1.0f;
-    public float GetSpeedMultiplier() { return SpeedMultiplier; }
+    public virtual float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     public virtual void Activate() { }
     public virtual void Activate(int dependedEffectIdx = 0) { }
@@ -43,7 +49,7 @@ public abstract class Skill : MonoBehaviour
             OnPlaySkill();
     }
 
-    public abstract void Deactivate();
+    public virtual void Deactivate() { }
 
     public List<SkillEffectController> effectController;
 

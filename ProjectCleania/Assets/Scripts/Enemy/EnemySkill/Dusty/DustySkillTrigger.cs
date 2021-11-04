@@ -36,25 +36,22 @@ public class DustySkillTrigger : EnemySkillTrigger
         {
             if (collider.CompareTag("Player"))
             {
-                // if (!IsSkillAvailable()) return;
-                enemySkillManager.PlaySkill(0);
+                if (enemySkillManager.PlayRandomSpecialSkill())
+                    return;
+
+                if (enemySkillManager.PlaySkill(2101))
+                    return;
             }
         }
 
 
         if (!isHittingByBodySkillTriggered && (ability.HP < ability.GetStat(Ability.Stat.MaxHP) * 0.1f))
         {
-            if (!enemySkillManager.isSkillAvailable())
+            if (!enemySkillManager.IsSkillAvailable())
                 return;
 
-            enemySkillManager.PlaySkill(1);
+            enemySkillManager.PlaySkill(2102);
             isHittingByBodySkillTriggered = true;
         }
     }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //        enemySkillManager.PlaySkill(0);
-    //}
 }

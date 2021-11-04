@@ -54,8 +54,12 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
         {
             if (collider.CompareTag("Player"))
             {
-                // if (!IsSkillAvailable()) return;
-                enemySkillManager.PlaySkill(2);
+                if (enemySkillManager.PlayRandomSpecialSkill())
+                    return;
+
+                // 먼지바람
+                if (enemySkillManager.PlaySkill(2402))
+                    return;
             }
         }
 
@@ -69,7 +73,7 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
             //    StartCoroutine(Summon());
             //}
             #endregion
-            enemySkillManager.PlaySkill(0);    // 소환 스킬 발동
+            enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
         }
     }
 

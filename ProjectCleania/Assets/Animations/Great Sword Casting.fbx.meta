@@ -6,6 +6,21 @@ ModelImporter:
   - first:
       74: -203655887218126122
     second: Skill3
+  - first:
+      74: 7281525542409595259
+    second: '[Skill3] Hands up'
+  - first:
+      74: 6562419418782886845
+    second: '[Skill3] Swing Down'
+  - first:
+      74: 2055468689366577538
+    second: '[Skill3] Wake up'
+  - first:
+      74: 2042803829534017116
+    second: '[Skill3] Post delay'
+  - first:
+      74: -3926047215268896914
+    second: '[Skill3] SwingDown And Wake up'
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -64,28 +79,222 @@ ModelImporter:
         data: 
         objectReferenceParameter: {fileID: 11400000, guid: b6b760b9f07052c42a4fa6c94489c8da, type: 2}
         floatParameter: 0
-        intParameter: 2
+        intParameter: 1105
         messageOptions: 0
       - time: 0.45240918
         functionName: ActivateSkillEffect
         data: 
         objectReferenceParameter: {fileID: 11400000, guid: 8372c11493854134489009cd3f669a4d, type: 2}
         floatParameter: 0
-        intParameter: 2
+        intParameter: 1105
         messageOptions: 0
       - time: 0.47185317
         functionName: ActivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 2
+        intParameter: 1105
         messageOptions: 0
       - time: 0.899651
         functionName: DeactivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 2
+        intParameter: 1105
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: '[Skill3] Hands up'
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 42
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.067653276
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: b6b760b9f07052c42a4fa6c94489c8da, type: 2}
+        floatParameter: 0
+        intParameter: 1105
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: '[Skill3] Swing Down'
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 43
+      lastFrame: 88
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.34460887
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 8372c11493854134489009cd3f669a4d, type: 2}
+        floatParameter: 0
+        intParameter: 1105
+        messageOptions: 0
+      - time: 0.39534885
+        functionName: ActivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1105
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: '[Skill3] Wake up'
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 89
+      lastFrame: 132
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.09302327
+        functionName: DeactivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1105
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: '[Skill3] Post delay'
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 133
+      lastFrame: 144
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: '[Skill3] SwingDown And Wake up'
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 43
+      lastFrame: 132
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.042283297
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 8372c11493854134489009cd3f669a4d, type: 2}
+        floatParameter: 0
+        intParameter: 1105
+        messageOptions: 0
+      - time: 0.09513742
+        functionName: ActivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1105
+        messageOptions: 0
+      - time: 0.30866808
+        functionName: DeactivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1105
         messageOptions: 0
       transformMask: []
       maskType: 3

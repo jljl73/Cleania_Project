@@ -5,39 +5,120 @@ using UnityEngine.UI;
 
 public class NPCEnchant : MonoBehaviour
 {
-    public GameObject ItemImage;
-    public Text ItemName;
-    public Text ItemDetail;
-    public GameObject[] options;
+    [SerializeField]
+    Image backgroundImage;
+    [SerializeField]
+    Image itemImage;
+    [SerializeField]
+    Text itemName;
+    [SerializeField]
+    Text itemDetail;
+    [SerializeField]
+    Text[] options; 
 
-    GameObject Image = null;
-    GameObject selectedItem;
-    ItemInstance instance;
+    ItemController_v2 selectedItem;
+    ItemInstance_Equipment equipment;
+    Ability.DynamicOption[] optionDatas;
 
-    public void SelectItem(GameObject item)
+    private void OnEnable()
     {
-        if (Image != null) Destroy(Image);
+        selectedItem = null;
+        equipment = null;
+        itemImage.enabled = false;
+        backgroundImage.enabled = false;
+        itemName.enabled = false;
+        itemDetail.enabled = false;
+
+        foreach (var v in options)
+            v.transform.parent.gameObject.SetActive(false);
+    }
+
+    public void SelectItem(ItemController_v2 item)
+    {
+        if (!(item.itemInstance is ItemInstance_Equipment))
+            return;
+        
         selectedItem = item;
-        // Image 불러오기 수정 필요할수도
-        Image = Instantiate(selectedItem.transform.GetChild(0).gameObject, ItemImage.transform);
+        equipment = (ItemInstance_Equipment)item.itemInstance;
+        itemImage.enabled = true;
+        itemImage.sprite = selectedItem.itemInstance.SO.ItemImage;
+        itemName.enabled = true;
+        itemName.text = equipment.SO.ItemName;
+        itemDetail.enabled = true;
+        itemDetail.text = equipment.SO.ToolTip;
+        backgroundImage.enabled = true;
+        //backgroundImage.sprite = ;
 
-        instance = item.GetComponent<ItemController_v2>().itemInstance;
-        ItemName.text = instance.SO.ItemName;
-        ItemDetail.text = instance.SO.ToolTip;
+        optionDatas = equipment.DynamicOptions;
 
-        ItemInstance_Equipment ie = (ItemInstance_Equipment)instance;
+        for (int i = 0; i < optionDatas.Length; ++i)
+        {
+            if (optionDatas[i].Equals(equipment.ChangedOption))
+                options[i].fontStyle = FontStyle.Bold;
+            else
+                options[i].fontStyle = FontStyle.Normal;
+        }
 
         int ct = 0;
-        foreach(var v in ie.DynamicProperties_ToString())
+        foreach(var v in equipment.DynamicProperties_ToString())
         {
-            options[ct].SetActive(true);
-            options[ct++].transform.GetComponentInChildren<Text>().text = v;
+            options[ct].transform.parent.gameObject.SetActive(true);
+            options[ct++].text = v;
         }
 
     }
 
-    // public Change Option
-    //
-    // 
+    enum FailCase
+    {
+        ControllerNotSelected,
+        OptionNotSelected,
+        OptionAlreadyChanged,
+        NotEnoughMeney
+    }
+
+    public void SelectOptionToChange(int index)
+    {
+        //if (selectedItem == null || equipment == null)
+        //    EnchantFail(FailCase.ControllerNotSelected);
+        //else if (equipment.ChangedOption.Stat != Ability.Stat.EnumTotal || equipment.ChangedOption.How != Ability.Enhance.EnumTotal)
+        //    EnchantFail(FailCase.OptionAlreadyChanged);
+        //else
+        //{
+        //    equipment.ChangedOption = optionDatas[index];
+        //}
+    }
+
+
+    public void ChangeSelectedOption()
+    {
+        //if (selectedItem == null || equipment == null)
+        //    EnchantFail(FailCase.ControllerNotSelected);
+        //else if (equipment.ChangedOption.Stat == Ability.Stat.EnumTotal || equipment.ChangedOption.How == Ability.Enhance.EnumTotal)
+        //    EnchantFail(FailCase.OptionNotSelected);
+        //else if (GameManager.Instance.uiManager.InventoryPanel.Crystal < 1000)
+        //    EnchantFail(FailCase.NotEnoughMeney);
+        //else
+        //{
+        //    if (EquipmentDealer.TryChangeDynamic(equipment, EquipmentDealer.CandidateDynamicOption(equipment)))
+        //        SelectItem(selectedItem);   // refresh
+        //    else
+        //        Debug.LogError("Logic error in NPCEnchant : SelectOptionToChange");
+        //}
+
+        EquipmentDealer.ShuffleDynamics(equipment);
+        SelectItem(selectedItem);
+    }
+
+
+    void EnchantFail(FailCase reason)
+    {
+        switch (reason)
+        {
+            default:
+                OnEnable(); // reset panel
+                Debug.Log($"enchant fail : {reason.ToString()}");
+                break;
+        }
+    }
 
 }

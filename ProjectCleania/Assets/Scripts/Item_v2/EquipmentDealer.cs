@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class EquipmentDealer
 {
+    // instantiating ItemInstance_Equipment
     static public ItemInstance_Equipment ShuffleStatics (ItemInstance_Equipment equipment)
     {
         // remove all stats
-        foreach (var keyval in equipment.StaticProperties)
+        foreach (var keyval in equipment.StaticDictionary)
             equipment[keyval.Key] = float.NaN;
 
         // add stats again
@@ -20,7 +21,7 @@ public class EquipmentDealer
     static public ItemInstance_Equipment ShuffleDynamics(ItemInstance_Equipment equipment, int number = 3)
     {
         // remove all options
-        foreach (var keyval in equipment.DynamicProperties)
+        foreach (var keyval in equipment.DynamicDictionary)
             equipment[keyval.Key] = float.NaN;
 
         // add options again
@@ -41,6 +42,68 @@ public class EquipmentDealer
         }
 
         return equipment;
+    }
+
+
+    // Enchant
+    static public Ability.DynamicOption RandomDynamicOption(EquipmentOptionSO optionSO)
+    {
+        EquipmentOptionSO.DynamicOptionTable[] dynamicTable = optionSO.DynamicTable;
+        EquipmentOptionSO.DynamicOptionTable table = dynamicTable[Random.Range(0, dynamicTable.Length)];
+
+        return new Ability.DynamicOption(Random.Range(table.Min, table.Max), table.KeyStat, table.KeyHow);
+    }
+
+    static public Ability.DynamicOption CandidateDynamicOption(ItemInstance_Equipment equipment)
+    {
+        int i = 100;
+        while (i-- < 0)
+        {
+            Ability.DynamicOption option = RandomDynamicOption(equipment.SO.OptionTable);
+
+            if (option.Key.Equals(equipment.ChangedOption.Key) ||
+                float.IsNaN(equipment[option.Key]))
+            return option;
+        }
+
+        return new Ability.DynamicOption(float.NaN, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
+    }
+
+    static public bool TryChangeDynamic(ItemInstance_Equipment equipment, Ability.DynamicOption option)
+    {
+        if (equipment.ChangedOption.Stat == Ability.Stat.EnumTotal ||
+            equipment.ChangedOption.How == Ability.Enhance.EnumTotal)
+            return false;   // choose what to change first
+
+        if (option.Key.Equals(equipment.ChangedOption.Key) ||
+            float.IsNaN(equipment[option.Stat, option.How]))
+        {
+            equipment[equipment.ChangedOption.Stat, equipment.ChangedOption.How] = float.NaN;
+            equipment[option.Stat, option.How] = option.Value;
+            equipment.ChangedOption = option;
+            return true;
+        }
+        else
+            return false;
+    }
+
+
+    // Repair
+    static public int GetRepairCost(ItemInstance_Equipment equipment)
+    {
+        return (equipment.SO.Durability - (int)equipment.Durability);
+    }
+
+    static public bool TryRepair(ItemInstance_Equipment equipment, Storage inventory)
+    {
+        if (inventory.Crystal >= GetRepairCost(equipment))
+        {
+            inventory.AddCrystal(-GetRepairCost(equipment));
+            equipment.Durability = equipment.SO.Durability;
+            return true;
+        }
+        else
+            return false;
     }
 
 }

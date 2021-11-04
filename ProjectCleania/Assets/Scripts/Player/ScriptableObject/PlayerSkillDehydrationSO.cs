@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerSkillDehydration", menuName = "Scriptable Object/PlayerSkill/PlayerSkillDehydration")]
-public class PlayerSkillDehydrationSO : ScriptableObject
+public class PlayerSkillDehydrationSO : PlayerSKillIDSO
 {
     public string SkillName;
     public string GetSkillName() { return SkillName; }
