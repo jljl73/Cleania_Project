@@ -13,7 +13,8 @@ public class EnemyStateMachine : StateMachine
         TheDusty = 7001
     }
 
-    public MonsterType monsterType;
+    [SerializeField]
+    MonsterType monsterType;
 
     public enum enumRank
     {
@@ -22,7 +23,8 @@ public class EnemyStateMachine : StateMachine
         Bose
     }
 
-    public enumRank rank = enumRank.Normal;
+    [SerializeField]
+    enumRank rank = enumRank.Normal;
     public enumRank Rank { get { return rank; } set { rank = value; } }
 
     public int ID
@@ -34,11 +36,6 @@ public class EnemyStateMachine : StateMachine
             return int.Parse(temp);
 
         }
-    }
-
-    new void Awake()
-    {
-        base.Awake();
     }
 
     public bool CompareState(enumRank state)

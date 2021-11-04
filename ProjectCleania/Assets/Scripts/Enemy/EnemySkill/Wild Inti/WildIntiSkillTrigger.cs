@@ -27,20 +27,10 @@ public class WildIntiSkillTrigger : EnemySkillTrigger
         {
             if (collider.CompareTag("Player"))
             {
-                // if (!IsSkillAvailable()) return;
+                if (enemySkillManager.PlayRandomSpecialSkill())
+                    return;
+
                 if (enemySkillManager.PlaySkill(2201))
-                    return;
-
-                // Áö·Ú
-                if (enemySkillManager.PlaySkill(2910))
-                    return;
-
-                // ºÀÀÎ
-                if (enemySkillManager.PlaySkill(2906))
-                    return;
-
-                // µ¶¼º
-                if (enemySkillManager.PlaySkill(2901))
                     return;
             }
         }
