@@ -146,7 +146,7 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
         if (item.CurrentStorage == null)
             item.CurrentStorage = this;
         else
-            Debug.LogError("Logic error in ItemStorage_LocalGrid : _Add");
+            Debug.Log("Logic error in ItemStorage_LocalGrid : _Add");
 
         // reserve grid
         for (int y = 0; y < item.SO.GridSize.Height; ++y)
