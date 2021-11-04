@@ -17,11 +17,7 @@ public class SavedData : MonoBehaviour
                 DontDestroyOnLoad(go);
                 _singleton.characterName = "debug";
 
-                _singleton.vulnerable = GameManager.Instance.PlayerAbility;
-                _singleton.equipable = GameManager.Instance.PlayerEquipments;
-                _singleton.Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
-
-                _singleton.Load();
+                _singleton.OnEnable();
             }
 
             return _singleton;

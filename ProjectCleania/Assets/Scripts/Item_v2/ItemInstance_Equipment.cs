@@ -42,6 +42,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         {
             ItemInstance_Equipment instance = new ItemInstance_Equipment(itemSO, level);
 
+            instance.ChangedOption = new Ability.DynamicOption(float.NaN, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
+
             EquipmentDealer.ShuffleStatics(instance);
             EquipmentDealer.ShuffleDynamics(instance);
             return instance;
@@ -76,7 +78,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     public float Durability;
     [SerializeField]
     public Ability.DynamicOption ChangedOption
-        = new Ability.DynamicOption(0, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
+        = new Ability.DynamicOption(float.NaN, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
 
     Dictionary<Ability.Stat, float> _statics = new Dictionary<Ability.Stat, float>();
 
@@ -88,7 +90,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     ///  use this[stat] to modify stats.<para></para>
     ///  * created for foreach access
     /// </summary>
-    public Dictionary<Ability.Stat, float> StaticProperties
+    public Dictionary<Ability.Stat, float> StaticDictionary
     {
         get { return new Dictionary<Ability.Stat, float>(_statics); }
     }
@@ -98,7 +100,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
     ///  use this[stat, enhance] to modify enchants.<para></para>
     ///  * created for foreach access
     /// </summary>
-    public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> DynamicProperties
+    public Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float> DynamicDictionary
     {
         get { return new Dictionary<KeyValuePair<Ability.Stat, Ability.Enhance>, float>(_dynamics); }
     }
@@ -207,6 +209,35 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         }
     }
 
+    public Ability.StaticOption[] StaticOptions
+    {
+        get
+        {
+            List<Ability.StaticOption> optionList = new List<Ability.StaticOption>();
+
+            foreach(var i in _statics)
+            {
+                optionList.Add(new Ability.StaticOption(i.Value, i.Key));
+            }
+
+            return optionList.ToArray();
+        }
+    }
+
+    public Ability.DynamicOption[] DynamicOptions
+    {
+        get
+        {
+            List<Ability.DynamicOption> optionList = new List<Ability.DynamicOption>();
+
+            foreach(var i in _dynamics)
+            {
+                optionList.Add(new Ability.DynamicOption(i.Value, i.Key.Key, i.Key.Value));
+            }
+
+            return optionList.ToArray();
+        }
+    }
 
     public List<string> StaticProperties_ToString()
     {
