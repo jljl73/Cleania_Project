@@ -50,7 +50,10 @@ public struct QuestNeed
     {
         get
         {
-            return String.Format("{0} 처치 ({1}/{2})", target, curValue, targetValue);
+            if (this.type == TYPE.Monster)
+                return String.Format("{0} 처치 ({1}/{2})", Enemy.GetName(target), curValue, targetValue);
+            else
+                return String.Format("{0} 획득 ({1}/{2})", target, curValue, targetValue);
         }
     }
 }
@@ -93,6 +96,8 @@ public class Quest : ScriptableObject
     // 몬스터 잡는거만 체크
     public void Achieve(QuestNeed.TYPE type, int target)
     {
+        if (state == STATE.Reward) return;
+
         for (int i = 0; i < questNeeds.Length; ++i)
         {
             if (questNeeds[i].type == type && questNeeds[i].target == target)
@@ -104,6 +109,15 @@ public class Quest : ScriptableObject
         }
         if (IsClear())
             state = STATE.Clear;
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < questNeeds.Length; ++i)
+        {
+            questNeeds[i].curValue = 0;
+        }
+        state = STATE.Unassign;
     }
 
     public bool IsClear()

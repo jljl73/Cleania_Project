@@ -187,4 +187,30 @@ public class Enemy : MonoBehaviour
     //    skillManager.DeactivateSkill(type);
     //}
 
+    public static string GetName(int ID)
+    {
+        switch(ID)
+        {
+            case 5001:
+                return "더스티";
+            case 5002:
+                return "야생 인티";
+            case 5003:
+                return "상위 더스티";
+            case 5004:
+                return "소환사 더스티";
+            case 6001:
+                return "(희귀)더스티";
+            case 6002:
+                return "(희귀)야생 인티";
+            case 6003:
+                return "(희귀)상위 더스티";
+            case 6004:
+                return "(희귀)소환사 더스티";
+            case 7001:
+                return "더 더스티";
+        }
+        return "";
+    }
+
 }

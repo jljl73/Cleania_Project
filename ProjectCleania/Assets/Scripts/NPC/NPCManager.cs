@@ -43,7 +43,6 @@ public class NPCManager : MonoBehaviour
                 Store(item);
                 break;
             case NPC.TYPE.Quest:
-
                 break;
         }
     }
