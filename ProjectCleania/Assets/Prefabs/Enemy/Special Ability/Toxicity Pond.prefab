@@ -1,63 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1005856082335985991
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5041912227513218523}
-  - component: {fileID: 6118228148409089899}
-  - component: {fileID: 3962111118604874408}
-  m_Layer: 0
-  m_Name: Awake Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5041912227513218523
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005856082335985991}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4507731389746830082}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6118228148409089899
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005856082335985991}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3962111118604874408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005856082335985991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65bc5dd201aad314bb5fc676272c7afb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2300191780678816601
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4507731389746830082}
-  - component: {fileID: 3197972820044796602}
   - component: {fileID: 4373509478355787756}
-  - component: {fileID: 1744134665969910317}
+  - component: {fileID: 773758634625882215}
   m_Layer: 0
   m_Name: Toxicity Pond
   m_TagString: Untagged
@@ -89,25 +30,9 @@ Transform:
   m_LocalScale: {x: 2, y: 0.0001, z: 2}
   m_Children:
   - {fileID: 2764058235981266347}
-  - {fileID: 5041912227513218523}
-  - {fileID: 364663834967786407}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3197972820044796602
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2300191780678816601}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.75
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4373509478355787756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +48,7 @@ MonoBehaviour:
   ParticleObject: {fileID: 2764058235980917011}
   Scale: 1.5
   IsEnabledOnAwake: 1
---- !u!114 &1744134665969910317
+--- !u!114 &773758634625882215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,70 +57,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2300191780678816601}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b7b67e78e591894da3ec33b344de30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 84968f703826dd74ab1c0ccddf01ef3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AwakeDamageCompo: {fileID: 3962111118604874408}
-  ContactStayDamageCompo: {fileID: 5311871715468165299}
-  DestroyDamageCompo: {fileID: 0}
---- !u!1 &5684917170042575936
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 364663834967786407}
-  - component: {fileID: 3286641061222501019}
-  - component: {fileID: 5311871715468165299}
-  m_Layer: 0
-  m_Name: Stay Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &364663834967786407
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5684917170042575936}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4507731389746830082}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3286641061222501019
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5684917170042575936}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5311871715468165299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5684917170042575936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5b589762f6e1e46bf878d953316c40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  damageRange: 1
 --- !u!1001 &2764058235980850041
 PrefabInstance:
   m_ObjectHideFlags: 0

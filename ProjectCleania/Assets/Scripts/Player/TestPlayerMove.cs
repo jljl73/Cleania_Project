@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class TestPlayerMove : MonoBehaviour 
+public class TestPlayerMove : MonoBehaviour, IStunned
 {
     [Header("움직임 사용 스킬")]
     public PlayerSkillRefreshingLeapForward LeapForwardSkill;
@@ -26,6 +26,7 @@ public class TestPlayerMove : MonoBehaviour
     float speed = 1.0f;
 
     bool isOrderedToMove = false;
+    bool isStunned = false;
 
     private void Awake()
     {
@@ -40,7 +41,7 @@ public class TestPlayerMove : MonoBehaviour
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
             player.stateMachine.CompareState(StateMachine.enumState.Attacking)) return;
 
-        if (!isOrderedToMove)
+        if (!isOrderedToMove || isStunned)
         {
             targetPos = transform.position;
             return;
@@ -180,5 +181,24 @@ public class TestPlayerMove : MonoBehaviour
         float dist = LeapForwardSkill.GetJumpDistance();
         isOrderedToMove = true;
         targetPos = transform.position + transform.forward * dist;
+    }
+
+    public void Stunned(bool isStunned, float stunnedTime)
+    {
+        if (isStunned)
+        {
+            StartCoroutine(StunnedFor(stunnedTime));
+        }
+        else
+        {
+            isStunned = false;
+        }
+    }
+
+    public IEnumerator StunnedFor(float time)
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(time);
+        isStunned = false;
     }
 }

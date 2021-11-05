@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class DamagingProperty : MonoBehaviour
 {
-    public AbilityStatus OwnerAbility { get; set; }
-    public float DamageScale { get; set; }
+    protected AbilityStatus ownerAbility;
+    protected float damageScale;
+    protected bool isSetup = false;
     public void SetUp(AbilityStatus abil, float damageScale)
     {
-        OwnerAbility = abil;
-        DamageScale = damageScale;
+        ownerAbility = abil;
+        this.damageScale = damageScale;
+        isSetup = true;
     }
 }

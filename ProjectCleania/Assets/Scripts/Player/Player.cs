@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public delegate void DelegateVoid();
     public event DelegateVoid OnLevelUp;
     public event DelegateVoid OnDead;
+    public UnityAction<bool, float> OnStunned;
 
     void Awake()
     {
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
 
         OnDead += RunDieAnimation;
         OnDead += playerSkillManager.DeactivateAllSkill;
+
+        OnStunned += playerMove.Stunned;
+        OnStunned += playerSkillManager.Stunned;
     }
 
     private void Update()

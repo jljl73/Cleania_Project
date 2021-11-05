@@ -44,9 +44,6 @@ public class EnemySkillManager : BaseSkillManager
 
         // skillData로 부터 쿨타임 관련 Dictionary 추가 및 초기화 & 스킬 animator 설정
         UpdateOtherDictBySkillDict();
-
-        myEnemy.OnDead += DeactivateAllSkill;
-        myEnemy.OnStunned += Stunned;
     }
 
     new void Update()
