@@ -35,9 +35,9 @@ public class QuestManager : MonoBehaviour
 
         for(int i = 0; i < quests_All.Length; ++i)
         {
-            if (quests_All[i].State == Quest.STATE.Assign)
+            if (quests_All[i].State == Quest.STATE.Assign || quests_All[i].State == Quest.STATE.Clear)
                 quests.Add(quests_All[i]);
-            else if (quests_All[i].State == Quest.STATE.Clear)
+            else if (quests_All[i].State == Quest.STATE.Reward)
                 clearQuests.Add(quests_All[i]);
         }
 
@@ -117,7 +117,7 @@ public class QuestManager : MonoBehaviour
         for(; q < miniLists.childCount && q < quests.Count; ++q)
         {
             sb.Clear();
-            sb.Append(quests[q].name);
+            sb.Append(quests[q].Name);
             sb.Append("\n");
             miniLists.GetChild(q).gameObject.SetActive(true);
             for (int i = 0; i < quests[q].QuestNeeds.Length; ++i)

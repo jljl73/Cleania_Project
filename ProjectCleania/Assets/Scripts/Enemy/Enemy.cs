@@ -95,7 +95,15 @@ public class Enemy : MonoBehaviour
         if (enemyStateMachine.CompareState(EnemyStateMachine.enumState.Dead)) return;
 
 
+        if (enemyStateMachine.CompareState(EnemyStateMachine.enumRank.Rare))
+        {
+            GameManager.Instance.uiManager.GetComponent<QuestManager>().Acheive(QuestNeed.TYPE.Monster, enemyStateMachine.ID);
+            GameManager.Instance.uiManager.GetComponent<QuestManager>().Acheive(QuestNeed.TYPE.Monster, enemyStateMachine.ID - (int)EnemyStateMachine.enumRank.Rare);
+        }
+        else
+            GameManager.Instance.uiManager.GetComponent<QuestManager>().Acheive(QuestNeed.TYPE.Monster, enemyStateMachine.ID);
 
+        ExpManager.Acquire(100);
         // 네비게이션 Off
         navMeshAgent.enabled = false;
 

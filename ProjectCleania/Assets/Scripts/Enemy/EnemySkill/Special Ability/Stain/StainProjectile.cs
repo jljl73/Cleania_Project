@@ -12,11 +12,23 @@ public class StainProjectile : DamagingProperty
 
     Rigidbody rigidbody;
 
+    Collider hitCollider;
+
+    [SerializeField]
+    SkillEffectController projectileBodyController;
+
+    [SerializeField]
+    SkillEffectController bombEffectController;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         if (rigidbody == null)
             throw new System.Exception("StainProjectile doesnt have Rigidbody");
+
+        hitCollider = GetComponent<Collider>();
+        if (hitCollider == null)
+            throw new System.Exception("StainProjectile doesnt have Collider");
     }
 
     private void Update()
@@ -29,7 +41,13 @@ public class StainProjectile : DamagingProperty
         {
             if (didStop) return;
             StartCoroutine("Stop", stopTime);
+            EnableCollider();
         }
+    }
+
+    void EnableCollider()
+    {
+        hitCollider.enabled = true;
     }
 
     IEnumerator Stop(float time)
@@ -57,7 +75,27 @@ public class StainProjectile : DamagingProperty
         if (other.CompareTag("Player"))
         {
             print("플레이어 stain 맞음!");
-            Destroy(gameObject);
+
+            bombEffectController.PlaySkillEffect();
+            projectileBodyController.StopSKillEffect();
+
+            hitCollider.enabled = false;
+            rigidbody.useGravity = false;
+            rigidbody.velocity = Vector3.zero;
+
+            Destroy(gameObject, 2f);
+        }
+
+        if (other.CompareTag("Ground"))
+        {
+            bombEffectController.PlaySkillEffect();
+            projectileBodyController.StopSKillEffect();
+
+            hitCollider.enabled = false;
+            rigidbody.useGravity = false;
+            rigidbody.velocity = Vector3.zero;
+
+            Destroy(gameObject, 2f);
         }
     }
 }

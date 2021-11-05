@@ -10,13 +10,8 @@ public class StateMachine : MonoBehaviour
         Idle, MoveAttack, Walk, Attacking, Chasing, Attacked, ReadyAttack, Dead
     };
 
-    public enumState state;
+    enumState state = enumState.Idle;
     public enumState State { get { return state; } }
-
-    protected void Awake()
-    {
-        state = enumState.Idle;
-    }
 
     public void Transition(enumState nextState)
     {
