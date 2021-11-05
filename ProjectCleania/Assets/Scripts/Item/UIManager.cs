@@ -10,8 +10,8 @@ public class UIManager : MonoBehaviour
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
-    public Storage InventoryPanel;
-    public Storage StoragePanel;
+    public GameObject InventoryPanel;
+    public GameObject StoragePanel;
     public GameObject SkillPanel;
     public GameObject ExpandMapPanel;
     public GameObject QuestPanel;
@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            OffAllPanels();
+            CloseLastPanel();
         }
     }
 
@@ -111,6 +111,7 @@ public class UIManager : MonoBehaviour
 
     void OffAllPanels()
     {
+        sPanels.Clear();
         //if (isActiveItemPanel) ShowInventory();
         this.InventoryPanel.gameObject.SetActive(false);
         this.StoragePanel.gameObject.SetActive(false);
@@ -120,6 +121,7 @@ public class UIManager : MonoBehaviour
         this.RepairPanel.SetActive(false);
         this.MarketPanel.SetActive(false);
         this.EnchantPanel.SetActive(false);
+        this.MenuPanel.SetActive(false);
     }
 
     public void OffNPCPanels()
@@ -135,7 +137,6 @@ public class UIManager : MonoBehaviour
         Debug.Log(panel.name);
         panel.SetActive(!panel.activeSelf);
 
-
         if (panel.activeSelf)
         {
             panel.transform.SetAsLastSibling();
@@ -149,7 +150,7 @@ public class UIManager : MonoBehaviour
     void CloseLastPanel()
     {
         if (sPanels.Count > 0)
-            ShowPanel(sPanels[sPanels.Count - 1]);
+            OffAllPanels();
         else
             ShowPanel(MenuPanel);
     }

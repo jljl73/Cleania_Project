@@ -56,8 +56,7 @@ public class EquipmentDealer
 
     static public Ability.DynamicOption CandidateDynamicOption(ItemInstance_Equipment equipment)
     {
-        int i = 100;
-        while (i-- < 0)
+        while (true)
         {
             Ability.DynamicOption option = RandomDynamicOption(equipment.SO.OptionTable);
 
@@ -65,8 +64,7 @@ public class EquipmentDealer
                 float.IsNaN(equipment[option.Key]))
             return option;
         }
-
-        return new Ability.DynamicOption(float.NaN, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
+        //return new Ability.DynamicOption(float.NaN, Ability.Stat.EnumTotal, Ability.Enhance.EnumTotal);
     }
 
     static public bool TryChangeDynamic(ItemInstance_Equipment equipment, Ability.DynamicOption option)
@@ -74,6 +72,10 @@ public class EquipmentDealer
         if (equipment.ChangedOption.Stat == Ability.Stat.EnumTotal ||
             equipment.ChangedOption.How == Ability.Enhance.EnumTotal)
             return false;   // choose what to change first
+
+        if (option.Stat == Ability.Stat.EnumTotal || 
+            option.How == Ability.Enhance.EnumTotal)
+            return false;
 
         if (option.Key.Equals(equipment.ChangedOption.Key) ||
             float.IsNaN(equipment[option.Stat, option.How]))

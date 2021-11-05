@@ -41,6 +41,7 @@ public class SpecialAbilityToxicity : EnemySkill
 
         base.UpdateSkillData(skillData);
 
+        damageScale = skillData.GetDamageRate();
         duration = skillData.GetDuration();
         radius = skillData.GetRadius();
         distanceInterval = skillData.GetDistanceInterval();
@@ -74,7 +75,7 @@ public class SpecialAbilityToxicity : EnemySkill
                     print("enemy.abilityStatus is null");
                 else
                     print("enemy.abilityStatus not null");
-                pondDamage.SetProperty(enemy.abilityStatus, damageScale);
+                pondDamage.SetProperty(OwnerAbilityStatus, damageScale);
             }
             else
                 print("Pond null");

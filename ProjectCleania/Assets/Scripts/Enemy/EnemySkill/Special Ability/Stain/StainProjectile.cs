@@ -74,7 +74,9 @@ public class StainProjectile : DamagingProperty
     {
         if (other.CompareTag("Player"))
         {
-            print("플레이어 stain 맞음!");
+            AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
+            if (abil != null)
+                abil.AttackedBy(OwnerAbility, DamageScale);
 
             bombEffectController.PlaySkillEffect();
             projectileBodyController.StopSKillEffect();

@@ -214,7 +214,7 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
         if (item.CurrentStorage == this)
             item.CurrentStorage = null;
         else
-            Debug.LogError("Logic error in ItemStorage_LocalGrid : _Remove");
+            Debug.Log("Logic error in ItemStorage_LocalGrid : _Remove");
 
         // checkout reserve
         Point location = _items[item];

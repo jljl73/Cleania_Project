@@ -14,7 +14,11 @@ public class NPCEnchant : MonoBehaviour
     [SerializeField]
     Text itemDetail;
     [SerializeField]
-    Text[] options; 
+    Text[] optionTexts;
+    [SerializeField]
+    int enchantCost = 1000;
+    [SerializeField]
+    Text costPanel;
 
     ItemController_v2 selectedItem;
     ItemInstance_Equipment equipment;
@@ -28,16 +32,21 @@ public class NPCEnchant : MonoBehaviour
         backgroundImage.enabled = false;
         itemName.enabled = false;
         itemDetail.enabled = false;
+        //costPanel.text = "-";
 
-        foreach (var v in options)
+        foreach (var v in optionTexts)
             v.transform.parent.gameObject.SetActive(false);
+
+        
     }
 
     public void SelectItem(ItemController_v2 item)
     {
         if (!(item.itemInstance is ItemInstance_Equipment))
             return;
-        
+
+        OnEnable();
+
         selectedItem = item;
         equipment = (ItemInstance_Equipment)item.itemInstance;
         itemImage.enabled = true;
@@ -54,59 +63,65 @@ public class NPCEnchant : MonoBehaviour
         for (int i = 0; i < optionDatas.Length; ++i)
         {
             if (optionDatas[i].Equals(equipment.ChangedOption))
-                options[i].fontStyle = FontStyle.Bold;
+                optionTexts[i].fontStyle = FontStyle.Bold;
             else
-                options[i].fontStyle = FontStyle.Normal;
+                optionTexts[i].fontStyle = FontStyle.Normal;
         }
 
         int ct = 0;
         foreach(var v in equipment.DynamicProperties_ToString())
         {
-            options[ct].transform.parent.gameObject.SetActive(true);
-            options[ct++].text = v;
+            optionTexts[ct].transform.parent.gameObject.SetActive(true);
+            optionTexts[ct++].text = v;
         }
 
+        costPanel.text = enchantCost.ToString();
     }
 
     enum FailCase
     {
-        ControllerNotSelected,
-        OptionNotSelected,
-        OptionAlreadyChanged,
-        NotEnoughMeney
+        장비가_선택되지_않았습니다,
+        옵션이_선택되지_않았습니다,
+        옵션이_선택된_장비입니다,
+        클린이_부족합니다
     }
 
     public void SelectOptionToChange(int index)
     {
-        //if (selectedItem == null || equipment == null)
-        //    EnchantFail(FailCase.ControllerNotSelected);
-        //else if (equipment.ChangedOption.Stat != Ability.Stat.EnumTotal || equipment.ChangedOption.How != Ability.Enhance.EnumTotal)
-        //    EnchantFail(FailCase.OptionAlreadyChanged);
-        //else
-        //{
-        //    equipment.ChangedOption = optionDatas[index];
-        //}
+        if (selectedItem == null || equipment == null)
+            EnchantFail(FailCase.장비가_선택되지_않았습니다);
+        else if (equipment.ChangedOption.Stat != Ability.Stat.EnumTotal || equipment.ChangedOption.How != Ability.Enhance.EnumTotal)
+            EnchantFail(FailCase.옵션이_선택된_장비입니다);
+        else
+        {
+            equipment.ChangedOption = optionDatas[index];
+            SelectItem(selectedItem);
+            UI_MessageBox.Message("옵션이 선택되었습니다.");
+        }
     }
 
 
     public void ChangeSelectedOption()
     {
-        //if (selectedItem == null || equipment == null)
-        //    EnchantFail(FailCase.ControllerNotSelected);
-        //else if (equipment.ChangedOption.Stat == Ability.Stat.EnumTotal || equipment.ChangedOption.How == Ability.Enhance.EnumTotal)
-        //    EnchantFail(FailCase.OptionNotSelected);
-        //else if (GameManager.Instance.uiManager.InventoryPanel.Crystal < 1000)
-        //    EnchantFail(FailCase.NotEnoughMeney);
-        //else
-        //{
-        //    if (EquipmentDealer.TryChangeDynamic(equipment, EquipmentDealer.CandidateDynamicOption(equipment)))
-        //        SelectItem(selectedItem);   // refresh
-        //    else
-        //        Debug.LogError("Logic error in NPCEnchant : SelectOptionToChange");
-        //}
+        if (selectedItem == null || equipment == null)
+            EnchantFail(FailCase.장비가_선택되지_않았습니다);
+        else if (equipment.ChangedOption.Stat == Ability.Stat.EnumTotal || equipment.ChangedOption.How == Ability.Enhance.EnumTotal)
+            EnchantFail(FailCase.옵션이_선택되지_않았습니다);
+        else if (GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal < enchantCost)
+            EnchantFail(FailCase.클린이_부족합니다);
+        else
+        {
+            if (EquipmentDealer.TryChangeDynamic(equipment, EquipmentDealer.CandidateDynamicOption(equipment)))
+            {
+                GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(-enchantCost);
+                SelectItem(selectedItem);   // refresh
+            }
+            else
+                Debug.LogError("Logic error in NPCEnchant : SelectOptionToChange");
+        }
 
-        EquipmentDealer.ShuffleDynamics(equipment);
-        SelectItem(selectedItem);
+        //EquipmentDealer.ShuffleDynamics(equipment);
+        //SelectItem(selectedItem);
     }
 
 
@@ -116,7 +131,7 @@ public class NPCEnchant : MonoBehaviour
         {
             default:
                 OnEnable(); // reset panel
-                Debug.Log($"enchant fail : {reason.ToString()}");
+                UI_MessageBox.Message($"인첸트 실패 : {reason.ToString()}");
                 break;
         }
     }

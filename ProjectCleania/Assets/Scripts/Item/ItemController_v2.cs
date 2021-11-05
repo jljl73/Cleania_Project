@@ -76,7 +76,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public void PutInventory()
     {
-        GameManager.Instance.uiManager.InventoryPanel.Add(this, out prevIndex);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Add(this, out prevIndex);
 
         //<Modified>
         if (prevIndex == -1)
@@ -86,25 +86,25 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public void PullInventory()
     {
-        GameManager.Instance.uiManager.InventoryPanel.Remove(prevIndex);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Remove(prevIndex);
     }
 
     void MoveToInventory()
     {
         if (prevIndex != -1)
-            GameManager.Instance.uiManager.StoragePanel.Remove(prevIndex);
-        GameManager.Instance.uiManager.InventoryPanel.Add(this, out prevIndex);
+            GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>().Remove(prevIndex);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Add(this, out prevIndex);
         if (prevIndex != -1)
-            parentStroage = GameManager.Instance.uiManager.InventoryPanel;
+            parentStroage = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>();
     }
 
     void MoveToStorage()
     {
         if (prevIndex != -1)
-            GameManager.Instance.uiManager.InventoryPanel.Remove(prevIndex);
-        GameManager.Instance.uiManager.StoragePanel.Add(this, out prevIndex);
+            GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Remove(prevIndex);
+        GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>().Add(this, out prevIndex);
         if (prevIndex != -1)
-            parentStroage = GameManager.Instance.uiManager.StoragePanel;
+            parentStroage = GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>();
     }
 
     void MoveFromParentTo(Storage to)
@@ -172,7 +172,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
         if(uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
         {
-            if (parentStroage == GameManager.Instance.uiManager.StoragePanel)
+            if (parentStroage == GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>())
                 MoveToInventory();
             else if (wearing == true)
                 GameManager.Instance.npcManager.equpiments.Equip(this);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BatSkill1 : EnemySkill
 {
-    float DamageScale = 10;
+    float damageScale = 10;
     float bloodChance = 0.3f;
     float bloodTime = 5.0f;
 
@@ -33,6 +33,7 @@ public class BatSkill1 : EnemySkill
 
         base.UpdateSkillData(skillData);
 
+        damageScale = skillData.GetDamageRate();
         bloodChance = skillData.GetBloodChance();
         bloodTime = skillData.GetBloodTime();
     }
@@ -57,7 +58,7 @@ public class BatSkill1 : EnemySkill
         {
             Player player = other.gameObject.GetComponent<Player>();
             if (player != null)
-                player.abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
+                player.abilityStatus.AttackedBy(enemy.abilityStatus, damageScale);
         }
     }
 
