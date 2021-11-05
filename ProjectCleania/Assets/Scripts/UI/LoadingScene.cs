@@ -17,7 +17,7 @@ public class LoadingScene : MonoBehaviour
 
     void Update()
     {
-        if(async != null) loadingBar.fillAmount = delayTime / 3.0f;
+        if (async != null) loadingBar.fillAmount = delayTime/3.0f;
         delayTime += Time.deltaTime;
     }
 
@@ -32,7 +32,7 @@ public class LoadingScene : MonoBehaviour
             yield return true;
         }
 
-        while (async.progress >= 0.9f)
+        while (async.progress >= 0.90f)
         {
             yield return new WaitForSeconds(0.1f);
             if (delayTime > 3.0f)

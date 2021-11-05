@@ -17,11 +17,18 @@ public class QuestManager : MonoBehaviour
         
 
     // UI
+    [SerializeField]
+    Sprite spritePlus;
+    [SerializeField]
+    Sprite spriteMinus;
     public Button[] buttons;
     public GameObject[] details;
+
+
     public GameObject TextPrefab;
     public Text QuestName;
     public Text QuestDetail;
+    public static Quest ClickedQuest = null;
     int prevIndex = -1;
 
 
@@ -36,7 +43,7 @@ public class QuestManager : MonoBehaviour
         for(int i = 0; i < quests_All.Length; ++i)
         {
             if (quests_All[i].State == Quest.STATE.Assign || quests_All[i].State == Quest.STATE.Clear)
-                quests.Add(quests_All[i]);
+                Add(quests_All[i]);
             else if (quests_All[i].State == Quest.STATE.Reward)
                 clearQuests.Add(quests_All[i]);
         }
@@ -80,11 +87,18 @@ public class QuestManager : MonoBehaviour
     {
         for (int i = buttons.Length - 1; i >= 0; --i)
         {
+            buttons[i].GetComponent<Image>().sprite = spritePlus;
             details[i].SetActive(false);
         }
-        if (prevIndex == index) return;
+        if (prevIndex == index)
+        {
+            prevIndex = -1;
+            return;
+        }
 
         details[index].SetActive(true);
+        buttons[index].GetComponent<Image>().sprite = spriteMinus;
+        prevIndex = index;
         SetListHeight();
     }
 
@@ -97,6 +111,21 @@ public class QuestManager : MonoBehaviour
         SetListHeight();
     }
 
+    void DeleteList(Quest quest)
+    {
+        quests.Remove(quest);
+        int index = (int)quest.Catergory;
+        for (int i = 0; i < details[index].transform.childCount; ++i)
+        {
+            if (details[index].transform.GetChild(i).GetComponent<QuestSlot>().quest == quest)
+            {
+                Destroy(details[index].transform.GetChild(i).gameObject);
+                break;
+            }
+        }
+        SetListHeight();
+    }
+
     void SetListHeight()
     {
         for (int i = 0; i < details.Length; ++i)
@@ -105,11 +134,22 @@ public class QuestManager : MonoBehaviour
         }
         SetMiniList();
     }
+
+
+    public void Abandon()
+    {
+        if (ClickedQuest == null) return;
+
+        DeleteList(ClickedQuest);
+        ClickedQuest.Reset();
+    }
+
     #endregion
 
     #region MINI UI
     [SerializeField]
     Transform miniLists;
+
     void SetMiniList()
     {
         StringBuilder sb = new StringBuilder();

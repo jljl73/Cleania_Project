@@ -47,6 +47,14 @@ public class AbilityStatus : MonoBehaviour, iSavedData
         Invoke("FullMP", 0.01f);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            FullHP(); FullMP();
+        }
+    }
+
 
 
     virtual protected float RefreshStat(Ability.Stat stat)

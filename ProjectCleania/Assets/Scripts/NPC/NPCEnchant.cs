@@ -36,6 +36,8 @@ public class NPCEnchant : MonoBehaviour
 
         foreach (var v in optionTexts)
             v.transform.parent.gameObject.SetActive(false);
+
+        
     }
 
     public void SelectItem(ItemController_v2 item)
