@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StormWind : MonoBehaviour
+public class StormWind : DamagingProperty
 {
     GameObject rotatePivot;
-    public float rotateSpeed;
-
+    float rotateSpeed;
 
     private void Update()
     {
@@ -23,5 +22,15 @@ public class StormWind : MonoBehaviour
     {
         if (rotatePivot == null) return;
         transform.RotateAround(rotatePivot.transform.position, rotatePivot.transform.up, rotateSpeed * Time.deltaTime);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
+            if (abil != null)
+                abil.AttackedBy(OwnerAbility, DamageScale * Time.deltaTime);
+        }
     }
 }

@@ -8,7 +8,9 @@ public class ContactStayDamage : DamagingProperty
     {
         if (other.CompareTag("Player"))
         {
-            print("컨택 데미지!");
+            AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
+            if (abil != null)
+                abil.AttackedBy(OwnerAbility, DamageScale * Time.deltaTime);
         }
     }
 }

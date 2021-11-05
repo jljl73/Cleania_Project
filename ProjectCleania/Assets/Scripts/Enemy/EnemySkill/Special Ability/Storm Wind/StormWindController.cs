@@ -14,20 +14,23 @@ public class StormWindController : MonoBehaviour
     float rotateRadius = 3f;
     float rotateSpeed = 90f;
     int count;
-
-    void Update()
-    {
-    }
+    float duration;
+    AbilityStatus ownerAbil;
+    float damageScale;
 
     // Initiate 후 함수 호출 필수
-    public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count)
+    public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count, float duration, AbilityStatus ownerAbil, float damageScale)
     {
         this.rotateCW = isCW;
         this.rotateRadius = rotateRadius;
         this.rotateSpeed = rotateSpeed;
         this.count = count;
+        this.duration = duration;
+        this.ownerAbil = ownerAbil;
+        this.damageScale = damageScale;
 
         MakeWinds(isCW);
+        Destroy(this.gameObject, duration);
     }
 
     void MakeWinds(bool isCW)
@@ -44,7 +47,10 @@ public class StormWindController : MonoBehaviour
                     stormWind.SetUp(this.gameObject, rotateSpeed);
                 else
                     stormWind.SetUp(this.gameObject, -rotateSpeed);
+
+                stormWind.SetUp(ownerAbil, damageScale);
             }
+
         }
     }
 

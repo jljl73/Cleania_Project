@@ -61,10 +61,13 @@ public class Decomposition : DamagingProperty
             if (collider.CompareTag("Player"))
             {
                 // 자폭 데미지!
-                print("플레이어에게 자폭 데미지!");
-                Destroy(gameObject);
+                AbilityStatus abil = collider.gameObject.GetComponent<AbilityStatus>();
+                if (abil != null)
+                    abil.AttackedBy(OwnerAbility, DamageScale);
             }
         }
+
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

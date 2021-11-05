@@ -41,6 +41,7 @@ public class SpecialAbilitySeal : EnemySkill
 
         base.UpdateSkillData(skillData);
 
+        damageScale = skillData.GetDamageRate();
         duration = skillData.GetDuration();
         radius = skillData.GetRadius();
         CreationRadius = skillData.GetCreationRadius();

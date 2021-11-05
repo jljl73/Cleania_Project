@@ -41,6 +41,7 @@ public class SpecialAbilityStormWind : EnemySkill
 
         base.UpdateSkillData(skillData);
 
+        damageScale = skillData.GetDamageRate();
         duration = skillData.GetDuration();
         orbitOffset = skillData.GetOrbitOffset();
         orbitCount = skillData.GetCount();
@@ -66,7 +67,8 @@ public class SpecialAbilityStormWind : EnemySkill
         {
             GameObject initiatedOrbit = Instantiate(stormWindOrbitPrefab, transform.position, transform.rotation);
             StormWindController orbitController = initiatedOrbit.GetComponent<StormWindController>();
-            orbitController.SetUp(i % 2 == 1, i * orbitOffset, rotationSpeed, i);
+            orbitController.SetUp(i % 2 == 1, i * orbitOffset, rotationSpeed, i, duration, OwnerAbilityStatus, damageScale);
+            
             //Destroy(this.gameObject, duration);
         }
     }
