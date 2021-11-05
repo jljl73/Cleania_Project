@@ -60,11 +60,11 @@ public class Storage : MonoBehaviour
         switch(LinkedStorage)
         {
             case StorageType.Inventory:
-                GameManager.Instance.uiManager.InventoryPanel = this;
+                GameManager.Instance.uiManager.InventoryPanel = gameObject;
                 myLocalGrid = SavedData.Instance.Item_Inventory;
                 break;
             case StorageType.Storage:
-                GameManager.Instance.uiManager.StoragePanel = this;
+                GameManager.Instance.uiManager.StoragePanel = gameObject;
                 myLocalGrid = SavedData.Instance.Item_Storage;
                 break;
             case StorageType.Equipment:

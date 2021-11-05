@@ -10,8 +10,8 @@ public class UIManager : MonoBehaviour
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
-    public Storage InventoryPanel;
-    public Storage StoragePanel;
+    public GameObject InventoryPanel;
+    public GameObject StoragePanel;
     public GameObject SkillPanel;
     public GameObject ExpandMapPanel;
     public GameObject QuestPanel;
