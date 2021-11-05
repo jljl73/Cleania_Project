@@ -172,7 +172,7 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
 
         if(uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
         {
-            if (parentStroage == GameManager.Instance.uiManager.StoragePanel)
+            if (parentStroage == GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>())
                 MoveToInventory();
             else if (wearing == true)
                 GameManager.Instance.npcManager.equpiments.Equip(this);
