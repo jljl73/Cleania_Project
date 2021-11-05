@@ -77,8 +77,10 @@ public class ItemSO : ScriptableObject
     public Sprite ItemImage
     { get => itemImage; }
 
-    //int maxDurability;
-    //Equipment Option;
+    [SerializeField]
+    Sprite backgroundImage;
+    public Sprite BackgroundImage
+    { get => backgroundImage; }
 
     [SerializeField]
     string toolTip = "-";
