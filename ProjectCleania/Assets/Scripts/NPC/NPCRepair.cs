@@ -23,6 +23,9 @@ public class NPCRepair : MonoBehaviour
 
     public void SelectItem(ItemController_v2 item)
     {
+        if (item == null || item.itemInstance == null)
+            return;
+
         selectedItem = item;
         itemImage.enabled = true;
         itemImage.sprite = selectedItem.itemInstance.SO.ItemImage;
@@ -46,11 +49,11 @@ public class NPCRepair : MonoBehaviour
         {   // repair success
             // tryRepair change money ammount
             SelectItem(selectedItem);   // refresh
-            Debug.Log("Repaired");
+            UI_MessageBox.Message("선택된 장비의 수리를 완료하였습니다.");
         }
         else 
         {   // repair fail
-            Debug.Log("Not Repaired");
+            UI_MessageBox.Message("클린이 부족합니다.");
         }
     }
 
@@ -77,18 +80,18 @@ public class NPCRepair : MonoBehaviour
             }
         }
 
-        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.Crystal)
+        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal)
         {
             foreach(var i in toRepair)
             {
-                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel);
+                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
             }
             SelectItem(selectedItem);   // refresh
-            Debug.Log("Repaired all items");
+            UI_MessageBox.Message("모든 장비의 수리를 완료하였습니다.");
         }
         else
         {
-            Debug.Log("Not repaired all items");
+            Debug.Log("클린이 부족합니다.");
         }
     }
 
@@ -107,18 +110,18 @@ public class NPCRepair : MonoBehaviour
             }
         }
 
-        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.Crystal)
+        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal)
         {
             foreach (var i in toRepair)
             {
-                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel);
+                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
             }
             SelectItem(selectedItem);   // refresh
-            Debug.Log("Repaired equiped items");
+            UI_MessageBox.Message("장착중인 장비의 수리를 완료하였습니다.");
         }
         else
         {
-            Debug.Log("Not repaired equiped items");
+            UI_MessageBox.Message("클린이 부족합니다.");
         }
     }
 }
