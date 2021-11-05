@@ -71,6 +71,7 @@ public class SpecialAbilityDecomposition : EnemySkill
         if (decomposition != null)
         {
             decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject);
+            decomposition.SetUp(OwnerAbilityStatus, damageScale);
         }
     }
 

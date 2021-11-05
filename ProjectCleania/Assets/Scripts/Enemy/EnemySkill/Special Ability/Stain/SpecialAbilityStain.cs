@@ -41,6 +41,7 @@ public class SpecialAbilityStain : EnemySkill
 
         base.UpdateSkillData(skillData);
 
+        damageScale = skillData.GetDamageRate();
         stainRadius = skillData.GetStainRadius();
         stainAvailableAreaRadius = skillData.GetCreationRadius();
         stainCount = skillData.GetCount();
@@ -98,6 +99,7 @@ public class SpecialAbilityStain : EnemySkill
             Vector3 targetPos = GetRandomPointInCircle(transform.position, stainAvailableAreaRadius);
             rigidbody.velocity = CaculateVelocity(targetPos, transform.position, projFlightTime);
             stainProj.SetUp(stopTime, projFlightTime * 0.5f);
+            stainProj.SetUp(OwnerAbilityStatus, damageScale);
         }
     }
 

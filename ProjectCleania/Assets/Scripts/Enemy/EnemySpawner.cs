@@ -48,11 +48,6 @@ public class EnemySpawner : MonoBehaviour
             if (i == 0)
             {
                 ResetSpecialSkillIDs(enemySkillManager);
-
-                foreach (int id in SpecialSkillIDs)
-                {
-                    print("id: " + id);
-                }
             }
 
             SetSpecialSkillTo(enemySkillManager);

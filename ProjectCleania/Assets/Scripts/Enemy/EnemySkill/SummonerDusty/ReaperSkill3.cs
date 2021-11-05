@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ReaperSkill3 : EnemySkill
 {
-    float DamageScale = 10;
+    float damageScale = 10;
     float hitForce = 1;
 
     Collider col;
@@ -31,7 +31,7 @@ public class ReaperSkill3 : EnemySkill
     {
         base.UpdateSkillData(skillData);
 
-        DamageScale = skillData.GetDamageRate();
+        damageScale = skillData.GetDamageRate();
         hitForce = skillData.GetHitForce();
     }
 
@@ -50,7 +50,7 @@ public class ReaperSkill3 : EnemySkill
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, DamageScale);
+            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, damageScale);
             other.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(other.transform.position - this.transform.position) * hitForce);
             //other.GetComponent<Player>()
         }
