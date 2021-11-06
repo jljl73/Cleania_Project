@@ -75,7 +75,10 @@ public class PlayerSkillDusting : PlayerSkill
             AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
 
             if (enemyAbil.HP != 0)
+            {
                 enemyAbil.AttackedBy(OwnerAbilityStatus, damageRate);
+                OwnerAbilityStatus.ConsumeMP(-CreatedMP);
+            }
         }
     }
 }

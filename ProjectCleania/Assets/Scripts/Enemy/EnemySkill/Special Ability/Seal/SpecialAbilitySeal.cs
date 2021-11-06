@@ -68,9 +68,11 @@ public class SpecialAbilitySeal : EnemySkill
         {
             GameObject initiatedPond = Instantiate(SealPond, transform.position, transform.rotation);
             initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            SealPond pondDamage = SealPond.GetComponent<SealPond>();
+            SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
+            print("0");
             pondDamage.SetUp(OwnerAbilityStatus, damageScale);
             pondDamage.SetUp(duration, silenceTime);
+            print("1");
             //if (pondDamage != null)
             //{
             //    print("Pond not null");

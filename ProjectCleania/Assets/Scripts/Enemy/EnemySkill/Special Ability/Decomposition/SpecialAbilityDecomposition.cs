@@ -70,8 +70,7 @@ public class SpecialAbilityDecomposition : EnemySkill
         Decomposition decomposition = initiatedObj.GetComponent<Decomposition>();
         if (decomposition != null)
         {
-            decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject);
-            decomposition.SetUp(OwnerAbilityStatus, damageScale);
+            decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject, OwnerAbilityStatus, damageScale);
         }
     }
 

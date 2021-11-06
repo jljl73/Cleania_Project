@@ -8,7 +8,7 @@ public class PondDamage : DamagingProperty
 
     private void Start()
     {
-        if (!isSetup) return; 
+        if (!isSetUp) return; 
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, damageRange);
         for (int i = 0; i < colliders.Length; i++)
@@ -24,7 +24,7 @@ public class PondDamage : DamagingProperty
 
     private void Update()
     {
-        if (!isSetup) return;
+        if (!isSetUp) return;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, damageRange);
         for (int i = 0; i < colliders.Length; i++)

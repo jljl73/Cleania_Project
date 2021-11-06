@@ -11,7 +11,7 @@ public class ToxicityPond : ToxicityDamage
 
     void GiveDamageOnRange(float range)
     {
-        if (!isSetup) return;
+        if (!isSetUp) return;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, range);
         for (int i = 0; i < colliders.Length; i++)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StormWindController : MonoBehaviour
+public class StormWindController : DamagingProperty
 {
     [SerializeField]
     GameObject stormWindPrefab;
@@ -15,19 +15,17 @@ public class StormWindController : MonoBehaviour
     float rotateSpeed = 90f;
     int count;
     float duration;
-    AbilityStatus ownerAbil;
-    float damageScale;
 
     // Initiate 후 함수 호출 필수
-    public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count, float duration, AbilityStatus ownerAbil, float damageScale)
+    public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count, float duration, AbilityStatus abil, float damageScale)
     {
         this.rotateCW = isCW;
         this.rotateRadius = rotateRadius;
         this.rotateSpeed = rotateSpeed;
         this.count = count;
         this.duration = duration;
-        this.ownerAbil = ownerAbil;
-        this.damageScale = damageScale;
+
+        base.SetUp(abil, damageScale);
 
         MakeWinds(isCW);
         Destroy(this.gameObject, duration);
@@ -48,7 +46,7 @@ public class StormWindController : MonoBehaviour
                 else
                     stormWind.SetUp(this.gameObject, -rotateSpeed);
 
-                stormWind.SetUp(ownerAbil, damageScale);
+                stormWind.SetUp(ownerAbility, damageScale);
             }
 
         }

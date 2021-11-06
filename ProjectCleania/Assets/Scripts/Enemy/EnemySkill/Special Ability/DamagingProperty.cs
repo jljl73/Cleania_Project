@@ -6,11 +6,11 @@ public class DamagingProperty : MonoBehaviour
 {
     protected AbilityStatus ownerAbility;
     protected float damageScale;
-    protected bool isSetup = false;
+    protected bool isSetUp = false;
     public void SetUp(AbilityStatus abil, float damageScale)
     {
         ownerAbility = abil;
         this.damageScale = damageScale;
-        isSetup = true;
+        isSetUp = true;
     }
 }

@@ -12,7 +12,6 @@ public class Decomposition : DamagingProperty
     float stunTime = 2f;
     GameObject target;
 
-    bool isSetUp = false;
     bool isExploding = false;
 
     NavMeshAgent nav;
@@ -31,7 +30,7 @@ public class Decomposition : DamagingProperty
         nav.SetDestination(target.transform.position);
     }
 
-    public void SetUp(float existTime, float speed, float explodeWaitTime, float explodeDamageRange, float stunTime, GameObject target)
+    public void SetUp(float existTime, float speed, float explodeWaitTime, float explodeDamageRange, float stunTime, GameObject target, AbilityStatus abil, float damageScale)
     {
         this.existTime = existTime;
         this.speed = speed;
@@ -40,7 +39,8 @@ public class Decomposition : DamagingProperty
         this.stunTime = stunTime;
         this.target = target;
 
-        isSetUp = true;
+        base.SetUp(abil, damageScale);
+
         nav.speed = speed;
         Invoke("ReadyToExplode", existTime);
     }

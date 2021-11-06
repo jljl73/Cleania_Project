@@ -19,11 +19,8 @@ public class SealPond : DamagingProperty
 
     void Start()
     {
-        print("a");
-        if (!isSetup) return;
-        print("b");
+        if (!isSetUp) return;
         if (!isSealPondSetUp) return;
-        print("c");
 
         Invoke("DoSilenceAttack", duration);
     }
@@ -37,6 +34,7 @@ public class SealPond : DamagingProperty
             {
                 AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
                 if (abil == null) return;
+                abil.AttackedBy(ownerAbility, damageScale);
                 print("Ä§¹¬ ¾îÅÃ!");
             }
         }
