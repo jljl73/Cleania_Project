@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SavedData : MonoBehaviour
+public partial class SavedData : MonoBehaviour
 {
     static private SavedData _singleton;
     static public SavedData Instance
@@ -36,9 +36,10 @@ public class SavedData : MonoBehaviour
 
     // save data 
     [System.NonSerialized]
-    public ItemStorage_World Item_World = new ItemStorage_World();
+    public ItemStorage_Equipments Item_Equipments = new ItemStorage_Equipments();
     public ItemStorage_LocalGrid Item_Inventory = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 6));
     public ItemStorage_LocalGrid Item_Storage = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 10));
+    public ItemStorage_World Item_World = new ItemStorage_World();
 
     Equipable equipable;
     [SerializeField]
@@ -89,9 +90,10 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        //((iSavedData)Item_World).AfterLoad();
+        ((iSavedData)Item_Equipments).AfterLoad();
         ((iSavedData)Item_Inventory).AfterLoad();
         ((iSavedData)Item_Storage).AfterLoad();
+        //((iSavedData)Item_World).AfterLoad();
 
         JsonUtility.FromJsonOverwrite(equipableStirng, equipable);
         ((iSavedData)equipable).AfterLoad();
@@ -106,9 +108,10 @@ public class SavedData : MonoBehaviour
 
     void BeforeSave()
     {
-        //((iSavedData)Item_World).BeforeSave();
+        ((iSavedData)Item_Equipments).BeforeSave();
         ((iSavedData)Item_Inventory).BeforeSave();
         ((iSavedData)Item_Storage).BeforeSave();
+        //((iSavedData)Item_World).BeforeSave();
 
         ((iSavedData)equipable).BeforeSave();
         equipableStirng = JsonUtility.ToJson(equipable);
@@ -121,6 +124,14 @@ public class SavedData : MonoBehaviour
 
     private void Awake()
     {
+        if(_singleton != null)
+        {
+            _singleton.Item_Equipments.ShareSubscribers(this.Item_Equipments);
+            _singleton.Item_Inventory.ShareSubscribers(this.Item_Inventory);
+            _singleton.Item_Storage.ShareSubscribers(this.Item_Storage);
+            _singleton.Item_World.ShareSubscribers(this.Item_World);
+        }
+
         _singleton = this;
     }
 
@@ -181,4 +192,13 @@ public class SavedData : MonoBehaviour
                 }
             }   
     }
+}
+
+
+
+
+
+public partial class SavedData
+{
+
 }
