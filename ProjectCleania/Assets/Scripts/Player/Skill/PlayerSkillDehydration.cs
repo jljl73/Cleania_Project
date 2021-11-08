@@ -14,6 +14,9 @@ public class PlayerSkillDehydration : PlayerSkill
     float damageRate = 3.0f;
     public float GetDamageRate() { return damageRate; }
 
+    public float damageRange = 1.0f;
+    public float GetDamageRange() { return damageRange; }
+
     public override int ID { get { return SkillData.ID; } protected set { id = value; } }
     private void Awake()
     {
@@ -28,6 +31,8 @@ public class PlayerSkillDehydration : PlayerSkill
         //initialNavAgentR = navMeshAgent.radius;
         base.Start();
         animator.SetFloat("Dehydration multiplier", SpeedMultiplier);
+
+        effectController[0].Scale = damageRange;
     }
 
     public void UpdateSkillData()
@@ -43,6 +48,7 @@ public class PlayerSkillDehydration : PlayerSkill
         SkillSlotDependency = SkillData.GetTriggerKey();
 
         damageRate = SkillData.GetDamageRate();
+        damageRange = SkillData.GetDamageRange();
     }
 
     public override void AnimationActivate()
@@ -67,12 +73,11 @@ public class PlayerSkillDehydration : PlayerSkill
         attackArea.enabled = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
-                other.GetComponent<Enemy>().Die();
+            other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale * Time.deltaTime);
         }
     }
 }

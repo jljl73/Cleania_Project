@@ -24,4 +24,12 @@ public class SpecialAbilityStainSO : EnemySkillSO
     [Header("시작~도착 시간")]
     public float ProjFlightTime;
     public float GetProjFlightTime() { return ProjFlightTime; }
+
+    [Header("파괴될 때 공격 범위")]
+    public float DestroyAttackRange;
+    public float GetDestroyAttackRange() { return DestroyAttackRange; }
+
+    [Header("파괴될 때 피해율")]
+    public float DestroyAttackScale;
+    public float GetDestroyAttackScale() { return DestroyAttackScale; }
 }

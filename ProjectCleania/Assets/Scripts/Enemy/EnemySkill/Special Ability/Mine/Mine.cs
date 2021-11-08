@@ -24,12 +24,14 @@ public class Mine : DamagingProperty
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isSetUp) return;
+
         if (other.CompareTag("Player"))
         {
-            print("Áö·Ú Æø¹ß!!");
-            //AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
-            //if (playerAbil != null)
-            //    playerAbil.AttackedBy(OwnerAbility, DamageScale);
+            AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
+            if (playerAbil != null)
+                playerAbil.AttackedBy(ownerAbility, damageScale);
+
             bombEffectController.PlaySkillEffect();
             bombObjectController.StopSKillEffect();
 

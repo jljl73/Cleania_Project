@@ -12,7 +12,10 @@ public class ParticleBase : MonoBehaviour
     protected ParticleSystem ParticleObjectWithPS;
     protected MeshRenderer ParticleObjectWithMR;
 
-    public float Scale = 1f;
+    [SerializeField]
+    float scale = 1f;
+    public float Scale { get => scale; set { scale = value; ChangeScale(value); } }
+
     public bool IsEnabledOnAwake = false;
 
     protected virtual void Awake()
@@ -31,7 +34,6 @@ public class ParticleBase : MonoBehaviour
             ResetSetting();
             ParticleObject.SetActive(false);
         }
-        ChangeScale(Scale);
     }
 
     protected virtual void Start()
@@ -40,7 +42,7 @@ public class ParticleBase : MonoBehaviour
             ParticleObjectWithMR.enabled = false;
 
         ChangeScalingMode(ParticleSystemScalingMode.Local);
-        
+        ChangeScale(Scale);
     }
 
     private void ResetSetting()
@@ -73,11 +75,14 @@ public class ParticleBase : MonoBehaviour
 
     protected void ChangeScale(float value)
     {
-        if (ParticleObjectWithMR != null)
-        {
-            Vector3 changedScale = new Vector3(value, value, value);
-            ParticleObject.transform.localScale = changedScale;
-        }
+        //if (ParticleObjectWithMR != null)
+        //{
+        //    Vector3 changedScale = new Vector3(value, value, value);
+        //    ParticleObject.transform.localScale = changedScale;
+        //}
+
+        Vector3 changedScale = new Vector3(value, value, value);
+        ParticleObject.transform.localScale = changedScale;
 
         foreach (ParticleSystem particle in particleChildrens)
         {

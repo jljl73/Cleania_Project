@@ -66,13 +66,12 @@ public class SpecialAbilityTurret : EnemySkill
 
     void MakeTurret()
     {
-        print("Made orbit!");
         for (int i = 0; i < count; i++)
         {
             GameObject initiatedOrbit = Instantiate(turretPrefab, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
             Turret turret = initiatedOrbit.GetComponent<Turret>();
             if (turret != null)
-                turret.SetUp(enemyMove.TargetObject, shotInterval, shotRange, projectileSpeed);
+                turret.SetUp(enemyMove.TargetObject, shotInterval, shotRange, projectileSpeed, OwnerAbilityStatus, damageScale);
             // float shotInterval;
             // float shotRange;
             // float projectileSpeed;

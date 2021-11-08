@@ -55,11 +55,21 @@ public class PlayerSkillManager : BaseSkillManager
 
     protected new bool IsSkillAvailable()
     {
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) 
+        //  || animator.GetCurrentAnimatorStateInfo(0).IsName("SkillR Dehydration")
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || 
+             animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) 
                 && !animator.IsInTransition(0))
             return true;
         else
             return false;
+    }
+    
+    void CheckCancelAttackTime()
+    {
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Post delay")))
+        {
+            animator.SetTrigger("SkillCancel");
+        }
     }
 
     void SetskillSlotDependencyDict()

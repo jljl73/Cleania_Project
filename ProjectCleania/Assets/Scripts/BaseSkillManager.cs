@@ -271,7 +271,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         if (isStunned)
         {
-            StartCoroutine("StunnedFor", stunnedTime);
+            StartCoroutine(StunnedFor(stunnedTime));
         }
         else
         {
@@ -279,7 +279,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         }
     }
 
-    IEnumerator IStunned.StunnedFor(float time)
+    public IEnumerator StunnedFor(float time)
     {
         animator.speed = 0;
         yield return new WaitForSeconds(time);

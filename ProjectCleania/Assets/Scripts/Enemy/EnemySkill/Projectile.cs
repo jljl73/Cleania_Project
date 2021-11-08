@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : DamagingProperty
 {
-    AbilityStatus pitcherStatus;
-    public AbilityStatus PitcherStatus { get { return pitcherStatus; } set { pitcherStatus = value; } }
+    Collider damageCollider;
+    SkillEffectController skillEffectController;
 
     public float moveSpeed = 5.0f;
-
-    // "무기 데미지의 5.4 = 540%
-    float skillScale = 5.4f;
 
     // "같은 피격체에 대한 최대 피해 적용 횟수"
     float maxHitPerSameObject = 2;
@@ -20,39 +17,56 @@ public class Projectile : MonoBehaviour
 
     bool canTakeDamage = true;
 
+    private void Awake()
+    {
+        damageCollider = GetComponent<Collider>();
+        skillEffectController = GetComponent<SkillEffectController>();
+    }
+
     void Start()
     {
-        Invoke("OnOffCollider", 1.0f);
         Destroy(gameObject, duration);
+
+        // 리사이징
+        //this.gameObject.transform.localScale = new Vector3(damageRange, damageRange, damageRange);
+        skillEffectController.Scale = damageRange;
     }
     
-    public void ResetSetting(float maxHitPerSameObject, float projectileDamageRatePerSec, float duration)
+    public void SetUp(float maxHitPerSameObject, float duration, AbilityStatus abil, float skillScale)
     {
-        this.skillScale = projectileDamageRatePerSec;
         this.maxHitPerSameObject = maxHitPerSameObject;
         this.duration = duration;
+
+        base.SetUp(abil, skillScale);
     }
 
     private void FixedUpdate()
     {
+        if (!isSetUp) return;
+
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (!isSetUp) return;
+
         if (other.tag == "Enemy")
         {
             AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
 
             if (enemyAbil.HP != 0)
-                enemyAbil.AttackedBy(pitcherStatus, skillScale * Time.fixedDeltaTime);
+                enemyAbil.AttackedBy(ownerAbility, damageScale * Time.fixedDeltaTime);
         }
     }
 
-    void OnOffCollider()
+    void TurnOnCollider()
     {
-        Collider collider = GetComponent<Collider>();
-        collider.enabled = false;
-        collider.enabled = true;
+        damageCollider.enabled = true;
+    }
+
+    void TurnOffCollider()
+    {
+        damageCollider.enabled = false;
     }
 }

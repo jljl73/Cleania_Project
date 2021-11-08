@@ -7,9 +7,11 @@ public class TurretProjectile : DamagingProperty
     float moveSpeed;
     float destroyTime = 8;
 
-    public void SetUp(float moveSpeed)
+    public void SetUp(float moveSpeed, AbilityStatus abil, float damageScale)
     {
         this.moveSpeed = moveSpeed;
+
+        base.SetUp(abil, damageScale);
     }
 
     private void Update()
@@ -25,9 +27,10 @@ public class TurretProjectile : DamagingProperty
         if (other.CompareTag("Player"))
         {
             print("ÅÍ·¿ Åº¾Ë Æø¹ß!!");
-            //AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
-            //if (playerAbil != null)
-            //    playerAbil.AttackedBy(OwnerAbility, DamageScale);
+            AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
+            if (playerAbil != null)
+                playerAbil.AttackedBy(ownerAbility, damageScale);
+            print("damageScale: " + damageScale);
             Destroy(this.gameObject);
         }
     }

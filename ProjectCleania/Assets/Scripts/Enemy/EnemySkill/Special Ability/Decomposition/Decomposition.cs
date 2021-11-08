@@ -12,7 +12,6 @@ public class Decomposition : DamagingProperty
     float stunTime = 2f;
     GameObject target;
 
-    bool isSetUp = false;
     bool isExploding = false;
 
     NavMeshAgent nav;
@@ -31,7 +30,7 @@ public class Decomposition : DamagingProperty
         nav.SetDestination(target.transform.position);
     }
 
-    public void SetUp(float existTime, float speed, float explodeWaitTime, float explodeDamageRange, float stunTime, GameObject target)
+    public void SetUp(float existTime, float speed, float explodeWaitTime, float explodeDamageRange, float stunTime, GameObject target, AbilityStatus abil, float damageScale)
     {
         this.existTime = existTime;
         this.speed = speed;
@@ -40,7 +39,8 @@ public class Decomposition : DamagingProperty
         this.stunTime = stunTime;
         this.target = target;
 
-        isSetUp = true;
+        base.SetUp(abil, damageScale);
+
         nav.speed = speed;
         Invoke("ReadyToExplode", existTime);
     }
@@ -63,7 +63,7 @@ public class Decomposition : DamagingProperty
                 // 자폭 데미지!
                 AbilityStatus abil = collider.gameObject.GetComponent<AbilityStatus>();
                 if (abil != null)
-                    abil.AttackedBy(OwnerAbility, DamageScale);
+                    abil.AttackedBy(ownerAbility, damageScale);
             }
         }
 
@@ -75,11 +75,12 @@ public class Decomposition : DamagingProperty
         if (other.CompareTag("Player"))
         {
             // 2초 기절 부여
-            print("플레이어 2초 기절!");
+            print("2초 기절 부여!");
+            other.gameObject.GetComponent<Player>().OnStunned(true, 2);
 
             // 폭발
             if (isExploding) return;
-            Explode();
+            Invoke("Explode", explodeWaitTime);
         }
     }
 }
