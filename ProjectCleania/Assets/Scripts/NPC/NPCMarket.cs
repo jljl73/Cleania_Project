@@ -8,6 +8,8 @@ public class NPCMarket : MonoBehaviour
     public ToggleGroup toggleGroup;
     public ToggleGroup[] pages;
     public GameObject prefab_Item;
+    [SerializeField]
+    ScrollRect pageScroll;
 
     List<ItemInMarket> items = new List<ItemInMarket>();
     Queue<ItemInMarket> soldItems = new Queue<ItemInMarket>();
@@ -34,6 +36,7 @@ public class NPCMarket : MonoBehaviour
 
         pages[index].gameObject.SetActive(true);
         toggleGroup = pages[index];
+        pageScroll.content = pages[index].GetComponent<RectTransform>();
     }
 
     public void Buy()
