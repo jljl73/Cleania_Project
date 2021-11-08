@@ -70,21 +70,21 @@ public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
     public float OtherSpeedMultiplier = 1.0f;
     public float GetOtherSpeedMultiplier() { return OtherSpeedMultiplier; }
 
-    [Header("도약 이팩트 크기")]
+    [Header("도약 이팩트 반경")]
     public float JumpEffectSize = 1f;
     public float GetJumpEffectSize() { return JumpEffectSize; }
+
+    [Header("빗자루 휘두름 반경")]
+    public float SwingDownSize = 1f;
+    public float GetSwingDownSize() { return SwingDownSize; }
 
     [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     public float SmashDamageRate = 5.4f;
     public float GetSmashDamageRate() { return SmashDamageRate; }
 
-    [Header("내려치기 범위")]
+    [Header("땅 내려찍기 반경")]
     public float SmashRange = 2f;
     public float GetSmashRange() { return SmashRange; }
-
-    [Header("칼 휘두름 크기")]
-    public float SwingDownSize = 1f;
-    public float GetSwingDownSize() { return SwingDownSize; }
 
     [Header("경직 시간")]
     public float StunTime = 1.5f;

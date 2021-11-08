@@ -15,15 +15,15 @@ public class HighDustySkillTrigger : EnemySkillTrigger
         {
             if (collider.CompareTag("Player"))
             {
-                //if (enemySkillManager.PlaySkill(2904))
+                if (enemySkillManager.PlaySkill(2901))
+                    return;
+
+                //if (enemySkillManager.PlayRandomSpecialSkill())
                 //    return;
 
-                if (enemySkillManager.PlayRandomSpecialSkill())
-                    return;
-
-                // ∏’¡ˆ ≈ı√¥
-                if (enemySkillManager.PlaySkill(2301))
-                    return;
+                //// ∏’¡ˆ ≈ı√¥
+                //if (enemySkillManager.PlaySkill(2301))
+                //    return;
             }
         }
     }
