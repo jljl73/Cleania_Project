@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class ItemInMarket : MonoBehaviour
 {
-    ItemInstance itemInstance;
+    public ItemInstance itemInstance
+    { private set; get; }
 
     [SerializeField]
     Text price;
