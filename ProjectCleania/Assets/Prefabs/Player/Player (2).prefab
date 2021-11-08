@@ -455,7 +455,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3500026802102679415
 GameObject:
@@ -2899,7 +2899,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af59e46c8f425ea4abe9a0f066259f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
 --- !u!54 &8761651706112751286
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3263,7 +3262,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 918181517589805245, guid: ea80fe07b8ac7c24baed02b034be7575, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.7
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1409656770682960511, guid: ea80fe07b8ac7c24baed02b034be7575, type: 3}
       propertyPath: Scale
@@ -3276,6 +3275,10 @@ PrefabInstance:
     - target: {fileID: 4200457137595083398, guid: ea80fe07b8ac7c24baed02b034be7575, type: 3}
       propertyPath: m_Name
       value: Skill4 RefreshingLeapForward
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200457137595083416, guid: ea80fe07b8ac7c24baed02b034be7575, type: 3}
+      propertyPath: m_Center.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4200457137595083421, guid: ea80fe07b8ac7c24baed02b034be7575, type: 3}
       propertyPath: m_RootOrder
@@ -3704,6 +3707,10 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 3904099616782483676}
+    - target: {fileID: 4889303805022537392, guid: 70358e05ba0fd81459c3436055a591bc, type: 3}
+      propertyPath: IsEnabledOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5671753195546204621, guid: 70358e05ba0fd81459c3436055a591bc, type: 3}
       propertyPath: m_Enabled
       value: 0

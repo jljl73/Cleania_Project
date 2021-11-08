@@ -39,7 +39,7 @@ public class SpecialAbilityMine : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
-        triggerRadius = skillData.GetRadius();
+        triggerRadius = skillData.GetExplosionRadius();
         CreationRadius = skillData.GetCreationRadius();
         mineCount = skillData.GetCount();
     }
@@ -64,7 +64,10 @@ public class SpecialAbilityMine : EnemySkill
             initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
             Mine mine = initiatedPond.GetComponent<Mine>();
             if (mine != null)
+            {
                 mine.SetUp(OwnerAbilityStatus, damageScale);
+                mine.Resize(triggerRadius);
+            }
             //if (pondDamage != null)
             //{
             //    print("Pond not null");

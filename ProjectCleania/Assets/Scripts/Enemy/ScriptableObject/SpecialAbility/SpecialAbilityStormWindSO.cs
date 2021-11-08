@@ -20,4 +20,8 @@ public class SpecialAbilityStormWindSO : EnemySkillSO
     [Header("궤도 내 물체 속도")]
     public float Speed;
     public float GetSpeed() { return Speed; }
+
+    [Header("물체 크기")]
+    public float DamageSize;
+    public float GetDamageSize() { return DamageSize; }
 }

@@ -10,6 +10,9 @@ public class SealPond : DamagingProperty
     float silenceTime;
     bool isSealPondSetUp = false;
 
+    [SerializeField]
+    SkillEffectController effectController;
+
     private void Awake()
     {
         damageCollider = GetComponent<Collider>();
@@ -42,10 +45,12 @@ public class SealPond : DamagingProperty
         Destroy(this.gameObject);
     }
 
-    public void SetUp(float duration, float silenceTime)
+    public void SetUp(float duration, float silenceTime, float skillRange)
     {
         this.duration = duration;
         this.silenceTime = silenceTime;
         isSealPondSetUp = true;
+
+        effectController.Scale = skillRange;
     }
 }
