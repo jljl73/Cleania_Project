@@ -9,6 +9,6 @@ public class Pollution : ContactStayDamage
 
     void Start()
     {
-        effectController.Scale = damageRange;
+        effectController.Scale = damageRange * 0.3333f;
     }
 }
