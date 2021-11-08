@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4847115326797821894}
   - component: {fileID: 4847115326797821913}
   - component: {fileID: 6344599071798008946}
+  - component: {fileID: 473138836477701410}
   m_Layer: 0
   m_Name: Decomposition
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4847115326797821916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7749583706072734456}
   m_Father: {fileID: 0}
@@ -68,6 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea24a024d38075f4b8ebfc64ad22df8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectController: {fileID: 473138836477701410}
 --- !u!135 &6344599071798008946
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -79,8 +81,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.66
+  m_Radius: 1.3
   m_Center: {x: 0, y: -0.08, z: 0}
+--- !u!114 &473138836477701410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847115326797821916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParticleObject: {fileID: 4847115326797821916}
+  scale: 1
+  IsEnabledOnAwake: 1
 --- !u!1001 &7754431868864175956
 PrefabInstance:
   m_ObjectHideFlags: 0
