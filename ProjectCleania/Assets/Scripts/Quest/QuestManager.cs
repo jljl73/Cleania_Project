@@ -11,7 +11,7 @@ public class QuestManager : MonoBehaviour
     List<Quest> clearQuests = new List<Quest>();
     // 수주받은 퀘스트
     [SerializeField]
-    List<Quest> quests = new List<Quest>();
+    List<Quest> assignQuests = new List<Quest>();
     [SerializeField]
     Quest[] quests_All;
         
@@ -66,7 +66,7 @@ public class QuestManager : MonoBehaviour
 
     public void Add(Quest quest)
     {
-        quests.Add(quest);
+        assignQuests.Add(quest);
         quest.Assign();
         AddList(quest);
     }
@@ -74,9 +74,9 @@ public class QuestManager : MonoBehaviour
     public void Acheive(QuestNeed.TYPE type, int target)
     {
         Debug.Log(type.ToString() + " " + target);
-        for (int i = 0; i < quests.Count; ++i)
+        for (int i = 0; i < assignQuests.Count; ++i)
         {
-            quests[i].Achieve(type, target);
+            assignQuests[i].Achieve(type, target);
             Debug.Log(type.ToString() + " " + target);
         }
         SetMiniList();
@@ -113,7 +113,7 @@ public class QuestManager : MonoBehaviour
 
     void DeleteList(Quest quest)
     {
-        quests.Remove(quest);
+        assignQuests.Remove(quest);
         int index = (int)quest.Catergory;
         for (int i = 0; i < details[index].transform.childCount; ++i)
         {
@@ -135,6 +135,13 @@ public class QuestManager : MonoBehaviour
         SetMiniList();
     }
 
+    public void Clear(Quest quest)
+    {
+        clearQuests.Add(quest);
+        assignQuests.Remove(quest);
+        SetListHeight();
+        SetMiniList();
+    }
 
     public void Abandon()
     {
@@ -154,15 +161,15 @@ public class QuestManager : MonoBehaviour
     {
         StringBuilder sb = new StringBuilder();
         int q = 0;
-        for(; q < miniLists.childCount && q < quests.Count; ++q)
+        for(; q < miniLists.childCount && q < assignQuests.Count; ++q)
         {
             sb.Clear();
-            sb.Append(quests[q].Name);
+            sb.Append(assignQuests[q].Name);
             sb.Append("\n");
             miniLists.GetChild(q).gameObject.SetActive(true);
-            for (int i = 0; i < quests[q].QuestNeeds.Length; ++i)
+            for (int i = 0; i < assignQuests[q].QuestNeeds.Length; ++i)
             {
-                sb.Append(quests[q].QuestNeeds[i].Contents);
+                sb.Append(assignQuests[q].QuestNeeds[i].Contents);
                 sb.Append("\n");
             }
             miniLists.GetChild(q).GetChild(0).GetComponent<Text>().text = sb.ToString();

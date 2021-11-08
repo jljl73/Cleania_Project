@@ -45,5 +45,6 @@ public class DialogQuest : Dialog
             }
         }
         quest.GetReward();
+        GameManager.Instance.uiManager.GetComponent<QuestManager>().Clear(quest);
     }
 }
