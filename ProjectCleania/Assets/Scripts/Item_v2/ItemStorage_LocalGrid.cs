@@ -381,6 +381,7 @@ public partial class ItemStorage_LocalGrid
         _InitGrid();
 
         _items.Clear();
+        OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
 
         foreach (Gridded<ItemInstance_Etc> i in SD_etcs)
         {

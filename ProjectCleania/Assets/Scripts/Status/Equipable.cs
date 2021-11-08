@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Equipable : MonoBehaviour, iSavedData
+public partial class Equipable : MonoBehaviour, iSavedData
 {
+    public enum SyncType
+    {
+        NonSync,
+        PlayerEquipment
+    }
+    [SerializeField]
+    SyncType syncWith;
+
     //[System.NonSerialized]
     ItemInstance_Equipment[] _equipments = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];
     /// <summary>
@@ -22,9 +30,9 @@ public class Equipable : MonoBehaviour, iSavedData
         set
         {
             if (value == null)
-                Unequip(type);
+                UnequipAsync(type);
             else if (value.EquipmentType == type)
-                Equip(value);
+                EquipAsync(value);
         }
     }
 
@@ -59,8 +67,55 @@ public class Equipable : MonoBehaviour, iSavedData
     }
 
 
+    private void Start()
+    {
+        switch(syncWith)
+        {
+            case SyncType.PlayerEquipment:
+                SavedData.Instance.Item_Equipments.Subscribe(Synchronize, ItemInstance_Equipment.Type.EnumTotal);
+                break;
+        }
+    }
 
-    public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment)
+    public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment, bool sync = false)
+    {
+        if (sync)
+            switch(syncWith)
+            {
+                case SyncType.PlayerEquipment:
+                    SavedData.Instance.Item_Equipments.Add(newEquipment);
+                    return null;
+                default:
+                    return null;
+            }
+
+        else
+            return EquipAsync(newEquipment);
+    }
+    public ItemInstance_Equipment Unequip(ItemInstance_Equipment.Type offType, bool sync = false)
+    {
+        if (sync)
+        switch (syncWith)
+            {
+                case SyncType.PlayerEquipment:
+                    ItemInstance item = SavedData.Instance.Item_Equipments[offType];
+                    if (item != null)
+                        SavedData.Instance.Item_Equipments.Remove(item);
+                    return null;
+                default:
+                    return null;
+            }
+        else
+            return UnequipAsync(offType);
+    }
+
+
+}
+
+
+public partial class Equipable
+{
+    ItemInstance_Equipment EquipAsync(ItemInstance_Equipment newEquipment)
     {
         // Exception
         if (newEquipment == null)
@@ -89,7 +144,7 @@ public class Equipable : MonoBehaviour, iSavedData
         }
     }
 
-    public ItemInstance_Equipment Unequip(ItemInstance_Equipment.Type offType)
+    ItemInstance_Equipment UnequipAsync(ItemInstance_Equipment.Type offType)
     {
         // Exception
         if (offType < ItemInstance_Equipment.Type.MainWeapon || offType >= ItemInstance_Equipment.Type.EnumTotal)
@@ -109,6 +164,7 @@ public class Equipable : MonoBehaviour, iSavedData
 
         return oldEquipment;
     }
+
 
 
     void Refresh()
@@ -184,6 +240,47 @@ public class Equipable : MonoBehaviour, iSavedData
         }
     }
 
+
+
+
+
+    // Sync
+    void Synchronize(iItemStorage sender, ItemStorage_Equipments.SyncOperator oper, ItemInstance_Equipment.Type index)
+    {
+        switch (oper)
+        {
+            case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Add:
+                {
+                    ItemStorage_Equipments storage = (ItemStorage_Equipments)sender;
+                    ItemInstance_Equipment item = (ItemInstance_Equipment)storage[index];
+                    EquipAsync(item);
+                    break;
+                }
+            case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Remove:
+                {
+                    UnequipAsync(index);
+                    break;
+                }
+            case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Refresh:
+                {
+                    for(int i = 0; i < (_equipments.Length); i++)
+                    {
+                        _equipments[i] = null;
+                    }
+
+                    foreach(var i in ((ItemStorage_Equipments)sender).Items)
+                    {
+                        _equipments[(int)i.Value] = (ItemInstance_Equipment)i.Key;
+                    }
+                    Refresh();
+                }
+                break;
+
+            default:
+                Debug.LogError("Logic error in UI_ItemContainer : Synchronize");
+                break;
+        }
+    }
 
 
 

@@ -142,6 +142,7 @@ public class ItemStorage_World : ItemStorage<GameObject>, iSavedData
     void iSavedData.AfterLoad()
     {
         _items.Clear();
+        OnSynchronize(this, SyncOperator.Refresh, null);
 
         foreach (Positioned<ItemInstance_Etc> i in SD_etcs)
         {
