@@ -16,11 +16,19 @@ public class Decomposition : DamagingProperty
 
     NavMeshAgent nav;
 
+    [SerializeField]
+    SkillEffectController effectController;
+
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
         if (nav == null)
             throw new System.Exception("Decomposition doesnt have nav");
+    }
+
+    private void Start()
+    {
+        effectController.Scale = damageRange;
     }
 
     private void Update()

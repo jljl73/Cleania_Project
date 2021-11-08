@@ -103,6 +103,7 @@ public class SpecialAbilityStain : EnemySkill
             Vector3 targetPos = GetRandomPointInCircle(transform.position, stainAvailableAreaRadius);
             rigidbody.velocity = CaculateVelocity(targetPos, transform.position, projFlightTime);
             stainProj.SetUp(stopTime, projFlightTime * 0.5f, destroyAttackRange, destroyAttackScale, OwnerAbilityStatus, damageScale);
+            stainProj.Resize(stainRadius);
         }
     }
 

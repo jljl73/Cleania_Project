@@ -11,7 +11,7 @@ public class StainProjectile : DamagingProperty
 
     Rigidbody stainRigidbody;
 
-    Collider hitCollider;
+    SphereCollider hitCollider;
     public float destroyAttackScale = 2f;
     public float destroyAttackRange = 2f;
 
@@ -29,9 +29,15 @@ public class StainProjectile : DamagingProperty
         if (stainRigidbody == null)
             throw new System.Exception("StainProjectile doesnt have Rigidbody");
 
-        hitCollider = GetComponent<Collider>();
+        hitCollider = GetComponent<SphereCollider>();
         if (hitCollider == null)
             throw new System.Exception("StainProjectile doesnt have Collider");
+    }
+
+    private void Start()
+    {
+        projectileBodyController.Scale = damageRange;
+        hitCollider.radius = damageRange * 0.5f;
     }
 
     private void Update()
@@ -78,6 +84,7 @@ public class StainProjectile : DamagingProperty
 
     void DestroyAttack()
     {
+        bombEffectController.Scale = destroyAttackRange;
         bombEffectController.PlaySkillEffect();
         Collider[] colliders = Physics.OverlapSphere(transform.position, destroyAttackRange);
         for (int i = 0; i < colliders.Length; i++)
