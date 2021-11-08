@@ -49,6 +49,9 @@ public class Enemy : MonoBehaviour
         OnDead += Die;
         OnDead += skillManager.DeactivateAllSkill;
 
+        OnStunned += enemyMove.Stunned;
+        OnStunned += skillManager.Stunned;
+
         StartCoroutine("InvincibleFor", 2f);
     }
 

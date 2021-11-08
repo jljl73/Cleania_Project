@@ -72,11 +72,13 @@ public class PlayerSkillDusting : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
-            Debug.Log("L Hit");
             AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
 
             if (enemyAbil.HP != 0)
+            {
                 enemyAbil.AttackedBy(OwnerAbilityStatus, damageRate);
+                OwnerAbilityStatus.ConsumeMP(-CreatedMP);
+            }
         }
     }
 }

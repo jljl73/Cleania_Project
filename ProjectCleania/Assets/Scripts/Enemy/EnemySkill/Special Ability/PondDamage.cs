@@ -2,30 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PondDamage : MonoBehaviour
+public class PondDamage : DamagingProperty
 {
-    public AwakeDamage AwakeDamageCompo;
-    public ContactStayDamage ContactStayDamageCompo;
-    public DestroyDamage DestroyDamageCompo;
+    public float damageRange = 3;
 
-    public void SetProperty(AbilityStatus abil, float damageScale)
+    private void Start()
     {
-        if (AwakeDamageCompo != null)
-        {
-            AwakeDamageCompo.OwnerAbility = abil;
-            AwakeDamageCompo.DamageScale = damageScale;
-        }
+        if (!isSetUp) return; 
 
-        if (ContactStayDamageCompo != null)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, damageRange);
+        for (int i = 0; i < colliders.Length; i++)
         {
-            ContactStayDamageCompo.OwnerAbility = abil;
-            ContactStayDamageCompo.DamageScale = damageScale;
+            if (colliders[i].CompareTag("Player"))
+            {
+                AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
+                if (abil == null) return;
+                abil.AttackedBy(ownerAbility, damageScale);
+            }
         }
+    }
 
-        if (DestroyDamageCompo != null)
+    private void Update()
+    {
+        if (!isSetUp) return;
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, damageRange);
+        for (int i = 0; i < colliders.Length; i++)
         {
-            DestroyDamageCompo.OwnerAbility = abil;
-            DestroyDamageCompo.DamageScale = damageScale;
+            if (colliders[i].CompareTag("Player"))
+            {
+                print("중독 상태이상 부여!");
+            }
         }
     }
 }

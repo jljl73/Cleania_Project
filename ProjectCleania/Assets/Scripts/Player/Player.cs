@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public delegate void DelegateVoid();
     public event DelegateVoid OnLevelUp;
     public event DelegateVoid OnDead;
+    public UnityAction<bool, float> OnStunned;
 
     void Awake()
     {
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
 
         OnDead += RunDieAnimation;
         OnDead += playerSkillManager.DeactivateAllSkill;
+
+        OnStunned += playerMove.Stunned;
+        OnStunned += playerSkillManager.Stunned;
     }
 
     private void Update()
@@ -62,16 +66,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ActivateSkill(AnimationEvent myEvent)
-    {
-        playerSkillManager.ActivateSkill(myEvent);
-    }
+    //public void ActivateSkill(AnimationEvent myEvent)
+    //{
+    //    playerSkillManager.ActivateSkill(myEvent);
+    //}
 
-    public void DeactivateSkill(int index)
-    {
-        print("deactivateSkill");
-        playerSkillManager.DeactivateSkill(index);
-    }
+    //public void DeactivateSkill(int index)
+    //{
+    //    print("deactivateSkill");
+    //    playerSkillManager.DeactivateSkill(index);
+    //}
 
     //public void activateskilleffect(int index)
     //{
@@ -79,15 +83,15 @@ public class Player : MonoBehaviour
     //    playerSkillManager.ActivateSkillEffect(index);
     //}
 
-    public void ActivateSkillEffect(AnimationEvent myEvent)
-    {
-        playerSkillManager.ActivateSkillEffect(myEvent);
-    }
+    //public void ActivateSkillEffect(AnimationEvent myEvent)
+    //{
+    //    playerSkillManager.ActivateSkillEffect(myEvent);
+    //}
 
-    public void DeactivateSkillEffect(AnimationEvent myEvent)
-    {
-        playerSkillManager.DeactivateSkillEffect(myEvent);
-    }
+    //public void DeactivateSkillEffect(AnimationEvent myEvent)
+    //{
+    //    playerSkillManager.DeactivateSkillEffect(myEvent);
+    //}
 
     //public void DeactivateSkillEffect(int index)
     //{

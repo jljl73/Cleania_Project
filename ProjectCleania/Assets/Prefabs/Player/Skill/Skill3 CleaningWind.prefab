@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3049604740127001621}
   - component: {fileID: 4889303805022537392}
   - component: {fileID: 5818699364605159568}
+  - component: {fileID: 4819448980209446327}
   m_Layer: 0
   m_Name: Skill3 CleaningWind
   m_TagString: PlayerAttack
@@ -48,13 +49,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  ID: 4
+  OwnerAbilityStatus: {fileID: 0}
   effectController:
   - {fileID: 4889303805022537392}
   - {fileID: 5818699364605159568}
   SkillData: {fileID: 11400000, guid: dc6be19f60d3dee4fb63125032441e90, type: 2}
   hurricanePrefabs: {fileID: 1799595379929035607, guid: dec20f08724486c479e7056d01da9b44, type: 3}
-  abilityStatus: {fileID: 0}
 --- !u!114 &4889303805022537392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 5671753195543733073}
-  Scale: 1
+  scale: 1
+  IsEnabledOnAwake: 0
 --- !u!114 &5818699364605159568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +83,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 1628248359881247203}
-  Scale: 1
+  scale: 1
+  IsEnabledOnAwake: 0
+--- !u!135 &4819448980209446327
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832986792702452419}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 3.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1628248359881370549
 PrefabInstance:
   m_ObjectHideFlags: 0

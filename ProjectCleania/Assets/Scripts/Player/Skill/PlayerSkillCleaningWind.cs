@@ -10,33 +10,31 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     GameObject newProjectile;
 
-    // "내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)"
     float smashDamageRate = 6f;
-    float GetSmashDamageRate() { return smashDamageRate; }
+    public float GetSmashDamageRate() { return smashDamageRate; }
 
-    // "내려치기 범위"
     float smashRange = 2f;
-    float GetSmashRange() { return smashRange; }
+    public float GetSmashRange() { return smashRange; }
 
-    // "회오리 유지 시간"
-    float projectileDuration = 2f;
-    float GetProjectileDuration() { return projectileDuration; }
+    float duration = 2f;
+    public float GetDuration() { return duration; }
 
-    // "회오리 갈래 갯수"
-    int projectileCount = 3;
-    int GetProjectileCount() { return projectileCount; }
+    int count = 3;
+    public int GetCount() { return count; }
 
-    // "초당 회오리 데미지 비율 (ex. 2.0 = 200% 데미지 적용)"
-    float projectileDamageRatePerSec = 5.4f;
-    float GetProjectileDamageRatePerSec() { return projectileDamageRatePerSec; }
+    float projectileSize = 1;
+    public float GetProjectileSize() { return projectileSize; }
+
+    float projectileDamageScale = 5.4f;
+    public float GetDamageScale() { return projectileDamageScale; }
 
     // "같은 피격체에 대한 최대 피해 적용 횟수"
     int maxHitPerSameObject = 2;
-    int GetMaxHitPerSameObject() { return maxHitPerSameObject; }
+    public int GetMaxHitPerSameObject() { return maxHitPerSameObject; }
 
     // "회오리 생성 높이"
     float projectilePositionY = 0.5f;
-    float GetprojectilePositionY() { return projectilePositionY; }
+    public float GetprojectilePositionY() { return projectilePositionY; }
 
     public override int ID { get { return SkillData.ID; } protected set { id = value; } }
 
@@ -50,6 +48,13 @@ public class PlayerSkillCleaningWind : PlayerSkill
         base.Start();
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
         animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
+
+        ResizeEffect();
+    }
+
+    void ResizeEffect()
+    {
+        effectController[1].Scale = smashRange;
     }
 
     public void UpdateSkillData()
@@ -67,8 +72,9 @@ public class PlayerSkillCleaningWind : PlayerSkill
         smashDamageRate = SkillData.GetSmashDamageRate();
         smashRange = SkillData.GetSmashRange();
         projectilePositionY = SkillData.GetProjectilePositionY();
-        projectileCount = SkillData.GetProjectileCount();
-        projectileDamageRatePerSec = SkillData.GetProjectileDamageRatePerSec();
+        count = SkillData.GetCount();
+        projectileDamageScale = SkillData.GetProjectileDamageScale();
+        projectileSize = SkillData.GetProjectileSize();
         maxHitPerSameObject = SkillData.GetMaxHitPerSameObject();
 
     }
@@ -91,37 +97,32 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     override public void Activate()
     {
+        // 내려치기
+        Collider[] overlappedColliders = Physics.OverlapSphere(transform.position, smashRange * 3.5f);
+        foreach (Collider collider in overlappedColliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                // 자폭 데미지!
+                AbilityStatus abil = collider.gameObject.GetComponent<AbilityStatus>();
+                if (abil != null)
+                    abil.AttackedBy(OwnerAbilityStatus, smashDamageRate);
+            }
+        }
+
+        // 회오리 발사
         Quaternion yAngle = transform.rotation;
         
         // 회오리 갯수 짝수
-        for (int i = 1; i <= projectileCount; i++)
+        for (int i = 1; i <= count; i++)
         {
             Quaternion tempYAngle = yAngle;
-            tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (projectileCount + 1)) * i, 0f);
+            tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (count + 1)) * i, 0f);
 
             newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
             Projectile proj = newProjectile.GetComponent<Projectile>();
-            proj.PitcherStatus = OwnerAbilityStatus;
-            proj.ResetSetting(maxHitPerSameObject, projectileDamageRatePerSec, projectileDuration);
+            proj.SetUp(maxHitPerSameObject, duration, OwnerAbilityStatus, projectileDamageScale);
+            proj.Resize(projectileSize);
         }
-
-        #region
-        // Quaternion left = transform.rotation;
-        // Quaternion right = transform.rotation;
-
-        // left *= Quaternion.Euler(0, 30.0f, 0.0f);
-        // right *= Quaternion.Euler(0, -30.0f, 0.0f);
-
-        //newProjectile = Instantiate(hurricanePrefabs, transform.position, left);
-        //Projectile proj = newProjectile.GetComponent<Projectile>();
-        //proj.abilityStatus = abilityStatus;
-        //proj.ResetSetting(maxHitPerSameObject, projectileDamageRatePerSec, projectileDuration);
-
-        //newProjectile = Instantiate(hurricanePrefabs, transform.position, transform.rotation);
-        //newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
-
-        //newProjectile = Instantiate(hurricanePrefabs, transform.position, right);
-        //newProjectile.GetComponent<Projectile>().abilityStatus = abilityStatus;
-        #endregion
     }
 }
