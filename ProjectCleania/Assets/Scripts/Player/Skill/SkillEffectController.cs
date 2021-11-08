@@ -13,4 +13,9 @@ public class SkillEffectController : ParticleBase
     {
         StopEffect();
     }
+
+    public void MovePosition(Vector3 localPose)
+    {
+        ParticleObject.transform.localPosition = localPose; 
+    }
 }

@@ -30,6 +30,16 @@ public class PlayerSkillSweeping : PlayerSkill
         base.Start();
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
         animator.SetFloat("Sweeping multiplier", SpeedMultiplier);
+
+        ResizeEffect();
+    }
+
+    void ResizeEffect()
+    {
+        for (int i = 0; i < effectController.Count; i++)
+        {
+            effectController[i].Scale = sweepRange;
+        }
     }
 
     public void UpdateSkillData()
@@ -46,7 +56,7 @@ public class PlayerSkillSweeping : PlayerSkill
 
         stunTime = SkillData.GetStunTime();
         sweepRange = SkillData.GetSweepRange();
-        col.radius = sweepRange;
+        //col.radius = sweepRange;
     }
 
     public override void AnimationActivate()

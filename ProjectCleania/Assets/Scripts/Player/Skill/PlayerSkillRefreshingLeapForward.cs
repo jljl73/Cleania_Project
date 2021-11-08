@@ -15,6 +15,9 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     float jumpDistance = 7f;
     public float GetJumpDistance() { return jumpDistance; }
 
+    float jumpEffectSize = 1f;
+    public float GetJumpEffectSize() { return jumpEffectSize; }
+
     // "내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)"
     float smashDamageRate = 5.4f;
     public float GetSmashDamageRate() { return smashDamageRate; }
@@ -22,6 +25,10 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     // "내려치기 범위"
     float smashRange = 2f;
     public float GetSmashRange() { return smashRange; }
+
+    // 칼 휘두름 크기
+    float swingDownSize = 1f;
+    public float GetSwingDownSize() { return swingDownSize; }
 
     // "경직 시간"
     float stunTime = 1.5f;
@@ -58,11 +65,19 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
         attackArea = GetComponent<CapsuleCollider>();
-        attackArea.radius = smashRange;
         animator.SetFloat("RefreshingLeapForward mulitplier", SpeedMultiplier);
         animator.SetFloat("RefreshingLeapForward_LiftUp mulitplier", liftUpSpeedMultiplier);
         animator.SetFloat("RefreshingLeapForward_SwingDown mulitplier", swingDownSpeedMultiplier);
         animator.SetFloat("RefreshingLeapForward_Other mulitplier", otherSpeedMultiplier);
+
+        attackArea.radius = 1.2f * smashRange;
+        //attackArea.center = new Vector3(attackArea.center.x, attackArea.center.y, attackArea.center.z * smashRange);
+        effectController[0].Scale = jumpEffectSize;
+        effectController[1].Scale = swingDownSize;
+        effectController[2].Scale = smashRange;
+        // effectController[2].MovePosition(attackArea.center);
+
+        effectController[0].MovePosition(new Vector3(0, 0, -1.5f * jumpEffectSize));
     }
 
     public void UpdateSkillData()
@@ -78,8 +93,10 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         SkillSlotDependency = SkillData.GetTriggerKey();
 
         jumpDistance = SkillData.GetJumpDistance();
+        jumpEffectSize = SkillData.GetJumpEffectSize();
         smashDamageRate = SkillData.GetSmashDamageRate();
         smashRange = SkillData.GetSmashRange();
+        swingDownSize = SkillData.GetSwingDownSize();
         stunTime = SkillData.GetStunTime();
         slowTime = SkillData.GetSlowTime();
 

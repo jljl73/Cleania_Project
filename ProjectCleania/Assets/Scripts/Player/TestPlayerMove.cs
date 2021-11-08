@@ -145,17 +145,31 @@ public class TestPlayerMove : MonoBehaviour, IStunned
         RaycastHit rayhitInfo;
         if (CanBeTriggerd("Ground", out rayhitInfo))
         {
-            player.gameObject.transform.LookAt(rayhitInfo.point);
+            print("ImmediateLookAtMouse it's ground!");
+            Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
+            player.gameObject.transform.LookAt(lookAtPointOnSameY);
+            //mousePos = lookAtPointOnSameY;
         }
     }
+
+    //Vector3 mousePos = Vector3.zero;
+    //Ray mouseRay;
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(mousePos, 2);
+    //    Gizmos.DrawRay(Camera.main.ScreenPointToRay(Input.mousePosition));
+    //}
 
     bool CanBeTriggerd(string collideTag, out RaycastHit rayhitInfo)
     {
         bool result = false;
 
+        int layerMask = 0;
+        layerMask = 1 << 5 | 1 << 7;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit raycastHit;
-        if (Physics.Raycast(ray, out raycastHit))
+        if (Physics.Raycast(ray, out raycastHit, 500.0f, layerMask))
         {
             if (raycastHit.collider.CompareTag(collideTag))
                 result = true;
