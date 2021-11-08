@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8230123336037000848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.57, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4337095177120087189}
@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3d1f898cf348e44b952042647a987f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyAttackScale: 2
+  destroyAttackRange: 2
   projectileBodyController: {fileID: 7145176565129056952}
   bombEffectController: {fileID: 6292360187680516494}
 --- !u!114 &7145176565129056952
@@ -93,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 4340085673091894559}
-  Scale: 1
+  scale: 1
   IsEnabledOnAwake: 1
 --- !u!114 &6292360187680516494
 MonoBehaviour:
@@ -108,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 7327731662499395818}
-  Scale: 1
+  scale: 1
   IsEnabledOnAwake: 0
 --- !u!1001 &4341289008181386021
 PrefabInstance:
@@ -131,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4273044217980848, guid: 966ffc55bdedb7549818ef87252380d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4273044217980848, guid: 966ffc55bdedb7549818ef87252380d2, type: 3}
       propertyPath: m_LocalPosition.z
