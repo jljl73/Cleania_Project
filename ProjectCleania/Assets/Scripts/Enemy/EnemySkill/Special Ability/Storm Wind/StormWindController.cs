@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StormWindController : DamagingProperty
+public class StormWindController : MonoBehaviour
 {
     [SerializeField]
     GameObject stormWindPrefab;
@@ -11,13 +11,17 @@ public class StormWindController : DamagingProperty
     //List<GameObject> winds = new List<GameObject>();
 
     bool rotateCW = true;
-    float rotateRadius = 3f;
     float rotateSpeed = 90f;
+    float rotateRadius = 3f;
     int count;
     float duration;
 
+    float stormDamageScale;
+    float stormDamageRange;
+    AbilityStatus ownerAbility;
+
     // Initiate 후 함수 호출 필수
-    public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count, float duration, AbilityStatus abil, float damageScale)
+    public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count, float duration, AbilityStatus abil, float damageScale, float damageRange)
     {
         this.rotateCW = isCW;
         this.rotateRadius = rotateRadius;
@@ -25,7 +29,9 @@ public class StormWindController : DamagingProperty
         this.count = count;
         this.duration = duration;
 
-        base.SetUp(abil, damageScale);
+        ownerAbility = abil;
+        stormDamageScale = damageScale;
+        stormDamageRange = damageRange;
 
         MakeWinds(isCW);
         Destroy(this.gameObject, duration);
@@ -46,7 +52,8 @@ public class StormWindController : DamagingProperty
                 else
                     stormWind.SetUp(this.gameObject, -rotateSpeed);
 
-                stormWind.SetUp(ownerAbility, damageScale);
+                stormWind.SetUp(ownerAbility, stormDamageScale);
+                stormWind.Resize(stormDamageRange);
             }
 
         }

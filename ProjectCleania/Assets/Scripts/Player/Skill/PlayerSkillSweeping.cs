@@ -81,10 +81,10 @@ public class PlayerSkillSweeping : PlayerSkill
             // ±âÀý
             other.GetComponent<Enemy>().OnStunned(true, stunTime);
 
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
-                other.GetComponent<Enemy>().Die();
-            else
-                other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);
+            //if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
+            //    other.GetComponent<Enemy>().Die();
+            //else
+            //    other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);
         }
     }
 

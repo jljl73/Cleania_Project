@@ -10,6 +10,7 @@ public class SpecialAbilityStormWind : EnemySkill
     float orbitOffset;
     float orbitCount;
     float rotationSpeed; // m/s
+    float damageSize;
 
     [SerializeField]
     GameObject stormWindOrbitPrefab;
@@ -46,6 +47,7 @@ public class SpecialAbilityStormWind : EnemySkill
         orbitOffset = skillData.GetOrbitOffset();
         orbitCount = skillData.GetCount();
         rotationSpeed = skillData.GetSpeed();
+        damageSize = skillData.GetDamageSize();
     }
 
     public override void AnimationActivate()
@@ -67,8 +69,7 @@ public class SpecialAbilityStormWind : EnemySkill
         {
             GameObject initiatedOrbit = Instantiate(stormWindOrbitPrefab, transform.position, transform.rotation);
             StormWindController orbitController = initiatedOrbit.GetComponent<StormWindController>();
-            orbitController.SetUp(i % 2 == 1, i * orbitOffset, rotationSpeed, i, duration, OwnerAbilityStatus, damageScale);
-            
+            orbitController.SetUp(i % 2 == 1, i * orbitOffset, rotationSpeed, i, duration, OwnerAbilityStatus, damageScale, damageSize);
             //Destroy(this.gameObject, duration);
         }
     }
