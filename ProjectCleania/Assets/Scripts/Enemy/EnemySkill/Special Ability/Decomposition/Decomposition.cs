@@ -28,7 +28,7 @@ public class Decomposition : DamagingProperty
 
     private void Start()
     {
-        effectController.Scale = damageRange;
+        effectController.Scale = damageRange * 0.76923f;
     }
 
     private void Update()
