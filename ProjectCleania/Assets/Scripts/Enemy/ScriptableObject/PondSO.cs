@@ -8,11 +8,11 @@ public class PondSO : EnemySkillSO
     public float Duration;
     public float GetDuration() { return Duration; }
 
-    [Header("장판 반경 (미적용)")]
+    [Header("반경")]
     public float Radius;
     public float GetRadius() { return Radius; }
 
-    [Header("장판 갯수")]
+    [Header("갯수")]
     public float Count;
     public float GetCount() { return Count; }
 }

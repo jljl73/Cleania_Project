@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class ToxicityPond : ToxicityDamage
 {
+    [SerializeField]
+    SkillEffectController effectController;
+
     private void Start()
     {
+        effectController.Scale = damageRange * 2;
         GiveDamageOnRange(damageRange);
+    }
+
+    public void SetUp(AbilityStatus abil, float damageScale, float damageRange)
+    {
+        base.SetUp(abil, damageScale);
+        this.damageRange = damageRange;
     }
 
     void GiveDamageOnRange(float range)

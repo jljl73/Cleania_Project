@@ -71,7 +71,7 @@ public class SpecialAbilitySeal : EnemySkill
             SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
             print("0");
             pondDamage.SetUp(OwnerAbilityStatus, damageScale);
-            pondDamage.SetUp(duration, silenceTime);
+            pondDamage.SetUp(duration, silenceTime, radius);
             print("1");
             //if (pondDamage != null)
             //{

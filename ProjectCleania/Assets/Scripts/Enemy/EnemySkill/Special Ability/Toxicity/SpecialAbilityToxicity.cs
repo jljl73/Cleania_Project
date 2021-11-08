@@ -75,7 +75,7 @@ public class SpecialAbilityToxicity : EnemySkill
                     print("enemy.abilityStatus is null");
                 else
                     print("enemy.abilityStatus not null");
-                pondDamage.SetUp(OwnerAbilityStatus, damageScale);
+                pondDamage.SetUp(OwnerAbilityStatus, damageScale, radius);
             }
             else
                 print("Pond null");

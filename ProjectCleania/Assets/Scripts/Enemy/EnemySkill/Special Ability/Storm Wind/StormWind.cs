@@ -7,6 +7,14 @@ public class StormWind : DamagingProperty
     GameObject rotatePivot;
     float rotateSpeed;
 
+    [SerializeField]
+    SkillEffectController effectController;
+
+    private void Start()
+    {
+        effectController.Scale = damageRange;
+    }
+
     private void Update()
     {
         MakeWindRotateAroundMe();

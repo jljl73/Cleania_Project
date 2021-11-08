@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4267116547748194425}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 2, y: 0.0001, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4042364098280536624}
   m_Father: {fileID: 0}
@@ -44,7 +44,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1
+  m_Radius: 1.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -60,8 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleObject: {fileID: 4042364098280294094}
-  Scale: 2
+  ParticleObject: {fileID: 4267116547748194425}
+  scale: 1
   IsEnabledOnAwake: 1
 --- !u!114 &196984474288563275
 MonoBehaviour:
@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageRange: 1
+  effectController: {fileID: 1760318572781495500}
 --- !u!1001 &4042364098280414880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139,6 +140,22 @@ PrefabInstance:
       propertyPath: InitialModule.startRotationY.minMaxState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 19818056, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19818056, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19818056, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19818056, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 19880960, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
       propertyPath: InitialModule.startRotationX.minMaxState
       value: 3
@@ -163,17 +180,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19983138, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 19990510, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
---- !u!1 &4042364098280294094 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 120942, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
-  m_PrefabInstance: {fileID: 4042364098280414880}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4042364098280536624 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 418960, guid: 35940d2be93f2774f9041b028c50764b, type: 3}
