@@ -271,7 +271,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         if (isStunned)
         {
-            StartCoroutine("StunnedFor", stunnedTime);
+            //StartCoroutine("StunnedFor", stunnedTime);
         }
         else
         {

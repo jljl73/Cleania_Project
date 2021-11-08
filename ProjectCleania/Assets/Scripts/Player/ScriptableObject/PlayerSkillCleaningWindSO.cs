@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSkillCleaningWind", menuName = "Scriptable Object/PlayerSkill/PlayerSkillCleaningWind")]
 public class PlayerSkillCleaningWindSO : PlayerSKillIDSO
 {
-    public string SkillName;
-    public string GetSkillName() { return SkillName; }
+    
 
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
