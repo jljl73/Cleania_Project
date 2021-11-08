@@ -14,6 +14,8 @@ public class ItemInMarket : MonoBehaviour
     Image image;
     [SerializeField]
     Text itemName;
+    [SerializeField]
+    Toggle toggle;
 
     public void Initialize(ItemInstance itemInstance)
     {
@@ -21,5 +23,6 @@ public class ItemInMarket : MonoBehaviour
         price.text = itemInstance.SO.Price.ToString();
         itemName.text = itemInstance.SO.ItemName;
         image.sprite = itemInstance.SO.ItemImage;
+        toggle.group = GetComponentInParent<ToggleGroup>();
     }
 }

@@ -22,7 +22,6 @@ public class NPCMarket : MonoBehaviour
             newItem2.Initialize(ItemInstance.Instantiate_RandomByRank(ItemSO.enumRank.Common));
         }
 
-        toggleGroup = pages[0].GetComponent<ToggleGroup>();
         ShowPage(0);
     }
 
