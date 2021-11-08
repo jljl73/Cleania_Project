@@ -8,6 +8,8 @@ public partial class UI_ItemContainer : MonoBehaviour
 {
     [SerializeField]
     GameObject slotParent;
+    public GameObject SlotParent
+    { get => slotParent; }
     [SerializeField]
     GameObject itemContollerParent;
     public GameObject ItemContollerParent
@@ -74,7 +76,8 @@ public partial class UI_ItemContainer : MonoBehaviour
                 break;
 
         }
-        Invoke("LoadItemControllers", 0.2f);
+
+        Invoke("SelfLoad", 0.2f);
     }
 
     public bool Add(ItemInstance item, int index = -1, bool sync = true)
@@ -99,33 +102,90 @@ public partial class UI_ItemContainer : MonoBehaviour
             return AddAsync(item, index);
     }
 
-    public bool Remove(ItemInstance item, int index = -1, bool sync = true)
+    public bool Remove(int index, bool sync = true)
     {
+        if (sync)
+            switch (containerType)
+            {
+                case StorageType.Inventory:
+                    return RemoveSync(SavedData.Instance.Item_Inventory, index);
+                case StorageType.Storage:
+                    return RemoveSync(SavedData.Instance.Item_Storage, index);
+                case StorageType.Equipment:
+                    return RemoveSync(SavedData.Instance.Item_Equipments, index);
 
-
-        return false;
+                default:
+                    return false;
+            }
+        else
+            return RemoveAsync(index);
     }
 
-    
 
 
 
-    public bool ImmigrateTo(UI_ItemController controller, UI_ItemContainer otherContainer, int index)
+
+    public bool ImmigrateTo(UI_ItemController controller, UI_ItemContainer dstContainer, int dstIndex)
     {
-        // remove destination
-        switch(otherContainer.containerType)
-        {
-            case StorageType.Inventory:
-            case StorageType.Storage:
-                break;
+        if (controller == null || controller.itemInstance == null)
+            return false;
+        
 
-            case StorageType.Equipment:
+        ItemInstance srcItem = controller.itemInstance;
+        ItemInstance dstItem = (dstContainer.controllers[dstIndex] == null ? null : dstContainer.controllers[dstIndex].itemInstance);
+        UI_ItemContainer srcContainer = this;
+        int srcIndex = -1;
+
+        if (srcItem == dstItem)
+            return true;
+
+        for (int i = 0; i < slotParent.transform.childCount; ++i)
+        {
+            if (controllers[i] == controller)
+            {
+                srcIndex = i;
                 break;
+            }
+        }
+        if (srcIndex == -1)
+        {
+            Debug.LogError($"Logic error in {ToString()} : ImmigrateTo");
+            return false;
         }
 
 
-        Debug.LogError("Logic error in UI_ItemContainer : MoveTo");
-        return false;
+        if (dstItem != null)
+            if (!dstContainer.Remove(dstIndex))
+            {
+                return false;
+            }
+
+        if (!srcContainer.Remove(srcIndex))
+        {
+            if (dstItem != null)
+                dstContainer.Add(dstItem, dstIndex);
+            return false;
+        }
+
+        if (!dstContainer.Add(srcItem, dstIndex))
+        {
+            if (dstItem != null)
+                dstContainer.Add(dstItem, dstIndex);
+            srcContainer.Add(srcItem, srcIndex);
+            return false;
+        }
+
+        if (dstItem != null)
+            if (!srcContainer.Add(dstItem, srcIndex))
+            {
+                dstContainer.Remove(dstIndex);
+                if (dstItem != null)
+                    dstContainer.Add(dstItem, dstIndex);
+                srcContainer.Add(srcItem, srcIndex);
+                return false;
+            }
+
+        return true;
     }
 }
 
@@ -139,27 +199,64 @@ public partial class UI_ItemContainer
         switch(oper)
         {
             case ItemStorage<Point>.SyncOperator.Add:
-                ItemStorage_LocalGrid storage = (ItemStorage_LocalGrid)sender;
-                ItemInstance item = storage[index];
-                AddAsync(item, storage.PointToIndex(index));
-                break;
+                {
+                    ItemStorage_LocalGrid storage = (ItemStorage_LocalGrid)sender;
+                    ItemInstance item = storage[index];
+                    AddAsync(item, storage.PointToIndex(index));
+                    break;
+                }
             case ItemStorage<Point>.SyncOperator.Remove:
-
-                break;
+                {
+                    ItemStorage_LocalGrid storage = (ItemStorage_LocalGrid)sender;
+                    ItemInstance item = storage[index];
+                    RemoveAsync(storage.PointToIndex(index));
+                    break;
+                }
             case ItemStorage<Point>.SyncOperator.Refresh:
                 LoadItemControllers(sender);
+                break;
+
+            default:
+                Debug.LogError("Logic error in UI_ItemContainer : Synchronize");
                 break;
         }
     }
 
     void Synchronize(iItemStorage sender, ItemStorage_Equipments.SyncOperator oper, ItemInstance_Equipment.Type index)
     {
+        switch (oper)
+        {
+            case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Add:
+                {
+                    ItemStorage_Equipments storage = (ItemStorage_Equipments)sender;
+                    ItemInstance item = storage[index];
+                    AddAsync(item, (int)index);
+                    break;
+                }
+            case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Remove:
+                {
+                    ItemStorage_Equipments storage = (ItemStorage_Equipments)sender;
+                    ItemInstance item = storage[index];
+                    RemoveAsync((int)index);
+                    break;
+                }
+            case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Refresh:
+                LoadItemControllers(sender);
+                break;
 
+            default:
+                Debug.LogError("Logic error in UI_ItemContainer : Synchronize");
+                break;
+        }
     }
 
 
     void LoadItemControllers(iItemStorage storage)
     {
+        for (int i = slotParent.transform.childCount - 1; i >= 0; i--)
+            if (controllers[i] != null)
+                RemoveAsync(i);
+
         switch (ContainerType)
         {
             case StorageType.Inventory:
@@ -169,12 +266,47 @@ public partial class UI_ItemContainer
                     AddAsync(i.Key, ((ItemStorage_LocalGrid)storage).PointToIndex(i.Value));
                 }
                 break;
+            case StorageType.Equipment:
+                foreach (var i in ((ItemStorage_Equipments)storage).Items)
+                {
+                    AddAsync(i.Key, (int)i.Value);
+                }
+                break;
+        }
+    }
+
+    void SelfLoad()
+    {
+        for (int i = slotParent.transform.childCount - 1; i >= 0; i--)
+            if (controllers[i] != null)
+                RemoveAsync(i);
+
+        switch (ContainerType)
+        {
+            case StorageType.Inventory:
+                foreach (var i in SavedData.Instance.Item_Inventory.Items)
+                {
+                    AddAsync(i.Key, SavedData.Instance.Item_Inventory.PointToIndex(i.Value));
+                }
+                break;
+            case StorageType.Storage:
+                foreach (var i in SavedData.Instance.Item_Storage.Items)
+                {
+                    AddAsync(i.Key, SavedData.Instance.Item_Storage.PointToIndex(i.Value));
+                }
+                break;
+            case StorageType.Equipment:
+                foreach (var i in SavedData.Instance.Item_Equipments.Items)
+                {
+                    AddAsync(i.Key, (int)i.Value);
+                }
+                break;
         }
     }
 
     bool AddSync(iItemStorage storage, ItemInstance item, int index)
     {
-        if (index >= 0 && index < itemContollerParent.transform.childCount)
+        if (index >= 0 && index < slotParent.transform.childCount)
             return ((ItemStorage_LocalGrid)storage).Add(item, index);
         else if (index == -1)
             return storage.Add(item);
@@ -201,13 +333,40 @@ public partial class UI_ItemContainer
     }
 
 
-    bool RemoveSync(ItemInstance item)
+    bool RemoveSync(iItemStorage storage, int index)
     {
-        return false;
+        if (index >= 0 && index < slotParent.transform.childCount)
+        {
+            bool result = storage.Remove(controllers[index].itemInstance);
+            return result;
+        }
+        else
+        {
+            Debug.LogError("Logic error in UI_ItemContainer : RemoveSync");
+            return false;
+        }
     }
 
-    bool RemoveAsync(ItemInstance item)
+    bool RemoveAsync(int index)
     {
-        return false;
+        if (index >= 0 && index < slotParent.transform.childCount)
+        {
+            if (controllers[index] != null)
+            {
+                UI_ItemController.Delete(controllers[index]);
+                controllers[index] = null;
+                return true;
+            }
+            else
+            {
+                Debug.Log("Tried to remove empty reference : UI_ItemContainer");
+                return false;
+            }
+        }
+        else
+        {
+            Debug.LogError("Logic error in UI_ItemContainer : AddAsync");
+            return false;
+        }
     }
 }

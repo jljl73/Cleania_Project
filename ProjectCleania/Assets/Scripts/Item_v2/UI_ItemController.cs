@@ -22,8 +22,8 @@ public class UI_ItemController : MonoBehaviour,
     Image backgroundImage;
 
     Vector3 prevPosition;
-    Vector2 pointerOffset;
     UI_ItemContainer currentContainer;
+    Canvas canvas;
 
     // generator
     static GameObject controllerPrefab;
@@ -43,11 +43,15 @@ public class UI_ItemController : MonoBehaviour,
         // check object pool
         if (_objectPool.Count < 1)
         {
-            GameObject newControllerObject = GameObject.Instantiate(controllerPrefab);
+            GameObject newControllerObject = GameObject.Instantiate(controllerPrefab, container.ItemContollerParent.transform);
             controller = newControllerObject.GetComponent<UI_ItemController>();
+            controller.canvas = controller.GetComponentInParent<Canvas>();
         }
         else
+        {
             controller = _objectPool.Dequeue().GetComponent<UI_ItemController>();
+            controller.transform.SetParent(container.ItemContollerParent.transform);
+        }
 
         // refresh data of controller
         controller.ItemChange(item, container, index);
@@ -73,13 +77,13 @@ public class UI_ItemController : MonoBehaviour,
         {
             itemImage.sprite = itemInstance.SO.ItemImage;
             /*backgroundImage.sprite change code*/
-            transform.SetParent(container.ItemContollerParent.transform);
             currentContainer = container;
         }
 
-        if (index >= 0 && index < container.ItemContollerParent.transform.childCount)
+        if (index >= 0 && index < container.SlotParent.transform.childCount)
         {
-            backgroundImage.rectTransform.position = container.ItemContollerParent.transform.GetChild(index).transform.position;
+            backgroundImage.rectTransform.sizeDelta = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().sizeDelta;
+            backgroundImage.rectTransform.position = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().position;
             prevPosition = backgroundImage.rectTransform.position;
         }
         else if (index != -1)
@@ -96,36 +100,30 @@ public class UI_ItemController : MonoBehaviour,
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
         transform.SetAsLastSibling();
+        currentContainer.transform.SetAsLastSibling();
         prevPosition = backgroundImage.transform.position;
-        pointerOffset = eventData.position - (Vector2)backgroundImage.rectTransform.position;
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        backgroundImage.rectTransform.position = eventData.position - pointerOffset;
+        backgroundImage.rectTransform.anchoredPosition += eventData.delta * canvas.scaleFactor;
     }
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
         List<RaycastResult> results = new List<RaycastResult>();
-        Vector2 curSorPoint = eventData.position - pointerOffset;
 
-        eventData.position = curSorPoint;
-        GameManager.Instance.MainCanvas.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
+        eventData.position = backgroundImage.rectTransform.position;
+        canvas.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
 
         for (int i = 0; i < results.Count; ++i)
         {
             switch(results[i].gameObject.tag)
             {
                 case "Slot":
-                    if (currentContainer.ImmigrateTo(this
+                    currentContainer.ImmigrateTo(this
                         , results[i].gameObject.GetComponentInParent<UI_ItemContainer>()
-                        , results[i].gameObject.transform.GetSiblingIndex()))
-
-                        backgroundImage.rectTransform.position = results[i].gameObject.transform.position;
-                    else
-                        backgroundImage.rectTransform.position = prevPosition;
-
+                        , results[i].gameObject.transform.GetSiblingIndex());
                     return;
 
                 default:
@@ -156,6 +154,17 @@ public class UI_ItemController : MonoBehaviour,
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
+        switch(currentContainer.ContainerType)
+        {
+            case UI_ItemContainer.StorageType.Inventory:
+                break;
+            case UI_ItemContainer.StorageType.Storage:
+                break;
+            case UI_ItemContainer.StorageType.Equipment:
+                //currentContainer.ImmigrateTo(this, )
+                break;
+        }
+
         // dosmt
     }
 }
