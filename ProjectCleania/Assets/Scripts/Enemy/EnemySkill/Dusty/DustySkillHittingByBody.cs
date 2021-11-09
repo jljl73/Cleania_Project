@@ -27,6 +27,7 @@ public class DustySkillHittingByBody : EnemySkill
 
         col = GetComponent<Collider>();
         // enemy = transform.parent.parent.GetComponent<Enemy>();
+        animator.SetFloat("HittingByBody Multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()

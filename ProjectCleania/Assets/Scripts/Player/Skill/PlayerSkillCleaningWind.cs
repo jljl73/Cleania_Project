@@ -73,6 +73,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
         SkillSlotDependency = SkillData.GetTriggerKey();
 
+        duration = SkillData.GetDuration();
+
         gatherEnergySize = SkillData.GetGatherEnergySize();
         smashDamageRate = SkillData.GetSmashDamageRate();
         smashRange = SkillData.GetSmashRange();

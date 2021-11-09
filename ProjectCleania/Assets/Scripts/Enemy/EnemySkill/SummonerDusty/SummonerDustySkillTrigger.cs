@@ -68,14 +68,6 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
 
         //if (enemyMove.ExistTarget())
         //{
-        //    #region
-        //    //if (isSummonCoolTime) return;
-
-        //    //if (IsSkillAvailable())
-        //    //{
-        //    //    StartCoroutine(Summon());
-        //    //}
-        //    #endregion
         //    enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
         //}
     }

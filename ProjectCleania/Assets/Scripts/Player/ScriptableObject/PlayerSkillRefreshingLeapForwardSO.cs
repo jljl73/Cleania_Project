@@ -60,15 +60,15 @@ public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
     public float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
-    [Header("부분 애니메이션 배속")]
-    public float LiftUpSpeedMultiplier = 1.0f;
-    public float GetLiftUpSpeedMultiplier() { return LiftUpSpeedMultiplier; }
+    //[Header("부분 애니메이션 배속")]
+    //public float LiftUpSpeedMultiplier = 1.0f;
+    //public float GetLiftUpSpeedMultiplier() { return LiftUpSpeedMultiplier; }
 
-    public float SwingDownSpeedMultiplier = 1.0f;
-    public float GetSwingDownSpeedMultiplier() { return SwingDownSpeedMultiplier; }
+    //public float SwingDownSpeedMultiplier = 1.0f;
+    //public float GetSwingDownSpeedMultiplier() { return SwingDownSpeedMultiplier; }
 
-    public float OtherSpeedMultiplier = 1.0f;
-    public float GetOtherSpeedMultiplier() { return OtherSpeedMultiplier; }
+    //public float OtherSpeedMultiplier = 1.0f;
+    //public float GetOtherSpeedMultiplier() { return OtherSpeedMultiplier; }
 
     [Header("도약 이팩트 반경")]
     public float JumpEffectSize = 1f;

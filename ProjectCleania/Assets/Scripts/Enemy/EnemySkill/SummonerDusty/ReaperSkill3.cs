@@ -28,6 +28,7 @@ public class ReaperSkill3 : EnemySkill
         UpdateSkillData();
 
         effectController[0].Scale = pushRadius;
+        animator.SetFloat("SpinAttack multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()

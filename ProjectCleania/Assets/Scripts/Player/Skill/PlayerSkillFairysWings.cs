@@ -82,7 +82,6 @@ public class PlayerSkillFairysWings : PlayerSkill
     IEnumerator SpeedUp(int effectIdx)
     {
         bSkill = true;
-        duration = 5.0f;
         nDeadEnemy = 0;
 
         base.PlayEffects(effectIdx);

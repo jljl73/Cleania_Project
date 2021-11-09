@@ -24,6 +24,7 @@ public class BatSkill1 : EnemySkill
         col = GetComponent<Collider>();
 
         UpdateSkillData();
+        animator.SetFloat("Spear multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()
