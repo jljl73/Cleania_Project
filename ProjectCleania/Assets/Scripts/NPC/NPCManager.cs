@@ -12,18 +12,18 @@ public class NPCManager : MonoBehaviour
     [SerializeField]
     NPCEnchant enchant;
     [SerializeField]
-    Storage storage;
+    UI_ItemContainer storage;
     [SerializeField]
-    Storage inventory;
+    UI_ItemContainer inventory;
     [SerializeField]
-    public EquipmentManager equpiments;
+    UI_ItemContainer equipments;
 
     void Awake()
     {
         GameManager.Instance.npcManager = this;
     }
 
-    public void Dosmth(ItemController_v2 item)
+    public void Dosmth(UI_ItemController item)
     {
         switch (GameManager.Instance.uiManager.GetCurrentNPC())
         {
@@ -47,29 +47,29 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    void Repair(ItemController_v2 item)
+    void Repair(UI_ItemController item)
     {
         repair.SelectItem(item);
     }
 
-    void Sell(ItemController_v2 item)
+    void Sell(UI_ItemController item)
     {
         market.SellItem(item);
     }
 
-    void Enchant(ItemController_v2 item)
+    void Enchant(UI_ItemController item)
     {
         enchant.SelectItem(item);
     }
 
-    void Store(ItemController_v2 item)
+    void Store(UI_ItemController item)
     {
         
     }
 
-    void Equip(ItemController_v2 item)
+    void Equip(UI_ItemController item)
     {
-        equpiments.Equip(item);
+        equipments.Add(item);
     }
     
 }

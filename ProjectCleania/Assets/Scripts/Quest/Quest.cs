@@ -42,7 +42,7 @@ public struct QuestNeed
             ++curValue;
         else
         {
-            curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().GetNumberItem(this.target);
+            curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().GetNumberItem(this.target);
         }
     }
 

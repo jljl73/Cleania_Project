@@ -77,22 +77,20 @@ public partial class Equipable : MonoBehaviour, iSavedData
         }
     }
 
-    public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment, bool sync = false)
+    public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment, bool sync = true)
     {
         if (sync)
             switch(syncWith)
             {
                 case SyncType.PlayerEquipment:
+                    ItemInstance item = Unequip(newEquipment.EquipmentType, sync);
                     SavedData.Instance.Item_Equipments.Add(newEquipment);
-                    return null;
-                default:
-                    return null;
+                    return (ItemInstance_Equipment)item;
             }
 
-        else
-            return EquipAsync(newEquipment);
+        return EquipAsync(newEquipment);
     }
-    public ItemInstance_Equipment Unequip(ItemInstance_Equipment.Type offType, bool sync = false)
+    public ItemInstance_Equipment Unequip(ItemInstance_Equipment.Type offType, bool sync = true)
     {
         if (sync)
         switch (syncWith)
@@ -101,16 +99,20 @@ public partial class Equipable : MonoBehaviour, iSavedData
                     ItemInstance item = SavedData.Instance.Item_Equipments[offType];
                     if (item != null)
                         SavedData.Instance.Item_Equipments.Remove(item);
-                    return null;
-                default:
-                    return null;
+                    return (ItemInstance_Equipment)item;
             }
-        else
-            return UnequipAsync(offType);
+
+        return UnequipAsync(offType);
     }
 
 
 }
+
+
+
+
+
+
 
 
 public partial class Equipable

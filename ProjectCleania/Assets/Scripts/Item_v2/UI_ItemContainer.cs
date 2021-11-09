@@ -17,7 +17,7 @@ public partial class UI_ItemContainer : MonoBehaviour
 
     private UI_ItemController[] controllers;
 
-    public enum StorageType
+    public enum SyncType
     {
         SelectOne,
         Inventory,
@@ -26,52 +26,51 @@ public partial class UI_ItemContainer : MonoBehaviour
     }
 
     [SerializeField]
-    StorageType containerType;
-    public StorageType ContainerType
-    { get => containerType; }
+    SyncType syncWith;
+    public SyncType SyncWith
+    { get => syncWith; }
 
+    public int this[UI_ItemController controller]
+    {
+        get
+        {
+            for (int i = 0; i < controllers.Length; ++i)
+                if (controllers[i] == controller)
+                    return i;
 
-    [SerializeField]
-    int crystal = 0;
-    public int Crystal { get { return crystal; } }
-    [SerializeField]
-    Text TextCrystal;
+            return -1;
+        }
+    }
+
+    public UI_ItemController this[int index]
+    {
+        get
+        {
+            if (index >= 0 && index < controllers.Length)
+                return controllers[index];
+            else
+                return null;
+        }
+    }
 
 
 
     private void Awake()
     {
-        if (TextCrystal != null)
-            TextCrystal.text = crystal.ToString();
-
         controllers = new UI_ItemController[slotParent.transform.childCount];
-
-        //switch (containerType)
-        //{
-        //    case StorageType.Inventory:
-        //        GameManager.Instance.uiManager.InventoryPanel = this;
-        //        break;
-        //    case StorageType.Storage:
-        //        GameManager.Instance.uiManager.StoragePanel = this;
-        //        break;
-        //    case StorageType.Equipment:
-        //        //GameManager.Instance.uiManager.EqupmentPanel = this;
-        //        //myLocalGrid = SavedData.Instance.Item_Storage;
-        //        break;
-        //}
     }
 
     private void Start()
     {
-        switch(containerType)
+        switch(syncWith)
         {
-            case StorageType.Inventory:
+            case SyncType.Inventory:
                 SavedData.Instance.Item_Inventory.Subscribe(Synchronize, Point.Empty);
                 break;
-            case StorageType.Storage:
+            case SyncType.Storage:
                 SavedData.Instance.Item_Storage.Subscribe(Synchronize, Point.Empty);
                 break;
-            case StorageType.Equipment:
+            case SyncType.Equipment:
                 SavedData.Instance.Item_Equipments.Subscribe(Synchronize, ItemInstance_Equipment.Type.EnumTotal);
                 break;
 
@@ -86,42 +85,52 @@ public partial class UI_ItemContainer : MonoBehaviour
             return false;
 
         if (sync)
-            switch (containerType)
+            switch (syncWith)
             {
-                case StorageType.Inventory:
+                case SyncType.Inventory:
                     return AddSync(SavedData.Instance.Item_Inventory, item, index);
-                case StorageType.Storage:
+                case SyncType.Storage:
                     return AddSync(SavedData.Instance.Item_Storage, item, index);
-                case StorageType.Equipment:
+                case SyncType.Equipment:
                     return AddSync(SavedData.Instance.Item_Equipments, item, index);
-
-                default:
-                    return false;
             }
-        else
-            return AddAsync(item, index);
+
+        return AddAsync(item, index);
     }
+    public bool Add(UI_ItemController controller, int index = -1, bool sync = true)
+    {
+        ItemInstance item = controller.itemInstance;
+        if (controller.currentContainer != null)
+            controller.currentContainer.Remove(controller);
+
+        return Add(item, index, sync);
+    }
+
 
     public bool Remove(int index, bool sync = true)
     {
         if (sync)
-            switch (containerType)
+            switch (syncWith)
             {
-                case StorageType.Inventory:
+                case SyncType.Inventory:
                     return RemoveSync(SavedData.Instance.Item_Inventory, index);
-                case StorageType.Storage:
+                case SyncType.Storage:
                     return RemoveSync(SavedData.Instance.Item_Storage, index);
-                case StorageType.Equipment:
+                case SyncType.Equipment:
                     return RemoveSync(SavedData.Instance.Item_Equipments, index);
-
-                default:
-                    return false;
             }
-        else
-            return RemoveAsync(index);
+
+        return RemoveAsync(index);
     }
+    public bool Remove(UI_ItemController controller, bool sync = true)
+    {
+        int index = this[controller];
 
-
+        if (index != -1)
+            return Remove(index, sync);
+        else
+            return false;
+    }
 
 
 
@@ -187,6 +196,23 @@ public partial class UI_ItemContainer : MonoBehaviour
 
         return true;
     }
+
+
+
+    public int GetNumberItem(int itemCode)
+    {
+        int sum = 0;
+        for (int i = 0; i < controllers.Length; ++i)
+        {
+            if (controllers[i] != null && controllers[i].itemInstance.SO.ID == itemCode)
+            {
+                Debug.Log(controllers[i].itemInstance.SO.ItemName);
+                sum += controllers[i].itemInstance.Count;
+            }
+        }
+        Debug.Log(sum);
+        return sum;
+    }
 }
 
 
@@ -213,7 +239,7 @@ public partial class UI_ItemContainer
                     break;
                 }
             case ItemStorage<Point>.SyncOperator.Refresh:
-                LoadItemControllers(sender);
+                LoadControllers(sender);
                 break;
 
             default:
@@ -241,7 +267,7 @@ public partial class UI_ItemContainer
                     break;
                 }
             case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Refresh:
-                LoadItemControllers(sender);
+                LoadControllers(sender);
                 break;
 
             default:
@@ -251,22 +277,22 @@ public partial class UI_ItemContainer
     }
 
 
-    void LoadItemControllers(iItemStorage storage)
+    void LoadControllers(iItemStorage storage)
     {
         for (int i = slotParent.transform.childCount - 1; i >= 0; i--)
             if (controllers[i] != null)
                 RemoveAsync(i);
 
-        switch (ContainerType)
+        switch (SyncWith)
         {
-            case StorageType.Inventory:
-            case StorageType.Storage:
+            case SyncType.Inventory:
+            case SyncType.Storage:
                 foreach (var i in ((ItemStorage_LocalGrid)storage).Items)
                 {
                     AddAsync(i.Key, ((ItemStorage_LocalGrid)storage).PointToIndex(i.Value));
                 }
                 break;
-            case StorageType.Equipment:
+            case SyncType.Equipment:
                 foreach (var i in ((ItemStorage_Equipments)storage).Items)
                 {
                     AddAsync(i.Key, (int)i.Value);
@@ -277,29 +303,16 @@ public partial class UI_ItemContainer
 
     void SelfLoad()
     {
-        for (int i = slotParent.transform.childCount - 1; i >= 0; i--)
-            if (controllers[i] != null)
-                RemoveAsync(i);
-
-        switch (ContainerType)
+        switch (SyncWith)
         {
-            case StorageType.Inventory:
-                foreach (var i in SavedData.Instance.Item_Inventory.Items)
-                {
-                    AddAsync(i.Key, SavedData.Instance.Item_Inventory.PointToIndex(i.Value));
-                }
+            case SyncType.Inventory:
+                LoadControllers(SavedData.Instance.Item_Inventory);
                 break;
-            case StorageType.Storage:
-                foreach (var i in SavedData.Instance.Item_Storage.Items)
-                {
-                    AddAsync(i.Key, SavedData.Instance.Item_Storage.PointToIndex(i.Value));
-                }
+            case SyncType.Storage:
+                LoadControllers(SavedData.Instance.Item_Storage);
                 break;
-            case StorageType.Equipment:
-                foreach (var i in SavedData.Instance.Item_Equipments.Items)
-                {
-                    AddAsync(i.Key, (int)i.Value);
-                }
+            case SyncType.Equipment:
+                LoadControllers(SavedData.Instance.Item_Equipments);
                 break;
         }
     }
@@ -324,6 +337,17 @@ public partial class UI_ItemContainer
         {
             controllers[index] = UI_ItemController.New(item, this, index);
             return true;
+        }
+        else if(index == -1)
+        {
+            for (int i = 0; i < controllers.Length; ++i)
+                if (controllers[i] == null)
+                {
+                    controllers[i] = UI_ItemController.New(item, this, i);
+                    return true;
+                }
+
+            return false;
         }
         else
         {

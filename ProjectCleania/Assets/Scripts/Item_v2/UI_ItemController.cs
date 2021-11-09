@@ -16,41 +16,51 @@ public class UI_ItemController : MonoBehaviour,
 {
     public ItemInstance itemInstance
     { get; private set; }
+    public UI_ItemContainer currentContainer
+    { get; private set; }
     [SerializeField]
     Image itemImage;
     [SerializeField]
     Image backgroundImage;
 
     Vector3 prevPosition;
-    UI_ItemContainer currentContainer;
     Canvas canvas;
 
+    public bool wearing = false;
+
     // generator
-    static GameObject controllerPrefab;
-    static Queue<GameObject> _objectPool;
+    static GameObject _controllerPrefab;
+    static Stack<GameObject> _objectPool;
 
 
-    static public UI_ItemController New(ItemInstance item, UI_ItemContainer container, int index)
+    static public UI_ItemController New(ItemInstance item, UI_ItemContainer container = null, int index = -1)
     {
-        UI_ItemController controller = null;
-
         // initialize statics
         if (_objectPool == null)
-            _objectPool = new Queue<GameObject>();
-        if (controllerPrefab == null)
-            controllerPrefab = Resources.Load<GameObject>("Prefabs/UI_ItemController");
+            _objectPool = new Stack<GameObject>();
+        if (_controllerPrefab == null)
+            _controllerPrefab = Resources.Load<GameObject>("Prefabs/UI_ItemController");
+
+
+        UI_ItemController controller = null;
 
         // check object pool
         if (_objectPool.Count < 1)
         {
-            GameObject newControllerObject = GameObject.Instantiate(controllerPrefab, container.ItemContollerParent.transform);
+            GameObject newControllerObject;
+            if (container != null)
+                newControllerObject = GameObject.Instantiate(_controllerPrefab, container.ItemContollerParent.transform);
+            else
+                newControllerObject = GameObject.Instantiate(_controllerPrefab);
+
             controller = newControllerObject.GetComponent<UI_ItemController>();
-            controller.canvas = controller.GetComponentInParent<Canvas>();
+            controller.canvas = GameManager.Instance.MainCanvas;
         }
         else
         {
-            controller = _objectPool.Dequeue().GetComponent<UI_ItemController>();
-            controller.transform.SetParent(container.ItemContollerParent.transform);
+            controller = _objectPool.Pop().GetComponent<UI_ItemController>();
+            if (container != null)
+                controller.transform.SetParent(container.ItemContollerParent.transform);
         }
 
         // refresh data of controller
@@ -63,44 +73,84 @@ public class UI_ItemController : MonoBehaviour,
     static public void Delete(UI_ItemController controller)
     {
         controller.ItemChange(null, null);
-        _objectPool.Enqueue(controller.gameObject);
+        _objectPool.Push(controller.gameObject);
 
         controller.gameObject.SetActive(false);
     }
 
-    public void ItemChange(ItemInstance item, UI_ItemContainer container, int index = -1)
+    void ItemChange(ItemInstance item, UI_ItemContainer container, int index = -1)
     {
         itemInstance = item;
-        //parentStroage = inStorage;
+        currentContainer = container;
 
-        if (item != null && container != null)
+        if (item != null)
         {
             itemImage.sprite = itemInstance.SO.ItemImage;
             /*backgroundImage.sprite change code*/
-            currentContainer = container;
         }
+
 
         if (index >= 0 && index < container.SlotParent.transform.childCount)
         {
-            backgroundImage.rectTransform.sizeDelta = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().sizeDelta;
-            backgroundImage.rectTransform.position = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().position;
+            if (container != null)
+            {
+                backgroundImage.rectTransform.sizeDelta = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().sizeDelta;
+                backgroundImage.rectTransform.position = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().position;
+            }
             prevPosition = backgroundImage.rectTransform.position;
         }
         else if (index != -1)
             Debug.LogError("Logic error in UI_ItemController : ItemChange");
     }
 
-    // get sibling index and put inside
-    // change parent of controller (compare currentContainer with raycasted container)
+
+
+    // interface
+
+    public void PutInventory()
+    {
+        ItemInstance item = itemInstance;
+        bool success = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().Add(this);
+
+        if (!success)
+            SavedData.Instance.Item_World.Add(item);
+    }
+
+    void MoveToInventory()
+    {
+        PutInventory();
+    }
+
+    void MoveToStorage()
+    {
+        ItemInstance item = itemInstance;
+        bool success = GameManager.Instance.uiManager.StoragePanel.GetComponent<UI_ItemContainer>().Add(this);
+
+        if (!success)
+            SavedData.Instance.Item_World.Add(item);
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        prevPosition = position;
+        transform.position = position;
+    }
 
 
 
 
+
+    // event
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
         transform.SetAsLastSibling();
-        currentContainer.transform.SetAsLastSibling();
+
+        if (currentContainer.SyncWith == UI_ItemContainer.SyncType.Equipment)
+            GameManager.Instance.uiManager.InventoryPanel.transform.SetAsLastSibling();
+        else
+            currentContainer.transform.SetAsLastSibling();
+
         prevPosition = backgroundImage.transform.position;
     }
 
@@ -154,17 +204,25 @@ public class UI_ItemController : MonoBehaviour,
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        switch(currentContainer.ContainerType)
-        {
-            case UI_ItemContainer.StorageType.Inventory:
-                break;
-            case UI_ItemContainer.StorageType.Storage:
-                break;
-            case UI_ItemContainer.StorageType.Equipment:
-                //currentContainer.ImmigrateTo(this, )
-                break;
-        }
+        if (eventData.button != PointerEventData.InputButton.Right) return;
 
-        // dosmt
+        if (GameManager.Instance.uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
+        {
+            switch (currentContainer.SyncWith)
+            {
+                case UI_ItemContainer.SyncType.Inventory:
+                    MoveToStorage();
+                    break;
+                case UI_ItemContainer.SyncType.Storage:
+                    MoveToInventory();
+                    break;
+                case UI_ItemContainer.SyncType.Equipment:
+                    MoveToInventory();
+                    break;
+            }
+        }
+        else
+            GameManager.Instance.npcManager.Dosmth(this);
+            return;
     }
 }

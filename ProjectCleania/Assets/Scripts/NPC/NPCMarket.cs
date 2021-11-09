@@ -53,27 +53,27 @@ public class NPCMarket : MonoBehaviour
             totalPrice += item.itemInstance.SO.Price * item.itemInstance.Count;
         }
 
-        Storage inventory = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>();
-        if(inventory.Crystal < totalPrice)
+        UI_Currency inventoryCurrency = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>();
+        if(inventoryCurrency.Crystal < totalPrice)
         {
             UI_MessageBox.Message("클린이 부족합니다.");
             return;
         }
         else
         {
+            UI_ItemContainer inventory = inventoryCurrency.GetComponent<UI_ItemContainer>();
             foreach(var i in items)
             {
-                ItemController_v2 newController = ItemController_v2.New(i.itemInstance, inventory);
-                inventory.Add(newController, out newController.prevIndex);
+                UI_ItemController newController = UI_ItemController.New(i.itemInstance);
 
-                if (newController.prevIndex != -1)
+                if (inventory.Add(newController))
                 {
-                    inventory.AddCrystal(-newController.itemInstance.SO.Price * newController.itemInstance.Count);
+                    inventoryCurrency.AddCrystal(-newController.itemInstance.SO.Price * newController.itemInstance.Count);
                     Destroy(i.gameObject);
                 }
                 else
                 {
-                    ItemController_v2.Delete(newController);
+                    UI_ItemController.Delete(newController);
                     UI_MessageBox.Message("인벤토리가 꽉 찼습니다.");
                     break;
                 }
@@ -84,16 +84,16 @@ public class NPCMarket : MonoBehaviour
         
     }
 
-    public void SellItem(ItemController_v2 controller)
+    public void SellItem(UI_ItemController controller)
     {
         ShowPage(2);
         ItemInMarket newItem = Instantiate(prefab_Item, pages[2].transform).GetComponent<ItemInMarket>();
         newItem.Initialize(controller.itemInstance, pages[2]);
         soldItems.Enqueue(newItem);
 
-        GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(controller.itemInstance.SO.Price);
-        GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Remove(controller.prevIndex);
-        ItemController_v2.Delete(controller);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(controller.itemInstance.SO.Price);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().Remove(controller);
+        UI_ItemController.Delete(controller);
 
         if (soldItems.Count >= 10)
             Destroy(soldItems.Dequeue().gameObject);
