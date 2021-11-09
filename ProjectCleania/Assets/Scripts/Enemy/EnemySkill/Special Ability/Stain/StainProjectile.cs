@@ -36,7 +36,7 @@ public class StainProjectile : DamagingProperty
 
     private void Start()
     {
-        projectileBodyController.Scale = damageRange;
+        projectileBodyController.Scale = damageRange * 1.2f;
         hitCollider.radius = damageRange;
 
         bombEffectController.Scale = damageRange * 0.5f;
@@ -87,6 +87,7 @@ public class StainProjectile : DamagingProperty
     void DestroyAttack()
     {
         bombEffectController.Scale = destroyAttackRange * 0.5f;
+        hitCollider.radius = destroyAttackRange;                    // 디버깅 위해 존재
         bombEffectController.PlaySkillEffect();
         Collider[] colliders = Physics.OverlapSphere(transform.position, destroyAttackRange);
         for (int i = 0; i < colliders.Length; i++)
