@@ -51,7 +51,7 @@ public class PlayerSkillDehydration : PlayerSkill
         damageRange = SkillData.GetDamageRange();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -59,6 +59,8 @@ public class PlayerSkillDehydration : PlayerSkill
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillR", true);
         animator.SetTrigger("Dehydration");
+
+        return true;
     }
 
     public override void Activate()

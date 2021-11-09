@@ -23,7 +23,7 @@ public class PlayerSkill4 : PlayerSkill
         animator.SetFloat("RefreshingLeapForward multiplier", SpeedMultiplier);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         //animator.SetInteger("Skill", 4);
         animator.SetBool("OnSkill", true);
@@ -34,6 +34,8 @@ public class PlayerSkill4 : PlayerSkill
         // PlaySkillEvent.Invoke();
         //if (OnPlaySkill != null)
         //    OnPlaySkill();
+
+        return true;
     }
 
     override public void Activate()

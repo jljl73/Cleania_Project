@@ -52,11 +52,13 @@ public class SpecialAbilityTurret : EnemySkill
         projectileSpeed = skillData.GetProjectileSpeed();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Turret");
+
+        return true;
     }
 
     override public void Activate()

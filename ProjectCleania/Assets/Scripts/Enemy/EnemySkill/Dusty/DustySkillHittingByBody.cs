@@ -40,10 +40,12 @@ public class DustySkillHittingByBody : EnemySkill
         damageScale = skillData.GetDamageRate();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("HittingByBody");
+
+        return true;
     }
 
     override public void Activate()

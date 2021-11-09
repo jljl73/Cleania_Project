@@ -22,7 +22,8 @@ public class PlayerSKillIDSO : SkillIDSO
         Skill1 = 3,
         Skill2 = 4,
         Skill3 = 5,
-        Skill4 = 6
+        Skill4 = 6,
+        SkillF = 9
     }
 
     public PlayerType playerType;

@@ -40,10 +40,12 @@ public class ReaperSkill3 : EnemySkill
         pushRadius = skillData.GetPushRadius();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("SpinAttack");
+
+        return true;
     }
 
     override public void Activate()

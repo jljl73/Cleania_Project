@@ -53,11 +53,13 @@ public class SpecialAbilityDecomposition : EnemySkill
         stunTime = skillData.GetStunTime();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Decomposition");
+
+        return true;
     }
 
     override public void Activate()

@@ -50,11 +50,13 @@ public class SpecialAbilitySeal : EnemySkill
         silenceTime = skillData.GetSilenceTime();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Seal");
+
+        return true;
     }
 
     override public void Activate()

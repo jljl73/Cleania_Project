@@ -39,10 +39,12 @@ public class EggletSkill1 : EnemySkill
         DamageScale = skillData.GetDamageRate();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("HittingByBody");
+
+        return true;
     }
 
     override public void Activate()

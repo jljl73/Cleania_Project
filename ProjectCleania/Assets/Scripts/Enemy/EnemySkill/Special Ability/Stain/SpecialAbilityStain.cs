@@ -53,11 +53,13 @@ public class SpecialAbilityStain : EnemySkill
         destroyAttackScale = skillData.GetDestroyAttackScale();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Stain");
+
+        return true;
     }
 
     override public void Activate()

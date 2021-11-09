@@ -60,6 +60,10 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1102);
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            player.PlaySkill(1199);
+        }
         // Å°º¸µå <<<<<
     }
 

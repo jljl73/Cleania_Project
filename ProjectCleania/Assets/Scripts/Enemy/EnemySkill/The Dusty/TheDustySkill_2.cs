@@ -11,9 +11,11 @@ public class TheDustySkill_2 : Skill
         Instantiate(projectile, transform.position, transform.rotation);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetTrigger("Projectile");
+
+        return true;
     }
 
     public override void Deactivate()

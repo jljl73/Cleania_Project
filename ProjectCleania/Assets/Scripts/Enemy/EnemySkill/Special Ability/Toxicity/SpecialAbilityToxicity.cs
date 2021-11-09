@@ -49,11 +49,12 @@ public class SpecialAbilityToxicity : EnemySkill
         pondCount = skillData.GetCount();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Toxicity");
+        return true;
     }
 
     override public void Activate()

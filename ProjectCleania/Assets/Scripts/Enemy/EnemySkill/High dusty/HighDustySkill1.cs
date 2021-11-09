@@ -38,10 +38,12 @@ public class HighDustySkill1 : EnemySkill
         pondSize = skillData.GetPondSize();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("ThrowingDust");
+
+        return true;
     }
 
     override public void Activate()

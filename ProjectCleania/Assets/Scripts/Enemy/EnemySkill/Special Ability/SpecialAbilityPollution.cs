@@ -54,13 +54,15 @@ public class SpecialAbilityPollution : EnemySkill
         pollutionDuration = skillData.GetDuration();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         UpdateSkillData();
 
         abilityActivate = true;
         // 체력 증가
         //enemy.buff
+
+        return true;
     }
 
     public override void Deactivate()

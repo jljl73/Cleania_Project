@@ -78,9 +78,11 @@ public class ReaperSkill1 : EnemySkill
         animator.SetBool("OnSkill", false);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("Summon");
+
+        return true;
     }
 }

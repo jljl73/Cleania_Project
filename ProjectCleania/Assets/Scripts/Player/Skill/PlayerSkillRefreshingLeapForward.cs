@@ -111,7 +111,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         // animationSplitCount = SkillData.GetAnimationSplitCount();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -120,6 +120,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         animator.SetBool("OnSkill4", true);
         animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
+
+        return true;
 
         // playerMovement.JumpForward(jumpDistance);
         // PlaySkillEvent.Invoke();

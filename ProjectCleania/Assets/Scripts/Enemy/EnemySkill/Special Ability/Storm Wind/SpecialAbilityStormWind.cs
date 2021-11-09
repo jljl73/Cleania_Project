@@ -50,11 +50,13 @@ public class SpecialAbilityStormWind : EnemySkill
         damageSize = skillData.GetDamageSize();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("StormWind");
+
+        return true;
     }
 
     override public void Activate()

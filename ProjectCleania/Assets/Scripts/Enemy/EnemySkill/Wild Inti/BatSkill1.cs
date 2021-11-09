@@ -39,11 +39,13 @@ public class BatSkill1 : EnemySkill
         bloodTime = skillData.GetBloodTime();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("Spear");
         //animator.SetInteger("Skill", 1);
+
+        return true;
     }
 
     override public void Activate()

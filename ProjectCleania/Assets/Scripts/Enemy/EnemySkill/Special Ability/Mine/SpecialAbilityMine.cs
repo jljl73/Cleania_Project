@@ -44,11 +44,13 @@ public class SpecialAbilityMine : EnemySkill
         mineCount = skillData.GetCount();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Mine");
+
+        return true;
     }
 
     override public void Activate()

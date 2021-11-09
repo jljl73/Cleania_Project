@@ -50,8 +50,13 @@ public class PlayerSkillManager : BaseSkillManager
     {
         // 1106 = »óÄèÇÑ µµ¾à
         skillStorage.GetNormalSkill(1106).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
+        skillStorage.GetNormalSkill(1199).OnSkillEnd += playKatarsis;
     }
 
+    bool abc(int id)
+    {
+        return true;
+    }
 
     protected new bool IsSkillAvailable()
     {
@@ -124,14 +129,18 @@ public class PlayerSkillManager : BaseSkillManager
             return false;
 
         // 1102 = Å»¼ö(mouse R), 1106 = »óÄèÇÑ µµ¾à(4¹ø)
-        if (id != 1106 && id != 1102) playerStateMachine.Transition(StateMachine.enumState.Attacking);
-
+        if (id != 1106 && id != 1102 && id != 1199) playerStateMachine.Transition(StateMachine.enumState.Attacking);
         playerMove.ImmediateLookAtMouse();
 
-        skillDict[id].AnimationActivate();
-        ResetSkill(id);
-
+        if (skillDict[id].AnimationActivate())
+            ResetSkill(id);
         return true;
+    }
+
+    void playKatarsis()
+    {
+        if (skillDict[1199].AnimationActivate())
+            ResetSkill(1199);
     }
 
     #region
