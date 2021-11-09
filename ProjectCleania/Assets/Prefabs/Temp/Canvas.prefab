@@ -6614,7 +6614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotParent: {fileID: 7157905448174003586}
   itemContollerParent: {fileID: 8978716288081562635}
-  syncWith: 0
+  syncWith: 2
 --- !u!114 &1792869927345791890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48888,6 +48888,14 @@ PrefabInstance:
     - target: {fileID: 1745975273726825157, guid: 4f4ac5b025a771246839fc38fdbaa186, type: 3}
       propertyPath: m_Name
       value: InventoryPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518988494341961414, guid: 4f4ac5b025a771246839fc38fdbaa186, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3783792633871469594, guid: a30582d5f4580f747953ffb643ade110, type: 3}
+    - target: {fileID: 4518988494341961414, guid: 4f4ac5b025a771246839fc38fdbaa186, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowInventory
       objectReference: {fileID: 0}
     - target: {fileID: 9176387358331041214, guid: 4f4ac5b025a771246839fc38fdbaa186, type: 3}
       propertyPath: m_AnchorMax.y

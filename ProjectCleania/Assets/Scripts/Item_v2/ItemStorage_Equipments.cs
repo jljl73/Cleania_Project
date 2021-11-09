@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public partial class ItemStorage_Equipments : ItemStorage<ItemInstance_Equipment.Type>, iSavedData
 {
     private ItemInstance_Equipment[] _reference = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];

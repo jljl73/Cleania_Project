@@ -35,24 +35,21 @@ public partial class SavedData : MonoBehaviour
 
 
     // save data 
-    [System.NonSerialized]
     public ItemStorage_Equipments Item_Equipments = new ItemStorage_Equipments();
     public ItemStorage_LocalGrid Item_Inventory = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 6));
     public ItemStorage_LocalGrid Item_Storage = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 10));
+    [System.NonSerialized]
     public ItemStorage_World Item_World = new ItemStorage_World();
 
-    Equipable equipable;
-    [SerializeField]
-    string equipableStirng;
 
-    AbilityStatus vulnerable;
-    //[SerializeField]
-    [System.NonSerialized]
-    string vulnerableString;
+    //AbilityStatus vulnerable;
+    ////[SerializeField]
+    //[System.NonSerialized]
+    //string vulnerableString;
 
-    //[SerializeField]
-    [System.NonSerialized]
-    Vector3 playerPosition;
+    ////[SerializeField]
+    //[System.NonSerialized]
+    //Vector3 playerPosition;
     //
 
         // Exp int
@@ -95,9 +92,6 @@ public partial class SavedData : MonoBehaviour
         ((iSavedData)Item_Storage).AfterLoad();
         //((iSavedData)Item_World).AfterLoad();
 
-        JsonUtility.FromJsonOverwrite(equipableStirng, equipable);
-        ((iSavedData)equipable).AfterLoad();
-
         //JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
         //((iSavedData)vulnerable).AfterLoad();
 
@@ -112,9 +106,6 @@ public partial class SavedData : MonoBehaviour
         ((iSavedData)Item_Inventory).BeforeSave();
         ((iSavedData)Item_Storage).BeforeSave();
         //((iSavedData)Item_World).BeforeSave();
-
-        ((iSavedData)equipable).BeforeSave();
-        equipableStirng = JsonUtility.ToJson(equipable);
 
         //((iSavedData)vulnerable).BeforeSave();
         //vulnerableString = JsonUtility.ToJson(vulnerable);
@@ -137,8 +128,6 @@ public partial class SavedData : MonoBehaviour
 
     private void OnEnable()
     {
-        vulnerable = GameManager.Instance.PlayerAbility;
-        equipable = GameManager.Instance.PlayerEquipments;
         Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
 
         Load();
@@ -187,7 +176,10 @@ public partial class SavedData : MonoBehaviour
                 if (item != null && item is ItemInstance_Equipment)
                 {
                     Item_Inventory.Remove(item);
-                    Item_Inventory.Add(equipable.Equip((ItemInstance_Equipment)item));
+                    ItemInstance old = Item_Equipments[((ItemInstance_Equipment)item).EquipmentType];
+                    Item_Equipments.Remove(old);
+                    Item_Equipments.Add(item);
+                    Item_Inventory.Add(old);
                     return;
                 }
             }   

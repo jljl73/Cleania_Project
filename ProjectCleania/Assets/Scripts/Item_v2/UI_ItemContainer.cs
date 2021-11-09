@@ -100,6 +100,7 @@ public partial class UI_ItemContainer : MonoBehaviour
     public bool Add(UI_ItemController controller, int index = -1, bool sync = true)
     {
         ItemInstance item = controller.itemInstance;
+
         if (controller.currentContainer != null)
             controller.currentContainer.Remove(controller);
 
@@ -138,7 +139,8 @@ public partial class UI_ItemContainer : MonoBehaviour
     {
         if (controller == null || controller.itemInstance == null)
             return false;
-        
+        //if (dstContainer.syncWith == SyncType.Equipment)
+        //    return false;
 
         ItemInstance srcItem = controller.itemInstance;
         ItemInstance dstItem = (dstContainer.controllers[dstIndex] == null ? null : dstContainer.controllers[dstIndex].itemInstance);
@@ -320,7 +322,17 @@ public partial class UI_ItemContainer
     bool AddSync(iItemStorage storage, ItemInstance item, int index)
     {
         if (index >= 0 && index < slotParent.transform.childCount)
-            return ((ItemStorage_LocalGrid)storage).Add(item, index);
+            switch (syncWith)
+            {
+                case SyncType.Inventory:
+                case SyncType.Storage:
+                    return ((ItemStorage_LocalGrid)storage).Add(item, index);
+                case SyncType.Equipment:
+                    return ((ItemStorage_Equipments)storage).Add(item);
+                default:
+                    Debug.LogError("Logic error in UI_ItemContainer : AddSync");
+                    return false;
+            }
         else if (index == -1)
             return storage.Add(item);
         else

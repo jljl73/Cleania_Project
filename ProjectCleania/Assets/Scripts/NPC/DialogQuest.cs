@@ -39,8 +39,8 @@ public class DialogQuest : Dialog
                     break;
                 case QuestReward.TYPE.item:
                     ItemInstance itemInstance = ItemInstance.Instantiate(q.value);
-                    UI_ItemController newItem = UI_ItemController.New(itemInstance, GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>());
-                    newItem.PutInventory();
+                    UI_ItemController newItem = UI_ItemController.New(itemInstance);
+                    newItem.MoveToInventory();
                     break;
             }
         }

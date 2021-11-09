@@ -64,12 +64,14 @@ public class NPCManager : MonoBehaviour
 
     void Store(UI_ItemController item)
     {
-        
+        item.MoveToStorage();
     }
 
     void Equip(UI_ItemController item)
     {
-        equipments.Add(item);
+        ItemInstance_Equipment equip = (ItemInstance_Equipment)item.itemInstance;
+
+        inventory.ImmigrateTo(item, equipments, (int)equip.EquipmentType);
     }
     
 }

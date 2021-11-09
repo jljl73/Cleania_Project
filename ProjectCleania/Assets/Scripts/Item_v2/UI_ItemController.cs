@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// CONTROLLER DO NOTHING WITHOUT CALLBACK & INSTANTIATING
 /// </summary>
-public class UI_ItemController : MonoBehaviour, 
+public class UI_ItemController : MonoBehaviour,
     IDragHandler, IBeginDragHandler, IEndDragHandler, // drag and drop
     IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,   // item infromation show
     IPointerClickHandler    // item auto move
@@ -107,7 +107,7 @@ public class UI_ItemController : MonoBehaviour,
 
     // interface
 
-    public void PutInventory()
+    public void MoveToInventory()
     {
         ItemInstance item = itemInstance;
         bool success = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().Add(this);
@@ -116,12 +116,7 @@ public class UI_ItemController : MonoBehaviour,
             SavedData.Instance.Item_World.Add(item);
     }
 
-    void MoveToInventory()
-    {
-        PutInventory();
-    }
-
-    void MoveToStorage()
+    public void MoveToStorage()
     {
         ItemInstance item = itemInstance;
         bool success = GameManager.Instance.uiManager.StoragePanel.GetComponent<UI_ItemContainer>().Add(this);
@@ -168,7 +163,7 @@ public class UI_ItemController : MonoBehaviour,
 
         for (int i = 0; i < results.Count; ++i)
         {
-            switch(results[i].gameObject.tag)
+            switch (results[i].gameObject.tag)
             {
                 case "Slot":
                     currentContainer.ImmigrateTo(this
@@ -206,23 +201,19 @@ public class UI_ItemController : MonoBehaviour,
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
 
-        if (GameManager.Instance.uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
+        switch (currentContainer.SyncWith)
         {
-            switch (currentContainer.SyncWith)
-            {
-                case UI_ItemContainer.SyncType.Inventory:
-                    MoveToStorage();
-                    break;
-                case UI_ItemContainer.SyncType.Storage:
-                    MoveToInventory();
-                    break;
-                case UI_ItemContainer.SyncType.Equipment:
-                    MoveToInventory();
-                    break;
-            }
+            case UI_ItemContainer.SyncType.Inventory:
+                GameManager.Instance.npcManager.Dosmth(this);
+                break;
+            case UI_ItemContainer.SyncType.Storage:
+                MoveToInventory();
+                break;
+            case UI_ItemContainer.SyncType.Equipment:
+                MoveToInventory();
+                break;
         }
-        else
-            GameManager.Instance.npcManager.Dosmth(this);
-            return;
+
+        return;
     }
 }
