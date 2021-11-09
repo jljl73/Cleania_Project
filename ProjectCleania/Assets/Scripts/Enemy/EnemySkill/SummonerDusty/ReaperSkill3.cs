@@ -6,6 +6,7 @@ public class ReaperSkill3 : EnemySkill
 {
     float damageScale = 10;
     float hitForce = 1;
+    float pushRadius;
 
     Collider col;
 
@@ -25,6 +26,8 @@ public class ReaperSkill3 : EnemySkill
         base.Start();
         col = GetComponent<Collider>();
         UpdateSkillData();
+
+        effectController[0].Scale = pushRadius;
     }
 
     public void UpdateSkillData()
@@ -33,6 +36,7 @@ public class ReaperSkill3 : EnemySkill
 
         damageScale = skillData.GetDamageRate();
         hitForce = skillData.GetHitForce();
+        pushRadius = skillData.GetPushRadius();
     }
 
     public override void AnimationActivate()

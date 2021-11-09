@@ -39,7 +39,7 @@ public class SpecialAbilityMine : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
-        triggerRadius = skillData.GetExplosionRadius();
+        triggerRadius = skillData.GetRadius();
         CreationRadius = skillData.GetCreationRadius();
         mineCount = skillData.GetCount();
     }

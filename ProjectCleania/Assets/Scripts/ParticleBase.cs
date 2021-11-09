@@ -84,6 +84,9 @@ public class ParticleBase : MonoBehaviour
         Vector3 changedScale = new Vector3(value, value, value);
         ParticleObject.transform.localScale = changedScale;
 
+        if (particleChildrens == null)
+            return;
+
         foreach (ParticleSystem particle in particleChildrens)
         {
             particle.transform.localScale = new Vector3(value, value, value);

@@ -54,8 +54,11 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
         {
             if (collider.CompareTag("Player"))
             {
-                if (enemySkillManager.PlayRandomSpecialSkill())
-                    return;
+                //if (enemySkillManager.PlayRandomSpecialSkill())
+                //    return;
+
+                //if (enemySkillManager.PlaySkill(2910))
+                //    return;
 
                 // 먼지바람
                 if (enemySkillManager.PlaySkill(2402))
@@ -63,18 +66,18 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
             }
         }
 
-        if (enemyMove.ExistTarget())
-        {
-            #region
-            //if (isSummonCoolTime) return;
+        //if (enemyMove.ExistTarget())
+        //{
+        //    #region
+        //    //if (isSummonCoolTime) return;
 
-            //if (IsSkillAvailable())
-            //{
-            //    StartCoroutine(Summon());
-            //}
-            #endregion
-            enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
-        }
+        //    //if (IsSkillAvailable())
+        //    //{
+        //    //    StartCoroutine(Summon());
+        //    //}
+        //    #endregion
+        //    enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
+        //}
     }
 
     #region

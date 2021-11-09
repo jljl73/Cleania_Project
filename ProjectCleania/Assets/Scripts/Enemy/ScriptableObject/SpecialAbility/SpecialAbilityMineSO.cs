@@ -9,9 +9,9 @@ public class SpecialAbilityMineSO : PondSO
     public float CreationRadius;
     public float GetCreationRadius() { return CreationRadius; }
 
-    [Header("폭발 반경")]
-    public float ExplosionRadius;
-    public float GetExplosionRadius() { return ExplosionRadius; }
+    //[Header("폭발 반경")]
+    //public float ExplosionRadius;
+    //public float GetExplosionRadius() { return ExplosionRadius; }
 
     //[Header("지뢰 시전 대기 시간")]
     //public float PreparationTime;

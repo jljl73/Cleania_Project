@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class HighDustySkill1 : EnemySkill
 {
-    float DamageScale = 10;
+    float damageScale = 10;
+    float projectileSize;
+    float pondSize;
+
 
     //Collider col
     AbilityStatus myAbility;
     public GameObject DustBall;
 
     [SerializeField]
-    EnemySkillSO skillData;
+    ThrowDustSO skillData;
     // public Enemy enemy;
 
     int skillCount = 0;
@@ -30,7 +33,9 @@ public class HighDustySkill1 : EnemySkill
     {
         base.UpdateSkillData(skillData);
 
-        DamageScale = skillData.GetDamageRate();
+        damageScale = skillData.GetDamageRate();
+        projectileSize = skillData.GetProjectileSize();
+        pondSize = skillData.GetPondSize();
     }
 
     public override void AnimationActivate()
@@ -42,8 +47,7 @@ public class HighDustySkill1 : EnemySkill
     override public void Activate()
     {
         GameObject ball = Instantiate(DustBall, transform.position, transform.rotation);
-        ball.GetComponent<HighDusty_DustBall>().Owner = enemy.gameObject;
-        ball.GetComponent<HighDusty_DustBall>().DamageScale = DamageScale;
+        ball.GetComponent<HighDusty_DustBall>().SetUp(projectileSize, pondSize, OwnerAbilityStatus, damageScale);
         ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up / 2) * 200.0f);
 
         if (++skillCount == 3)
