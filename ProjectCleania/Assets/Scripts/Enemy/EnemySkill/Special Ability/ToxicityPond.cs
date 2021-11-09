@@ -9,7 +9,7 @@ public class ToxicityPond : ToxicityDamage
 
     private void Start()
     {
-        effectController.Scale = damageRange * 2;
+        effectController.Scale = damageRange;
         GiveDamageOnRange(damageRange);
     }
 

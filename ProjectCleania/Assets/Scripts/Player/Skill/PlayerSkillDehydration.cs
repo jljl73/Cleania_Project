@@ -32,7 +32,7 @@ public class PlayerSkillDehydration : PlayerSkill
         base.Start();
         animator.SetFloat("Dehydration multiplier", SpeedMultiplier);
 
-        effectController[0].Scale = damageRange;
+        effectController[0].Scale = damageRange * 0.5f;
     }
 
     public void UpdateSkillData()

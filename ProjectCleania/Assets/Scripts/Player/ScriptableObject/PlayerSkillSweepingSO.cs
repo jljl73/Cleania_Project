@@ -57,7 +57,7 @@ public class PlayerSkillSweepingSO : PlayerSKillIDSO
     public float StunTime = 2;
     public float GetStunTime() { return StunTime; }
 
-    [Header("쓸어담기 범위")]
+    [Header("쓸어담기 반경")]
     public float SweepRange = 2f;
     public float GetSweepRange() { return SweepRange; }
 }

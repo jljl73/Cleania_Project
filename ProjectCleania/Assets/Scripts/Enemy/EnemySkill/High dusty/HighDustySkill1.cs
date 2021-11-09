@@ -49,7 +49,8 @@ public class HighDustySkill1 : EnemySkill
         if (++skillCount == 3)
         {
             skillCount = 0;
-            base.AnimationActivate();
+            enemyMove.RunAway();
+            //base.AnimationActivate();
         }
     }
 

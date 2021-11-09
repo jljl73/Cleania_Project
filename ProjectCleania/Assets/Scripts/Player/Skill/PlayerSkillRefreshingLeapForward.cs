@@ -73,7 +73,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         attackArea.radius = 1.2f * smashRange;
         //attackArea.center = new Vector3(attackArea.center.x, attackArea.center.y, attackArea.center.z * smashRange);
         effectController[0].Scale = jumpEffectSize;
-        effectController[1].Scale = swingDownSize;
+        effectController[1].Scale = swingDownSize * 0.3333f;
         effectController[2].Scale = smashRange;
         // effectController[2].MovePosition(attackArea.center);
 

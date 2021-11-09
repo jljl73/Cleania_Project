@@ -24,6 +24,7 @@ public class Mine : DamagingProperty
 
     private void Start()
     {
+        bombObjectController.Scale = damageRange * 1.42857f;
         bombEffectController.Scale = damageRange;
         triggerCollider.radius = damageRange;
     }

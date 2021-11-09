@@ -65,11 +65,15 @@ public class PlayerSkillCleaningWindSO : PlayerSKillIDSO
     public float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
+    [Header("기모으기 이팩트 크기 반경")]
+    public float GatherEnergySize = 1f;
+    public float GetGatherEnergySize() { return GatherEnergySize; }
+
     [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     public float SmashDamageRate = 6f;
     public float GetSmashDamageRate() { return SmashDamageRate; }
 
-    [Header("내려치기 범위")]
+    [Header("내려치기 반경")]
     public float SmashRange = 2f;
     public float GetSmashRange() { return SmashRange; }
 
