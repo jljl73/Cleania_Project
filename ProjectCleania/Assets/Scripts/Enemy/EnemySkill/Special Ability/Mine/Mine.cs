@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mine : DamagingProperty
 {
-    Collider triggerCollider;
+    SphereCollider triggerCollider;
     public float ColliderEnableTime = 1;
 
     [SerializeField]
@@ -15,21 +15,29 @@ public class Mine : DamagingProperty
 
     private void Awake()
     {
-        triggerCollider = GetComponent<Collider>();
+        triggerCollider = GetComponent<SphereCollider>();
         if (triggerCollider == null)
             throw new System.Exception("ContactOnceDamage doesnt have collider");
 
         Invoke("EnableCollider", ColliderEnableTime);
     }
 
+    private void Start()
+    {
+        bombEffectController.Scale = damageRange;
+        triggerCollider.radius = damageRange;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        if (!isSetUp) return;
+
         if (other.CompareTag("Player"))
         {
-            print("Áö·Ú Æø¹ß!!");
-            //AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
-            //if (playerAbil != null)
-            //    playerAbil.AttackedBy(OwnerAbility, DamageScale);
+            AbilityStatus playerAbil = other.gameObject.GetComponent<AbilityStatus>();
+            if (playerAbil != null)
+                playerAbil.AttackedBy(ownerAbility, damageScale);
+
             bombEffectController.PlaySkillEffect();
             bombObjectController.StopSKillEffect();
 

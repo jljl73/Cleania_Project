@@ -7,6 +7,14 @@ public class StormWind : DamagingProperty
     GameObject rotatePivot;
     float rotateSpeed;
 
+    [SerializeField]
+    SkillEffectController effectController;
+
+    private void Start()
+    {
+        effectController.Scale = damageRange;
+    }
+
     private void Update()
     {
         MakeWindRotateAroundMe();
@@ -30,7 +38,7 @@ public class StormWind : DamagingProperty
         {
             AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
             if (abil != null)
-                abil.AttackedBy(OwnerAbility, DamageScale * Time.deltaTime);
+                abil.AttackedBy(ownerAbility, damageScale * Time.deltaTime);
         }
     }
 }

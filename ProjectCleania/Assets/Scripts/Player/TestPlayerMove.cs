@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class TestPlayerMove : MonoBehaviour 
+public class TestPlayerMove : MonoBehaviour, IStunned
 {
     [Header("움직임 사용 스킬")]
     public PlayerSkillRefreshingLeapForward LeapForwardSkill;
@@ -26,6 +26,7 @@ public class TestPlayerMove : MonoBehaviour
     float speed = 1.0f;
 
     bool isOrderedToMove = false;
+    bool isStunned = false;
 
     private void Awake()
     {
@@ -40,7 +41,7 @@ public class TestPlayerMove : MonoBehaviour
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
             player.stateMachine.CompareState(StateMachine.enumState.Attacking)) return;
 
-        if (!isOrderedToMove)
+        if (!isOrderedToMove || isStunned)
         {
             targetPos = transform.position;
             return;
@@ -144,17 +145,31 @@ public class TestPlayerMove : MonoBehaviour
         RaycastHit rayhitInfo;
         if (CanBeTriggerd("Ground", out rayhitInfo))
         {
-            player.gameObject.transform.LookAt(rayhitInfo.point);
+            print("ImmediateLookAtMouse it's ground!");
+            Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
+            player.gameObject.transform.LookAt(lookAtPointOnSameY);
+            //mousePos = lookAtPointOnSameY;
         }
     }
+
+    //Vector3 mousePos = Vector3.zero;
+    //Ray mouseRay;
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(mousePos, 2);
+    //    Gizmos.DrawRay(Camera.main.ScreenPointToRay(Input.mousePosition));
+    //}
 
     bool CanBeTriggerd(string collideTag, out RaycastHit rayhitInfo)
     {
         bool result = false;
 
+        int layerMask = 0;
+        layerMask = 1 << 5 | 1 << 7;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit raycastHit;
-        if (Physics.Raycast(ray, out raycastHit))
+        if (Physics.Raycast(ray, out raycastHit, 500.0f, layerMask))
         {
             if (raycastHit.collider.CompareTag(collideTag))
                 result = true;
@@ -180,5 +195,24 @@ public class TestPlayerMove : MonoBehaviour
         float dist = LeapForwardSkill.GetJumpDistance();
         isOrderedToMove = true;
         targetPos = transform.position + transform.forward * dist;
+    }
+
+    public void Stunned(bool isStunned, float stunnedTime)
+    {
+        if (isStunned)
+        {
+            StartCoroutine(StunnedFor(stunnedTime));
+        }
+        else
+        {
+            isStunned = false;
+        }
+    }
+
+    public IEnumerator StunnedFor(float time)
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(time);
+        isStunned = false;
     }
 }

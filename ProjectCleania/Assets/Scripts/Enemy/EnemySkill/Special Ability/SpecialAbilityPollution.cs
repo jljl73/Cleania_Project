@@ -6,6 +6,7 @@ public class SpecialAbilityPollution : EnemySkill
 {
     float pollutionDuration = 3;
     float damageRate;
+    float damageRange;
 
     bool abilityActivate = false;
 
@@ -34,8 +35,9 @@ public class SpecialAbilityPollution : EnemySkill
     {
         if (!abilityActivate) return;
         GameObject obj = Instantiate(pollutionPrefab, transform.position, transform.rotation);
-        ContactStayDamage contactStayDamage = obj.GetComponent<ContactStayDamage>();
+        Pollution contactStayDamage = obj.GetComponent<Pollution>();
         contactStayDamage.SetUp(OwnerAbilityStatus, damageRate);
+        contactStayDamage.Resize(damageRange);
 
         Destroy(obj, pollutionDuration);
     }
@@ -48,6 +50,7 @@ public class SpecialAbilityPollution : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageRate = skillData.GetDamageRate();
+        damageRange = skillData.GetDamageRange();
         pollutionDuration = skillData.GetDuration();
     }
 

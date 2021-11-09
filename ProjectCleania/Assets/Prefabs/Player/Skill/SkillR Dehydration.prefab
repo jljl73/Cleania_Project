@@ -47,11 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  ID: 1
+  OwnerAbilityStatus: {fileID: 0}
   effectController:
   - {fileID: 1937970725370664227}
   SkillData: {fileID: 11400000, guid: 121871b9bfe966541b26c712990bf2a7, type: 2}
-  abilityStatus: {fileID: 0}
   skillScale: 3
 --- !u!114 &1937970725370664227
 MonoBehaviour:
@@ -65,8 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleObject: {fileID: 4667555280748868116}
-  Scale: 0.1
+  ParticleObject: {fileID: 1380775491731411335}
+  scale: 1
+  IsEnabledOnAwake: 0
 --- !u!135 &2652734453603319006
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -75,10 +75,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380775491731411335}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4667555280748992850
 PrefabInstance:
@@ -409,11 +409,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f397486307d568448af4fe267a74d690, type: 3}
---- !u!1 &4667555280748868116 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 142150, guid: f397486307d568448af4fe267a74d690, type: 3}
-  m_PrefabInstance: {fileID: 4667555280748992850}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4667555280749108136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 410362, guid: f397486307d568448af4fe267a74d690, type: 3}

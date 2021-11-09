@@ -103,7 +103,7 @@ CapsuleCollider:
   m_Radius: 3
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1, z: 2.7}
 --- !u!114 &5604432946984027590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,14 +117,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  ID: 5
+  OwnerAbilityStatus: {fileID: 0}
   effectController:
   - {fileID: 6844621399097575717}
   - {fileID: 1409656770682960511}
   - {fileID: 1557461521805866206}
   SkillData: {fileID: 11400000, guid: a222e10aedf6be54899025fc9cc48e07, type: 2}
-  abilityStatus: {fileID: 0}
-  playerMovement: {fileID: 0}
 --- !u!114 &6844621399097575717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 918181517589518701}
-  Scale: 1
+  scale: 1
+  IsEnabledOnAwake: 0
 --- !u!114 &1409656770682960511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 8225589972182732374}
-  Scale: 1
+  scale: 1
+  IsEnabledOnAwake: 0
 --- !u!114 &1557461521805866206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 8365779631565054806}
-  Scale: 1
+  scale: 1
+  IsEnabledOnAwake: 0
 --- !u!1001 &918181517589619087
 PrefabInstance:
   m_ObjectHideFlags: 0

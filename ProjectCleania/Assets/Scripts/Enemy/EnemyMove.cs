@@ -43,7 +43,7 @@ public class EnemyMove : MonoBehaviour, IStunned
     {
         StartCoroutine(SetPositionToTarget());
 
-        myEnemy.OnStunned += Stunned;
+        
     }
 
     void FixedUpdate()
@@ -222,7 +222,7 @@ public class EnemyMove : MonoBehaviour, IStunned
     {
         if (isStunned)
         {
-            StartCoroutine("StunnedFor", stunnedTime);
+            StartCoroutine(StunnedFor(stunnedTime));
         }
         else
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public class Turret : DamagingProperty
 {
     [SerializeField]
     GameObject projectilePrefab;
@@ -14,12 +14,14 @@ public class Turret : MonoBehaviour
 
     bool isWaitingForShoot = false;
 
-    public void SetUp(GameObject targetObj, float shotInterval, float shotRange, float projectileSpeed)
+    public void SetUp(GameObject targetObj, float shotInterval, float shotRange, float projectileSpeed, AbilityStatus abil, float damageScale)
     {
         this.targetObj = targetObj;
         this.shotInterval = shotInterval;
         this.shotRange = shotRange;
         this.projectileSpeed = projectileSpeed;
+
+        base.SetUp(abil, damageScale);
     }
 
     private void Update()
@@ -43,7 +45,7 @@ public class Turret : MonoBehaviour
 
         TurretProjectile proj = obj.GetComponent<TurretProjectile>();
         if (proj != null)
-            proj.SetUp(projectileSpeed);
+            proj.SetUp(projectileSpeed, ownerAbility, damageScale);
 
         Destroy(obj, 8);
 

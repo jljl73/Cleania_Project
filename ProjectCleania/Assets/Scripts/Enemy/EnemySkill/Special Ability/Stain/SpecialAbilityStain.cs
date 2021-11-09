@@ -11,6 +11,8 @@ public class SpecialAbilityStain : EnemySkill
     float stainCount;
     float stopTime;
     float projFlightTime;
+    float destroyAttackRange;
+    float destroyAttackScale;
 
     public GameObject StainProjectilePrefab;
 
@@ -47,6 +49,8 @@ public class SpecialAbilityStain : EnemySkill
         stainCount = skillData.GetCount();
         stopTime = skillData.GetStopTime();
         projFlightTime = skillData.GetProjFlightTime();
+        destroyAttackRange = skillData.GetDestroyAttackRange();
+        destroyAttackScale = skillData.GetDestroyAttackScale();
     }
 
     public override void AnimationActivate()
@@ -98,8 +102,8 @@ public class SpecialAbilityStain : EnemySkill
         {
             Vector3 targetPos = GetRandomPointInCircle(transform.position, stainAvailableAreaRadius);
             rigidbody.velocity = CaculateVelocity(targetPos, transform.position, projFlightTime);
-            stainProj.SetUp(stopTime, projFlightTime * 0.5f);
-            stainProj.SetUp(OwnerAbilityStatus, damageScale);
+            stainProj.SetUp(stopTime, projFlightTime * 0.5f, destroyAttackRange, destroyAttackScale, OwnerAbilityStatus, damageScale);
+            stainProj.Resize(stainRadius);
         }
     }
 

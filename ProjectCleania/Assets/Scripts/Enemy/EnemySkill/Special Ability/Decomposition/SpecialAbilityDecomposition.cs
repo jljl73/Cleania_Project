@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpecialAbilityDecomposition : EnemySkill
 {
     float damageScale = 10;
+    float objectSize;
     float CreationRadius;           
     float existTime = 7f;
     float speed = 0.5f;
@@ -43,6 +44,7 @@ public class SpecialAbilityDecomposition : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
+        objectSize = skillData.GetObjectSize();
         CreationRadius = skillData.GetCreationRadius();
         existTime = skillData.GetExistTime();
         speed = skillData.GetSpeed();
@@ -70,8 +72,8 @@ public class SpecialAbilityDecomposition : EnemySkill
         Decomposition decomposition = initiatedObj.GetComponent<Decomposition>();
         if (decomposition != null)
         {
-            decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject);
-            decomposition.SetUp(OwnerAbilityStatus, damageScale);
+            decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject, OwnerAbilityStatus, damageScale);
+            decomposition.Resize(objectSize);
         }
     }
 

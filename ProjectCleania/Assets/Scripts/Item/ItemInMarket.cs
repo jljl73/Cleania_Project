@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class ItemInMarket : MonoBehaviour
 {
-    ItemInstance itemInstance;
+    public ItemInstance itemInstance
+    { private set; get; }
 
     [SerializeField]
     Text price;
@@ -13,6 +14,8 @@ public class ItemInMarket : MonoBehaviour
     Image image;
     [SerializeField]
     Text itemName;
+    [SerializeField]
+    Toggle toggle;
 
     public void Initialize(ItemInstance itemInstance)
     {
@@ -20,5 +23,6 @@ public class ItemInMarket : MonoBehaviour
         price.text = itemInstance.SO.Price.ToString();
         itemName.text = itemInstance.SO.ItemName;
         image.sprite = itemInstance.SO.ItemImage;
+        toggle.group = GetComponentInParent<ToggleGroup>();
     }
 }

@@ -10,6 +10,7 @@ public class SpecialAbilitySeal : EnemySkill
     float radius;
     float CreationRadius;           // 생성 반경
     float pondCount;
+    float silenceTime;
     // 침묵 상태 이상
 
     public GameObject SealPond;
@@ -46,6 +47,7 @@ public class SpecialAbilitySeal : EnemySkill
         radius = skillData.GetRadius();
         CreationRadius = skillData.GetCreationRadius();
         pondCount = skillData.GetCount();
+        silenceTime = skillData.GetSilenceTime();
     }
 
     public override void AnimationActivate()
@@ -66,7 +68,11 @@ public class SpecialAbilitySeal : EnemySkill
         {
             GameObject initiatedPond = Instantiate(SealPond, transform.position, transform.rotation);
             initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            PondDamage pondDamage = SealPond.GetComponent<PondDamage>();
+            SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
+            print("0");
+            pondDamage.SetUp(OwnerAbilityStatus, damageScale);
+            pondDamage.SetUp(duration, silenceTime, radius);
+            print("1");
             //if (pondDamage != null)
             //{
             //    print("Pond not null");
@@ -78,8 +84,6 @@ public class SpecialAbilitySeal : EnemySkill
             //}
             //else
             //    print("Pond null");
-
-            Destroy(initiatedPond, duration);
         }
     }
 

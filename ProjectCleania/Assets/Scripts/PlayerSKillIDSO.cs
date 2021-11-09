@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerSKillIDSO : SkillIDSO
 {
+    public string SkillName;
+    public string GetSkillName() { return SkillName; }
+
     public enum PlayerType
     {
         Blue = 1
@@ -41,4 +44,16 @@ public class PlayerSKillIDSO : SkillIDSO
             return int.Parse(temp);
         }
     }
+
+    [System.Serializable]
+    public struct Rune
+    {
+        public Sprite sprite;
+        public string RuneName;
+        public string Details;
+    }
+
+    [SerializeField]
+    Rune[] runes;
+    public Rune[] Runes { get { return runes; } }
 }

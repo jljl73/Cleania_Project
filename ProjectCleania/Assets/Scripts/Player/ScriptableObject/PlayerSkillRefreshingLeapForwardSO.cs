@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSkillRefreshingLeapForward", menuName = "Scriptable Object/PlayerSkill/PlayerSkillRefreshingLeapForward")]
 public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
 {
-    public string SkillName;
-    public string GetSkillName() { return SkillName; }
+    
 
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
@@ -70,6 +69,10 @@ public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
     public float OtherSpeedMultiplier = 1.0f;
     public float GetOtherSpeedMultiplier() { return OtherSpeedMultiplier; }
 
+    [Header("도약 이팩트 크기")]
+    public float JumpEffectSize = 1f;
+    public float GetJumpEffectSize() { return JumpEffectSize; }
+
     [Header("내려치기 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     public float SmashDamageRate = 5.4f;
     public float GetSmashDamageRate() { return SmashDamageRate; }
@@ -77,6 +80,10 @@ public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
     [Header("내려치기 범위")]
     public float SmashRange = 2f;
     public float GetSmashRange() { return SmashRange; }
+
+    [Header("칼 휘두름 크기")]
+    public float SwingDownSize = 1f;
+    public float GetSwingDownSize() { return SwingDownSize; }
 
     [Header("경직 시간")]
     public float StunTime = 1.5f;

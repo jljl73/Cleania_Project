@@ -67,7 +67,7 @@ public class SpecialAbilityToxicity : EnemySkill
         {
             GameObject initiatedPond = Instantiate(DustPond, transform.position, transform.rotation);
             initiatedPond.transform.position += (initiatedPond.transform.forward * distanceInterval * i + initiatedPond.transform.up * 0.2f);
-            PondDamage pondDamage = DustPond.GetComponent<PondDamage>();
+            ToxicityPond pondDamage = initiatedPond.GetComponent<ToxicityPond>();
             if (pondDamage != null)
             {
                 print("Pond not null");
@@ -75,7 +75,7 @@ public class SpecialAbilityToxicity : EnemySkill
                     print("enemy.abilityStatus is null");
                 else
                     print("enemy.abilityStatus not null");
-                pondDamage.SetProperty(OwnerAbilityStatus, damageScale);
+                pondDamage.SetUp(OwnerAbilityStatus, damageScale, radius);
             }
             else
                 print("Pond null");

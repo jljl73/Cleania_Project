@@ -13,6 +13,10 @@ public class SpecialAbilityDecompositionSO : EnemySkillSO
     public float CreationRadius;
     public float GetCreationRadius() { return CreationRadius; }
 
+    [Header("¾ó·è Å©±â")]
+    public float ObjectSize = 1f;
+    public float GetObjectSize() { return ObjectSize; }
+
     [Header("¾ó·è ¼Óµµ")]
     public float Speed;
     public float GetSpeed() { return Speed; }

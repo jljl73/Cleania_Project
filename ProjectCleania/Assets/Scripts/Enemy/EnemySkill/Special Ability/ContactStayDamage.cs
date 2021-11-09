@@ -10,7 +10,7 @@ public class ContactStayDamage : DamagingProperty
         {
             AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
             if (abil != null)
-                abil.AttackedBy(OwnerAbility, DamageScale * Time.deltaTime);
+                abil.AttackedBy(ownerAbility, damageScale * Time.deltaTime);
         }
     }
 }

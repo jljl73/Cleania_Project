@@ -8,6 +8,12 @@ public class NPCTrigger : MonoBehaviour
     public UIManager uiManager;
     List<GameObject> npcs = new List<GameObject>();
 
+    void Start()
+    {
+        dialogManager = GameManager.Instance.MainCanvas.GetComponentInChildren<DialogManager>();
+        uiManager = GameManager.Instance.uiManager;
+    }
+
     GameObject npc;
     void Update()
     {

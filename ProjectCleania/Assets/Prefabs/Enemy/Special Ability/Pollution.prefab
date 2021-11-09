@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5766955881765969600}
-  - component: {fileID: 7622269451923902454}
+  - component: {fileID: 751853115834007345}
   - component: {fileID: 4446815041124303252}
   - component: {fileID: 6645628908312161054}
   m_Layer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7622269451923902454
+--- !u!114 &751853115834007345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +43,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4705225340911326131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5b589762f6e1e46bf878d953316c40, type: 3}
+  m_Script: {fileID: 11500000, guid: 8272e53282a42914e86f535d05382281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectController: {fileID: 6645628908312161054}
 --- !u!136 &4446815041124303252
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -56,7 +57,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 3
   m_Height: 0.72
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -72,8 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleObject: {fileID: 5358548788717100313}
-  Scale: 0.25
+  ParticleObject: {fileID: 4705225340911326131}
+  scale: 0.25
   IsEnabledOnAwake: 1
 --- !u!1001 &5139718428518707992
 PrefabInstance:
@@ -82,6 +83,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5766955881765969600}
     m_Modifications:
+    - target: {fileID: 940848896015554681, guid: 02f1987dd3808684bab33257694e438c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 940848896695732269, guid: 02f1987dd3808684bab33257694e438c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -126,17 +131,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 940848897039740788, guid: 02f1987dd3808684bab33257694e438c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940848897039740788, guid: 02f1987dd3808684bab33257694e438c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940848897039740789, guid: 02f1987dd3808684bab33257694e438c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 940848897129684775, guid: 02f1987dd3808684bab33257694e438c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 940848897695673857, guid: 02f1987dd3808684bab33257694e438c, type: 3}
       propertyPath: m_Name
       value: VFX_Shock_BuFF 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02f1987dd3808684bab33257694e438c, type: 3}
---- !u!1 &5358548788717100313 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 940848897695673857, guid: 02f1987dd3808684bab33257694e438c, type: 3}
-  m_PrefabInstance: {fileID: 5139718428518707992}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5358548790137387829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 940848896695732269, guid: 02f1987dd3808684bab33257694e438c, type: 3}

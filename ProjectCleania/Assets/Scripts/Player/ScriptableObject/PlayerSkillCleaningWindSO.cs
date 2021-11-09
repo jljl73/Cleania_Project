@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSkillCleaningWind", menuName = "Scriptable Object/PlayerSkill/PlayerSkillCleaningWind")]
 public class PlayerSkillCleaningWindSO : PlayerSKillIDSO
 {
-    public string SkillName;
-    public string GetSkillName() { return SkillName; }
+    
 
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
@@ -30,13 +29,13 @@ public class PlayerSkillCleaningWindSO : PlayerSKillIDSO
         string smashRange = SmashRange.ToString();
         tempString = tempString.Replace("SmashRange", smashRange);
 
-        string projectileDuration = ProjectileDuration.ToString();
+        string projectileDuration = Duration.ToString();
         tempString = tempString.Replace("ProjectileDuration", projectileDuration);
 
-        string projectileCount = ProjectileCount.ToString();
+        string projectileCount = Count.ToString();
         tempString = tempString.Replace("ProjectileCount", projectileCount);
 
-        string projectileDamageRatePerSec = (ProjectileDamageRatePerSec * 100).ToString();
+        string projectileDamageRatePerSec = (ProjectileDamageScale * 100).ToString();
         tempString = tempString.Replace("ProjectileDamageRatePerSec", projectileDamageRatePerSec);
 
         string maxHitPerSameObject = MaxHitPerSameObject.ToString();
@@ -79,16 +78,20 @@ public class PlayerSkillCleaningWindSO : PlayerSKillIDSO
     public float GetProjectilePositionY() { return ProjectilePositionY; }
 
     [Header("회오리 유지 시간")]
-    public float ProjectileDuration = 2f;
-    public float GetProjectileDuration() { return ProjectileDuration; }
+    public float Duration = 2f;
+    public float GetDuration() { return Duration; }
 
     [Header("회오리 갈래 갯수")]
-    public int ProjectileCount = 3;
-    public int GetProjectileCount() { return ProjectileCount; }
+    public int Count = 3;
+    public int GetCount() { return Count; }
+
+    [Header("회오리 크기")]
+    public int ProjectileSize = 1;
+    public int GetProjectileSize() { return ProjectileSize; }
 
     [Header("초당 회오리 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
-    public float ProjectileDamageRatePerSec = 5.4f;
-    public float GetProjectileDamageRatePerSec() { return ProjectileDamageRatePerSec; }
+    public float ProjectileDamageScale = 5.4f;
+    public float GetProjectileDamageScale() { return ProjectileDamageScale; }
 
     [Header("같은 피격체에 대한 최대 피해 적용 횟수")]
     public int MaxHitPerSameObject = 2;
