@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class NPCMarket : MonoBehaviour
 {
     public ToggleGroup toggleGroup;
-    public GameObject[] pages;
+    public ToggleGroup[] pages;
     public GameObject prefab_Item;
+    [SerializeField]
+    ScrollRect pageScroll;
 
     List<ItemInMarket> items = new List<ItemInMarket>();
     Queue<ItemInMarket> soldItems = new Queue<ItemInMarket>();
@@ -17,11 +19,12 @@ public class NPCMarket : MonoBehaviour
         for (int i = 0; i < 5; ++i)
         {
             ItemInMarket newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-            newItem.Initialize(ItemInstance.Instantiate_RandomByRank(ItemSO.enumRank.Common));
+            newItem.Initialize(ItemInstance.Instantiate_RandomByRank(ItemSO.enumRank.Common), pages[0]);
             ItemInMarket newItem2 = Instantiate(prefab_Item, pages[1].transform).GetComponent<ItemInMarket>();
-            newItem2.Initialize(ItemInstance.Instantiate_RandomByRank(ItemSO.enumRank.Common));
+            newItem2.Initialize(ItemInstance.Instantiate_RandomByRank(ItemSO.enumRank.Common), pages[1]);
         }
 
+        toggleGroup = pages[0];
         ShowPage(0);
     }
 
@@ -29,10 +32,11 @@ public class NPCMarket : MonoBehaviour
     public void ShowPage(int index)
     {
         for(int i = 0; i < pages.Length; ++i)
-            pages[i].SetActive(false);
+            pages[i].gameObject.SetActive(false);
 
-        pages[index].SetActive(true);
-        toggleGroup = pages[index].GetComponent<ToggleGroup>();
+        pages[index].gameObject.SetActive(true);
+        toggleGroup = pages[index];
+        pageScroll.content = pages[index].GetComponent<RectTransform>();
     }
 
     public void Buy()
@@ -80,19 +84,15 @@ public class NPCMarket : MonoBehaviour
         
     }
 
-    public void SelectItem(ItemInMarket item)
-    {
-        items.Add(item);
-    }
-
     public void SellItem(ItemController_v2 controller)
     {
         ShowPage(2);
         ItemInMarket newItem = Instantiate(prefab_Item, pages[2].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(controller.itemInstance);
+        newItem.Initialize(controller.itemInstance, pages[2]);
         soldItems.Enqueue(newItem);
 
         GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(controller.itemInstance.SO.Price);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Remove(controller.prevIndex);
         ItemController_v2.Delete(controller);
 
         if (soldItems.Count >= 10)

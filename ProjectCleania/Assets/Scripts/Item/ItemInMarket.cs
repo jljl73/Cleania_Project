@@ -17,12 +17,12 @@ public class ItemInMarket : MonoBehaviour
     [SerializeField]
     Toggle toggle;
 
-    public void Initialize(ItemInstance itemInstance)
+    public void Initialize(ItemInstance itemInstance, ToggleGroup toggleGroup)
     {
         this.itemInstance = itemInstance;
         price.text = itemInstance.SO.Price.ToString();
         itemName.text = itemInstance.SO.ItemName;
         image.sprite = itemInstance.SO.ItemImage;
-        toggle.group = GetComponentInParent<ToggleGroup>();
+        toggle.group = toggleGroup;
     }
 }
