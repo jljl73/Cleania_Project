@@ -12,11 +12,13 @@ public class MouseController : MonoBehaviour
     PointerEventData pointerEventData;
     EventSystem eventSystem;
 
-    enum STATE { Default, Enemy, Entrance, Loot, BlackSmith, Merchant, Storage, Talk, Activate };
+    enum CURSORSTATE { Default, Enemy, Entrance, Loot, BlackSmith, Merchant, Storage, Talk, Activate };
     [SerializeField]
     Texture2D[] cursorTexture;
 
     StringBuilder sb = new StringBuilder();
+    [SerializeField]
+    GameObject iconToolTip;
     [SerializeField]
     GameObject itemToolTip;
     [SerializeField]
@@ -28,56 +30,46 @@ public class MouseController : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI itemOptions;
 
-    STATE state = STATE.Default;
+    CURSORSTATE cursorState = CURSORSTATE.Default;
     void Start()
     {
         raycaster = GetComponent<GraphicRaycaster>();
         eventSystem = GetComponent<EventSystem>();
-        ChangeCursor(STATE.Default);
+        ChangeCursor(CURSORSTATE.Default);
     }
 
     void Update()
     {
         // UI 마우스
-        state = STATE.Default;
+        cursorState = CURSORSTATE.Default;
+        itemToolTip.SetActive(false);
+        iconToolTip.SetActive(false);
+
         if (EventSystem.current.IsPointerOverGameObject(-1))
         {
             List<RaycastResult> results = new List<RaycastResult>();
             pointerEventData = new PointerEventData(eventSystem);
             pointerEventData.position = Input.mousePosition;
             raycaster.Raycast(pointerEventData, results);
-            itemToolTip.SetActive(false);
-            
+
             for (int i = 0; i < results.Count; ++i)
             {
                 if (results[i].gameObject.CompareTag("Item"))
                 {
                     itemToolTip.SetActive(true);
                     itemToolTip.transform.position = Input.mousePosition;
-                    SetItemTip(results[i].gameObject);
-                    switch (GameManager.Instance.uiManager.GetCurrentNPC())
-                    {
-
-                        case NPC.TYPE.Repair:
-                            state = STATE.BlackSmith;
-                            break;
-                        case NPC.TYPE.Market:
-                            state = STATE.Merchant;
-                            break;
-                        case NPC.TYPE.Storage:
-                            state = STATE.Storage;
-                            break;
-                        case NPC.TYPE.Portal:
-                            state = STATE.Entrance;
-                            break;
-                        default:
-                            state = STATE.Activate;
-                            break;
-                    }
+                    SetItemTip(results[i].gameObject, out cursorState);
+                    
+                }
+                else if(results[i].gameObject.CompareTag("Icon"))
+                {
+                    iconToolTip.SetActive(true);
+                    iconToolTip.transform.position = Input.mousePosition;
+                    SetIconTip(results[i].gameObject);
                 }
                 else if(results[i].gameObject.TryGetComponent<Button>(out Button button))
                 {
-                    state = STATE.Activate;
+                    cursorState = CURSORSTATE.Activate;
                 }
             }
         }
@@ -93,17 +85,36 @@ public class MouseController : MonoBehaviour
             }
         }
 
-        ChangeCursor(state);
+        ChangeCursor(cursorState);
     }
 
-    void ChangeCursor(STATE target)
+    void ChangeCursor(CURSORSTATE target)
     { 
         Cursor.SetCursor(cursorTexture[(int)target], Vector2.zero, CursorMode.Auto);
     }
 
-    void SetItemTip(GameObject item)
+    void SetItemTip(GameObject item, out CURSORSTATE state)
     {
-        ItemSO itemSO = item.GetComponent<UI_ItemController>().itemInstance.SO;
+        switch (GameManager.Instance.uiManager.GetCurrentNPC())
+        {
+            case NPC.TYPE.Repair:
+                state = CURSORSTATE.BlackSmith;
+                break;
+            case NPC.TYPE.Market:
+                state = CURSORSTATE.Merchant;
+                break;
+            case NPC.TYPE.Storage:
+                state = CURSORSTATE.Storage;
+                break;
+            case NPC.TYPE.Portal:
+                state = CURSORSTATE.Entrance;
+                break;
+            default:
+                state = CURSORSTATE.Activate;
+                break;
+        }
+
+        ItemSO itemSO = item.GetComponent<ItemController_v2>().itemInstance.SO;
 
         itemName.text = itemSO.ItemName;
         sb.Clear();
@@ -113,7 +124,7 @@ public class MouseController : MonoBehaviour
                 sb.Append("<color=white>");
                 break;
             case ItemSO.enumRank.Rare:
-                sb.Append("<color=blue>");
+                sb.Append("<color=skyblue>");
                 break;
             case ItemSO.enumRank.Legendary:
                 sb.Append("<color=yellow>");
@@ -124,12 +135,23 @@ public class MouseController : MonoBehaviour
         itemRank.text = sb.ToString();
         itemDetails.text = itemSO.ToolTip;
 
+
+        if (!(item.GetComponent<ItemController_v2>().itemInstance is ItemInstance_Equipment))
+        {
+            itemOptions.gameObject.SetActive(false);
+            return;
+        }
+
+        ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.GetComponent<ItemController_v2>().itemInstance;
+
         sb.Clear();
+        sb.Append("내구도 (");
+        sb.Append(equipment.Durability);
+        sb.Append("/");
         sb.Append(itemSO.Durability);
-        sb.Append("\n");
+        sb.Append(")\n");
         //sb.Append()
 
-        ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.GetComponent<UI_ItemController>().itemInstance;
         foreach (var v in equipment.StaticProperties_ToString())
         {
             sb.Append(v);
@@ -146,7 +168,12 @@ public class MouseController : MonoBehaviour
         sb.Append(itemSO.Tradable ? "판매 가능\n" : "판매 불가능\n");
         sb.Append(itemSO.Droppable ? "버리기 가능\n" : "버리기 불가능\n");
 
+        itemOptions.gameObject.SetActive(true);
         itemOptions.text = sb.ToString();
     }
 
+    void SetIconTip(GameObject icon)
+    {
+        iconToolTip.GetComponentInChildren<TextMeshProUGUI>().text = icon.GetComponent<IconData>().GetString();
+    }
 }

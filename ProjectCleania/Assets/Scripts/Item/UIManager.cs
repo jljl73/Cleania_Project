@@ -10,16 +10,21 @@ public class UIManager : MonoBehaviour
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
-    public GameObject InventoryPanel;
+    [Header ("왼쪽 창")]
     public GameObject StoragePanel;
-    public GameObject SkillPanel;
-    public GameObject ExpandMapPanel;
     public GameObject QuestPanel;
-    public GameObject RepairPanel;
+    public GameObject SkillPanel;
     public GameObject MarketPanel;
-    public GameObject EnchantPanel;
+
+    [Header ("가운데 창")]
     public GameObject MenuPanel;
     public GameObject SettingPanel;
+    public GameObject RepairPanel;
+    public GameObject ExpandMapPanel;
+    public GameObject EnchantPanel;
+
+    [Header ("오른쪽 창")]
+    public GameObject InventoryPanel;
 
     List<GameObject> sPanels = new List<GameObject>();
 
@@ -36,22 +41,23 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            ShowInventory();
+            ShowInventory(!InventoryPanel.activeSelf);
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            ShowSkillPanel();
+            ShowSkillPanel(!SkillPanel.activeSelf);
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ExpandMapPanel.SetActive(!ExpandMapPanel.activeSelf);
+            
         }
 
         if (Input.GetKeyDown(KeyCode.J))
         {
-            ShowQuestPanel();
+            ShowQuestPanel(!QuestPanel.activeSelf);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -60,45 +66,67 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowInventory()
+    public void ShowInventory(bool bActive)
     {
-        ShowPanel(InventoryPanel.gameObject);
+        GameManager.Instance.soundPlayer.PlaySound("Inventory");
+        ShowPanel(InventoryPanel.gameObject, bActive);
     }
 
-    public void ShowSkillPanel()
+    public void ShowSkillPanel(bool bActive)
     {
-        ShowPanel(SkillPanel);
+        OffLeftPanel();
+        ShowPanel(SkillPanel, bActive);
     }
     
-    public void ShowQuestPanel()
+    public void ShowQuestPanel(bool bActive)
     {
-        ShowPanel(QuestPanel);
+        OffLeftPanel();
+        ShowPanel(QuestPanel, bActive);
     }
 
-    public void ShowRepairPanel()
+    public void ShowRepairPanel(bool bActive)
     {
-        ShowPanel(RepairPanel);
+        OffMiddlePanel();
+        if (bActive)
+            ShowPanel(InventoryPanel, true);
+        ShowPanel(RepairPanel, bActive);
     }
 
-    public void ShowMarketPanel()
+    public void ShowMarketPanel(bool bActive)
     {
-        ShowPanel(MarketPanel);
+        OffLeftPanel();
+        if (bActive)
+            ShowPanel(InventoryPanel, true);
+        ShowPanel(MarketPanel, bActive);
     }
     
-    public void ShowEnchantPanel()
+    public void ShowEnchantPanel(bool bActive)
     {
-        ShowPanel(EnchantPanel);
+        OffMiddlePanel();
+        if (bActive)
+            ShowPanel(InventoryPanel, true);
+        ShowPanel(EnchantPanel, bActive);
     }
 
-    public void ShowStoragePanel()
+    public void ShowStoragePanel(bool bActive)
     {
-        ShowPanel(StoragePanel.gameObject);
+        OffLeftPanel();
+        if (bActive)
+        {
+            ShowPanel(InventoryPanel, true);
+
+            GameManager.Instance.soundPlayer.PlaySound("Storage");
+
+        }
+        ShowPanel(StoragePanel.gameObject, bActive);
     }
 
-    public void ShowMenuPanel()
+    public void ShowMenuPanel(bool bActive)
     {
-        ShowPanel(MenuPanel);
+        OffMiddlePanel();
+        ShowPanel(MenuPanel, bActive);
     }
+   
 
     public NPC.TYPE GetCurrentNPC()
     {
@@ -108,6 +136,22 @@ public class UIManager : MonoBehaviour
         else if (RepairPanel.activeSelf) return NPC.TYPE.Repair;
         else return NPC.TYPE.None;
     }
+
+    void OffLeftPanel()
+    {
+        ShowPanel(StoragePanel, false);
+        ShowPanel(QuestPanel, false);
+        ShowPanel(SkillPanel, false);
+        ShowPanel(MarketPanel, false);
+    }
+
+    void OffMiddlePanel()
+    {
+        MenuPanel.SetActive(false);
+        EnchantPanel.SetActive(false);
+        RepairPanel.SetActive(false);
+    }
+
 
     void OffAllPanels()
     {
@@ -126,32 +170,31 @@ public class UIManager : MonoBehaviour
 
     public void OffNPCPanels()
     {
-        this.RepairPanel.SetActive(false);
-        this.MarketPanel.SetActive(false);
-        this.EnchantPanel.SetActive(false);
-        this.StoragePanel.gameObject.SetActive(false);
+        ShowPanel(RepairPanel, false);
+        ShowPanel(MarketPanel, false);
+        ShowPanel(EnchantPanel, false);
+        ShowPanel(StoragePanel, false);
     }
 
-    public void ShowPanel(GameObject panel)
+    public void ShowPanel(GameObject panel, bool bActive)
     {
-        Debug.Log(panel.name);
-        panel.SetActive(!panel.activeSelf);
+        panel.SetActive(bActive);
 
         if (panel.activeSelf)
         {
             panel.transform.SetAsLastSibling();
-            sPanels.Add(panel);
+            if (!sPanels.Contains(panel))
+                sPanels.Add(panel);
         }
-        else
+        else if(sPanels.Contains(panel))
             sPanels.Remove(panel);
-
     }
 
     void CloseLastPanel()
     {
         if (sPanels.Count > 0)
-            OffAllPanels();
+            ShowPanel(sPanels[sPanels.Count - 1], false);
         else
-            ShowPanel(MenuPanel);
+            ShowPanel(MenuPanel, true);
     }
 }

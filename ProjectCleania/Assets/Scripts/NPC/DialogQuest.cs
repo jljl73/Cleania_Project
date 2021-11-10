@@ -27,24 +27,6 @@ public class DialogQuest : Dialog
 
     public void ClearQuest(Quest quest)
     {
-        foreach (var q in quest.QuestRewards)
-        {
-            switch (q.type)
-            {
-                case QuestReward.TYPE.clean:    // ChangeStorage
-                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(q.value);
-                    break;
-                case QuestReward.TYPE.exp:
-                    ExpManager.Acquire(q.value);
-                    break;
-                case QuestReward.TYPE.item:
-                    ItemInstance itemInstance = ItemInstance.Instantiate(q.value);
-                    UI_ItemController newItem = UI_ItemController.New(itemInstance);
-                    newItem.MoveToInventory();
-                    break;
-            }
-        }
-        quest.GetReward();
-        GameManager.Instance.uiManager.GetComponent<QuestManager>().Clear(quest);
+        GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest);
     }
 }

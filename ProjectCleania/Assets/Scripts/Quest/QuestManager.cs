@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Text;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class QuestManager : MonoBehaviour
     public GameObject TextPrefab;
     public Text QuestName;
     public Text QuestDetail;
+    public TextMeshProUGUI RewardExp;
+    public TextMeshProUGUI RewardClean;
+    public TextMeshProUGUI RewardItem;
     public static Quest ClickedQuest = null;
     int prevIndex = -1;
 
@@ -69,15 +73,14 @@ public class QuestManager : MonoBehaviour
         assignQuests.Add(quest);
         quest.Assign();
         AddList(quest);
+        GameManager.Instance.soundPlayer.PlaySound("QuestAssign");
     }
     
     public void Acheive(QuestNeed.TYPE type, int target)
     {
-        Debug.Log(type.ToString() + " " + target);
         for (int i = 0; i < assignQuests.Count; ++i)
         {
             assignQuests[i].Achieve(type, target);
-            Debug.Log(type.ToString() + " " + target);
         }
         SetMiniList();
     }
@@ -135,18 +138,39 @@ public class QuestManager : MonoBehaviour
         SetMiniList();
     }
 
-    public void Clear(Quest quest)
+    public void Reward(Quest quest)
     {
+        quest.GetReward();
         clearQuests.Add(quest);
-        assignQuests.Remove(quest);
-        SetListHeight();
-        SetMiniList();
+        DeleteList(quest);
+
+        GameManager.Instance.soundPlayer.PlaySound("QuestReward");
+
+        // 보상받기
+        foreach (var q in quest.QuestRewards)
+        {
+            switch (q.type)
+            {
+                case QuestReward.TYPE.clean:
+                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
+                    break;
+                case QuestReward.TYPE.exp:
+                    ExpManager.Acquire(q.value);
+                    break;
+                case QuestReward.TYPE.item:
+                    ItemInstance itemInstance = ItemInstance.Instantiate(q.value);
+                    ItemController_v2 newItem = ItemController_v2.New(itemInstance, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
+                    newItem.PutInventory();
+                    break;
+            }
+        }
     }
 
     public void Abandon()
     {
         if (ClickedQuest == null) return;
 
+        if (ClickedQuest.State == Quest.STATE.Reward) return;
         DeleteList(ClickedQuest);
         ClickedQuest.Reset();
     }
