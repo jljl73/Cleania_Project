@@ -69,9 +69,8 @@ public class ReaperSkill3 : EnemySkill
 
     public override void Deactivate()
     {
-        if (col == null)
-            print("col is null!");
-        col.enabled = false;
+        if (col != null)
+            col.enabled = false;
         animator.SetBool("OnSkill", false);
     }
 }
