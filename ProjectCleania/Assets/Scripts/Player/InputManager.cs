@@ -64,6 +64,17 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1199);
         }
+
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    GameObject obj = ObjectPool.GetObject(ObjectPool.enumPoolObject.Pollution);
+        //    obj.transform.position = player.gameObject.transform.position + player.gameObject.transform.up;
+        //    obj.transform.rotation = player.gameObject.transform.rotation;
+
+        //    Pollution pollution = obj.GetComponent<Pollution>();
+        //    pollution.SetUp(3, player.abilityStatus, 1);
+        //    pollution.Resize(2);
+        //}
         // Å°º¸µå <<<<<
     }
 
