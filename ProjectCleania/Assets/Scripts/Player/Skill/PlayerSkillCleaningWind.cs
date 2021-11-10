@@ -10,6 +10,9 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     GameObject newProjectile;
 
+    float gatherEnergySize = 1f;
+    float GetGatherEnergySize() { return gatherEnergySize; }
+
     float smashDamageRate = 6f;
     public float GetSmashDamageRate() { return smashDamageRate; }
 
@@ -54,7 +57,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     void ResizeEffect()
     {
-        effectController[1].Scale = smashRange;
+        effectController[0].Scale = gatherEnergySize;
+        effectController[1].Scale = smashRange * 0.3333f;
     }
 
     public void UpdateSkillData()
@@ -69,6 +73,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
         SkillSlotDependency = SkillData.GetTriggerKey();
 
+        gatherEnergySize = SkillData.GetGatherEnergySize();
         smashDamageRate = SkillData.GetSmashDamageRate();
         smashRange = SkillData.GetSmashRange();
         projectilePositionY = SkillData.GetProjectilePositionY();

@@ -51,6 +51,6 @@ public class SealPond : DamagingProperty
         this.silenceTime = silenceTime;
         isSealPondSetUp = true;
 
-        effectController.Scale = skillRange;
+        effectController.Scale = skillRange * 0.6666f;
     }
 }

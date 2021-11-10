@@ -275,14 +275,15 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         }
         else
         {
-            animator.speed = 1;
+            animator.SetBool("Stun", false);
         }
     }
 
     public IEnumerator StunnedFor(float time)
     {
-        animator.speed = 0;
+        DeactivateAllSkill();
+        animator.SetBool("Stun", true);
         yield return new WaitForSeconds(time);
-        animator.speed = 1;
+        animator.SetBool("Stun", false);
     }
 }

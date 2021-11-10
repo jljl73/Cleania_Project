@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class NPCRepair : MonoBehaviour
 {
-    ItemController_v2 selectedItem;
+    UI_ItemController selectedItem;
     [SerializeField]
     Image backgroundImage;
     [SerializeField]
@@ -21,7 +21,7 @@ public class NPCRepair : MonoBehaviour
         selectedCost.text = "-";
     }
 
-    public void SelectItem(ItemController_v2 item)
+    public void SelectItem(UI_ItemController item)
     {
         if (item == null || item.itemInstance == null)
             return;
@@ -45,7 +45,7 @@ public class NPCRepair : MonoBehaviour
 
         ItemInstance_Equipment item = (ItemInstance_Equipment)selectedItem.itemInstance;
 
-        if (EquipmentDealer.TryRepair(item, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>()))
+        if (EquipmentDealer.TryRepair(item, GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>()))
         {   // repair success
             // tryRepair change money ammount
             SelectItem(selectedItem);   // refresh
@@ -80,11 +80,11 @@ public class NPCRepair : MonoBehaviour
             }
         }
 
-        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal)
+        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().Crystal)
         {
             foreach(var i in toRepair)
             {
-                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
+                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>());
             }
             SelectItem(selectedItem);   // refresh
             UI_MessageBox.Message("모든 장비의 수리를 완료하였습니다.");
@@ -110,11 +110,11 @@ public class NPCRepair : MonoBehaviour
             }
         }
 
-        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal)
+        if (totalCost <= GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().Crystal)
         {
             foreach (var i in toRepair)
             {
-                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
+                EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>());
             }
             SelectItem(selectedItem);   // refresh
             UI_MessageBox.Message("장착중인 장비의 수리를 완료하였습니다.");

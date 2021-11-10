@@ -20,7 +20,7 @@ public class NPCEnchant : MonoBehaviour
     [SerializeField]
     Text costPanel;
 
-    ItemController_v2 selectedItem;
+    UI_ItemController selectedItem;
     ItemInstance_Equipment equipment;
     Ability.DynamicOption[] optionDatas;
 
@@ -40,7 +40,7 @@ public class NPCEnchant : MonoBehaviour
         
     }
 
-    public void SelectItem(ItemController_v2 item)
+    public void SelectItem(UI_ItemController item)
     {
         if (!(item.itemInstance is ItemInstance_Equipment))
             return;
@@ -107,13 +107,13 @@ public class NPCEnchant : MonoBehaviour
             EnchantFail(FailCase.장비가_선택되지_않았습니다);
         else if (equipment.ChangedOption.Stat == Ability.Stat.EnumTotal || equipment.ChangedOption.How == Ability.Enhance.EnumTotal)
             EnchantFail(FailCase.옵션이_선택되지_않았습니다);
-        else if (GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().Crystal < enchantCost)
+        else if (GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().Crystal < enchantCost)
             EnchantFail(FailCase.클린이_부족합니다);
         else
         {
             if (EquipmentDealer.TryChangeDynamic(equipment, EquipmentDealer.CandidateDynamicOption(equipment)))
             {
-                GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(-enchantCost);
+                GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(-enchantCost);
                 SelectItem(selectedItem);   // refresh
             }
             else

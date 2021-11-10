@@ -11,9 +11,9 @@ public class DepositPanel : MonoBehaviour
     [SerializeField]
     Text afterText;
     [SerializeField]
-    Storage storage;
+    UI_Currency storage;
     [SerializeField]
-    Storage otherStorage;
+    UI_Currency otherStorage;
 
     StringBuilder sb = new StringBuilder();
     public string Title;

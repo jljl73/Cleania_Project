@@ -31,17 +31,9 @@ public class PlayerSkillSweeping : PlayerSkill
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
         animator.SetFloat("Sweeping multiplier", SpeedMultiplier);
 
-        ResizeEffect();
+        effectController[0].Scale = sweepRange * 0.3333f;
     }
-
-    void ResizeEffect()
-    {
-        for (int i = 0; i < effectController.Count; i++)
-        {
-            effectController[i].Scale = sweepRange;
-        }
-    }
-
+    
     public void UpdateSkillData()
     {
         ID = SkillData.ID;
