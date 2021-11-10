@@ -54,9 +54,13 @@ public class ItemInstance_Etc : ItemInstance, iSavedData
 
     void iSavedData.AfterLoad()
     {
+        //Debug.Log("Equipment al");
+        so = ItemSO.Load(id);
     }
 
     void iSavedData.BeforeSave()
     {
+        //Debug.Log("Equipment bs");
+        id = so.ID;
     }
 }
