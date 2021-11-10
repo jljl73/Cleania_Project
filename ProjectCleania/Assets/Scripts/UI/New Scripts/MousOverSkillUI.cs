@@ -30,28 +30,28 @@ public class MousOverSkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     void Awake()
     {
 
-        textSkillName.GetComponent<Text>().text = skillName;
-        textRuneName.GetComponent<Text>().text = runeName;
-        textResource.GetComponent<Text>().text = resource;
-        textDetails.GetComponent<Text>().text = detail;
-        textRuneDetail.GetComponent<Text>().text = runeDetail;
+        //textSkillName.GetComponent<Text>().text = skillName;
+        //textRuneName.GetComponent<Text>().text = runeName;
+        //textResource.GetComponent<Text>().text = resource;
+        //textDetails.GetComponent<Text>().text = detail;
+        //textRuneDetail.GetComponent<Text>().text = runeDetail;
 
-        if (!existRune)
-        {
-            textRuneName.gameObject.SetActive(false);
-            textRuneDetail.transform.parent.gameObject.SetActive(false);
-        }
+        //if (!existRune)
+        //{
+        //    textRuneName.gameObject.SetActive(false);
+        //    textRuneDetail.transform.parent.gameObject.SetActive(false);
+        //}
     }
 
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        detailPanel.SetActive(true);
+        //detailPanel.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        detailPanel.SetActive(false);
+        //detailPanel.SetActive(false);
     }
 
 
