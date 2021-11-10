@@ -83,5 +83,5 @@ public class ItemInstance
     protected int count;
     public int Count { get { return count; } }
     
-    public ItemStorage CurrentStorage;
+    public iItemStorage CurrentStorage;
 }

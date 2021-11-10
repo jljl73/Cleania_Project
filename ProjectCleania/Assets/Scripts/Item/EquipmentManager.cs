@@ -7,7 +7,7 @@ public class EquipmentManager : MonoBehaviour
 {
     ItemController_v2[] controllers;
     Equipable playerEquipable;
-    Storage inventoryComp;
+    UI_ItemContainer inventoryComp;
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class EquipmentManager : MonoBehaviour
     void Start()
     { 
         playerEquipable = GameManager.Instance.PlayerEquipments;
-        inventoryComp = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>();
+        inventoryComp = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>();
 
         Invoke("LoadItemControllers", 0.2f);
     }
@@ -37,7 +37,7 @@ public class EquipmentManager : MonoBehaviour
         {
             if (playerEquipable[(ItemInstance_Equipment.Type)i] != null)
             {
-                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], inventoryComp);
+                ItemController_v2 item = ItemController_v2.New(playerEquipable[(ItemInstance_Equipment.Type)i], inventoryComp.GetComponent<Storage>());
 
                 ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.itemInstance;
                 int ct = (int)equipment.EquipmentType;

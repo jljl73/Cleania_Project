@@ -31,16 +31,16 @@ public class DialogQuest : Dialog
         {
             switch (q.type)
             {
-                case QuestReward.TYPE.clean:
-                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
+                case QuestReward.TYPE.clean:    // ChangeStorage
+                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(q.value);
                     break;
                 case QuestReward.TYPE.exp:
                     ExpManager.Acquire(q.value);
                     break;
                 case QuestReward.TYPE.item:
                     ItemInstance itemInstance = ItemInstance.Instantiate(q.value);
-                    ItemController_v2 newItem = ItemController_v2.New(itemInstance, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
-                    newItem.PutInventory();
+                    UI_ItemController newItem = UI_ItemController.New(itemInstance);
+                    newItem.MoveToInventory();
                     break;
             }
         }

@@ -107,15 +107,6 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
             parentStroage = GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>();
     }
 
-    void MoveFromParentTo(Storage to)
-    {
-        if (prevIndex != -1)
-            parentStroage.Remove(prevIndex);
-        to.Add(this, out prevIndex);
-        if (prevIndex != -1)
-            parentStroage = to;
-    }
-
     public void MoveTo(Vector3 position)
     {
         prevPosition = position;
@@ -170,16 +161,18 @@ public class ItemController_v2 : MonoBehaviour, IPointerDownHandler, IDragHandle
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
 
-        if(uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
+        if (uiManager.GetCurrentNPC() == NPC.TYPE.Storage)
         {
             if (parentStroage == GameManager.Instance.uiManager.StoragePanel.GetComponent<Storage>())
                 MoveToInventory();
             else if (wearing == true)
-                GameManager.Instance.npcManager.equpiments.Equip(this);
+                //GameManager.Instance.npcManager.equpiments.Equip(this);
+                return;
             else
                 MoveToStorage();
         }
         else
-            GameManager.Instance.npcManager.Dosmth(this);
+            //GameManager.Instance.npcManager.Dosmth(this);
+            return;
     }
 }

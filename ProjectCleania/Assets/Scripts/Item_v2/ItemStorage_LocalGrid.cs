@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,25 +10,15 @@ using UnityEngine;
 /// 2. this[ItemInstance]<para></para>
 /// 3. this[int y, int x]<para></para>
 /// 4. Item<para></para>
-/// 5. foreach
 /// </summary>
 [System.Serializable]
-public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
+public partial class ItemStorage_LocalGrid : ItemStorage<Point>, iSavedData, IEnumerable
 {
     public ItemStorage_LocalGrid(Size size)
     {
         GridSize = size;
         _InitGrid();
     }
-
-    protected Dictionary<ItemInstance, Point> _items = new Dictionary<ItemInstance, Point>();
-    /// <summary>
-    ///  You can't change storage's items with this accessor.<para></para>
-    ///  use Add() and Remove() to modify storage.<para></para>
-    ///  * created for foreach, search access
-    /// </summary>
-    public Dictionary<ItemInstance, Point> Items
-    { get => new Dictionary<ItemInstance, Point>(_items); }
 
     int gridSizeX;
     int gridSizeY;
@@ -141,21 +132,6 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
 
         return true;
     }
-    void _Add(ItemInstance item, Point position)
-    {
-        if (item.CurrentStorage == null)
-            item.CurrentStorage = this;
-        else
-            Debug.Log("Logic error in ItemStorage_LocalGrid : _Add");
-
-        // reserve grid
-        for (int y = 0; y < item.SO.GridSize.Height; ++y)
-            for (int x = 0; x < item.SO.GridSize.Width; ++x)
-                _referenceGrid[y + position.Y][x + position.X] = item;
-
-        // add
-        _items.Add(item, position);
-    }
 
     /// <summary>
     /// Default Remove function.<para></para>
@@ -209,22 +185,7 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
 
         return true;
     }
-    void _Remove(ItemInstance item)
-    {
-        if (item.CurrentStorage == this)
-            item.CurrentStorage = null;
-        else
-            Debug.Log("Logic error in ItemStorage_LocalGrid : _Remove");
 
-        // checkout reserve
-        Point location = _items[item];
-        for (int y = 0; y < item.SO.GridSize.Height; ++y)
-            for (int x = 0; x < item.SO.GridSize.Width; ++x)
-                _referenceGrid[y + location.Y][x + location.X] = null;
-
-        // remove
-        _items.Remove(item);
-    }
 
 
     public bool SwapSameSize(ItemInstance a, ItemInstance b)
@@ -316,7 +277,53 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
     {
         return new Point(index % gridSizeX, index / gridSizeX);
     }
+}
 
+
+
+
+
+// private
+public partial class ItemStorage_LocalGrid
+{
+    void _Add(ItemInstance item, Point position)
+    {
+        if (item.CurrentStorage == null)
+            item.CurrentStorage = this;
+        else
+            Debug.Log("Logic error in ItemStorage_LocalGrid : _Add");
+
+        // reserve grid
+        for (int y = 0; y < item.SO.GridSize.Height; ++y)
+            for (int x = 0; x < item.SO.GridSize.Width; ++x)
+                _referenceGrid[y + position.Y][x + position.X] = item;
+
+        // add
+        _items.Add(item, position);
+
+        // Sync
+        OnSynchronize(this, SyncOperator.Add, position);
+    }
+
+    void _Remove(ItemInstance item)
+    {
+        if (item.CurrentStorage == this)
+            item.CurrentStorage = null;
+        else
+            Debug.Log("Logic error in ItemStorage_LocalGrid : _Remove");
+
+        // checkout reserve
+        Point location = _items[item];
+        for (int y = 0; y < item.SO.GridSize.Height; ++y)
+            for (int x = 0; x < item.SO.GridSize.Width; ++x)
+                _referenceGrid[y + location.Y][x + location.X] = null;
+
+        // remove
+        _items.Remove(item);
+
+        // Sync
+        OnSynchronize(this, SyncOperator.Remove, location);
+    }
 
     bool _IsAreaEmpty(Size area, Point location)
     {
@@ -339,7 +346,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
 
 
 
-        // SAVE DATA IMPLEMENTATION
+
+
+    // SAVE DATA IMPLEMENTATION
 
     [System.Serializable]
     public struct Gridded<T>
@@ -372,8 +381,9 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
         _InitGrid();
 
         _items.Clear();
+        OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
 
-        foreach(Gridded<ItemInstance_Etc> i in SD_etcs)
+        foreach (Gridded<ItemInstance_Etc> i in SD_etcs)
         {
             ((iSavedData)i.ItemData).AfterLoad();
             _Add(i.ItemData, i.Location);
@@ -404,7 +414,7 @@ public class ItemStorage_LocalGrid : ItemStorage, iSavedData, IEnumerable
                     break;
                 default:
                     SD_etcs.Add(new Gridded<ItemInstance_Etc>((ItemInstance_Etc)i.Key, i.Value));
-                       break;
+                    break;
             }
         }
     }

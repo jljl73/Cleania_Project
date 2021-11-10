@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SavedData : MonoBehaviour
+public partial class SavedData : MonoBehaviour
 {
     static private SavedData _singleton;
     static public SavedData Instance
@@ -35,23 +35,21 @@ public class SavedData : MonoBehaviour
 
 
     // save data 
-    [System.NonSerialized]
-    public ItemStorage_World Item_World = new ItemStorage_World();
+    public ItemStorage_Equipments Item_Equipments = new ItemStorage_Equipments();
     public ItemStorage_LocalGrid Item_Inventory = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 6));
     public ItemStorage_LocalGrid Item_Storage = new ItemStorage_LocalGrid(new System.Drawing.Size(10, 10));
-
-    Equipable equipable;
-    [SerializeField]
-    string equipableStirng;
-
-    AbilityStatus vulnerable;
-    //[SerializeField]
     [System.NonSerialized]
-    string vulnerableString;
+    public ItemStorage_World Item_World = new ItemStorage_World();
 
-    //[SerializeField]
-    [System.NonSerialized]
-    Vector3 playerPosition;
+
+    //AbilityStatus vulnerable;
+    ////[SerializeField]
+    //[System.NonSerialized]
+    //string vulnerableString;
+
+    ////[SerializeField]
+    //[System.NonSerialized]
+    //Vector3 playerPosition;
     //
 
         // Exp int
@@ -89,12 +87,10 @@ public class SavedData : MonoBehaviour
 
     void AfterLoad()
     {
-        //((iSavedData)Item_World).AfterLoad();
+        ((iSavedData)Item_Equipments).AfterLoad();
         ((iSavedData)Item_Inventory).AfterLoad();
         ((iSavedData)Item_Storage).AfterLoad();
-
-        JsonUtility.FromJsonOverwrite(equipableStirng, equipable);
-        ((iSavedData)equipable).AfterLoad();
+        //((iSavedData)Item_World).AfterLoad();
 
         //JsonUtility.FromJsonOverwrite(vulnerableString, vulnerable);
         //((iSavedData)vulnerable).AfterLoad();
@@ -106,12 +102,10 @@ public class SavedData : MonoBehaviour
 
     void BeforeSave()
     {
-        //((iSavedData)Item_World).BeforeSave();
+        ((iSavedData)Item_Equipments).BeforeSave();
         ((iSavedData)Item_Inventory).BeforeSave();
         ((iSavedData)Item_Storage).BeforeSave();
-
-        ((iSavedData)equipable).BeforeSave();
-        equipableStirng = JsonUtility.ToJson(equipable);
+        //((iSavedData)Item_World).BeforeSave();
 
         //((iSavedData)vulnerable).BeforeSave();
         //vulnerableString = JsonUtility.ToJson(vulnerable);
@@ -121,13 +115,19 @@ public class SavedData : MonoBehaviour
 
     private void Awake()
     {
+        if(_singleton != null)
+        {
+            _singleton.Item_Equipments.ShareSubscribers(this.Item_Equipments);
+            _singleton.Item_Inventory.ShareSubscribers(this.Item_Inventory);
+            _singleton.Item_Storage.ShareSubscribers(this.Item_Storage);
+            _singleton.Item_World.ShareSubscribers(this.Item_World);
+        }
+
         _singleton = this;
     }
 
     private void OnEnable()
     {
-        vulnerable = GameManager.Instance.PlayerAbility;
-        equipable = GameManager.Instance.PlayerEquipments;
         Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
 
         Load();
@@ -176,9 +176,21 @@ public class SavedData : MonoBehaviour
                 if (item != null && item is ItemInstance_Equipment)
                 {
                     Item_Inventory.Remove(item);
-                    Item_Inventory.Add(equipable.Equip((ItemInstance_Equipment)item));
+                    ItemInstance old = Item_Equipments[((ItemInstance_Equipment)item).EquipmentType];
+                    Item_Equipments.Remove(old);
+                    Item_Equipments.Add(item);
+                    Item_Inventory.Add(old);
                     return;
                 }
             }   
     }
+}
+
+
+
+
+
+public partial class SavedData
+{
+
 }

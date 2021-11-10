@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ItemStorage_World : ItemStorage, iSavedData
+public class ItemStorage_World : ItemStorage<GameObject>, iSavedData
 {
     public ItemStorage_World()
     { }
-
-    protected Dictionary<ItemInstance, GameObject> _items = new Dictionary<ItemInstance,GameObject>();
-    /// <summary>
-    ///  You can't change storage's items with this accessor.<para></para>
-    ///  use Add() and Remove() to modify storage.<para></para>
-    ///  * created for foreach, search access
-    /// </summary>
-    public Dictionary<ItemInstance, GameObject> Items
-    { get => new Dictionary<ItemInstance, GameObject>(_items); }
 
     [System.NonSerialized]
     public GameObject ItemObjectPrefab;
@@ -71,6 +62,9 @@ public class ItemStorage_World : ItemStorage, iSavedData
         container.ItemData = item;
 
         _items.Add(item, newObject);
+
+        // Sync
+        OnSynchronize(this, SyncOperator.Add, newObject);
     }
 
     
@@ -115,6 +109,9 @@ public class ItemStorage_World : ItemStorage, iSavedData
         removingObject.SetActive(false);
         removingObject.GetComponent<ItemObject_v2>().ItemData = null;
         _objectPool.Enqueue(removingObject);
+
+        // Sync
+        OnSynchronize(this, SyncOperator.Remove, removingObject);
     }
 
 
@@ -145,6 +142,7 @@ public class ItemStorage_World : ItemStorage, iSavedData
     void iSavedData.AfterLoad()
     {
         _items.Clear();
+        OnSynchronize(this, SyncOperator.Refresh, null);
 
         foreach (Positioned<ItemInstance_Etc> i in SD_etcs)
         {

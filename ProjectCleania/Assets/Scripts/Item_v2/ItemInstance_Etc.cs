@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ItemInstance_Etc : ItemInstance
+public class ItemInstance_Etc : ItemInstance, iSavedData
 {
     // used for unityengine only
     private ItemInstance_Etc() : base(null)
@@ -50,5 +50,17 @@ public class ItemInstance_Etc : ItemInstance
             return null;
         else
             return Instantiate(itemSO, count); // delegate to overload
+    }
+
+    void iSavedData.AfterLoad()
+    {
+        //Debug.Log("Equipment al");
+        so = ItemSO.Load(id);
+    }
+
+    void iSavedData.BeforeSave()
+    {
+        //Debug.Log("Equipment bs");
+        id = so.ID;
     }
 }

@@ -96,11 +96,11 @@ public class EquipmentDealer
         return (equipment.SO.Durability - (int)equipment.Durability);
     }
 
-    static public bool TryRepair(ItemInstance_Equipment equipment, Storage inventory)
+    static public bool TryRepair(ItemInstance_Equipment equipment, UI_Currency currency)
     {
-        if (inventory.Crystal >= GetRepairCost(equipment))
+        if (currency.Crystal >= GetRepairCost(equipment))
         {
-            inventory.AddCrystal(-GetRepairCost(equipment));
+            currency.AddCrystal(-GetRepairCost(equipment));
             equipment.Durability = equipment.SO.Durability;
             return true;
         }

@@ -103,7 +103,7 @@ public class MouseController : MonoBehaviour
 
     void SetItemTip(GameObject item)
     {
-        ItemSO itemSO = item.GetComponent<ItemController_v2>().itemInstance.SO;
+        ItemSO itemSO = item.GetComponent<UI_ItemController>().itemInstance.SO;
 
         itemName.text = itemSO.ItemName;
         sb.Clear();
@@ -129,7 +129,7 @@ public class MouseController : MonoBehaviour
         sb.Append("\n");
         //sb.Append()
 
-        ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.GetComponent<ItemController_v2>().itemInstance;
+        ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.GetComponent<UI_ItemController>().itemInstance;
         foreach (var v in equipment.StaticProperties_ToString())
         {
             sb.Append(v);
