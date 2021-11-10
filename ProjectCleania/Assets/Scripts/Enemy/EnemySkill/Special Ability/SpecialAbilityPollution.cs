@@ -38,6 +38,11 @@ public class SpecialAbilityPollution : EnemySkill
         Pollution contactStayDamage = obj.GetComponent<Pollution>();
         contactStayDamage.SetUp(OwnerAbilityStatus, damageRate);
         contactStayDamage.Resize(damageRange);
+        //GameObject obj = ObjectPool.GetObject(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
+        // Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
+        Pollution pollution = obj.GetComponent<Pollution>();
+        pollution.SetUp(pollutionDuration, OwnerAbilityStatus, damageRate);
+        pollution.Resize(damageRange);
 
         Destroy(obj, pollutionDuration);
     }

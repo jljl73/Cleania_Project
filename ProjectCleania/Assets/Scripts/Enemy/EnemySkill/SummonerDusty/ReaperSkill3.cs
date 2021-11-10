@@ -8,7 +8,7 @@ public class ReaperSkill3 : EnemySkill
     float hitForce = 1;
     float pushRadius;
 
-    Collider col;
+    CapsuleCollider col;
 
     [SerializeField]
     public DustWindSO skillData;
@@ -24,7 +24,11 @@ public class ReaperSkill3 : EnemySkill
     private new void Start()
     {
         base.Start();
-        col = GetComponent<Collider>();
+        col = GetComponent<CapsuleCollider>();
+        if (col != null)
+            print("im in reaperskill3. col is not null");
+        else
+            print("im in reaperskill3. col is null");
         UpdateSkillData();
 
         effectController[0].Scale = pushRadius;
@@ -65,6 +69,8 @@ public class ReaperSkill3 : EnemySkill
 
     public override void Deactivate()
     {
+        if (col == null)
+            print("col is null!");
         col.enabled = false;
         animator.SetBool("OnSkill", false);
     }
