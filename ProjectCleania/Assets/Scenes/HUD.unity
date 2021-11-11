@@ -3348,6 +3348,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626983698}
   m_CullTransparentMesh: 1
+--- !u!1 &627624615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3448515097711401950, guid: f2632cf904ac31741a0215981eec3032, type: 3}
+  m_PrefabInstance: {fileID: 4681020615082593762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &627624616 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3448515097711401949, guid: f2632cf904ac31741a0215981eec3032, type: 3}
+  m_PrefabInstance: {fileID: 4681020615082593762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &627624617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8750551837002177734, guid: f2632cf904ac31741a0215981eec3032, type: 3}
+  m_PrefabInstance: {fileID: 4681020615082593762}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627624615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f345c5eddce798c41b93108dc2c8f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &629735933
 GameObject:
   m_ObjectHideFlags: 0
@@ -11920,17 +11941,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30a8212771642e94db7fe2f5ac582ab9, type: 3}
---- !u!114 &3550753314346117527 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8192219389460964469, guid: f2632cf904ac31741a0215981eec3032, type: 3}
-  m_PrefabInstance: {fileID: 4681020615082593762}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7488762628419153551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f345c5eddce798c41b93108dc2c8f7e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4138612545240876856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12280,6 +12290,10 @@ PrefabInstance:
     - target: {fileID: 2817914832498697070, guid: f2632cf904ac31741a0215981eec3032, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448515097711401949, guid: f2632cf904ac31741a0215981eec3032, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4061041302195149648, guid: f2632cf904ac31741a0215981eec3032, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -24298,7 +24312,7 @@ PrefabInstance:
     - target: {fileID: 776187425, guid: a30582d5f4580f747953ffb643ade110, type: 3}
       propertyPath: market
       value: 
-      objectReference: {fileID: 3550753314346117527}
+      objectReference: {fileID: 627624617}
     - target: {fileID: 776187425, guid: a30582d5f4580f747953ffb643ade110, type: 3}
       propertyPath: repair
       value: 
@@ -24414,7 +24428,7 @@ PrefabInstance:
     - target: {fileID: 3783792633871469594, guid: a30582d5f4580f747953ffb643ade110, type: 3}
       propertyPath: MarketPanel
       value: 
-      objectReference: {fileID: 7488762628419153551}
+      objectReference: {fileID: 627624615}
     - target: {fileID: 3783792633871469594, guid: a30582d5f4580f747953ffb643ade110, type: 3}
       propertyPath: RepairPanel
       value: 
@@ -32274,7 +32288,7 @@ RectTransform:
   - {fileID: 6206314629106541393}
   - {fileID: 47692390}
   - {fileID: 413740968}
-  - {fileID: 7488762628419153548}
+  - {fileID: 627624616}
   - {fileID: 325560724}
   - {fileID: 6206314628825692988}
   m_Father: {fileID: 6206314628919760624}
@@ -41272,16 +41286,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uD018\uC2A4\uD2B8"
---- !u!224 &7488762628419153548 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2817914832498697070, guid: f2632cf904ac31741a0215981eec3032, type: 3}
-  m_PrefabInstance: {fileID: 4681020615082593762}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7488762628419153551 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2817914832498697069, guid: f2632cf904ac31741a0215981eec3032, type: 3}
-  m_PrefabInstance: {fileID: 4681020615082593762}
-  m_PrefabAsset: {fileID: 0}
 --- !u!222 &7498154947280774722
 CanvasRenderer:
   m_ObjectHideFlags: 0
