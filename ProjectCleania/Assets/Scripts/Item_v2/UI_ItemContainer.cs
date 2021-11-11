@@ -142,35 +142,30 @@ public partial class UI_ItemContainer : MonoBehaviour
         //if (dstContainer.syncWith == SyncType.Equipment)
         //    return false;
 
-        ItemInstance srcItem = controller.itemInstance;
-        ItemInstance dstItem = (dstContainer.controllers[dstIndex] == null ? null : dstContainer.controllers[dstIndex].itemInstance);
-        UI_ItemContainer srcContainer = this;
-        int srcIndex = -1;
 
+        ItemInstance srcItem = controller.itemInstance;
+        ItemInstance dstItem = (dstContainer[dstIndex] == null ? null : dstContainer[dstIndex].itemInstance);
         if (srcItem == dstItem)
             return true;
 
-        for (int i = 0; i < slotParent.transform.childCount; ++i)
-        {
-            if (controllers[i] == controller)
-            {
-                srcIndex = i;
-                break;
-            }
-        }
+        UI_ItemContainer srcContainer = this;
+        int srcIndex = this[controller];
+
+
         if (srcIndex == -1)
         {
             Debug.LogError($"Logic error in {ToString()} : ImmigrateTo");
             return false;
         }
 
-
+        // 1 : remove dst from DST
         if (dstItem != null)
             if (!dstContainer.Remove(dstIndex))
             {
                 return false;
             }
 
+        // 2 : remove src from SRC
         if (!srcContainer.Remove(srcIndex))
         {
             if (dstItem != null)
@@ -178,21 +173,23 @@ public partial class UI_ItemContainer : MonoBehaviour
             return false;
         }
 
+        // 3 : add src to DST
         if (!dstContainer.Add(srcItem, dstIndex))
         {
+            srcContainer.Add(srcItem, srcIndex);
             if (dstItem != null)
                 dstContainer.Add(dstItem, dstIndex);
-            srcContainer.Add(srcItem, srcIndex);
             return false;
         }
 
+        // 4 : add dst to SRC
         if (dstItem != null)
             if (!srcContainer.Add(dstItem, srcIndex))
             {
                 dstContainer.Remove(dstIndex);
+                srcContainer.Add(srcItem, srcIndex);
                 if (dstItem != null)
                     dstContainer.Add(dstItem, dstIndex);
-                srcContainer.Add(srcItem, srcIndex);
                 return false;
             }
 
