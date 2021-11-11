@@ -57,12 +57,12 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
                 //if (enemySkillManager.PlayRandomSpecialSkill())
                 //    return;
 
-                //if (enemySkillManager.PlaySkill(2910))
-                //    return;
-
-                // 먼지바람
-                if (enemySkillManager.PlaySkill(2402))
+                if (enemySkillManager.PlaySkill(2907))
                     return;
+
+                //// 먼지바람
+                //if (enemySkillManager.PlaySkill(2402))
+                //    return;
             }
         }
 

@@ -9,10 +9,10 @@ public class Pollution : ContactStayDamage
 
     float duration;
 
-    //private void OnEnable()
-    //{
-    //    Invoke("DeactivateDelay", duration);
-    //}
+    private void OnEnable()
+    {
+        Invoke("DeactivateDelay", duration);
+    }
 
     void Start()
     {
@@ -27,9 +27,9 @@ public class Pollution : ContactStayDamage
         base.SetUp(abil, damageScale);
     }
 
-    //private void OnDisable()
-    //{
-    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Pollution, this.gameObject);
-    //    CancelInvoke();
-    //}
+    private void OnDisable()
+    {
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Pollution, this.gameObject);
+        CancelInvoke();
+    }
 }

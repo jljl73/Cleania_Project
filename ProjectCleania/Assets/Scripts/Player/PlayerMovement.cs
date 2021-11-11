@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private GameObject targetObj;               // 공격 대상
     private Vector3 targetPose;                 // 목표 위치
 
-    private NavMeshPath path;                   // 목표까지 path
     private int currentPathIdx;                 // path 내 현재 목표 지점
 
     private float distanceBetweenTargetObj = 1f;   // 공격 시, 목표 위치 얼마 앞에서 멈출 것인가
@@ -25,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     //private bool isAttackPlaying;
     //bool isAttacking;
 
-    public PlayerSkillL skillL;
     public bool bAttacking = false;
     bool bChasing = false;
     public StateMachine playerStateMachine;
@@ -260,19 +258,4 @@ public class PlayerMovement : MonoBehaviour
             playerStateMachine.Transition(StateMachine.enumState.Idle);
         // --- //
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (playerStateMachine.State == StateMachine.enumState.Chasing)
-        // 데미지 주기, 공격 콜라이더만 trigger 설정됨.
-        {
-            AccelerateRotation();
-
-            //print(other.transform.name + "Collision");
-            //transform.LookAt(targetObj.transform);
-            targetPose = transform.position;
-            skillL.AnimationActivate();
-        }
-    }
-        
 }

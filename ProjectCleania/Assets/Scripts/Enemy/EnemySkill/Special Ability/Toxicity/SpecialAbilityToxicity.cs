@@ -64,9 +64,11 @@ public class SpecialAbilityToxicity : EnemySkill
     
     IEnumerator MakePonds()
     {
+        Vector3 tempPosition = transform.position;
+        Quaternion tempQuaternion = transform.rotation;
         for (int i = 1; i <= pondCount; i++)
         {
-            GameObject initiatedPond = Instantiate(DustPond, transform.position, transform.rotation);
+            GameObject initiatedPond = Instantiate(DustPond, tempPosition, tempQuaternion);
             initiatedPond.transform.position += (initiatedPond.transform.forward * distanceInterval * i + initiatedPond.transform.up * 0.2f);
             ToxicityPond pondDamage = initiatedPond.GetComponent<ToxicityPond>();
             if (pondDamage != null)

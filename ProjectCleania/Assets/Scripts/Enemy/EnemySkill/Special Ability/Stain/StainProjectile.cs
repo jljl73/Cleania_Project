@@ -6,8 +6,6 @@ public class StainProjectile : DamagingProperty
 {
     float stopTime;         // 총 stop 시간
     float stopStartTime;    // stop 시작 시간
-    bool didStop = false;
-    float spentTimeSum = 0f;
 
     Rigidbody stainRigidbody;
 
@@ -32,29 +30,47 @@ public class StainProjectile : DamagingProperty
         hitCollider = GetComponent<SphereCollider>();
         if (hitCollider == null)
             throw new System.Exception("StainProjectile doesnt have Collider");
+
     }
 
+    private void OnEnable()
+    {
+        if (!isSetUp) return;
+
+        ResetSetting();
+        Start();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Stain, this.gameObject);
+    }
     private void Start()
     {
         projectileBodyController.Scale = damageRange * 1.2f;
         hitCollider.radius = damageRange;
 
         bombEffectController.Scale = damageRange * 0.5f;
+
+        Invoke("StopAtTop", stopStartTime);
     }
 
-    private void Update()
+    void ResetSetting()
     {
-        if (!isSetUp) return;
-
-        spentTimeSum += Time.deltaTime;
-
-        if (spentTimeSum > stopStartTime)
-        {
-            if (didStop) return;
-            StartCoroutine("Stop", stopTime);
-            EnableCollider();
-        }
+        isDestroying = false;
+        projectileBodyController.gameObject.SetActive(true);
+        projectileBodyController.PlaySkillEffect();
+        stainRigidbody.useGravity = true;
     }
+
+    void StopAtTop()
+    {
+        StartCoroutine("Stop", stopTime);
+        EnableCollider();
+    }
+
+    void DeactivateDelay() => this.gameObject.SetActive(false);
 
     void EnableCollider()
     {
@@ -66,7 +82,6 @@ public class StainProjectile : DamagingProperty
         Vector3 tempVel = stainRigidbody.velocity;
         stainRigidbody.velocity = Vector3.zero;
         stainRigidbody.useGravity = false;
-        didStop = true;
 
         yield return new WaitForSeconds(time);
 
@@ -99,7 +114,8 @@ public class StainProjectile : DamagingProperty
                 abil.AttackedBy(ownerAbility, destroyAttackScale);
             }
         }
-        Destroy(gameObject, 2f);
+        //Destroy(gameObject, 2f);
+        Invoke("DeactivateDelay", 2f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -131,7 +147,10 @@ public class StainProjectile : DamagingProperty
             stainRigidbody.useGravity = false;
             stainRigidbody.velocity = Vector3.zero;
             isDestroying = true;
-            Destroy(gameObject, 2f);
+            Invoke("DeactivateDelay", 2f);
+            //Destroy(gameObject, 2f);
         }
     }
+
+    
 }

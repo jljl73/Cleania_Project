@@ -9,14 +9,17 @@ public class ObjectPool : MonoBehaviour
 
     public enum enumPoolObject
     {
-        Pollution
+        Pollution,
+        Stain
     }
 
     public GameObject pollutionPrefab;
+    public GameObject stainPrefab;
 
     Dictionary<enumPoolObject, Queue<GameObject>> poolableDict = new Dictionary<enumPoolObject, Queue<GameObject>>();
 
     Queue<GameObject> pollutionQueue = new Queue<GameObject>();
+    Queue<GameObject> StainQueue = new Queue<GameObject>();
 
 
     private void Awake()
@@ -29,6 +32,7 @@ public class ObjectPool : MonoBehaviour
     void AddQueueToDict()
     {
         poolableDict.Add(enumPoolObject.Pollution, pollutionQueue);
+        poolableDict.Add(enumPoolObject.Stain, StainQueue);
     }
 
     public static GameObject GetObject(enumPoolObject objType, Vector3 pos, Quaternion rot)
@@ -41,7 +45,6 @@ public class ObjectPool : MonoBehaviour
         }
 
         GameObject objToSpawn = Instance.poolableDict[objType].Dequeue();
-
 
         objToSpawn.transform.position = pos;
         objToSpawn.transform.rotation = rot;
@@ -71,6 +74,12 @@ public class ObjectPool : MonoBehaviour
         {
             case enumPoolObject.Pollution:
                 obj = Instantiate(pollutionPrefab);
+                obj.transform.position = pos;
+                obj.transform.rotation = rot;
+                obj.SetActive(false);
+                break;
+            case enumPoolObject.Stain:
+                obj = Instantiate(stainPrefab);
                 obj.transform.position = pos;
                 obj.transform.rotation = rot;
                 obj.SetActive(false);
