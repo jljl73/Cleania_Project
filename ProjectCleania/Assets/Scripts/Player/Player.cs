@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     // public
     public StateMachine stateMachine;
-    public TestPlayerMove playerMove;
+    public PlayerMovement playerMove;
     public PlayerSkillManager playerSkillManager;
     public AbilityStatus abilityStatus;
     public Animator animator;

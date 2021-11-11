@@ -7,14 +7,33 @@ public class ToxicityPond : ToxicityDamage
     [SerializeField]
     SkillEffectController effectController;
 
+    float duration;
+
+    private void OnEnable()
+    {
+        if (!isSetUp) return;
+        Start();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Toxicity, this.gameObject);
+    }
+
     private void Start()
     {
         effectController.Scale = damageRange;
         GiveDamageOnRange(damageRange);
+
+        Invoke("DeactivateDelay", duration);
     }
 
-    public void SetUp(AbilityStatus abil, float damageScale, float damageRange)
+    void DeactivateDelay() => this.gameObject.SetActive(false);
+
+    public void SetUp(float duration, AbilityStatus abil, float damageScale, float damageRange)
     {
+        this.duration = duration;
         base.SetUp(abil, damageScale);
         this.damageRange = damageRange;
     }

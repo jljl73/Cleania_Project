@@ -23,6 +23,7 @@ public class PlayerSKillIDSO : SkillIDSO
         Skill2 = 4,
         Skill3 = 5,
         Skill4 = 6,
+        skillSpace = 8,
         SkillF = 9
     }
 

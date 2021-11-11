@@ -9,7 +9,7 @@ public class SpecialAbilityMine : EnemySkill
     float CreationRadius;           // 생성 반경
     float mineCount;
 
-    public GameObject MinePond;
+    //public GameObject MinePond;
 
     [SerializeField]
     SpecialAbilityMineSO skillData;
@@ -20,8 +20,8 @@ public class SpecialAbilityMine : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        if (MinePond == null)
-            throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
+        //if (MinePond == null)
+        //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
 
     private new void Start()
@@ -62,25 +62,9 @@ public class SpecialAbilityMine : EnemySkill
     {
         for (int i = 1; i <= mineCount; i++)
         {
-            GameObject initiatedPond = Instantiate(MinePond, transform.position, transform.rotation);
-            initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            Mine mine = initiatedPond.GetComponent<Mine>();
-            if (mine != null)
-            {
-                mine.SetUp(OwnerAbilityStatus, damageScale);
-                mine.Resize(triggerRadius);
-            }
-            //if (pondDamage != null)
-            //{
-            //    print("Pond not null");
-            //    if (enemy.abilityStatus == null)
-            //        print("enemy.abilityStatus is null");
-            //    else
-            //        print("enemy.abilityStatus not null");
-            //    pondDamage.SetProperty(enemy.abilityStatus, damageScale);
-            //}
-            //else
-            //    print("Pond null");
+            Mine mine = ObjectPool.SpawnFromPool<Mine>(ObjectPool.enumPoolObject.Mine, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            mine.SetUp(OwnerAbilityStatus, damageScale);
+            mine.Resize(triggerRadius);
         }
     }
 

@@ -10,6 +10,19 @@ public class StormWind : DamagingProperty
     [SerializeField]
     SkillEffectController effectController;
 
+    private void OnEnable()
+    {
+        if (!isSetUp) return;
+
+        Start();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.StormWind, this.gameObject);
+    }
+
     private void Start()
     {
         effectController.Scale = damageRange;

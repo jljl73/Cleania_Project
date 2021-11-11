@@ -13,7 +13,7 @@ public class SpecialAbilitySeal : EnemySkill
     float silenceTime;
     // 침묵 상태 이상
 
-    public GameObject SealPond;
+    //public GameObject SealPond;
 
     [SerializeField]
     SpecialAbilitySealSO skillData;
@@ -24,8 +24,8 @@ public class SpecialAbilitySeal : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        if (SealPond == null)
-            throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
+        //if (SealPond == null)
+        //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
 
     private new void Start()
@@ -68,13 +68,12 @@ public class SpecialAbilitySeal : EnemySkill
     {
         for (int i = 1; i <= pondCount; i++)
         {
-            GameObject initiatedPond = Instantiate(SealPond, transform.position, transform.rotation);
-            initiatedPond.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
-            print("0");
-            pondDamage.SetUp(OwnerAbilityStatus, damageScale);
-            pondDamage.SetUp(duration, silenceTime, radius);
-            print("1");
+            SealPond sealPond = ObjectPool.SpawnFromPool<SealPond>(ObjectPool.enumPoolObject.Seal, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            //GameObject initiatedPond = Instantiate(SealPond, transform.position, transform.rotation);
+            //sealPond.gameObject.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
+            //SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
+            sealPond.SetUp(OwnerAbilityStatus, damageScale);
+            sealPond.SetUp(duration, silenceTime, radius);
             //if (pondDamage != null)
             //{
             //    print("Pond not null");

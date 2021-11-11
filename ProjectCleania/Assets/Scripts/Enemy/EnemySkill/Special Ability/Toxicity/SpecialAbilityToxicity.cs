@@ -10,9 +10,8 @@ public class SpecialAbilityToxicity : EnemySkill
     float distanceInterval;
     float generationTimeInterval;
     float pondCount;
-
-
-    public GameObject DustPond;
+    
+    //public GameObject DustPond;
 
     [SerializeField]
     SpecialAbilityToxicitySO skillData;
@@ -23,8 +22,8 @@ public class SpecialAbilityToxicity : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        if (DustPond == null)
-            throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
+        //if (DustPond == null)
+        //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
 
     private new void Start()
@@ -64,26 +63,23 @@ public class SpecialAbilityToxicity : EnemySkill
     
     IEnumerator MakePonds()
     {
+        Vector3 tempUp = transform.up;
+        Vector3 tempForward = transform.forward;
         Vector3 tempPosition = transform.position;
         Quaternion tempQuaternion = transform.rotation;
         for (int i = 1; i <= pondCount; i++)
         {
-            GameObject initiatedPond = Instantiate(DustPond, tempPosition, tempQuaternion);
-            initiatedPond.transform.position += (initiatedPond.transform.forward * distanceInterval * i + initiatedPond.transform.up * 0.2f);
-            ToxicityPond pondDamage = initiatedPond.GetComponent<ToxicityPond>();
-            if (pondDamage != null)
-            {
-                print("Pond not null");
-                if (enemy.abilityStatus == null)
-                    print("enemy.abilityStatus is null");
-                else
-                    print("enemy.abilityStatus not null");
-                pondDamage.SetUp(OwnerAbilityStatus, damageScale, radius);
-            }
+            //GameObject initiatedPond = Instantiate(DustPond, tempPosition, tempQuaternion);
+            Vector3 spawnedPos = tempPosition + (tempForward * distanceInterval * i + tempUp * 0.2f);
+            ToxicityPond toxicityPond = ObjectPool.SpawnFromPool<ToxicityPond>(ObjectPool.enumPoolObject.Toxicity, spawnedPos, tempQuaternion);
+            //initiatedPond.transform.position += (initiatedPond.transform.forward * distanceInterval * i + initiatedPond.transform.up * 0.2f);
+            if (enemy.abilityStatus == null)
+                print("enemy.abilityStatus is null");
             else
-                print("Pond null");
+                print("enemy.abilityStatus not null");
+            toxicityPond.SetUp(duration ,OwnerAbilityStatus, damageScale, radius);
 
-            Destroy(initiatedPond, duration);
+            //Destroy(initiatedPond, duration);
 
             yield return new WaitForSeconds(generationTimeInterval);
         }

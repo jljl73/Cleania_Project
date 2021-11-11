@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class PlayerSkillManager : BaseSkillManager
 {
     public StateMachine playerStateMachine;
-    public TestPlayerMove playerMove;
+    public PlayerMovement playerMove;
 
     Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
@@ -32,7 +32,7 @@ public class PlayerSkillManager : BaseSkillManager
         if (playerStateMachine == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerStateMachine");
 
-        playerMove = GetComponent<TestPlayerMove>();
+        playerMove = GetComponent<PlayerMovement>();
         if (playerMove == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerMove");
     }
