@@ -114,7 +114,7 @@ public class MouseController : MonoBehaviour
                 break;
         }
 
-        ItemSO itemSO = item.GetComponent<ItemController_v2>().itemInstance.SO;
+        ItemSO itemSO = item.GetComponent<UI_ItemController>().itemInstance.SO;
 
         itemName.text = itemSO.ItemName;
         sb.Clear();
@@ -136,13 +136,13 @@ public class MouseController : MonoBehaviour
         itemDetails.text = itemSO.ToolTip;
 
 
-        if (!(item.GetComponent<ItemController_v2>().itemInstance is ItemInstance_Equipment))
+        if (!(item.GetComponent<UI_ItemController>().itemInstance is ItemInstance_Equipment))
         {
             itemOptions.gameObject.SetActive(false);
             return;
         }
 
-        ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.GetComponent<ItemController_v2>().itemInstance;
+        ItemInstance_Equipment equipment = (ItemInstance_Equipment)item.GetComponent<UI_ItemController>().itemInstance;
 
         sb.Clear();
         sb.Append("³»±¸µµ (");

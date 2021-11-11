@@ -74,6 +74,8 @@ public class QuestManager : MonoBehaviour
         quest.Assign();
         AddList(quest);
         GameManager.Instance.soundPlayer.PlaySound("QuestAssign");
+
+        QuestDB.Save(quest);
     }
     
     public void Acheive(QuestNeed.TYPE type, int target)
