@@ -32,6 +32,16 @@ public class InputManager : MonoBehaviour
         {
             player.Move(Input.mousePosition);
         }
+
+        if (Input.GetMouseButton(1))
+        {
+            player.PlaySkill(1102);
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            player.StopSkill(1102);
+        }
         // ¸¶¿ì½º <<<<<
 
 
@@ -56,10 +66,7 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1101);
         }
-        if (Input.GetMouseButton(1))
-        {
-            player.PlaySkill(1102);
-        }
+        
         if (Input.GetKeyDown(KeyCode.F))
         {
             player.PlaySkill(1199);

@@ -63,6 +63,19 @@ public class PlayerSkillDehydration : PlayerSkill
         return true;
     }
 
+    public override void StopSkill()
+    {
+        //Deactivate();
+
+        animator.SetTrigger("DehydrationEnd");
+        animator.SetBool("OnSkillR", false);
+        animator.SetBool("OnSkill", false);
+        attackArea.enabled = false;
+
+        effectController[0].StopSKillEffect();
+
+    }
+
     public override void Activate()
     {
         attackArea.enabled = true;
@@ -70,9 +83,10 @@ public class PlayerSkillDehydration : PlayerSkill
 
     public override void Deactivate()
     {
-        animator.SetBool("OnSkillR", false);
-        animator.SetBool("OnSkill", false);
-        attackArea.enabled = false;
+        //animator.SetTrigger("DehydrationEnd");
+        //animator.SetBool("OnSkillR", false);
+        //animator.SetBool("OnSkill", false);
+        //attackArea.enabled = false;
     }
 
     void OnTriggerStay(Collider other)

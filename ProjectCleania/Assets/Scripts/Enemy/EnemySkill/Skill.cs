@@ -64,6 +64,8 @@ public abstract class Skill : MonoBehaviour
             OnSkillEnd();
     }
 
+    public virtual void StopSkill() { }
+
     public List<SkillEffectController> effectController;
 
     protected void Start()

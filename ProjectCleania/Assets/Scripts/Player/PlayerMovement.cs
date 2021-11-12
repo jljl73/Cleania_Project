@@ -54,16 +54,24 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            playerAnimator.SetTrigger("JumpOver");
+        if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
+            player.stateMachine.CompareState(StateMachine.enumState.Attacking)) return;
 
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
-        if (!EventSystem.current.IsPointerOverGameObject())
-            ActivateNavigation();
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-        if (!EventSystem.current.IsPointerOverGameObject(0))
-            ActivateNavigation();
-#endif
+        if (!isOrderedToMove || isStunned)
+        {
+            targetPose = transform.position;
+            return;
+        }
+
+        ActivateNavigation();
+
+//#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+//        if (!EventSystem.current.IsPointerOverGameObject())
+//            ActivateNavigation();
+//#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+//        if (!EventSystem.current.IsPointerOverGameObject(0))
+//            ActivateNavigation();
+//#endif
         // 회전 가속
         AccelerateRotation();
 

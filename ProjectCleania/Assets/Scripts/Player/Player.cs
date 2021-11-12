@@ -71,6 +71,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StopSkill(int id)
+    {
+        playerSkillManager.StopSkill(id);
+    }
+
     //public void ActivateSkill(AnimationEvent myEvent)
     //{
     //    playerSkillManager.ActivateSkill(myEvent);

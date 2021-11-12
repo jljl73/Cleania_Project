@@ -172,7 +172,10 @@ public class PlayerSkillManager : BaseSkillManager
         return true;
     }
 
-    
+    public void StopSkill(int id)
+    {
+        skillDict[id].StopSkill();
+    }
 
     #region
     //public void ActivateSkillEffect(int index)
