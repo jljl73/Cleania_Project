@@ -96,6 +96,9 @@ public class UI_ItemController : MonoBehaviour,
             {
                 backgroundImage.rectTransform.sizeDelta = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().sizeDelta;
                 backgroundImage.rectTransform.position = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().position;
+                backgroundImage.rectTransform.sizeDelta = new Vector2(
+                    backgroundImage.rectTransform.sizeDelta.x * item.SO.GridSize.Width,
+                    backgroundImage.rectTransform.sizeDelta.y * item.SO.GridSize.Height);
             }
             prevPosition = backgroundImage.rectTransform.position;
         }

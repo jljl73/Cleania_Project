@@ -56,10 +56,11 @@ public partial class ItemStorage_LocalGrid : ItemStorage<Point>, iSavedData, IEn
     {
         get
         {
-            if (y >= 0 && y < gridSizeY && x >= 0 && x < gridSizeX)
-                return _referenceGrid[y][x];
-            else
+            if (y < 0 || y >= gridSizeY ||
+                x < 0 || x >= gridSizeX)
                 return null;
+            else
+                return _referenceGrid[y][x];
         }
     }
     public ItemInstance this[Point pos]
@@ -378,9 +379,12 @@ public partial class ItemStorage_LocalGrid
 
     void iSavedData.AfterLoad()
     {
-        _InitGrid();
-
         _items.Clear();
+
+        for (int y = 0; y < _referenceGrid.Length; ++y)
+            for (int x = 0; x < _referenceGrid[y].Length; ++x)
+                _referenceGrid[y][x] = null;
+
         OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
 
         foreach (Gridded<ItemInstance_Etc> i in SD_etcs)
