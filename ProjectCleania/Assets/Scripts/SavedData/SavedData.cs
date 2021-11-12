@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public partial class SavedData : MonoBehaviour
+public class SavedData : MonoBehaviour
 {
     static private SavedData _singleton;
     static public SavedData Instance
@@ -184,13 +184,4 @@ public partial class SavedData : MonoBehaviour
                 }
             }   
     }
-}
-
-
-
-
-
-public partial class SavedData
-{
-
 }

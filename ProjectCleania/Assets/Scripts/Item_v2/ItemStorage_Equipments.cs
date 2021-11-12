@@ -95,6 +95,10 @@ public partial class ItemStorage_Equipments
     void iSavedData.AfterLoad()
     {
         _items.Clear();
+
+        for (int i = 0; i < _reference.Length; ++i)
+            _reference[i] = null;
+
         OnSynchronize(this, SyncOperator.Refresh, ItemInstance_Equipment.Type.EnumTotal);
 
         foreach (var i in SD_equipments)
