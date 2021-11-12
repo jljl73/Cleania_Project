@@ -57,7 +57,7 @@ public struct QuestNeed
         }
     }
 }
-[CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Object/Quest")]
+[CreateAssetMenu(fileName = "Quest", menuName = "Scriptable Object/Quest")]
 public class Quest : ScriptableObject
 {
     public enum STATE { Unassign, Assign, Clear, Reward };
