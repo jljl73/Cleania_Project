@@ -47,7 +47,7 @@ public class QuestManager : MonoBehaviour
         for(int i = 0; i < quests_All.Length; ++i)
         {
             if (quests_All[i].State == Quest.STATE.Assign || quests_All[i].State == Quest.STATE.Clear)
-                Add(quests_All[i]);
+                Assign(quests_All[i]);
             else if (quests_All[i].State == Quest.STATE.Reward)
                 clearQuests.Add(quests_All[i]);
         }
@@ -58,17 +58,13 @@ public class QuestManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Acheive(QuestNeed.TYPE.Monster, 0);
-        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             ExpManager.Acquire(100);
         }
     }
 
-    public void Add(Quest quest)
+    public void Assign(Quest quest)
     {
         assignQuests.Add(quest);
         quest.Assign();

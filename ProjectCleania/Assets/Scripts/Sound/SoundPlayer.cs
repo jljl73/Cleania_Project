@@ -11,6 +11,7 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] AudioClip m_QuestReward;
     [SerializeField] AudioClip m_Inventory;
     [SerializeField] AudioClip m_Storage;
+    [SerializeField] AudioClip m_NPCInteraction;
 
     void Start()
     {
@@ -36,6 +37,9 @@ public class SoundPlayer : MonoBehaviour
                 break;
             case "Storage":
                 audioSource.clip = m_Storage;
+                break;
+            case "NPCInteraction":
+                audioSource.clip = m_NPCInteraction;
                 break;
         }
         audioSource.Play();
