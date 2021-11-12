@@ -98,6 +98,9 @@ public class SavedData : MonoBehaviour
         //GameManager.Instance.SinglePlayer.transform.position = playerPosition;
         //GameManager.Instance.SinglePlayer.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
         //GameManager.Instance.player.playerMove.StopMoving();
+
+        GameManager.Instance.PlayerAbility.FullHP();
+        GameManager.Instance.PlayerAbility.FullMP();
     }
 
     void BeforeSave()

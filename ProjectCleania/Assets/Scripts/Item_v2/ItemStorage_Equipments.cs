@@ -54,10 +54,10 @@ public partial class ItemStorage_Equipments
 {
     void _Add(ItemInstance_Equipment item)
     {
-        if (item.CurrentStorage == null)
-            item.CurrentStorage = this;
-        else
-            Debug.Log("Logic error in ItemStorage_LocalGrid : _Add");
+        if (item.CurrentStorage != null)
+            item.CurrentStorage.Remove(item);
+
+        item.CurrentStorage = this;
 
         // reserve grid
         _reference[(int)item.EquipmentType] = item;
