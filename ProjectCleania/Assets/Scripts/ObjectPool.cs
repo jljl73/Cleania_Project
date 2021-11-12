@@ -9,6 +9,10 @@ public class ObjectPool : MonoBehaviour
 
     public enum enumPoolObject
     {
+        Dusty,
+        WildInti,
+        HighDusty,
+        SummonerDusty,
         Toxicity,
         Seal,
         Mine,
@@ -21,7 +25,20 @@ public class ObjectPool : MonoBehaviour
         Pollution,
         EndIndex
     }
+    [Header("적 오브젝트")]
+    [SerializeField]
+    GameObject dustyPrefab;
 
+    [SerializeField]
+    GameObject wildIntiPrefab;
+
+    [SerializeField]
+    GameObject highDustyPrefab;
+
+    [SerializeField]
+    GameObject summonerDustyPrefab;
+
+    [Header("스킬 오브젝트")]
     [SerializeField]
     GameObject toxicityPondPrefab;
 
@@ -124,6 +141,18 @@ public class ObjectPool : MonoBehaviour
         GameObject obj = null;
         switch (objType)
         {
+            case enumPoolObject.Dusty:
+                obj = Instantiate(dustyPrefab);
+                break;
+            case enumPoolObject.WildInti:
+                obj = Instantiate(wildIntiPrefab);
+                break;
+            case enumPoolObject.HighDusty:
+                obj = Instantiate(highDustyPrefab);
+                break;
+            case enumPoolObject.SummonerDusty:
+                obj = Instantiate(summonerDustyPrefab);
+                break;
             case enumPoolObject.Toxicity:
                 obj = Instantiate(toxicityPondPrefab);
                 break;

@@ -8,6 +8,8 @@ public class PlayerSkillRoll : PlayerSkill
     bool bSkill = false;
 
     float avoidDistance;
+    float avoidSpeedMultiplier;
+    public float AvoidSpeedMultiplier { get => avoidSpeedMultiplier; }
 
     public PlayerSkillRollSO skillData;
 
@@ -33,37 +35,42 @@ public class PlayerSkillRoll : PlayerSkill
 
         SkillSlotDependency = skillData.GetTriggerKey();
         avoidDistance = skillData.GetAvoidDistance();
+        avoidSpeedMultiplier = skillData.GetAvoidSpeedMultiplier();
     }
 
-    public override bool IsAvailable()
-    {
-        return (OwnerAbilityStatus.MP > OwnerAbilityStatus.GetStat(Ability.Stat.MaxMP) * 0.5f) || bSkill;
-    }
+    //public override bool IsAvailable()
+    //{
+    //    return (OwnerAbilityStatus.MP > OwnerAbilityStatus.GetStat(Ability.Stat.MaxMP) * 0.5f) || bSkill;
+    //}
 
     public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
-        if (bSkill)
-        {
-            OffSkill();
-            return true;
-        }
+        //if (bSkill)
+        //{
+        //    OffSkill();
+        //    return true;
+        //}
 
         animator.SetBool("OnSkill", true);
-        animator.SetTrigger("Avoid");
+        animator.SetBool("OnSkillUltimate", true);
+        animator.SetTrigger("Roll");
 
-        return false;
+        return true;
     }
 
     public override void Deactivate()
     {
+        base.Deactivate();
+        effectController[0].PlaySkillEffect();
+        animator.SetBool("OnSkillUltimate", false);
         animator.SetBool("OnSkill", false);
     }
 
     public override void Activate()
     {
-        StartCoroutine(OnSkill());
+        //StartCoroutine(OnSkill());
     }
 
     IEnumerator OnSkill()

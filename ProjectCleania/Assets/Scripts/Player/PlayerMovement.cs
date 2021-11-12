@@ -35,6 +35,17 @@ public class PlayerMovement : MonoBehaviour, IStunned
         playerNavMeshAgent = GetComponent<NavMeshAgent>();
     }
 
+    private void OnEnable()
+    {
+        playerNavMeshAgent.enabled = true;
+        targetPose = this.transform.position;
+    }
+
+    private void OnDisable()
+    {
+        playerNavMeshAgent.enabled = false;
+    }
+
     void Start()
     {
         // 설정 초기화

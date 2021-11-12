@@ -8,6 +8,8 @@ public class PlayerSkillManager : BaseSkillManager
 {
     public StateMachine playerStateMachine;
     public PlayerMovement playerMove;
+    public TestPlayerMove PlayerMoveWithoutNav;
+    Collider objectCollider;
 
     Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
@@ -35,6 +37,14 @@ public class PlayerSkillManager : BaseSkillManager
         playerMove = GetComponent<PlayerMovement>();
         if (playerMove == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerMove");
+
+        PlayerMoveWithoutNav = GetComponent<TestPlayerMove>();
+        if (PlayerMoveWithoutNav == null)
+            throw new System.Exception("PlayerSkillManager doesnt have TestPlayerMove");
+
+        objectCollider = GetComponent<Collider>();
+        if (objectCollider == null)
+            throw new System.Exception("PlayerSkillManager doesnt have Collider");
     }
 
     new void Start()
@@ -50,12 +60,33 @@ public class PlayerSkillManager : BaseSkillManager
     {
         // 1106 = 상쾌한 도약
         skillStorage.GetNormalSkill(1106).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
+
+        // 1199 = 카타르시스
         skillStorage.GetNormalSkill(1199).OnSkillEnd += playKatarsis;
+
+        // 1198 = 구르기
+        skillStorage.GetNormalSkill(1198).OnPlaySkill += playRoll;
+        skillStorage.GetNormalSkill(1198).OnSkillEnd += EndRoll;
     }
 
-    bool abc(int id)
+    void playKatarsis()
     {
-        return true;
+        if (skillDict[1199].AnimationActivate())
+            ResetSkill(1199);
+    }
+
+    void playRoll()
+    {
+        playerMove.enabled = false;
+        PlayerMoveWithoutNav.enabled = true;
+        objectCollider.enabled = false;
+    }
+
+    void EndRoll()
+    {
+        playerMove.enabled = true;
+        PlayerMoveWithoutNav.enabled = false;
+        objectCollider.enabled = true;
     }
 
     protected new bool IsSkillAvailable()
@@ -128,20 +159,20 @@ public class PlayerSkillManager : BaseSkillManager
         if (!abilityStatus.ConsumeMP(skillDict[id].GetConsumMP()))
             return false;
 
-        // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번)
-        if (id != 1106 && id != 1102 && id != 1199) playerStateMachine.Transition(StateMachine.enumState.Attacking);
-        playerMove.ImmediateLookAtMouse();
+        // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번), 1199 = 카타르시스(F) 1198 = 구르기(Space)
+        if (id != 1106 && id != 1102 && id != 1199 && id != 1198) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+
+        if (playerMove.enabled)
+            playerMove.ImmediateLookAtMouse();
+        else
+            PlayerMoveWithoutNav.ImmediateLookAtMouse();
 
         if (skillDict[id].AnimationActivate())
             ResetSkill(id);
         return true;
     }
 
-    void playKatarsis()
-    {
-        if (skillDict[1199].AnimationActivate())
-            ResetSkill(1199);
-    }
+    
 
     #region
     //public void ActivateSkillEffect(int index)

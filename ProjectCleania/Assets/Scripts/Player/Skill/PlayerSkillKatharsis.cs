@@ -64,13 +64,15 @@ public class PlayerSkillKatharsis : PlayerSkill
         }
 
         animator.SetBool("OnSkill", true);
-        animator.SetTrigger("OnSkillUltimate");
+        animator.SetBool("OnSkillUltimate", true);
+        animator.SetTrigger("Katharsis");
 
         return false;
     }
 
     public override void Deactivate()
     {
+        animator.SetBool("OnSkillUltimate", false);
         animator.SetBool("OnSkill", false);
     }
 

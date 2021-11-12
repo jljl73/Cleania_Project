@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     // public
     public StateMachine stateMachine;
     public PlayerMovement playerMove;
+    public TestPlayerMove PlayerMoveWithoutNav;
     public PlayerSkillManager playerSkillManager;
     public AbilityStatus abilityStatus;
     public Animator animator;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
         OnDead += playerSkillManager.DeactivateAllSkill;
 
         OnStunned += playerMove.Stunned;
+        OnStunned += PlayerMoveWithoutNav.Stunned;
         OnStunned += playerSkillManager.Stunned;
     }
 
@@ -48,7 +50,10 @@ public class Player : MonoBehaviour
 
     public void Move(Vector3 position)
     {
-        playerMove.Move(position);
+        if (playerMove.enabled)
+            playerMove.Move(position);
+        else
+            PlayerMoveWithoutNav.Move(position);
     }
 
     public void StopMoving()

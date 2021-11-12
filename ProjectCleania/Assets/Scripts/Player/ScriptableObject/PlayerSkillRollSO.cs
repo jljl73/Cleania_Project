@@ -41,4 +41,8 @@ public class PlayerSkillRollSO : PlayerSKillIDSO
     [Header("회피 거리")]
     public float AvoidDistance = 4f;
     public float GetAvoidDistance() { return AvoidDistance; }
+
+    [Header("속도 배속")]
+    public float AvoidSpeedMultiplier = 2f;
+    public float GetAvoidSpeedMultiplier() { return AvoidSpeedMultiplier; }
 }
