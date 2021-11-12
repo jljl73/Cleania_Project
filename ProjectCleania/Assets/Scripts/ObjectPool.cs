@@ -93,6 +93,7 @@ public class ObjectPool : MonoBehaviour
 
         if (obj.TryGetComponent(out T component))
         {
+            obj.transform.SetParent(ObjectPool.Instance.transform);
             return component;
         }
         else

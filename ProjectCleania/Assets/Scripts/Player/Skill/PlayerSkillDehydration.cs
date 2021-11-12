@@ -20,6 +20,8 @@ public class PlayerSkillDehydration : PlayerSkill
     public override int ID { get { return SkillData.ID; } protected set { id = value; } }
     private void Awake()
     {
+        attackArea = GetComponent<Collider>();
+
         UpdateSkillData();
     }
 
@@ -27,8 +29,6 @@ public class PlayerSkillDehydration : PlayerSkill
     {
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
 
-        attackArea = GetComponent<Collider>();
-        //initialNavAgentR = navMeshAgent.radius;
         base.Start();
         animator.SetFloat("Dehydration multiplier", SpeedMultiplier);
 

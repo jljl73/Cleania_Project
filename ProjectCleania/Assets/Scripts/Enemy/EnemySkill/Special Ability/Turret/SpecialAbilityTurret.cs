@@ -9,12 +9,13 @@ public class SpecialAbilityTurret : EnemySkill
     float duration;
     float creationRadius;
     int count;
+    float projectileDuration;
     float shotInterval;
     float shotRange;
     float projectileSpeed;
 
-    [SerializeField]
-    GameObject turretPrefab;
+    //[SerializeField]
+    //GameObject turretPrefab;
 
     [SerializeField]
     SpecialAbilityTurretSO skillData;
@@ -25,8 +26,8 @@ public class SpecialAbilityTurret : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        if (turretPrefab == null)
-            throw new System.Exception("SpecialAbilityTurret doesnt have turretPrefab");
+        //if (turretPrefab == null)
+        //    throw new System.Exception("SpecialAbilityTurret doesnt have turretPrefab");
     }
 
     private new void Start()
@@ -47,6 +48,7 @@ public class SpecialAbilityTurret : EnemySkill
         duration = skillData.GetDuration();
         creationRadius = skillData.GetCreationRadius();
         count = skillData.GetCount();
+        projectileDuration = skillData.GetProjectileDuration();
         shotInterval = skillData.GetShotInterval();
         shotRange = skillData.GetShotRange();
         projectileSpeed = skillData.GetProjectileSpeed();
@@ -66,19 +68,17 @@ public class SpecialAbilityTurret : EnemySkill
         MakeTurret();
     }
 
+    void DeactivateDelay() => this.gameObject.SetActive(false);
+
     void MakeTurret()
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject initiatedOrbit = Instantiate(turretPrefab, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
-            Turret turret = initiatedOrbit.GetComponent<Turret>();
-            if (turret != null)
-                turret.SetUp(enemyMove.TargetObject, shotInterval, shotRange, projectileSpeed, OwnerAbilityStatus, damageScale);
-            // float shotInterval;
-            // float shotRange;
-            // float projectileSpeed;
+            //GameObject initiatedOrbit = Instantiate(turretPrefab, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
+            Turret turret = ObjectPool.SpawnFromPool<Turret>(ObjectPool.enumPoolObject.Turret, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
+            turret.SetUp(duration, projectileDuration, enemyMove.TargetObject, shotInterval, shotRange, projectileSpeed, OwnerAbilityStatus, damageScale);
 
-            Destroy(this.gameObject, duration);
+            // Destroy(this.gameObject, duration);
         }
     }
 

@@ -14,7 +14,7 @@ public class SpecialAbilityDecomposition : EnemySkill
     float stunTime = 2f;
     GameObject target;
 
-    public GameObject DecompositionPrefab;
+    //public GameObject DecompositionPrefab;
 
     [SerializeField]
     SpecialAbilityDecompositionSO skillData;
@@ -25,8 +25,8 @@ public class SpecialAbilityDecomposition : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        if (DecompositionPrefab == null)
-            throw new System.Exception("SpecialAbilityDecomposition doesnt have DecompositionPrefab");
+        //if (DecompositionPrefab == null)
+        //    throw new System.Exception("SpecialAbilityDecomposition doesnt have DecompositionPrefab");
     }
 
     private new void Start()
@@ -69,14 +69,11 @@ public class SpecialAbilityDecomposition : EnemySkill
 
     void MakeMines()
     {
-        GameObject initiatedObj = Instantiate(DecompositionPrefab, transform.position, transform.rotation);
-        initiatedObj.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-        Decomposition decomposition = initiatedObj.GetComponent<Decomposition>();
-        if (decomposition != null)
-        {
-            decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject, OwnerAbilityStatus, damageScale);
-            decomposition.Resize(objectSize);
-        }
+        //GameObject initiatedObj = Instantiate(DecompositionPrefab, transform.position, transform.rotation);
+        //initiatedObj.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
+        Decomposition decomposition = ObjectPool.SpawnFromPool<Decomposition>(ObjectPool.enumPoolObject.Decomposition, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+        decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject, OwnerAbilityStatus, damageScale);
+        decomposition.Resize(objectSize);
     }
 
     Vector3 GetRandomPointInCircle(Vector3 center, float distance)
