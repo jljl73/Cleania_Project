@@ -42,6 +42,18 @@ public partial class UI_ItemContainer : MonoBehaviour
         }
     }
 
+    public int this[ItemInstance item]
+    {
+        get
+        {
+            for (int i = 0; i < controllers.Length; ++i)
+                if (controllers[i].itemInstance == item)
+                    return i;
+
+            return -1;
+        }
+    }
+
     public UI_ItemController this[int index]
     {
         get
@@ -186,7 +198,7 @@ public partial class UI_ItemContainer : MonoBehaviour
         if (dstItem != null)
             if (!srcContainer.Add(dstItem, srcIndex))
             {
-                dstContainer.Remove(dstIndex);
+                dstContainer.Remove(dstContainer[srcItem]);
                 srcContainer.Add(srcItem, srcIndex);
                 if (dstItem != null)
                     dstContainer.Add(dstItem, dstIndex);
