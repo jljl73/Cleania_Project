@@ -223,6 +223,12 @@ public class UI_ItemController : MonoBehaviour,
 
                 default:
                     backgroundImage.rectTransform.position = prevPosition;
+                    if (UI_MessageBox.Show("버릴거야?", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        ItemInstance item = itemInstance;
+                        currentContainer.Remove(this);
+                        SavedData.Instance.Item_World.Add(item);
+                    }
                     break;
             }
         }
@@ -238,7 +244,10 @@ public class UI_ItemController : MonoBehaviour,
         switch (currentContainer.SyncWith)
         {
             case UI_ItemContainer.SyncType.Inventory:
-                GameManager.Instance.npcManager.Dosmth(this);
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                    _DevideItemInInventory();
+                else
+                    GameManager.Instance.npcManager.Dosmth(this);
                 break;
             case UI_ItemContainer.SyncType.Storage:
                 MoveToInventory();
@@ -249,5 +258,28 @@ public class UI_ItemController : MonoBehaviour,
         }
 
         return;
+    }
+
+    void _DevideItemInInventory()
+    {
+        if (itemInstance.Count < 2)
+        {
+            UI_MessageBox.Show("반토막내지는 말아주세요.");
+            return;
+        }
+
+        ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
+
+        if(!currentContainer.Add(devided))
+        {
+            UI_MessageBox.Show("공간이 부족합니다.");
+            return;
+        }
+        currentContainer.Remove(currentContainer[devided]);
+
+        ItemDividePanel devidePanel = currentContainer.GetComponentInChildren<ItemDividePanel>();
+
+        devidePanel.gameObject.SetActive(true);
+        //devidePanel.
     }
 }

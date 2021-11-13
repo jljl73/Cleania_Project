@@ -49,11 +49,11 @@ public class NPCRepair : MonoBehaviour
         {   // repair success
             // tryRepair change money ammount
             SelectItem(selectedItem);   // refresh
-            UI_MessageBox.Message("선택된 장비의 수리를 완료하였습니다.");
+            UI_MessageBox.Show("선택된 장비의 수리를 완료하였습니다.");
         }
         else 
         {   // repair fail
-            UI_MessageBox.Message("클린이 부족합니다.");
+            UI_MessageBox.Show("클린이 부족합니다.");
         }
     }
 
@@ -87,7 +87,7 @@ public class NPCRepair : MonoBehaviour
                 EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>());
             }
             SelectItem(selectedItem);   // refresh
-            UI_MessageBox.Message("모든 장비의 수리를 완료하였습니다.");
+            UI_MessageBox.Show("모든 장비의 수리를 완료하였습니다.");
         }
         else
         {
@@ -117,11 +117,11 @@ public class NPCRepair : MonoBehaviour
                 EquipmentDealer.TryRepair(i, GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>());
             }
             SelectItem(selectedItem);   // refresh
-            UI_MessageBox.Message("장착중인 장비의 수리를 완료하였습니다.");
+            UI_MessageBox.Show("장착중인 장비의 수리를 완료하였습니다.");
         }
         else
         {
-            UI_MessageBox.Message("클린이 부족합니다.");
+            UI_MessageBox.Show("클린이 부족합니다.");
         }
     }
 }
