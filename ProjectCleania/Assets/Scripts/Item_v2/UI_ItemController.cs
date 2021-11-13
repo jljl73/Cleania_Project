@@ -179,6 +179,8 @@ public class UI_ItemController : MonoBehaviour,
         //backgroundImage.raycastTarget = false;
         //itemImage.raycastTarget = false;
         //countText.raycastTarget = false;
+        GameManager.Instance.inputManager.PlayerMovable = false;
+
 
         if (currentContainer.SyncWith == UI_ItemContainer.SyncType.Equipment)
             GameManager.Instance.uiManager.InventoryPanel.transform.SetAsLastSibling();
@@ -195,6 +197,12 @@ public class UI_ItemController : MonoBehaviour,
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
+        //backgroundImage.raycastTarget = true;
+        //itemImage.raycastTarget = true;
+        //countText.raycastTarget = true;
+        GameManager.Instance.inputManager.PlayerMovable = true;
+
+
         eventData.position = backgroundImage.rectTransform.position;
         eventData.position +=
             new Vector2( backgroundImage.rectTransform.sizeDelta.x / itemInstance.SO.GridSize.Width / 2, 
@@ -221,9 +229,6 @@ public class UI_ItemController : MonoBehaviour,
 
         // raycast with offset and choose action
         // if tag is slot, call Add and Remove of each containers.
-        //backgroundImage.raycastTarget = true;
-        //itemImage.raycastTarget = true;
-        //countText.raycastTarget = true;
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
