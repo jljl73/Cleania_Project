@@ -91,6 +91,24 @@ public partial class UI_ItemContainer : MonoBehaviour
         Invoke("_SelfLoad", 0.1f);
     }
 
+    private void OnDestroy()
+    {
+        switch (syncWith)
+        {
+            case SyncType.Inventory:
+                SavedData.Instance.Item_Inventory.QuitSubscribe(Synchronize);
+                break;
+            case SyncType.Storage:
+                SavedData.Instance.Item_Storage.QuitSubscribe(Synchronize);
+                break;
+            case SyncType.Equipment:
+                SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
+                break;
+
+        }
+        
+    }
+
     public bool Add(ItemInstance item, int index = -1, bool sync = true)
     {
         if (item == null)
@@ -233,6 +251,12 @@ public partial class UI_ItemContainer
 
     void Synchronize(iItemStorage sender, ItemStorage_LocalGrid.SyncOperator oper, Point index)
     {
+        if (this == null)
+        {
+            ((ItemStorage<Point>)sender).QuitSubscribe(Synchronize);
+            return;
+        }
+
         switch(oper)
         {
             case ItemStorage<Point>.SyncOperator.Add:
@@ -261,6 +285,12 @@ public partial class UI_ItemContainer
 
     void Synchronize(iItemStorage sender, ItemStorage_Equipments.SyncOperator oper, ItemInstance_Equipment.Type index)
     {
+        if(this == null)
+        {
+            ((ItemStorage<ItemInstance_Equipment.Type>)sender).QuitSubscribe(Synchronize);
+            return;
+        }
+
         switch (oper)
         {
             case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Add:
