@@ -227,7 +227,11 @@ public class UI_ItemController : MonoBehaviour,
             }
         }
 
-        StartCoroutine(_ThrowItemInInventory());
+        //StartCoroutine(_ThrowItemInInventory());
+        var refer = GetComponentInParent<ItemInventory>();
+        refer.ThrowPanel.controller = this;
+        refer.ThrowPanel.gameObject.SetActive(true);
+
 
         // raycast with offset and choose action
         // if tag is slot, call Add and Remove of each containers.

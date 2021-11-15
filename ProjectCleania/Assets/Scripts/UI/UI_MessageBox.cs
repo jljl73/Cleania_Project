@@ -59,9 +59,9 @@ public class UI_MessageBox : MonoBehaviour
     }
 
 
-    static public IEnumerator Show(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
+    static public void Show(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
     {
-        return Instance.Show_Coroutine(message, buttons);
+        Instance._Setup(message, buttons);
     }
 
     public IEnumerator Show_Coroutine(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
@@ -122,6 +122,7 @@ public class UI_MessageBox : MonoBehaviour
 
     private void OnDestroy()
     {
+        if(_singleton == this)
         _singleton = null;
     }
 }
