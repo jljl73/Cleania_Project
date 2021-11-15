@@ -12,7 +12,7 @@ public class NPCMarket : MonoBehaviour
     ScrollRect pageScroll;
 
     List<ItemInMarket> items = new List<ItemInMarket>();
-    Queue<ItemInMarket> soldItems = new Queue<ItemInMarket>();
+    List<ItemInMarket> soldItems = new List<ItemInMarket>();
 
     private void Awake()
     {
@@ -64,16 +64,21 @@ public class NPCMarket : MonoBehaviour
             UI_ItemContainer inventory = inventoryCurrency.GetComponent<UI_ItemContainer>();
             foreach(var i in items)
             {
-                UI_ItemController newController = UI_ItemController.New(i.itemInstance);
-
-                if (inventory.Add(newController))
+                int originCount = i.itemInstance.Count;
+                if (inventory.Add(i.itemInstance))
                 {
-                    inventoryCurrency.AddCrystal(-newController.itemInstance.SO.Price * newController.itemInstance.Count);
+                    inventoryCurrency.AddCrystal(-i.itemInstance.SO.Price * originCount);
+                    if (soldItems.Contains(i))
+                        soldItems.Remove(i);
                     Destroy(i.gameObject);
                 }
                 else
                 {
-                    UI_ItemController.Delete(newController);
+                    if(i.itemInstance.Count != originCount)
+                    {
+                        inventoryCurrency.AddCrystal(-i.itemInstance.SO.Price * (originCount - i.itemInstance.Count));
+                    }
+
                     UI_MessageBox.Message("ÀÎº¥Åä¸®°¡ ²Ë Ã¡½À´Ï´Ù.");
                     break;
                 }
@@ -86,17 +91,20 @@ public class NPCMarket : MonoBehaviour
 
     public void SellItem(UI_ItemController controller)
     {
+        if (soldItems.Count >= 10)
+        {
+            Destroy(soldItems[0].gameObject);
+            soldItems.RemoveAt(0);
+        }
+
         ShowPage(2);
         ItemInMarket newItem = Instantiate(prefab_Item, pages[2].transform).GetComponent<ItemInMarket>();
         newItem.Initialize(controller.itemInstance, pages[2]);
-        soldItems.Enqueue(newItem);
+        soldItems.Add(newItem);
 
-        GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(controller.itemInstance.SO.Price);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(controller.itemInstance.SO.Price * controller.itemInstance.Count);
         GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().Remove(controller);
-        UI_ItemController.Delete(controller);
 
-        if (soldItems.Count >= 10)
-            Destroy(soldItems.Dequeue().gameObject);
     }
     
 }

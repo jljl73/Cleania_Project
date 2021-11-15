@@ -39,6 +39,9 @@ public class ItemStorage_World : ItemStorage<GameObject>, iSavedData
     }
     void _Add(ItemInstance item, Vector3 position, Quaternion rotation)
     {
+        if (item.CurrentStorage != null)
+            item.CurrentStorage.Remove(item);
+
         item.CurrentStorage = this;
 
         GameObject newObject;

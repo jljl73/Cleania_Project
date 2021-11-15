@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour
 {
     Player player;
+    public bool PlayerMovable = true;
 
     void Start()
     {
         player = GameManager.Instance.player;
+        GameManager.Instance.inputManager = this;
     }
 
     void Update()
@@ -30,7 +32,8 @@ public class InputManager : MonoBehaviour
         // 마우스 >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            player.Move(Input.mousePosition);
+            if (PlayerMovable)
+                player.Move(Input.mousePosition);
         }
         // 마우스 <<<<<
 
