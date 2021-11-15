@@ -36,6 +36,8 @@ public class UI_MessageBox : MonoBehaviour
     Button buttonCancel;
 
     DialogResult result = DialogResult.None;
+    static public DialogResult Result
+    { get => Instance.result; }
     //MessageBoxButtons buttons;
 
     static UI_MessageBox _singleton;
@@ -56,16 +58,20 @@ public class UI_MessageBox : MonoBehaviour
         }
     }
 
-    static public DialogResult Show(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
+
+    static public IEnumerator Show(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
+    {
+        return Instance.Show_Coroutine(message, buttons);
+    }
+
+    public IEnumerator Show_Coroutine(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
     {
         Instance._Setup(message, buttons);
 
-        Instance.Show();
+        yield return StartCoroutine(_Wait());
 
-        Instance.gameObject.SetActive(false);
-        return Instance.result;
+        gameObject.SetActive(false);
     }
-
 
     void _Setup(string message, MessageBoxButtons buttons)
     {
@@ -91,12 +97,8 @@ public class UI_MessageBox : MonoBehaviour
         }
     }
 
-    IEnumerator Show()
-    {
-        yield return StartCoroutine(Wait());
-    }
 
-    IEnumerator Wait()
+    IEnumerator _Wait()
     {
         while(result == DialogResult.None)
         {
@@ -107,11 +109,13 @@ public class UI_MessageBox : MonoBehaviour
     public void ButtonOk()
     {
         result = DialogResult.OK;
+        Instance.gameObject.SetActive(false);
     }
 
     public void ButtonCancel()
     {
         result = DialogResult.Cancel;
+        Instance.gameObject.SetActive(false);
     }
 
 

@@ -223,15 +223,11 @@ public class UI_ItemController : MonoBehaviour,
 
                 default:
                     backgroundImage.rectTransform.position = prevPosition;
-                    if (UI_MessageBox.Show("버릴거야?", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        ItemInstance item = itemInstance;
-                        currentContainer.Remove(this);
-                        SavedData.Instance.Item_World.Add(item);
-                    }
                     break;
             }
         }
+
+        StartCoroutine(_ThrowItemInInventory());
 
         // raycast with offset and choose action
         // if tag is slot, call Add and Remove of each containers.
@@ -260,26 +256,44 @@ public class UI_ItemController : MonoBehaviour,
         return;
     }
 
-    void _DevideItemInInventory()
+    IEnumerator _ThrowItemInInventory()
     {
-        if (itemInstance.Count < 2)
+        yield return StartCoroutine(UI_MessageBox.Instance.Show_Coroutine("버릴거야?", MessageBoxButtons.OKCancel));
+
+        switch(UI_MessageBox.Result)
         {
-            UI_MessageBox.Show("반토막내지는 말아주세요.");
-            return;
+            case DialogResult.OK:
+                ItemInstance item = itemInstance;
+                currentContainer.Remove(this);
+                SavedData.Instance.Item_World.Add(item);
+                break;
+
+            case DialogResult.Cancel:
+                break;
         }
+    }
 
-        ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
+    IEnumerator _DevideItemInInventory()
+    {
+        //if (itemInstance.Count < 2)
+        //{
+        //    UI_MessageBox.Show("반토막내지는 말아주세요.");
+        //    return;
+        //}
 
-        if(!currentContainer.Add(devided))
-        {
-            UI_MessageBox.Show("공간이 부족합니다.");
-            return;
-        }
-        currentContainer.Remove(currentContainer[devided]);
+        //ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
 
-        ItemDividePanel devidePanel = currentContainer.GetComponentInChildren<ItemDividePanel>();
+        //if(!currentContainer.Add(devided))
+        //{
+        //    UI_MessageBox.Show("공간이 부족합니다.");
+        //    return;
+        //}
+        //currentContainer.Remove(currentContainer[devided]);
 
-        devidePanel.gameObject.SetActive(true);
-        //devidePanel.
+        //ItemDividePanel devidePanel = currentContainer.GetComponentInChildren<ItemDividePanel>();
+
+        //devidePanel.gameObject.SetActive(true);
+        ////devidePanel.
+        return null;
     }
 }

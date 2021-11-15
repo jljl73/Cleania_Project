@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemThrowPanel : MonoBehaviour
 {
+    [System.NonSerialized]
     public UI_ItemController controller;
 
     public void OnClickedOK()
