@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class ItemDividePanel : MonoBehaviour
 {
-    public ItemInventory itemInventory;
+    public UI_ItemController controller;
 
     public InputField inputField;
     public Slider slider;
     public float nDivide;
+
+
+
+
 
     private void Start()
     {
@@ -27,15 +31,6 @@ public class ItemDividePanel : MonoBehaviour
         inputField.text = slider.value.ToString();
     }
 
-    public void OnClickedUp()
-    {
-        slider.value += 1;
-    }
-
-    public void OnClickedDown()
-    {
-        slider.value -= 1;
-    }
 
     public void InputValue()
     {
@@ -48,9 +43,23 @@ public class ItemDividePanel : MonoBehaviour
         }
     }
 
+
+
+
+
+    public void OnClickedUp()
+    {
+        slider.value += 1;
+    }
+
+    public void OnClickedDown()
+    {
+        slider.value -= 1;
+    }
+
     public void OnClickedOK()
     {
-        itemInventory.OnDivideOK((int)slider.value);
+        //
         gameObject.SetActive(false);
     }
 

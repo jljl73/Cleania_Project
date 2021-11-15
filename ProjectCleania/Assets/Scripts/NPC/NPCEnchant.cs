@@ -96,7 +96,7 @@ public class NPCEnchant : MonoBehaviour
         {
             equipment.ChangedOption = optionDatas[index];
             SelectItem(selectedItem);
-            UI_MessageBox.Message("옵션이 선택되었습니다.");
+            UI_MessageBox.Show("옵션이 선택되었습니다.");
         }
     }
 
@@ -131,7 +131,7 @@ public class NPCEnchant : MonoBehaviour
         {
             default:
                 OnEnable(); // reset panel
-                UI_MessageBox.Message($"인첸트 실패 : {reason.ToString()}");
+                UI_MessageBox.Show($"인첸트 실패 : {reason.ToString()}");
                 break;
         }
     }
