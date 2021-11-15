@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections.ObjectModel;
 
@@ -82,15 +83,25 @@ public class Quest : ScriptableObject
     [SerializeField]
     QuestNeed[] questNeeds;
     public QuestNeed[] QuestNeeds { get { return questNeeds; } }
+
+
+    UnityEvent updateEvent;
+
+    public void AddListener(UnityAction action)
+    {
+        updateEvent.AddListener(action);
+    }
     
     public void Assign()
     {
         state = STATE.Assign;
+        updateEvent.Invoke();
     }
 
     public void GetReward()
     {
         state = STATE.Reward;
+        updateEvent.Invoke();
     }
 
     // 몬스터 잡는거만 체크
@@ -110,6 +121,7 @@ public class Quest : ScriptableObject
 
         if (IsClear())
             state = STATE.Clear;
+        updateEvent.Invoke();
     }
 
     public void Reset()
@@ -119,6 +131,7 @@ public class Quest : ScriptableObject
             questNeeds[i].curValue = 0;
         }
         state = STATE.Unassign;
+        updateEvent.Invoke();
     }
 
     public bool IsClear()
@@ -132,3 +145,4 @@ public class Quest : ScriptableObject
         return true;
     }
 }
+

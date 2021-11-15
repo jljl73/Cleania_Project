@@ -53,7 +53,9 @@ public class QuestManager : MonoBehaviour
         }
 
         SetListHeight();
-        ExpManager.Initailize(0);
+        //ExpManager.Initailize(0);
+        QuestDB.SetNickName(SavedData.Instance.characterName);
+        assignQuests = QuestDB.Load();
     }
 
     void Update()
@@ -71,7 +73,7 @@ public class QuestManager : MonoBehaviour
         AddList(quest);
         GameManager.Instance.soundPlayer.PlaySound("QuestAssign");
 
-        QuestDB.Save(quest);
+        QuestDB.Save(assignQuests);
     }
     
     public void Acheive(QuestNeed.TYPE type, int target)
