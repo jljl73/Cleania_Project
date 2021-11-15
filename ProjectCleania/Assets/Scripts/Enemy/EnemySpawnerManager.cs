@@ -31,6 +31,12 @@ public class EnemySpawnerManager : MonoBehaviour
         SpawnStart();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SpawnStart();
+    }
+
     void SetWeightPerCategories()
     {
         switch (CurrentCategoriesCount)
