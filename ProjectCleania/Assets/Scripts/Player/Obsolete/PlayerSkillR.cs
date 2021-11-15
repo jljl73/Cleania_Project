@@ -17,12 +17,14 @@ public class PlayerSkillR : PlayerSkill
         animator.SetFloat("Dehydration multiplier", SpeedMultiplier);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         // animator.SetInteger("Skill", 6);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillR", true);
         animator.SetTrigger("Dehydration");
+
+        return true;
     }
 
     public override void Activate()

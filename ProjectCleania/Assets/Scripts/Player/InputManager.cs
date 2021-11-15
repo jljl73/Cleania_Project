@@ -6,12 +6,14 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour
 {
     Player player;
-    public bool PlayerMovable = true;
+
+    [SerializeField]
+    EnemySpawnerManager enemySpawnerManager;
 
     void Start()
     {
         player = GameManager.Instance.player;
-        GameManager.Instance.inputManager = this;
+        enemySpawnerManager = FindObjectOfType<EnemySpawnerManager>();
     }
 
     void Update()
@@ -32,8 +34,17 @@ public class InputManager : MonoBehaviour
         // 마우스 >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            if (PlayerMovable)
-                player.Move(Input.mousePosition);
+            player.Move(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            player.PlaySkill(1102);
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            player.StopSkill(1102);
         }
         // 마우스 <<<<<
 
@@ -59,11 +70,30 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1101);
         }
-        if (Input.GetMouseButton(1))
+        
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            player.PlaySkill(1102);
+            player.PlaySkill(1199);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.PlaySkill(1198);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            player.PlaySkill(1196);
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            player.PlaySkill(1197);
         }
         // 키보드 <<<<<
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            enemySpawnerManager.SpawnStart();
+        }
     }
 
 }

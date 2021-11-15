@@ -20,8 +20,9 @@ public class TheDustySkill_1 : EnemySkill
         col.enabled = true;
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
+        return true;
     }
 
     public override void Deactivate()

@@ -56,9 +56,11 @@ public class BatSkill2 : EnemySkill
         return center;
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         // animator.SetTrigger("Attack Soundwave");
+
+        return true;
     }
 
     override public void Activate()

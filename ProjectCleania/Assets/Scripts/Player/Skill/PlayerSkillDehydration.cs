@@ -20,6 +20,8 @@ public class PlayerSkillDehydration : PlayerSkill
     public override int ID { get { return SkillData.ID; } protected set { id = value; } }
     private void Awake()
     {
+        attackArea = GetComponent<Collider>();
+
         UpdateSkillData();
     }
 
@@ -27,8 +29,6 @@ public class PlayerSkillDehydration : PlayerSkill
     {
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
 
-        attackArea = GetComponent<Collider>();
-        //initialNavAgentR = navMeshAgent.radius;
         base.Start();
         animator.SetFloat("Dehydration multiplier", SpeedMultiplier);
 
@@ -51,7 +51,7 @@ public class PlayerSkillDehydration : PlayerSkill
         damageRange = SkillData.GetDamageRange();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -59,6 +59,16 @@ public class PlayerSkillDehydration : PlayerSkill
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillR", true);
         animator.SetTrigger("Dehydration");
+
+        return true;
+    }
+
+    public override void StopSkill()
+    {
+        Deactivate();
+        //animator.SetTrigger("DehydrationEnd");
+        effectController[0].StopSKillEffect();
+
     }
 
     public override void Activate()
@@ -68,6 +78,7 @@ public class PlayerSkillDehydration : PlayerSkill
 
     public override void Deactivate()
     {
+        animator.SetTrigger("DehydrationEnd");
         animator.SetBool("OnSkillR", false);
         animator.SetBool("OnSkill", false);
         attackArea.enabled = false;

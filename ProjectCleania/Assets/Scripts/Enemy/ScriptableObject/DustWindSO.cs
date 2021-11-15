@@ -52,4 +52,8 @@ public class DustWindSO : EnemySkillSO
     [Header("밀어치기 힘")]
     public float HitForce;
     public float GetHitForce() { return HitForce; }
+
+    [Header("밀어치기 반경 (수정 금지)")]
+    public float PushRadius;
+    public float GetPushRadius() { return PushRadius; }
 }

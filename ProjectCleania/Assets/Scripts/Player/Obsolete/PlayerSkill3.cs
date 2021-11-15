@@ -14,12 +14,14 @@ public class PlayerSkill3 : PlayerSkill
         animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         //animator.SetInteger("Skill", 3);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill3", true);
         animator.SetTrigger("CleaningWind");
+
+        return true;
     }
 
     public override void Deactivate()

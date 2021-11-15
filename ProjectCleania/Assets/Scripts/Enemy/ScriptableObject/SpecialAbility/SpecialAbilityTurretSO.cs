@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SpecialAbilityTurret", menuName = "Scriptable Object/Enemy/SpecialAbilityTurret")]
 public class SpecialAbilityTurretSO : EnemySkillSO
 {
-    [Header("지속 시간")]
+    [Header("터렛 수명")]
     public float Duration;
     public float GetDuration() { return Duration; }
 
@@ -16,6 +16,10 @@ public class SpecialAbilityTurretSO : EnemySkillSO
     [Header("생성 갯수")]
     public int Count;
     public int GetCount() { return Count; }
+
+    [Header("총알 수명")]
+    public float ProjectileDuration = 8f;
+    public float GetProjectileDuration() { return ProjectileDuration; }
 
     [Header("발사 간격")]
     public float ShotInterval;

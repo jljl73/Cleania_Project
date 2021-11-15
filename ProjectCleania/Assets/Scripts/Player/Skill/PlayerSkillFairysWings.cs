@@ -61,7 +61,7 @@ public class PlayerSkillFairysWings : PlayerSkill
         speedUpRate = SkillData.GetSpeedUpRate();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -69,6 +69,8 @@ public class PlayerSkillFairysWings : PlayerSkill
         animator.SetBool("OnSkill1", true);
         //animator.SetInteger("Skill", 1);
         animator.SetTrigger("FairysWings");
+
+        return true;
     }
 
     override public void Activate(int dependedEffectIdx)
@@ -82,7 +84,6 @@ public class PlayerSkillFairysWings : PlayerSkill
     IEnumerator SpeedUp(int effectIdx)
     {
         bSkill = true;
-        duration = 5.0f;
         nDeadEnemy = 0;
 
         base.PlayEffects(effectIdx);

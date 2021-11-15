@@ -26,10 +26,26 @@ public class Decomposition : DamagingProperty
             throw new System.Exception("Decomposition doesnt have nav");
     }
 
+    private void OnEnable()
+    {
+        if (!isSetUp) return;
+        Start();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Decomposition, this.gameObject);
+    }
+
     private void Start()
     {
+        Invoke("ReadyToExplode", existTime);
+
         effectController.Scale = damageRange * 0.76923f;
     }
+
+    void DeactivateDelay() => gameObject.SetActive(false);
 
     private void Update()
     {
@@ -46,11 +62,9 @@ public class Decomposition : DamagingProperty
         this.explodeDamageRange = explodeDamageRange;
         this.stunTime = stunTime;
         this.target = target;
+        nav.speed = speed;
 
         base.SetUp(abil, damageScale);
-
-        nav.speed = speed;
-        Invoke("ReadyToExplode", existTime);
     }
 
     void ReadyToExplode()
@@ -75,7 +89,8 @@ public class Decomposition : DamagingProperty
             }
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)

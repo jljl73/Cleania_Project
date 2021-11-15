@@ -26,21 +26,16 @@ public class ItemDrop : MonoBehaviour
 
     void DropItem()
     {
-        print("ItemDrop start!");
         // 몬스터 등급 확인
         EnemyStateMachine.enumRank monsterRank = enemyStateMachine.Rank;
 
         // 몬스터 드랍 테이블 참조하여 드랍 수량 결정
         int dropCount = DropTableData.GetDropCount(monsterRank);
 
-        print("dropCount: " + dropCount);
-
         for (int i = 0; i < dropCount; i++)
         {
             // 전설 등급 결정
             Item.ITEMRANK itemRank = DropTableData.GetDropRank(monsterRank);
-
-            print("Dropped : " + itemRank.ToString());
 
             // 아이템 생성
             //ItemInstance.Instantiate(1101001); 아이템 데이터 생성

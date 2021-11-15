@@ -10,8 +10,8 @@ public class SpecialAbilityPollution : EnemySkill
 
     bool abilityActivate = false;
 
-    [SerializeField]
-    GameObject pollutionPrefab;
+    //[SerializeField]
+    //GameObject pollutionPrefab;
 
     [SerializeField]
     SpecialAbilityPollutionSO skillData;
@@ -34,12 +34,14 @@ public class SpecialAbilityPollution : EnemySkill
     private void FixedUpdate()
     {
         if (!abilityActivate) return;
-        GameObject obj = Instantiate(pollutionPrefab, transform.position, transform.rotation);
-        Pollution contactStayDamage = obj.GetComponent<Pollution>();
-        contactStayDamage.SetUp(OwnerAbilityStatus, damageRate);
-        contactStayDamage.Resize(damageRange);
+        //GameObject obj = Instantiate(pollutionPrefab, transform.position, transform.rotation);
+        //GameObject obj = ObjectPool.GetObject(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
+        Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
+        //Pollution pollution = obj.GetComponent<Pollution>();
+        pollution.SetUp(pollutionDuration, OwnerAbilityStatus, damageRate);
+        pollution.Resize(damageRange);
 
-        Destroy(obj, pollutionDuration);
+        //Destroy(obj, pollutionDuration);
     }
 
     public void UpdateSkillData()
@@ -54,13 +56,15 @@ public class SpecialAbilityPollution : EnemySkill
         pollutionDuration = skillData.GetDuration();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         UpdateSkillData();
 
         abilityActivate = true;
         // 체력 증가
         //enemy.buff
+
+        return true;
     }
 
     public override void Deactivate()

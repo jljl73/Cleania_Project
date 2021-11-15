@@ -18,12 +18,14 @@ public class PlayerSkillL : PlayerSkill
 
     // Update is called once per frame
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkillC", true);
         animator.SetTrigger("Dusting");
         // animator.SetInteger("Skill", 5);
+
+        return true;
     }
 
     public override void Activate()

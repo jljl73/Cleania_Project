@@ -24,9 +24,11 @@ public class TheDustySkill_3 : Skill
         gameObject.SetActive(false);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetTrigger("Cast");
+
+        return true;
     }
 
     public override void Deactivate()

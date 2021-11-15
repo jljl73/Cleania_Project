@@ -73,6 +73,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
         SkillSlotDependency = SkillData.GetTriggerKey();
 
+        duration = SkillData.GetDuration();
+
         gatherEnergySize = SkillData.GetGatherEnergySize();
         smashDamageRate = SkillData.GetSmashDamageRate();
         smashRange = SkillData.GetSmashRange();
@@ -84,7 +86,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -92,6 +94,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill3", true);
         animator.SetTrigger("CleaningWind");
+
+        return true;
     }
 
     public override void Deactivate()
@@ -103,7 +107,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
     override public void Activate()
     {
         // 내려치기
-        Collider[] overlappedColliders = Physics.OverlapSphere(transform.position, smashRange * 3.5f);
+        Collider[] overlappedColliders = Physics.OverlapSphere(transform.position, smashRange);
         foreach (Collider collider in overlappedColliders)
         {
             if (collider.CompareTag("Enemy"))

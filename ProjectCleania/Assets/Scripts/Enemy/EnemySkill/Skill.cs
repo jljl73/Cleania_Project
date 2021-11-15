@@ -10,6 +10,7 @@ public abstract class Skill : MonoBehaviour
 
     public delegate void DelegateVoid();
     public event DelegateVoid OnPlaySkill;
+    public event DelegateVoid OnSkillEnd;
 
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
@@ -43,13 +44,27 @@ public abstract class Skill : MonoBehaviour
     public virtual void Activate() { }
     public virtual void Activate(int dependedEffectIdx = 0) { }
 
-    public virtual void AnimationActivate()
+    public virtual bool IsAvailable()
+    {
+        return true;
+    }
+
+    // Return true if i have to update cooltime
+    public virtual bool AnimationActivate()
     {
         if (OnPlaySkill != null)
             OnPlaySkill();
+
+        return true;
     }
 
-    public virtual void Deactivate() { }
+    public virtual void Deactivate()
+    {
+        if (OnSkillEnd != null)
+            OnSkillEnd();
+    }
+
+    public virtual void StopSkill() { }
 
     public List<SkillEffectController> effectController;
 

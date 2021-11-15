@@ -25,6 +25,11 @@ public class EnemySpawner : MonoBehaviour
     public float Weight { get { return weight; } set { weight = value; } }
     public int RareMonsterCount { set { rareMonsterCount = value; } }
 
+    private void Awake()
+    {
+        print("RareMonsters[Random.Range(0, RareMonsters.Count)].name: " + RareMonsters[Random.Range(0, RareMonsters.Count)].name);
+    }
+
     public void Spawn()
     {
         float tempTotalWeight = weight;
@@ -37,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
                 break;
             GameObject newMonster = Instantiate(RareMonsters[Random.Range(0, RareMonsters.Count)], GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
             // newMonster.GetComponent<Enemy>().EnemySpawner = gameObject;
-
+            // GameObject newMonster = GenerateObject(RareMonsters[Random.Range(0, RareMonsters.Count)]);
             newMonster.GetComponentInChildren<EnemyChase>().EnemySpawner = gameObject;
             tempTotalWeight -= RareMonsterWeight;
 
@@ -57,11 +62,34 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject newMonster = Instantiate(NormalMonsters[Random.Range(0, NormalMonsters.Count)], GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
             // newMonster.GetComponent<Enemy>().EnemySpawner = gameObject;
+            // GameObject newMonster = GenerateObject(NormalMonsters[Random.Range(0, NormalMonsters.Count)]);
             newMonster.GetComponentInChildren<EnemyChase>().EnemySpawner = gameObject;
             tempTotalWeight -= NormalMonsterWeight;
         }
     }
 
+    GameObject GenerateObject(GameObject obj)
+    {
+        Vector3 generatedPose = GetRandomPointInCircle(this.transform.position, SpawnRadius);
+        Enemy enemy;
+        switch (obj.name)
+        {
+            case "Enemy_HighDusty":
+                enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.HighDusty, generatedPose, this.transform.rotation);
+                break;
+            case "Enemy_SummonerDusty":
+                enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.SummonerDusty, generatedPose, this.transform.rotation);
+                break;
+            case "Enemy_Dusty":
+                enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.Dusty, generatedPose, this.transform.rotation);
+                break;
+            default:
+                enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.WildInti, generatedPose, this.transform.rotation);
+                break;
+        }
+
+        return enemy.gameObject;
+    }
 
 
     Vector3 GetRandomPointInCircle(Vector3 center, float distance)

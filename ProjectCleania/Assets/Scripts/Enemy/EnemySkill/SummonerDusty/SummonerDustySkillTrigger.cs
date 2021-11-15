@@ -54,27 +54,22 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
         {
             if (collider.CompareTag("Player"))
             {
-                if (enemySkillManager.PlayRandomSpecialSkill())
-                    return;
+                //if (enemySkillManager.PlayRandomSpecialSkill())
+                //    return;
 
-                // 먼지바람
-                if (enemySkillManager.PlaySkill(2402))
-                    return;
+                //if (enemySkillManager.PlaySkill(2902))
+                //    return;
+
+                //// 먼지바람
+                //if (enemySkillManager.PlaySkill(2402))
+                //    return;
             }
         }
 
-        if (enemyMove.ExistTarget())
-        {
-            #region
-            //if (isSummonCoolTime) return;
-
-            //if (IsSkillAvailable())
-            //{
-            //    StartCoroutine(Summon());
-            //}
-            #endregion
-            enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
-        }
+        //if (enemyMove.ExistTarget())
+        //{
+        //    enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
+        //}
     }
 
     #region
