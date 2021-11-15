@@ -16,8 +16,8 @@ public class Fog : MonoBehaviour
     Vector3[] m_vertices;
     Color[] m_colors;
 
-    float width = 400.0f;
-    float height = 400.0f;
+    //float width = 400.0f;
+    //float height = 400.0f;
 
     void Start()
     {
@@ -35,7 +35,6 @@ public class Fog : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(r, out hit, 1000, m_fogLayer, QueryTriggerInteraction.Collide))
         {
-
             for (int i = 0; i < m_vertices.Length; ++i)
             {
                 Vector3 v = m_fogOfWarPlane.transform.TransformPoint(m_vertices[i]);

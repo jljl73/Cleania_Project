@@ -4,42 +4,42 @@ using UnityEngine;
 
 public class DialogManager : MonoBehaviour
 {
-    public UIManager uiManager;
     public GameObject MarketDialog;
     public GameObject RepairDialog;
     public GameObject EnchantDialog;
     public GameObject StorageDialog;
     GameObject QuestDialog = null;
 
-    public void ShowMarketDialog()
+    public void ShowMarketDialog(bool bActive)
     {
-        ShowDialog(MarketDialog);
+        ShowDialog(MarketDialog, bActive);
     }
 
-    public void ShowRepairDialog()
+    public void ShowRepairDialog(bool bActive)
     {
-        ShowDialog(RepairDialog);
+        ShowDialog(RepairDialog, bActive);
     }
 
-    public void ShowEnchantDialog()
+    public void ShowEnchantDialog(bool bActive)
     {
-        ShowDialog(EnchantDialog);
+        ShowDialog(EnchantDialog, bActive);
     }
 
-    public void ShowStorageDialog()
+    public void ShowStorageDialog(bool bActive)
     {
-        ShowDialog(StorageDialog);
+        ShowDialog(StorageDialog, bActive);
     }
 
     public void ShowQuestDialog(string dialogName)
     {
-        QuestDialog = transform.Find(dialogName).gameObject; ;
-        ShowDialog(QuestDialog);
+        QuestDialog = transform.Find(dialogName).gameObject;
+        ShowDialog(QuestDialog, true);
     }
 
-    void ShowDialog(GameObject dialog)
+    void ShowDialog(GameObject dialog, bool bActive)
     {
-        dialog.SetActive(!dialog.activeSelf);
+        dialog.SetActive(bActive);
+        GameManager.Instance.soundPlayer.PlaySound("NPCInteraction");
     }
 
     public void OffDialog()

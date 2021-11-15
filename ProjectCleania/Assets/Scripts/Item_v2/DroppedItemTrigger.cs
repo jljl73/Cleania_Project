@@ -41,9 +41,6 @@ public class DroppedItemTrigger : MonoBehaviour
             {
                 container.Parent.Remove(itemData);
                 droppedItems.Remove(droppedItem);
-                var invenUI = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>();
-                var newController = ItemController_v2.New(itemData, invenUI);
-                invenUI.Add(newController, out newController.prevIndex);
             }
 
         }

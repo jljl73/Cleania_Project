@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Collections.ObjectModel;
 
 [System.Serializable]
 public struct QuestReward
@@ -42,7 +43,7 @@ public struct QuestNeed
             ++curValue;
         else
         {
-            curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().GetNumberItem(this.target);
+            curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().GetNumberItem(this.target);
         }
     }
 
@@ -57,7 +58,7 @@ public struct QuestNeed
         }
     }
 }
-[CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Object/Quest")]
+[CreateAssetMenu(fileName = "Quest", menuName = "Scriptable Object/Quest")]
 public class Quest : ScriptableObject
 {
     public enum STATE { Unassign, Assign, Clear, Reward };
@@ -71,7 +72,6 @@ public class Quest : ScriptableObject
     CATEGORY category;
     public CATEGORY Catergory { get { return category; } }
 
-
     public string Name;
     public string Content;
 
@@ -82,7 +82,7 @@ public class Quest : ScriptableObject
     [SerializeField]
     QuestNeed[] questNeeds;
     public QuestNeed[] QuestNeeds { get { return questNeeds; } }
-
+    
     public void Assign()
     {
         state = STATE.Assign;
@@ -107,6 +107,7 @@ public class Quest : ScriptableObject
             else if (questNeeds[i].type == QuestNeed.TYPE.Item)
                 questNeeds[i].Achieve();
         }
+
         if (IsClear())
             state = STATE.Clear;
     }
