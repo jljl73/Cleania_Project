@@ -71,27 +71,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(time);
         ActivateColliders(true);
     }
-    //public void Stunned(bool isStunned, float stunnedTime)
-    //{
-    //    if (isStunned)
-    //    {
-    //        StartCoroutine("StunnedFor", stunnedTime);
-    //    }
-    //    else
-    //    {
-    //        animator.speed = 1;
-    //        navMeshAgent.enabled = true;
-    //    }
-    //}
 
-    //IEnumerator StunnedFor(float time)
-    //{
-    //    animator.speed = 0;
-    //    navMeshAgent.enabled = false;
-    //    yield return new WaitForSeconds(time);
-    //    animator.speed = 1;
-    //    navMeshAgent.enabled = true;
-    //}
 
     public void Die()
     {
@@ -168,27 +148,6 @@ public class Enemy : MonoBehaviour
     {
         enemyMove.ReleaseTarget();
     }
-
-    //public void ActivateSkillEffect(AnimationEvent myEvent)
-    //{
-    //    skillManager.ActivateSkillEffect(myEvent);
-    //}
-
-    //public void DeactivateSkillEffect(AnimationEvent myEvent)
-    //{
-    //    skillManager.DeactivateSkillEffect(myEvent);
-    //}
-
-    //// Listener
-    //public void ActivateSkill(int type)
-    //{
-    //    skillManager.ActivateSkill(type);
-    //}
-
-    //public void DeactivateSkill(int type)
-    //{
-    //    skillManager.DeactivateSkill(type);
-    //}
 
     public static string GetName(int ID)
     {

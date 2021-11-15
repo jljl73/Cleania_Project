@@ -7,9 +7,13 @@ public class InputManager : MonoBehaviour
 {
     Player player;
 
+    [SerializeField]
+    EnemySpawnerManager enemySpawnerManager;
+
     void Start()
     {
         player = GameManager.Instance.player;
+        enemySpawnerManager = FindObjectOfType<EnemySpawnerManager>();
     }
 
     void Update()
@@ -75,7 +79,21 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1198);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            player.PlaySkill(1196);
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            player.PlaySkill(1197);
+        }
         // Å°º¸µå <<<<<
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            enemySpawnerManager.SpawnStart();
+        }
     }
 
 }

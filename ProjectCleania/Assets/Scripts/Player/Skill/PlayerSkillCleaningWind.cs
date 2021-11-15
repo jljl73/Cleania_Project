@@ -107,7 +107,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
     override public void Activate()
     {
         // 내려치기
-        Collider[] overlappedColliders = Physics.OverlapSphere(transform.position, smashRange * 3.5f);
+        Collider[] overlappedColliders = Physics.OverlapSphere(transform.position, smashRange);
         foreach (Collider collider in overlappedColliders)
         {
             if (collider.CompareTag("Enemy"))

@@ -73,6 +73,8 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+            Destroy(this.gameObject);
         DontDestroyOnLoad(this.gameObject);
         Instance = this;
         AddQueueToDict();

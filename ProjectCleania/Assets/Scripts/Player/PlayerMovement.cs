@@ -55,7 +55,13 @@ public class PlayerMovement : MonoBehaviour, IStunned
     void Update()
     {
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
-            player.stateMachine.CompareState(StateMachine.enumState.Attacking)) return;
+            player.stateMachine.CompareState(StateMachine.enumState.Attacking))
+        {
+            ResetNavigation(this.transform.position);
+            return;
+        }
+
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
 
         if (!isOrderedToMove || isStunned)
         {
@@ -88,6 +94,12 @@ public class PlayerMovement : MonoBehaviour, IStunned
     public void StopMoving()
     {
         targetPose = transform.position;
+    }
+
+    void ResetNavigation(Vector3 newPose)
+    {
+        targetPose = transform.position;
+        playerNavMeshAgent.SetDestination(targetPose);
     }
 
     private void ActivateNavigation()

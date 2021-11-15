@@ -7,6 +7,7 @@ public class PlayerSkillVillageReturn : PlayerSkill
     public PlayerSkillVillageReturnSO skillData;
 
     float timeCost;
+    string villageName;
     Vector3 returnPosition;
 
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -31,6 +32,7 @@ public class PlayerSkillVillageReturn : PlayerSkill
 
         SkillSlotDependency = skillData.GetTriggerKey();
         timeCost = skillData.GetTimeCost();
+        villageName = skillData.GetVillageName();
         returnPosition = skillData.GetReturnPosition();
     }
 
@@ -38,9 +40,12 @@ public class PlayerSkillVillageReturn : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkillEtc", true);
-        animator.SetTrigger("VillageReturn");
+        //animator.SetBool("OnSkill", true);
+        //animator.SetBool("OnSkillEtc", true);
+        // animator.SetTrigger("VillageReturn");
+        GameManager.Instance.ChangeScene(villageName);
+        Player player = FindObjectOfType<Player>();
+        player.gameObject.transform.position = returnPosition;
 
         return true;
     }
@@ -55,7 +60,5 @@ public class PlayerSkillVillageReturn : PlayerSkill
     {
         base.Deactivate();
         //effectController[0].PlaySkillEffect();
-        animator.SetBool("OnSkillEtc", false);
-        animator.SetBool("OnSkill", false);
     }
 }
