@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class ItemThrowPanel : MonoBehaviour
 {
-    public ItemInventory itemInventory;
+    [System.NonSerialized]
+    public UI_ItemController controller;
 
     public void OnClickedOK()
     {
-        itemInventory.OnThrowOK();
+        if (controller != null)
+        {
+            ItemInstance item = controller.itemInstance;
+            controller.currentContainer.Remove(controller);
+            SavedData.Instance.Item_World.Add(item);
+
+            controller = null;
+        }
         gameObject.SetActive(false);
     }
 
     public void OnClickedCancel()
     {
+        controller = null;
+
         gameObject.SetActive(false);
     }
 }

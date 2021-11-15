@@ -77,6 +77,16 @@ public partial class Equipable : MonoBehaviour, iSavedData
         }
     }
 
+    private void OnDestroy()
+    {
+        switch (syncWith)
+        {
+            case SyncType.PlayerEquipment:
+                SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
+                break;
+        }
+    }
+
     public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment, bool sync = true)
     {
         if (sync)

@@ -244,7 +244,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773973, y: 1}
+    m_SensorSize: {x: 1.777448, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -414,6 +414,10 @@ PrefabInstance:
     - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_Name
       value: NPC (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6023421954684956923, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_RootOrder
@@ -705,7 +709,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6023421954684956918, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: Value
-      value: QuestDialog (1)
+      value: QuestDialog 1002
       objectReference: {fileID: 0}
     - target: {fileID: 6023421954684956918, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: npctype
@@ -714,6 +718,10 @@ PrefabInstance:
     - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_Name
       value: NPC (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6023421954684956923, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_RootOrder
@@ -1962,7 +1970,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4944885585885749602, guid: 2513259196463b84d87bf1f26a6909df, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4944885585885749602, guid: 2513259196463b84d87bf1f26a6909df, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2609,6 +2617,10 @@ PrefabInstance:
     - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_Name
       value: NPC (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6023421954684956923, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_RootOrder
@@ -3422,58 +3434,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7116404930934774724, guid: 559e2830c6f0b7942a1a8375be05bea7, type: 3}
   m_PrefabInstance: {fileID: 1491689258}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1507636914
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1507636916}
-  - component: {fileID: 1507636915}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1507636915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507636914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6919b3a3560542b41a3c6c1442391f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: test
-  Item_Equipments:
-    SD_equipments: []
-  Item_Inventory:
-    SD_equipments: []
-    SD_etcs: []
-  Item_Storage:
-    SD_equipments: []
-    SD_etcs: []
---- !u!4 &1507636916
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507636914}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1553855614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3488,6 +3448,10 @@ PrefabInstance:
     - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_Name
       value: NPC (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6023421954684956923, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_RootOrder
@@ -4221,7 +4185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5033f056e4e945c418ffea280dd8a6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnerManager: {fileID: 0}
   PlayerMovable: 1
 --- !u!4 &1827780756
 Transform:
@@ -4858,6 +4821,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2114876669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114876672}
+  - component: {fileID: 2114876671}
+  - component: {fileID: 2114876670}
+  m_Layer: 0
+  m_Name: Portal To Forest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &2114876670
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114876669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 4, z: 30}
+  m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &2114876671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114876669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660b3f9d105dc9c4e9f4e7b714d6990d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneName: MY_DirtyForest_Village_1
+--- !u!4 &2114876672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114876669}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 25.28, y: 2.31, z: 330.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140166461
 GameObject:
   m_ObjectHideFlags: 0
@@ -5271,6 +5292,10 @@ PrefabInstance:
     - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023421954684956922, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6023421954684956923, guid: 46906b8eeea8e654582db87e101462e1, type: 3}
       propertyPath: m_RootOrder
