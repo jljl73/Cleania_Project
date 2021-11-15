@@ -32,13 +32,14 @@ public class DialogManager : MonoBehaviour
 
     public void ShowQuestDialog(string dialogName)
     {
-        QuestDialog = transform.Find(dialogName).gameObject; ;
+        QuestDialog = transform.Find(dialogName).gameObject;
         ShowDialog(QuestDialog, true);
     }
 
     void ShowDialog(GameObject dialog, bool bActive)
     {
         dialog.SetActive(bActive);
+        GameManager.Instance.soundPlayer.PlaySound("NPCInteraction");
     }
 
     public void OffDialog()
