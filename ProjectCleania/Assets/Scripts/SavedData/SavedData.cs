@@ -124,6 +124,7 @@ public class SavedData : MonoBehaviour
             _singleton.Item_Inventory.ShareSubscribers(this.Item_Inventory);
             _singleton.Item_Storage.ShareSubscribers(this.Item_Storage);
             _singleton.Item_World.ShareSubscribers(this.Item_World);
+            Destroy(_singleton.gameObject);
         }
 
         _singleton = this;
@@ -132,7 +133,7 @@ public class SavedData : MonoBehaviour
     private void OnEnable()
     {
         Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
-
+        DontDestroyOnLoad(this);
         Load();
     }
 
@@ -140,6 +141,7 @@ public class SavedData : MonoBehaviour
     {
         Save();
     }
+
 
 
     public void Test_Add1101001()

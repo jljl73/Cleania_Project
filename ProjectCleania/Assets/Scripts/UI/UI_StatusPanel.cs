@@ -24,12 +24,12 @@ public class UI_StatusPanel : MonoBehaviour
     {
         if (status)
         {
-            coreTexts[0].text = $"Level : {status.level.ToString().PadLeft(8)}";
+            coreTexts[0].text = $"Level : {ExpManager.Level.ToString().PadLeft(8)}";
         }
 
         if (abilityStatus)
         {
-            coreTexts[0].text = $"{status.level}";
+            coreTexts[0].text = $"{ExpManager.Level}";
             coreTexts[1].text = $"{abilityStatus[Ability.Stat.Strength]}";
             coreTexts[2].text = $"{abilityStatus.DPS()}";
             coreTexts[3].text = $"{abilityStatus[Ability.Stat.Vitality]}";

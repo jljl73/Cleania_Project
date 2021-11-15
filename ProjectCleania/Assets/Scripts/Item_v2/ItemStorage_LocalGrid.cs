@@ -373,13 +373,17 @@ public partial class ItemStorage_LocalGrid
                 i.Key.Count += extraGap;
                 item.Count -= extraGap;
 
-                OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
+                //OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
+                OnSynchronize(this, SyncOperator.Remove, i.Value);
+                OnSynchronize(this, SyncOperator.Add, i.Value);
             }
             else
             {
                 i.Key.Count += item.Count;
 
-                OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
+                //OnSynchronize(this, SyncOperator.Refresh, Point.Empty);
+                OnSynchronize(this, SyncOperator.Remove, i.Value);
+                OnSynchronize(this, SyncOperator.Add, i.Value);
                 return true;
             }
         }

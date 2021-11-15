@@ -13,16 +13,26 @@ MonoBehaviour:
   m_Name: Quest 2001
   m_EditorClassIdentifier: 
   state: 0
-  category: 0
+  category: 1
   Name: "\uAC15\uD55C \uC6A9\uC0AC\uC784\uC744 \uC99D\uBA85\uD558\uAE30!"
   Content: "\uB354\uC2A4\uD2F0 20\uB9C8\uB9AC\uC640 \uC57C\uC0DD \uC778\uD2F0 10\uB9C8\uB9AC\uB97C
     \uCC98\uCE58\uD558\uACE0 \uB354\uC2A4\uD2F0 \uBD80\uC2A4\uB7EC\uAE30 5\uAC1C
     \uCC59\uACA8\uC624\uAE30 "
   questRewards:
   - type: 1
-    value: 2000
+    value: 500
+  - type: 0
+    value: 1000
   questNeeds:
+  - type: 0
+    target: 5001
+    targetValue: 20
+    curValue: 18
+  - type: 0
+    target: 5002
+    targetValue: 10
+    curValue: 60
   - type: 1
     target: 3666001
     targetValue: 5
-    curValue: 0
+    curValue: 2
