@@ -8,52 +8,72 @@ public class DialogButton : MonoBehaviour
 {
     Dialog dialog = null;
     Button button;
-    enum Func { NextPage, QuestAssign, QuestReward, NpcPanel, Close };
+    public enum TYPE { NextPage, NextPageWithQuest, QuestAssign, QuestReward, NpcPanel, Close };
 
     Quest quest;
     [SerializeField]
-    Func func;
+    TYPE type;
     [SerializeField]
     string value;
 
-    void Start()
+    void Awake()
     {
         dialog = GetComponentInParent<Dialog>();
-        button = GetComponent<Button>();
+    }
+
+    public void Initialize(TYPE type, Quest quest, string value)
+    {
+        this.type = type;
+        this.value = value;
+        this.quest = quest;
         AddListener();
     }
 
     void AddListener()
     {
-        switch (func)
+        if (button == null) button = GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
+        switch (type)
         {
-            case Func.NextPage:
-                button.onClick.AddListener(() => NextPage(int.Parse(value)));
+            case TYPE.NextPage:
+                button.onClick.AddListener(NextPage);
                 break;
-            case Func.QuestAssign:
+            case TYPE.NextPageWithQuest:
+                button.onClick.AddListener(NextPageWithQuest);
+                break;
+            case TYPE.QuestAssign:
                 button.onClick.AddListener(QuestAssign);
+                button.onClick.AddListener(CloseDialog);
                 break;
-            case Func.QuestReward:
+            case TYPE.QuestReward:
                 button.onClick.AddListener(QuestGetReward);
+                button.onClick.AddListener(CloseDialog);
                 break;
-            case Func.NpcPanel:
-                button.onClick.AddListener(() => ShowPanel(value));
+            case TYPE.NpcPanel:
+                button.onClick.AddListener(ShowPanel);
+                button.onClick.AddListener(CloseDialog);
                 break;
-            case Func.Close:
+            case TYPE.Close:
                 button.onClick.AddListener(CloseDialog);
                 break;
         }
     }
 
-
-    void NextPage(int next)
+    void NextPage()
     {
-        dialog.NextPage(next);
+        int next = int.Parse(value);
+        dialog.ChangePage(next);
+    }
+
+    void NextPageWithQuest()
+    {
+        string[] values = value.Split(' ');
+        int next = int.Parse(values[(int)quest.State]);
+        dialog.ChangePage(next);
     }
 
     void QuestAssign()
     {
-        quest = Resources.Load("ScriptableObject/QuestTable/" + value) as Quest;
         if (quest == null)
         {
             Debug.Log("Quest is null");
@@ -64,8 +84,7 @@ public class DialogButton : MonoBehaviour
 
     void QuestGetReward()
     {
-        quest = Resources.Load("ScriptableObject/QuestTable/" + value) as Quest;
-        if(quest == null)
+        if (quest == null)
         {
             Debug.Log("Quest is null");
             return;
@@ -73,7 +92,7 @@ public class DialogButton : MonoBehaviour
         GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest);
     }
 
-    void ShowPanel(string value)
+    void ShowPanel()
     {
         switch (value)
         {

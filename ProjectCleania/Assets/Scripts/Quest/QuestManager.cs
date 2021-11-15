@@ -60,7 +60,7 @@ public class QuestManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            ExpManager.Acquire(100);
+            
         }
     }
 
@@ -150,7 +150,8 @@ public class QuestManager : MonoBehaviour
             switch (q.type)
             {
                 case QuestReward.TYPE.clean:
-                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
+                    Debug.Log("크리스탈 위치 설정해야댐");
+                    //GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
                     break;
                 case QuestReward.TYPE.exp:
                     ExpManager.Acquire(q.value);
