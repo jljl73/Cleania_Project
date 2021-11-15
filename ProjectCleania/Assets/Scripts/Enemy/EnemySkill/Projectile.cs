@@ -29,7 +29,7 @@ public class Projectile : DamagingProperty
 
         // ∏ÆªÁ¿Ã¬°
         //this.gameObject.transform.localScale = new Vector3(damageRange, damageRange, damageRange);
-        skillEffectController.Scale = damageRange;
+        skillEffectController.Scale = damageRange * 0.6666f;
     }
     
     public void SetUp(float maxHitPerSameObject, float duration, AbilityStatus abil, float skillScale)

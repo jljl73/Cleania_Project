@@ -79,7 +79,7 @@ public class EnemySpawnerManager : MonoBehaviour
         }
     }
 
-    void SpawnStart()
+    public void SpawnStart()
     {
         for (int i = 0; i < enemySpawners.Count; i++)
         {

@@ -6,6 +6,12 @@ ModelImporter:
   - first:
       74: -203655887218126122
     second: Spin
+  - first:
+      74: -6511337961102527105
+    second: Spin_PostDelay
+  - first:
+      74: -6913749456598017369
+    second: Spin_Main
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -59,29 +65,101 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.19339395
+      - time: 0.1560763
         functionName: ActivateSkillEffect
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1102
         messageOptions: 0
-      - time: 0.35495502
+      - time: 0.20679055
         functionName: ActivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1102
         messageOptions: 0
-      - time: 0.6792079
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Spin_PostDelay
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 50.1
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.12955464
+        functionName: DeactivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1102
+        messageOptions: 0
+      - time: 0.27327934
         functionName: DeactivateSkillEffect
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1102
         messageOptions: 0
-      - time: 0.7451435
-        functionName: DeactivateSkill
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Spin_Main
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.12934929
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1102
+        messageOptions: 0
+      - time: 0.24593674
+        functionName: ActivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

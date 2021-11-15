@@ -2,30 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HighDusty_DustBall : MonoBehaviour
+public class HighDusty_DustBall : DamagingProperty
 {
-    //public GameObject owner;
-    public GameObject Owner { get; set; }
-    public float DamageScale;
-
     public GameObject Ball;
     public GameObject Pond;
-    public SkillEffectController BallHitTargetEffect;
-    public SkillEffectController BallHitGroundEffect;
+
+    [SerializeField]
+    SkillEffectController ballProjectile;
+    [SerializeField]
+    SkillEffectController ballHitTargetEffect;
+    [SerializeField]
+    SkillEffectController ballHitGroundEffect;
+    [SerializeField]
+    SkillEffectController pondEffect;
 
     AbilityStatus playerAbility;
-    AbilityStatus ownerAbility;
+
     bool isBall = true;
 
     bool isGoingToBeDestroyed = false;
 
+    float projectileSize;
+    float pondSize;
+
+    private void Start()
+    {
+        ballProjectile.Scale = projectileSize * 2f;
+        ballHitTargetEffect.Scale = projectileSize;
+        ballHitGroundEffect.Scale = pondSize * 0.3333f;
+        pondEffect.Scale = pondSize * 0.3333f;
+    }
+
+    public void SetUp(float projectileSize, float pondSize, AbilityStatus abil, float damageScale)
+    {
+        this.projectileSize = projectileSize;
+        this.pondSize = pondSize;
+
+        base.SetUp(abil, damageScale);
+    }
+
     void OnTriggerEnter(Collider other)
     {
+        if (!isSetUp) return;
         if (isGoingToBeDestroyed) return;
 
-        ownerAbility = Owner.GetComponent<Enemy>().abilityStatus;
-        if (Owner == null)
-            throw new System.Exception("HighDusty_DustBall Owner is null");
         if (other.CompareTag("Player"))
             playerAbility = other.GetComponent<Player>().abilityStatus;
 
@@ -33,7 +53,7 @@ public class HighDusty_DustBall : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                playerAbility.AttackedBy(ownerAbility, DamageScale);
+                playerAbility.AttackedBy(ownerAbility, damageScale);
 
                 // BallHitTargetEffect.gameObject.transform.position = other.ClosestPoint(other.transform.position);
                 // BallHitTargetEffect.PlaySkillEffect();
@@ -41,7 +61,7 @@ public class HighDusty_DustBall : MonoBehaviour
                 Ball.SetActive(false);
                 Pond.SetActive(false);
 
-                BallHitTargetEffect.PlaySkillEffect();
+                ballHitTargetEffect.PlaySkillEffect();
 
                 Destroy(gameObject, 1);
                 isGoingToBeDestroyed = true;
@@ -50,10 +70,10 @@ public class HighDusty_DustBall : MonoBehaviour
             {
                 Ball.SetActive(false);
 
-                BallHitGroundEffect.PlaySkillEffect();
+                ballHitGroundEffect.PlaySkillEffect();
 
                 Pond.SetActive(true);
-                Pond.GetComponent<SkillEffectController>().PlaySkillEffect();
+                pondEffect.PlaySkillEffect();
                 GetComponent<Rigidbody>().isKinematic = true;
                 //GetComponent<Rigidbody>().useGravity = false;
 
@@ -65,10 +85,11 @@ public class HighDusty_DustBall : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (!isSetUp) return;
         if (!isBall)
             if (other.gameObject.CompareTag("Player"))
             {
-                playerAbility.AttackedBy(ownerAbility, Time.deltaTime * DamageScale);
+                playerAbility.AttackedBy(ownerAbility, Time.deltaTime * damageScale);
             }
     }
 }

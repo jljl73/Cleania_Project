@@ -241,7 +241,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
 
     public bool IsSpecificSkillAvailable(int id)
     {
-        return availableSkillDict.ContainsKey(id);
+        return availableSkillDict.ContainsKey(id) && skillDict[id].IsAvailable();
     }
 
     protected void ResetSkill(int skillID)

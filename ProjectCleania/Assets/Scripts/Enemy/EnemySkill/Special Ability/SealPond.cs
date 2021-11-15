@@ -20,6 +20,18 @@ public class SealPond : DamagingProperty
             throw new System.Exception("SealPond doesnt have Collider");
     }
 
+    private void OnEnable()
+    {
+        if (!isSetUp) return;
+        Start();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Seal, this.gameObject);
+    }
+
     void Start()
     {
         if (!isSetUp) return;
@@ -42,7 +54,7 @@ public class SealPond : DamagingProperty
             }
         }
 
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     public void SetUp(float duration, float silenceTime, float skillRange)

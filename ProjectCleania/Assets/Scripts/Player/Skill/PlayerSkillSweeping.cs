@@ -51,7 +51,7 @@ public class PlayerSkillSweeping : PlayerSkill
         //col.radius = sweepRange;
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -59,6 +59,8 @@ public class PlayerSkillSweeping : PlayerSkill
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill2", true);
         animator.SetTrigger("Sweeping");
+
+        return true;
     }
 
     override public void Activate()

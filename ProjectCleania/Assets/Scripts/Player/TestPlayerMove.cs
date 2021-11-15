@@ -8,6 +8,7 @@ public class TestPlayerMove : MonoBehaviour, IStunned
 {
     [Header("움직임 사용 스킬")]
     public PlayerSkillRefreshingLeapForward LeapForwardSkill;
+    public PlayerSkillRoll RollSkill;
 
     GameObject playerObject;
     Player player;
@@ -55,7 +56,7 @@ public class TestPlayerMove : MonoBehaviour, IStunned
             return;
         }
 
-        speed = player.abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6;
+        speed = player.abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6 * RollSkill.AvoidSpeedMultiplier;
         playerObject.transform.localPosition = Vector3.MoveTowards(playerObject.transform.position, targetPos, speed * Time.deltaTime);
         AccelerateRotation();
     }

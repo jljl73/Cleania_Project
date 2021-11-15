@@ -20,6 +20,30 @@ public class StormWindController : MonoBehaviour
     float stormDamageRange;
     AbilityStatus ownerAbility;
 
+    bool isSetUp = false;
+
+    private void OnEnable()
+    {
+        if (!isSetUp) return;
+
+        Start();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.StormWindGroup, this.gameObject);
+    }
+
+    private void Start()
+    {
+        MakeWinds(rotateCW);
+        Invoke("DeactivateDelay", duration);
+        //Destroy(this.gameObject, duration);
+    }
+
+    void DeactivateDelay() => this.gameObject.SetActive(false);
+
     // Initiate 후 함수 호출 필수
     public void SetUp(bool isCW, float rotateRadius, float rotateSpeed, int count, float duration, AbilityStatus abil, float damageScale, float damageRange)
     {
@@ -32,30 +56,25 @@ public class StormWindController : MonoBehaviour
         ownerAbility = abil;
         stormDamageScale = damageScale;
         stormDamageRange = damageRange;
-
-        MakeWinds(isCW);
-        Destroy(this.gameObject, duration);
+        isSetUp = true;
     }
 
     void MakeWinds(bool isCW)
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject obj = Instantiate(stormWindPrefab, GetRandomPosOnCircleEdge(), transform.rotation, transform);
+            //GameObject obj = Instantiate(stormWindPrefab, GetRandomPosOnCircleEdge(), transform.rotation, transform);
             // winds.Add(obj);
 
-            StormWind stormWind = obj.GetComponent<StormWind>();
-            if (stormWind != null)
-            {
-                if (isCW)
-                    stormWind.SetUp(this.gameObject, rotateSpeed);
-                else
-                    stormWind.SetUp(this.gameObject, -rotateSpeed);
+            StormWind stormWind = ObjectPool.SpawnFromPool<StormWind>(ObjectPool.enumPoolObject.StormWind, GetRandomPosOnCircleEdge(), transform.rotation, transform);
 
-                stormWind.SetUp(ownerAbility, stormDamageScale);
-                stormWind.Resize(stormDamageRange);
-            }
+            if (isCW)
+                stormWind.SetUp(this.gameObject, rotateSpeed);
+            else
+                stormWind.SetUp(this.gameObject, -rotateSpeed);
 
+            stormWind.SetUp(ownerAbility, stormDamageScale);
+            stormWind.Resize(stormDamageRange);
         }
     }
 

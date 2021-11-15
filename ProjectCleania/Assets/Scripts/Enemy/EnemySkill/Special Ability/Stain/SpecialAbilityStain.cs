@@ -53,11 +53,13 @@ public class SpecialAbilityStain : EnemySkill
         destroyAttackScale = skillData.GetDestroyAttackScale();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSpecialSkill", true);
         animator.SetTrigger("Stain");
+
+        return true;
     }
 
     override public void Activate()
@@ -91,13 +93,14 @@ public class SpecialAbilityStain : EnemySkill
 
     void Shot()
     {
-        GameObject obj = Instantiate(StainProjectilePrefab, this.transform.position, Quaternion.identity);
-        if (obj == null) return;
+        //GameObject obj = Instantiate(StainProjectilePrefab, this.transform.position, Quaternion.identity);
+        StainProjectile stainProj = ObjectPool.SpawnFromPool<StainProjectile>(ObjectPool.enumPoolObject.Stain, this.transform.position, Quaternion.identity);
+        //if (obj == null) return;
 
-        StainProjectile stainProj = obj.GetComponent<StainProjectile>();
-        if (stainProj == null) return;
+        //StainProjectile stainProj = obj.GetComponent<StainProjectile>();
+        //if (stainProj == null) return;
 
-        Rigidbody rigidbody = obj.GetComponent<Rigidbody>(); ;
+        Rigidbody rigidbody = stainProj.gameObject.GetComponent<Rigidbody>(); ;
         if (rigidbody != null)
         {
             Vector3 targetPos = GetRandomPointInCircle(transform.position, stainAvailableAreaRadius);

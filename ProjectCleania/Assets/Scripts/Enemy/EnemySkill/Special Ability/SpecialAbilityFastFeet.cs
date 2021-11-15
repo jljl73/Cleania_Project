@@ -34,11 +34,13 @@ public class SpecialAbilityFastFeet : EnemySkill
         speedIncreaseRate = skillData.GetSpeedIncreaseRate();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         // 체력 증가
         print("공속 & 이속 증가!");
         //enemy.buff
+
+        return true;
     }
 
     public override void Deactivate()

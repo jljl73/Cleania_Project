@@ -27,6 +27,7 @@ public class DustySkillHittingByBody : EnemySkill
 
         col = GetComponent<Collider>();
         // enemy = transform.parent.parent.GetComponent<Enemy>();
+        animator.SetFloat("HittingByBody Multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()
@@ -39,10 +40,12 @@ public class DustySkillHittingByBody : EnemySkill
         damageScale = skillData.GetDamageRate();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("HittingByBody");
+
+        return true;
     }
 
     override public void Activate()

@@ -40,11 +40,12 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
         //projFlightTime = skillData.GetProjFlightTime();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         // 체력 증가
         print("체력 증가!");
         //enemy.buff
+        return true;
     }
 
     public override void Deactivate()

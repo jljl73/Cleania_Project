@@ -55,16 +55,18 @@ public class DustySkillSuicide : EnemySkill
         }
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         if (!(Random.Range(0f, 1f) < skillTriggerPercentage))
-            return;
+            return true;
 
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("Angry");
         enemyMove.StopMoving(true); 
 
         StartCoroutine("AngryToFlyForward", angryDuration);
+
+        return true;
     }
 
     IEnumerator AngryToFlyForward(float angryDuration)
