@@ -14,7 +14,7 @@ public class SavedData : MonoBehaviour
             {
                 GameObject go = new GameObject("_SavedData");
                 _singleton = go.AddComponent<SavedData>();
-                DontDestroyOnLoad(go);
+
                 _singleton.characterName = "debug";
 
                 _singleton.OnEnable();
@@ -133,15 +133,21 @@ public class SavedData : MonoBehaviour
     private void OnEnable()
     {
         Item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
-        DontDestroyOnLoad(this);
         Load();
+        DontDestroyOnLoad(gameObject);
     }
+
 
     private void OnApplicationQuit()
     {
         Save();
     }
 
+    private void OnDestroy()
+    {
+        if (_singleton == this)
+            _singleton = null;
+    }
 
 
     public void Test_Add1101001()
