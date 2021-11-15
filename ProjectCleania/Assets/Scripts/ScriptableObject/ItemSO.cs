@@ -104,6 +104,21 @@ public class ItemSO : ScriptableObject
     public int Price
     { get => price; }
 
+    [SerializeField]
+    int maxCount = 999;
+    public int MaxCount
+    {
+        get
+        {
+            if (MainCategory == enumMainCategory.Equipment)
+                return 1;
+            else
+                return maxCount;
+        }
+    }
+
+
+
 
     [SerializeField]
     bool disassemble = true;

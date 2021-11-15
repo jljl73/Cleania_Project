@@ -42,6 +42,18 @@ public partial class UI_ItemContainer : MonoBehaviour
         }
     }
 
+    public int this[ItemInstance item]
+    {
+        get
+        {
+            for (int i = 0; i < controllers.Length; ++i)
+                if (controllers[i].itemInstance == item)
+                    return i;
+
+            return -1;
+        }
+    }
+
     public UI_ItemController this[int index]
     {
         get
@@ -76,7 +88,7 @@ public partial class UI_ItemContainer : MonoBehaviour
 
         }
 
-        Invoke("SelfLoad", 0.2f);
+        Invoke("_SelfLoad", 0.1f);
     }
 
     public bool Add(ItemInstance item, int index = -1, bool sync = true)
@@ -88,14 +100,14 @@ public partial class UI_ItemContainer : MonoBehaviour
             switch (syncWith)
             {
                 case SyncType.Inventory:
-                    return AddSync(SavedData.Instance.Item_Inventory, item, index);
+                    return _AddSync(SavedData.Instance.Item_Inventory, item, index);
                 case SyncType.Storage:
-                    return AddSync(SavedData.Instance.Item_Storage, item, index);
+                    return _AddSync(SavedData.Instance.Item_Storage, item, index);
                 case SyncType.Equipment:
-                    return AddSync(SavedData.Instance.Item_Equipments, item, index);
+                    return _AddSync(SavedData.Instance.Item_Equipments, item, index);
             }
 
-        return AddAsync(item, index);
+        return _AddAsync(item, index);
     }
     public bool Add(UI_ItemController controller, int index = -1, bool sync = true)
     {
@@ -114,14 +126,14 @@ public partial class UI_ItemContainer : MonoBehaviour
             switch (syncWith)
             {
                 case SyncType.Inventory:
-                    return RemoveSync(SavedData.Instance.Item_Inventory, index);
+                    return _RemoveSync(SavedData.Instance.Item_Inventory, index);
                 case SyncType.Storage:
-                    return RemoveSync(SavedData.Instance.Item_Storage, index);
+                    return _RemoveSync(SavedData.Instance.Item_Storage, index);
                 case SyncType.Equipment:
-                    return RemoveSync(SavedData.Instance.Item_Equipments, index);
+                    return _RemoveSync(SavedData.Instance.Item_Equipments, index);
             }
 
-        return RemoveAsync(index);
+        return _RemoveAsync(index);
     }
     public bool Remove(UI_ItemController controller, bool sync = true)
     {
@@ -186,7 +198,7 @@ public partial class UI_ItemContainer : MonoBehaviour
         if (dstItem != null)
             if (!srcContainer.Add(dstItem, srcIndex))
             {
-                dstContainer.Remove(dstIndex);
+                dstContainer.Remove(dstContainer[srcItem]);
                 srcContainer.Add(srcItem, srcIndex);
                 if (dstItem != null)
                     dstContainer.Add(dstItem, dstIndex);
@@ -227,18 +239,18 @@ public partial class UI_ItemContainer
                 {
                     ItemStorage_LocalGrid storage = (ItemStorage_LocalGrid)sender;
                     ItemInstance item = storage[index];
-                    AddAsync(item, storage.PointToIndex(index));
+                    _AddAsync(item, storage.PointToIndex(index));
                     break;
                 }
             case ItemStorage<Point>.SyncOperator.Remove:
                 {
                     ItemStorage_LocalGrid storage = (ItemStorage_LocalGrid)sender;
                     ItemInstance item = storage[index];
-                    RemoveAsync(storage.PointToIndex(index));
+                    _RemoveAsync(storage.PointToIndex(index));
                     break;
                 }
             case ItemStorage<Point>.SyncOperator.Refresh:
-                LoadControllers(sender);
+                _LoadControllers(sender);
                 break;
 
             default:
@@ -255,18 +267,18 @@ public partial class UI_ItemContainer
                 {
                     ItemStorage_Equipments storage = (ItemStorage_Equipments)sender;
                     ItemInstance item = storage[index];
-                    AddAsync(item, (int)index);
+                    _AddAsync(item, (int)index);
                     break;
                 }
             case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Remove:
                 {
                     ItemStorage_Equipments storage = (ItemStorage_Equipments)sender;
                     ItemInstance item = storage[index];
-                    RemoveAsync((int)index);
+                    _RemoveAsync((int)index);
                     break;
                 }
             case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Refresh:
-                LoadControllers(sender);
+                _LoadControllers(sender);
                 break;
 
             default:
@@ -276,11 +288,11 @@ public partial class UI_ItemContainer
     }
 
 
-    void LoadControllers(iItemStorage storage)
+    void _LoadControllers(iItemStorage storage)
     {
         for (int i = slotParent.transform.childCount - 1; i >= 0; i--)
             if (controllers[i] != null)
-                RemoveAsync(i);
+                _RemoveAsync(i);
 
         switch (SyncWith)
         {
@@ -288,35 +300,37 @@ public partial class UI_ItemContainer
             case SyncType.Storage:
                 foreach (var i in ((ItemStorage_LocalGrid)storage).Items)
                 {
-                    AddAsync(i.Key, ((ItemStorage_LocalGrid)storage).PointToIndex(i.Value));
+                    _AddAsync(i.Key, ((ItemStorage_LocalGrid)storage).PointToIndex(i.Value));
                 }
                 break;
             case SyncType.Equipment:
                 foreach (var i in ((ItemStorage_Equipments)storage).Items)
                 {
-                    AddAsync(i.Key, (int)i.Value);
+                    _AddAsync(i.Key, (int)i.Value);
                 }
                 break;
         }
     }
 
-    void SelfLoad()
+    void _SelfLoad()
     {
         switch (SyncWith)
         {
             case SyncType.Inventory:
-                LoadControllers(SavedData.Instance.Item_Inventory);
+                _LoadControllers(SavedData.Instance.Item_Inventory);
+                gameObject.SetActive(false);
                 break;
             case SyncType.Storage:
-                LoadControllers(SavedData.Instance.Item_Storage);
+                _LoadControllers(SavedData.Instance.Item_Storage);
+                gameObject.SetActive(false);
                 break;
             case SyncType.Equipment:
-                LoadControllers(SavedData.Instance.Item_Equipments);
+                _LoadControllers(SavedData.Instance.Item_Equipments);
                 break;
         }
     }
 
-    bool AddSync(iItemStorage storage, ItemInstance item, int index)
+    bool _AddSync(iItemStorage storage, ItemInstance item, int index)
     {
         if (index >= 0 && index < slotParent.transform.childCount)
             switch (syncWith)
@@ -339,7 +353,7 @@ public partial class UI_ItemContainer
         }
     }
 
-    bool AddAsync(ItemInstance item, int index )
+    bool _AddAsync(ItemInstance item, int index )
     {
         if (index >= 0 && index < slotParent.transform.childCount &&
             controllers[index] == null)
@@ -366,7 +380,7 @@ public partial class UI_ItemContainer
     }
 
 
-    bool RemoveSync(iItemStorage storage, int index)
+    bool _RemoveSync(iItemStorage storage, int index)
     {
         if (index >= 0 && index < slotParent.transform.childCount)
         {
@@ -380,7 +394,7 @@ public partial class UI_ItemContainer
         }
     }
 
-    bool RemoveAsync(int index)
+    bool _RemoveAsync(int index)
     {
         if (index >= 0 && index < slotParent.transform.childCount)
         {

@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public SoundPlayer soundPlayer;
     public string nextSceneName;
 
+    public InputManager inputManager;
+
     public InputField IF_Chat;
     public bool isChatting
     {
