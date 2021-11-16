@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour
 {
     Player player;
+    public bool PlayerMovable = true;
 
     [SerializeField]
     EnemySpawnerManager enemySpawnerManager;
@@ -34,7 +35,8 @@ public class InputManager : MonoBehaviour
         // ¸¶¿ì½º >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            player.Move(Input.mousePosition);
+            if (PlayerMovable)
+                player.Move(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(1))
