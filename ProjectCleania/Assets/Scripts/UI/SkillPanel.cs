@@ -11,7 +11,7 @@ public class SkillPanel : MonoBehaviour
     public Text runeName;
     public Text runeDetails;
 
-    PlayerSKillIDSO skill = null;
+    PlayerSkillSO skill = null;
     [SerializeField]
     Button[] buttons;
     [SerializeField]
@@ -45,7 +45,7 @@ public class SkillPanel : MonoBehaviour
         keyboardSkillFirst.onClick.Invoke();
     }
 
-    public void OnClickedSkill(PlayerSKillIDSO skill)
+    public void OnClickedSkill(PlayerSkillSO skill)
     {
         this.skill = skill;
 

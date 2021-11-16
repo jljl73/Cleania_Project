@@ -25,11 +25,6 @@ public class EnemySpawner : MonoBehaviour
     public float Weight { get { return weight; } set { weight = value; } }
     public int RareMonsterCount { set { rareMonsterCount = value; } }
 
-    private void Awake()
-    {
-        print("RareMonsters[Random.Range(0, RareMonsters.Count)].name: " + RareMonsters[Random.Range(0, RareMonsters.Count)].name);
-    }
-
     public void Spawn()
     {
         float tempTotalWeight = weight;

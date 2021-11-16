@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour, IStunned
     public float rotateCoef = 360f;
 
     bool isStunned = false;
-    bool isOrderedToMove = false;
     RaycastHit hit;
     Player player;
 
@@ -23,7 +22,8 @@ public class PlayerMovement : MonoBehaviour, IStunned
     private Rigidbody playerRigidbody;          // 리지드바디 컴포넌트
 
 
-    private Vector3 targetPose;                 // 목표 위치
+    Vector3 targetPose;                 // 목표 위치
+    public Vector3 TargetPose { get => targetPose; private set { targetPose = value; } }
     bool bChasing = false;
 
 
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
     private void OnEnable()
     {
         playerNavMeshAgent.enabled = true;
-        targetPose = this.transform.position;
+        TargetPose = this.transform.position;
     }
 
     private void OnDisable()
@@ -46,38 +46,21 @@ public class PlayerMovement : MonoBehaviour, IStunned
         playerNavMeshAgent.enabled = false;
     }
 
-    void Start()
-    {
-        // 설정 초기화
-        targetPose = transform.position;    // 목표 위치는 현재 위치
-    }
-
     void Update()
     {
-        if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
-            player.stateMachine.CompareState(StateMachine.enumState.Attacking))
-        {
-            ResetNavigation(this.transform.position);
+        if (!CanMove())
             return;
-        }
-
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
-
-        if (!isOrderedToMove || isStunned)
-        {
-            targetPose = transform.position;
-            return;
-        }
 
         ActivateNavigation();
-
-//#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
-//        if (!EventSystem.current.IsPointerOverGameObject())
-//            ActivateNavigation();
-//#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-//        if (!EventSystem.current.IsPointerOverGameObject(0))
-//            ActivateNavigation();
-//#endif
+        #region
+        //#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+        //        if (!EventSystem.current.IsPointerOverGameObject())
+        //            ActivateNavigation();
+        //#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+        //        if (!EventSystem.current.IsPointerOverGameObject(0))
+        //            ActivateNavigation();
+        //#endif
+        #endregion
         // 회전 가속
         AccelerateRotation();
 
@@ -85,41 +68,50 @@ public class PlayerMovement : MonoBehaviour, IStunned
         playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
     }
 
+    bool CanMove()
+    {
+        if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
+            player.stateMachine.CompareState(StateMachine.enumState.Attacking))
+        {
+            ResetNavigation(this.transform.position);
+            return false;
+        }
+
+        if (isStunned)
+        {
+            TargetPose = transform.position;
+            return false;
+        }
+
+        return true;
+    }
+
     public void Move(Vector3 pose)
     {
-        isOrderedToMove = true;
         MoveToPosition(pose);
     }
 
     public void StopMoving()
     {
-        targetPose = transform.position;
+        TargetPose = transform.position;
     }
 
     void ResetNavigation(Vector3 newPose)
     {
-        targetPose = transform.position;
-        playerNavMeshAgent.SetDestination(targetPose);
+        TargetPose = transform.position;
+        playerNavMeshAgent.SetDestination(TargetPose);
     }
 
     private void ActivateNavigation()
     {
-        if (player.stateMachine.State == StateMachine.enumState.Attacking)
-        {
-            targetPose = transform.position;
-        }
-
-        if (player.stateMachine.State != StateMachine.enumState.Chasing)
-        {
-            playerNavMeshAgent.SetDestination(targetPose);
-        }
+        playerNavMeshAgent.SetDestination(TargetPose);
     }
 
     private void AccelerateRotation()
     {
         Vector3 rotateForward; //= Vector3.zero;
 
-        rotateForward = Vector3.Normalize(targetPose - transform.position);
+        rotateForward = Vector3.Normalize(TargetPose - transform.position);
 
         // 목표 회전 벡터 결정
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
@@ -142,14 +134,14 @@ public class PlayerMovement : MonoBehaviour, IStunned
         {
             if (hit.collider.tag == "Ground")
             {
-                targetPose = hit.point;
+                TargetPose = hit.point;
                 //print("Ground Hit");
             }
             else if (hit.collider.CompareTag("Enemy"))
-                targetPose = hit.collider.transform.position;
+                TargetPose = hit.collider.transform.position;
         }
 
-        if (Vector3.Distance(targetPose, transform.position) > 0.01f)
+        if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
         {
             playerAnimator.SetBool("Walk", true);
         }
@@ -157,11 +149,10 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
     public void JumpForward(float dist)
     {
-        //playerNavMeshAgent.avoidancePriority = 1;
-        targetPose = transform.position + transform.forward * dist;
+        TargetPose = transform.position + transform.forward * dist;
     }
 
-    bool CanBeTriggerd(string collideTag, out RaycastHit rayhitInfo)
+    bool IsMovableLayer(string collideTag, out RaycastHit rayhitInfo)
     {
         bool result = false;
 
@@ -183,7 +174,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
     public void ImmediateLookAtMouse()
     {
         RaycastHit rayhitInfo;
-        if (CanBeTriggerd("Ground", out rayhitInfo))
+        if (IsMovableLayer("Ground", out rayhitInfo))
         {
             print("ImmediateLookAtMouse it's ground!");
             Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
@@ -198,8 +189,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
         if (LeapForwardSkill == null)
             throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
         float dist = LeapForwardSkill.GetJumpDistance();
-        isOrderedToMove = true;
-        targetPose = transform.position + transform.forward * dist;
+        TargetPose = transform.position + transform.forward * dist;
     }
 
     public void Stunned(bool isStunned, float stunnedTime)

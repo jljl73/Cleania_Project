@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerSkillKatharsis : PlayerSkill
 {
+    [SerializeField]
+    PlayerSkillKatharsisSO skillData;
+
     // public Status status;
     bool bSkill = false;
 
@@ -15,12 +18,12 @@ public class PlayerSkillKatharsis : PlayerSkill
     float strikingPowerIncreaseRate = 1.0f;
     float defenceIncreaseRate = 1.0f;
 
-    public PlayerSkillKatharsisSO skillData;
 
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         UpdateskillData();
     }
 
@@ -31,13 +34,7 @@ public class PlayerSkillKatharsis : PlayerSkill
 
     public void UpdateskillData()
     {
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
-
-        SkillSlotDependency = skillData.GetTriggerKey();
+        base.UpdateSkillData(skillData);
 
         triggerAvailablePercent = skillData.GetTriggerAvailablePercent();
         consumMPPerSec = skillData.GetConsumMPPerSec();
