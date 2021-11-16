@@ -39,7 +39,7 @@ public class DialogManager : MonoBehaviour
     void ShowDialog(GameObject dialog, bool bActive)
     {
         dialog.SetActive(bActive);
-        GameManager.Instance.soundPlayer.PlaySound("NPCInteraction");
+        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
     }
 
     public void OffDialog()
