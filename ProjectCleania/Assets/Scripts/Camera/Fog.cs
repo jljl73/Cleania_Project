@@ -23,6 +23,8 @@ public class Fog : MonoBehaviour
     {
         //CreateMesh();
         Initialize();
+        if (m_player == null)
+            Debug.Log("Player is null");
     }
 
     // Update is called once per frame

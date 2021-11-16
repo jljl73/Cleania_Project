@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour, IStunned
     private Vector3 targetPose;                 // 목표 위치
     bool bChasing = false;
 
-
     private void Awake()
     {
         // 컴포넌트 불러오기
