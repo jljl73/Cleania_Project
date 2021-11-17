@@ -181,6 +181,7 @@ public class PlayerSkillManager : BaseSkillManager
     public override void AnimationDeactivate()
     {
         playerStateMachine.Transition(StateMachine.enumState.Idle);
+        print("AnimationDeactivate!");
     }
 
     #region

@@ -39,11 +39,9 @@ public class EnemyMove : MonoBehaviour, IStunned
             throw new System.Exception("EnemyMove doesnt have myEnemy");
     }
 
-    void Start()
+    private void OnEnable()
     {
         StartCoroutine(SetPositionToTarget());
-
-        
     }
 
     void FixedUpdate()

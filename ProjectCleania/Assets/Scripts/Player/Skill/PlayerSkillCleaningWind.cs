@@ -122,10 +122,13 @@ public class PlayerSkillCleaningWind : PlayerSkill
             Quaternion tempYAngle = yAngle;
             tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (count + 1)) * i, 0f);
 
-            newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
-            Projectile proj = newProjectile.GetComponent<Projectile>();
-            proj.SetUp(maxHitPerSameObject, duration, OwnerAbilityStatus, projectileDamageScale);
-            proj.Resize(projectileSize);
+
+            //newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            //CleaningWind cleaningWind = newProjectile.GetComponent<CleaningWind>();
+            CleaningWind cleaningWind = ObjectPool.SpawnFromPool<CleaningWind>(ObjectPool.enumPoolObject.CleaningWind, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            //Projectile proj = ObjectPool.SpawnFromPool<Projectile>(ObjectPool.enumPoolObject.)
+            cleaningWind.SetUp(maxHitPerSameObject, duration, OwnerAbilityStatus, projectileDamageScale);
+            cleaningWind.Resize(projectileSize);
         }
     }
 }

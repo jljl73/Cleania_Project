@@ -9,6 +9,7 @@ public class ObjectPool : MonoBehaviour
 
     public enum enumPoolObject
     {
+        CleaningWind,
         Dusty,
         WildInti,
         HighDusty,
@@ -25,6 +26,11 @@ public class ObjectPool : MonoBehaviour
         Pollution,
         EndIndex
     }
+
+    [Header("플레이어 스킬 오브젝트")]
+    [SerializeField]
+    GameObject cleaningWindPrefab;
+
     [Header("적 오브젝트")]
     [SerializeField]
     GameObject dustyPrefab;
@@ -98,6 +104,8 @@ public class ObjectPool : MonoBehaviour
                 throw new System.Exception("objType is wrong!");
         }
 
+        if (Instance.poolableDict[objType].Count == 0)
+            throw new System.Exception(objType + " type queue is empty");
         GameObject objToSpawn = Instance.poolableDict[objType].Dequeue();
 
         objToSpawn.transform.position = pos;
@@ -143,6 +151,9 @@ public class ObjectPool : MonoBehaviour
         GameObject obj = null;
         switch (objType)
         {
+            case enumPoolObject.CleaningWind:
+                obj = Instantiate(cleaningWindPrefab);
+                break;
             case enumPoolObject.Dusty:
                 obj = Instantiate(dustyPrefab);
                 break;
@@ -203,4 +214,23 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(false);
         Instance.poolableDict[objType].Enqueue(obj);
     }
+
+    //public static void ReturnObject(EnemyStateMachine.MonsterType monsterType, GameObject obj)
+    //{
+    //    switch (monsterType)
+    //    {
+    //        case EnemyStateMachine.MonsterType.HighDusty:
+    //            ObjectPool.ReturnObject(ObjectPool.enumPoolObject.HighDusty, obj);
+    //            break;
+    //        case EnemyStateMachine.MonsterType.SummonerDusty:
+    //            ObjectPool.ReturnObject(ObjectPool.enumPoolObject.SummonerDusty, obj);
+    //            break;
+    //        case EnemyStateMachine.MonsterType.Dusty:
+    //            ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Dusty, obj);
+    //            break;
+    //        default:
+    //            ObjectPool.ReturnObject(ObjectPool.enumPoolObject.WildInti, obj);
+    //            break;
+    //    }
+    //}
 }

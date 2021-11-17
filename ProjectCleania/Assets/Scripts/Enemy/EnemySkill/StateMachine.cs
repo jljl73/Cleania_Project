@@ -20,6 +20,11 @@ public class StateMachine : MonoBehaviour
         state = nextState;
     }
 
+    public virtual void ResetState()
+    {
+        state = enumState.Idle;
+    }
+
     public bool CompareState(enumState state)
     {
         return this.state == state;
