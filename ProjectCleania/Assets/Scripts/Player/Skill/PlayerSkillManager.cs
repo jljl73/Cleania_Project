@@ -155,6 +155,7 @@ public class PlayerSkillManager : BaseSkillManager
     {
         if (!IsSpecificSkillAvailable(id)) return false;
         if (!IsSkillAvailable()) return false;
+
         // MP가 없으면 실행 불가
         if (!abilityStatus.ConsumeMP(skillDict[id].GetConsumMP()))
             return false;
@@ -175,6 +176,11 @@ public class PlayerSkillManager : BaseSkillManager
     public void StopSkill(int id)
     {
         skillDict[id].StopSkill();
+    }
+
+    public override void AnimationDeactivate()
+    {
+        playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 
     #region
@@ -253,7 +259,7 @@ public class PlayerSkillManager : BaseSkillManager
 
     public override void DeactivateSkill(int id)
     {
-        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
         skillDict[id].Deactivate();
     }
 

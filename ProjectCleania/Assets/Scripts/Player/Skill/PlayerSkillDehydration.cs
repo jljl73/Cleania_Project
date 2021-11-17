@@ -63,7 +63,6 @@ public class PlayerSkillDehydration : PlayerSkill
         Deactivate();
         //animator.SetTrigger("DehydrationEnd");
         effectController[0].StopSKillEffect();
-
     }
 
     public override void Activate()

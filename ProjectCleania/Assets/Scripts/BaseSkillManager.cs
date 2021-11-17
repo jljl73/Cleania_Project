@@ -162,6 +162,11 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         return true;
     }
 
+    public virtual void AnimationDeactivate()
+    {
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
+    }
+
     public virtual void ActivateSkill(int id)
     {
         skillDict[id].Activate();
