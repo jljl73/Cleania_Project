@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class DialogQuest : Dialog
 {
+    DialogManager dialogManager;
     public Quest prevQuest;
+    Quest[] quests;
+    GameObject[] dialogs;
 
-    public void ClearQuest(Quest quest)
+    void ShowDialog()
     {
-        GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest);
+        for(int i = 0;i < quests.Length;++i)
+        {
+            if (quests[i].State == Quest.STATE.Reward)
+                continue;
+            else
+                dialogManager.ShowDialog(dialogs[i], true);
+        }
     }
 }

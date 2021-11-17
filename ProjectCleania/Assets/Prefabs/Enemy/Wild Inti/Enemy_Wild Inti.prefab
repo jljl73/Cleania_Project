@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 6030317598042825671}
-  Scale: 1
+  scale: 1
   IsEnabledOnAwake: 0
 --- !u!1 &4185383675287487963
 GameObject:
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleObject: {fileID: 7095982466197245400}
-  Scale: 1
+  scale: 1
   IsEnabledOnAwake: 0
 --- !u!1 &4185383675751946793
 GameObject:
@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37aa8875d5f5e2440b535f37d2bc3d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   monsterType: 5002
   rank: 0
 --- !u!114 &338930018133428618
@@ -330,7 +331,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4185383675751946793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64a59020999fd38488ab926cb2a42367, type: 3}
   m_Name: 
@@ -423,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c6a2624a6db3742b1f199c48e43976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncWith: 0
   SD_equipments: []
 --- !u!114 &4661569931696314050
 MonoBehaviour:
@@ -454,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4185383677180586502
 Transform:
   m_ObjectHideFlags: 0

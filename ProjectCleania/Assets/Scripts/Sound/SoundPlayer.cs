@@ -38,7 +38,7 @@ public class SoundPlayer : MonoBehaviour
         ItemClick, ItemBuySell,
     };
 
-    public void PlaySound(TYPE type, int index)
+    public void PlaySound(TYPE type)
     {
         switch (type)
         {

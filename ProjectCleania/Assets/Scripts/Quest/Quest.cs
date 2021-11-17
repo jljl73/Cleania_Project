@@ -23,7 +23,7 @@ public struct QuestReward
 [System.Serializable]
 public struct QuestNeed
 {
-    public enum TYPE { Monster, Item };
+    public enum TYPE { Monster, Item, Trigger };
     public bool IsClear { get { return targetValue <= curValue; } }
 
     public TYPE type;
@@ -43,10 +43,15 @@ public struct QuestNeed
     {
         if(this.type == TYPE.Monster)
             ++curValue;
+        else if(type == TYPE.Trigger)
+        {
+            targetValue = curValue;
+        }
         else
         {
             curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().GetNumberItem(this.target);
         }
+
     }
 
     public string Contents

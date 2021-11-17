@@ -36,7 +36,7 @@ public class DialogManager : MonoBehaviour
         ShowDialog(QuestDialog, true);
     }
 
-    void ShowDialog(GameObject dialog, bool bActive)
+    public void ShowDialog(GameObject dialog, bool bActive)
     {
         dialog.SetActive(bActive);
         GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);

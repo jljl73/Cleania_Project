@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour, IStunned
     [Header("회전 계수")]
     public float rotateCoef = 360f;
 
-    bool isStunned = false;
-    bool isOrderedToMove = false;
+    public bool isStunned = false;
+    public bool isOrderedToMove = false;
     RaycastHit hit;
     Player player;
 
@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
     void Update()
     {
+        
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
             player.stateMachine.CompareState(StateMachine.enumState.Attacking))
         {
@@ -60,7 +61,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
             return;
         }
 
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+        //if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
 
         if (!isOrderedToMove || isStunned)
         {
@@ -69,6 +70,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
         }
 
         ActivateNavigation();
+        
 
 //#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
 //        if (!EventSystem.current.IsPointerOverGameObject())
@@ -107,6 +109,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
         {
             targetPose = transform.position;
         }
+
 
         if (player.stateMachine.State != StateMachine.enumState.Chasing)
         {
@@ -152,6 +155,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
         {
             playerAnimator.SetBool("Walk", true);
         }
+
     }
 
     public void JumpForward(float dist)
