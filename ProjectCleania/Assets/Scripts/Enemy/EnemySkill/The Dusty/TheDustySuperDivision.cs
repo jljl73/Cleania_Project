@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheDustySkill_3 : Skill
+public class TheDustySuperDivision : EnemySkill
 {
     public EnemyEvent enemyEvent;
     public GameObject theDusty;
