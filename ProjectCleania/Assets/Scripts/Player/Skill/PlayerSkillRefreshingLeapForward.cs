@@ -89,7 +89,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     override public void Activate()
     {
-        attackArea.enabled = true;
+        if (attackArea != null)
+            attackArea.enabled = true;
     }
 
     public override void Deactivate()

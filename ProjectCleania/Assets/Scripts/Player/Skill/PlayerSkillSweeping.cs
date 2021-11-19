@@ -77,7 +77,8 @@ public class PlayerSkillSweeping : PlayerSkill
 
     void OffSkill()
     {
-        col.enabled = false;
+        if (col != null)
+            col.enabled = false;
     }
 
     public override void Deactivate()

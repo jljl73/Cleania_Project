@@ -17,33 +17,36 @@ public class PlayerMovement : MonoBehaviour, IStunned
     RaycastHit hit;
     Player player;
 
-    Animator playerAnimator;            // 애니메이터 컴포넌트
-    NavMeshAgent playerNavMeshAgent;    // path 계산 컴포턴트
-    Rigidbody playerRigidbody;          // 리지드바디 컴포넌트
-
+    Animator animator;            // 애니메이터 컴포넌트
+    NavMeshAgent navMeshAgent;    // path 계산 컴포턴트
+    Rigidbody characterRigidBody;          // 리지드바디 컴포넌트
+    float beforeFrameVelocity = -1;
+    float currentFrameVelocity;
 
     Vector3 targetPose;                 // 목표 위치
     public Vector3 TargetPose { get => targetPose; private set { targetPose = value; } }
     bool bChasing = false;
-
+    bool bPulled = false;
+    bool bPushed = false;
 
     private void Awake()
     {
         // 컴포넌트 불러오기
         player = GetComponent<Player>();
-        playerAnimator = GetComponent<Animator>();
-        playerNavMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        characterRigidBody = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
     {
-        playerNavMeshAgent.enabled = true;
+        navMeshAgent.enabled = true;
         TargetPose = this.transform.position;
     }
 
     private void OnDisable()
     {
-        playerNavMeshAgent.enabled = false;
+        navMeshAgent.enabled = false;
     }
 
     void FixedUpdate()
@@ -65,11 +68,15 @@ public class PlayerMovement : MonoBehaviour, IStunned
         AccelerateRotation();
 
         // 애니메이션 업데이트
-        playerAnimator.SetFloat("Speed", playerNavMeshAgent.velocity.magnitude);
+        if (!bPulled && !bPushed)
+            animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
     }
 
     bool CanMove()
     {
+        if (IscharacterRigidBodyOn())
+            return false;
+
         if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
             player.stateMachine.CompareState(StateMachine.enumState.Attacking))
         {
@@ -86,8 +93,34 @@ public class PlayerMovement : MonoBehaviour, IStunned
         return true;
     }
 
+    bool IscharacterRigidBodyOn()
+    {
+        if (!bPushed)
+        {
+            currentFrameVelocity = 0;
+            beforeFrameVelocity = -1;
+            return false;
+        }
+        else
+        {
+            currentFrameVelocity = characterRigidBody.velocity.magnitude;
+
+            if (characterRigidBody.velocity.magnitude <= 1f && (beforeFrameVelocity - currentFrameVelocity) >= 0)
+            {
+                SetRigidBody(false);
+                animator.SetBool("Pulled", false);
+                bPushed = false;
+            }
+
+            beforeFrameVelocity = currentFrameVelocity;
+            return true;
+        }
+    }
+
     public void Move(Vector3 pose)
     {
+        if (bPulled)
+            return;
         MoveToPosition(pose);
     }
 
@@ -98,14 +131,14 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
     void ResetNavigation(Vector3 newPose)
     {
-        TargetPose = transform.position;
-        playerNavMeshAgent.SetDestination(TargetPose);
+        TargetPose = newPose;
+        navMeshAgent.SetDestination(newPose);
     }
 
     private void ActivateNavigation()
     {
-        if (!playerNavMeshAgent.SetDestination(TargetPose))
-            print("playerNavMeshAgent.SetDestination(TargetPose) FAILED!!!!");
+        if (!navMeshAgent.SetDestination(TargetPose))
+            print("navMeshAgent.SetDestination(TargetPose) FAILED!!!!");
     }
 
     private void AccelerateRotation()
@@ -144,7 +177,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
         if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
         {
-            playerAnimator.SetBool("Walk", true);
+            animator.SetBool("Walk", true);
         }
     }
 
@@ -180,7 +213,6 @@ public class PlayerMovement : MonoBehaviour, IStunned
             print("ImmediateLookAtMouse it's ground!");
             Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
             player.gameObject.transform.LookAt(lookAtPointOnSameY);
-            //mousePos = lookAtPointOnSameY;
         }
     }
 
@@ -191,6 +223,35 @@ public class PlayerMovement : MonoBehaviour, IStunned
             throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
         float dist = LeapForwardSkill.GetJumpDistance();
         TargetPose = transform.position + transform.forward * dist;
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        SetRigidBody(true);
+        characterRigidBody.AddForce(force);
+        animator.SetBool("Pulled", true);
+
+        bPushed = true;
+    }
+
+    void SetRigidBody(bool value)
+    {
+        characterRigidBody.isKinematic = !value;
+        navMeshAgent.isStopped = value;
+    }
+
+    public void Pulled(bool value, Vector3 position)
+    {
+        bPulled = value;
+        SetRigidBody(!value);
+        if (value)
+            TargetPose = position;
+        else
+            TargetPose = this.transform.position;
+
+        if (value)
+            player.playerSkillManager.DeactivateAllSkill();
+        animator.SetBool("Pulled", value);
     }
 
     public void Stunned(bool isStunned, float stunnedTime)

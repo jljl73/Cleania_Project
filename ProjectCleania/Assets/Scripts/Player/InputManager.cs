@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     EnemySpawnerManager enemySpawnerManager;
 
+    public Vector3 force = Vector3.right;
+
     void Start()
     {
         player = GameManager.Instance.player;
@@ -93,6 +95,21 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             enemySpawnerManager.SpawnStart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            player.playerMove.AddForce(force);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            player.playerMove.Pulled(false, Vector3.zero);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
         }
     }
 

@@ -54,7 +54,8 @@ public class PlayerSkillDusting : PlayerSkill
 
     public override void Activate()
     {
-        attackArea.enabled = true;
+        if (attackArea != null)
+            attackArea.enabled = true;
     }
 
     public override void Deactivate()
