@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +28,22 @@ public class ObjectPool : MonoBehaviour
         EndIndex
     }
 
+    [Serializable]
+    public struct Pool
+    {
+        public enumPoolObject EnumType;
+        public GameObject GameObject;
+        public int Count;
+    }
+
+    [SerializeField]
+    Pool[] pools;
+
     [Header("플레이어 스킬 오브젝트")]
     [SerializeField]
     GameObject cleaningWindPrefab;
+    [SerializeField]
+    int startCount = 3;
 
     [Header("적 오브젝트")]
     [SerializeField]
@@ -79,11 +93,17 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
+        // 간단한 싱글톤 구현
         if (Instance != null)
             Destroy(this.gameObject);
         DontDestroyOnLoad(this.gameObject);
         Instance = this;
+
+        // 오브젝트의 큐를 Dict에 업로드
         AddQueueToDict();
+
+        // 오브젝트 초기화
+        InitializeGameObjects();
     }
 
     void AddQueueToDict()
@@ -93,6 +113,17 @@ public class ObjectPool : MonoBehaviour
             Queue<GameObject> newQueue = new Queue<GameObject>();
             poolableDict.Add((enumPoolObject)i, newQueue);
         }
+    }
+
+    void InitializeGameObjects()
+    {
+        //for (int i = 0; i < pools.Length; i++)
+        //{
+        //    for (int j = 0; j < pools[i].Count; j++)
+        //    {
+        //        CreateNewObject(pools[i].EnumType, pools[i].GameObject, this.transform.position, this.transform.rotation);
+        //    }
+        //}
     }
 
     public static GameObject GetObject(enumPoolObject objType, Vector3 pos, Quaternion rot)
@@ -120,7 +151,7 @@ public class ObjectPool : MonoBehaviour
 
         if (obj.TryGetComponent(out T component))
         {
-            obj.transform.SetParent(ObjectPool.Instance.transform);
+            //obj.transform.SetParent(ObjectPool.Instance.transform);
             return component;
         }
         else
@@ -136,6 +167,7 @@ public class ObjectPool : MonoBehaviour
 
         if (obj.TryGetComponent(out T component))
         {
+            obj.transform.SetParent(null);
             obj.transform.SetParent(parent);
             return component;
         }
@@ -149,6 +181,7 @@ public class ObjectPool : MonoBehaviour
     GameObject CreateNewObject(enumPoolObject objType, Vector3 pos, Quaternion rot)
     {
         GameObject obj = null;
+
         switch (objType)
         {
             case enumPoolObject.CleaningWind:
@@ -204,8 +237,23 @@ public class ObjectPool : MonoBehaviour
             obj.transform.position = pos;
             obj.transform.rotation = rot;
             obj.SetActive(false);
+            obj.transform.SetParent(ObjectPool.Instance.transform);
         }
-        
+
+        return obj;
+    }
+
+    GameObject CreateNewObject(enumPoolObject objType, GameObject objPrefab, Vector3 pos, Quaternion rot)
+    {
+        GameObject obj = Instantiate(objPrefab, pos, rot, ObjectPool.Instance.transform);
+
+        obj.transform.position = pos;
+        obj.transform.rotation = rot;
+        obj.SetActive(false);
+        obj.name = objType.ToString();
+
+        //pool poolableDict[objType].Count;
+
         return obj;
     }
 

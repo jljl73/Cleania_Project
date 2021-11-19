@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour, IStunned
     RaycastHit hit;
     Player player;
 
-    private Animator playerAnimator;            // 애니메이터 컴포넌트
-    private NavMeshAgent playerNavMeshAgent;    // path 계산 컴포턴트
-    private Rigidbody playerRigidbody;          // 리지드바디 컴포넌트
+    Animator playerAnimator;            // 애니메이터 컴포넌트
+    NavMeshAgent playerNavMeshAgent;    // path 계산 컴포턴트
+    Rigidbody playerRigidbody;          // 리지드바디 컴포넌트
 
 
     Vector3 targetPose;                 // 목표 위치
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour, IStunned
         playerNavMeshAgent.enabled = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!CanMove())
             return;
@@ -104,7 +104,8 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
     private void ActivateNavigation()
     {
-        playerNavMeshAgent.SetDestination(TargetPose);
+        if (!playerNavMeshAgent.SetDestination(TargetPose))
+            print("playerNavMeshAgent.SetDestination(TargetPose) FAILED!!!!");
     }
 
     private void AccelerateRotation()

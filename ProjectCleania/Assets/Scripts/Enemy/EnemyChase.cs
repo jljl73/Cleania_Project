@@ -23,11 +23,6 @@ public class EnemyChase : MonoBehaviour
 
     Collider[] overlappedColiders;
 
-    private void OnEnable()
-    {
-        
-    }
-
     private void OnDisable()
     {
         if (myGroupManager != null)
@@ -46,7 +41,7 @@ public class EnemyChase : MonoBehaviour
 
                 //myGroupManager.SetTarget(collider.gameObject);
                 myGroupManager.Target = collider.gameObject;
-                targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
+                //targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
                 break;
             }
         }
