@@ -28,6 +28,7 @@ public class TheDustyGroundHit : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        effectController[0].Scale = damageRadius * 0.3333f;
     }
 
     public void UpdateSkillData()
@@ -46,6 +47,9 @@ public class TheDustyGroundHit : EnemySkill
 
     public override bool AnimationActivate()
     {
+        if (!(Random.Range(0.0f, 1.0f) <= triggerProbability))
+            return false;
+
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("GroundHit");
         return true;
@@ -54,11 +58,45 @@ public class TheDustyGroundHit : EnemySkill
     public override void Activate()
     {
         base.Activate();
+
+        DirectAttack();
+        IndirectAttack();
     }
 
     public override void Deactivate()
     {
+        enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
         return;
+    }
+
+    void DirectAttack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRadius);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].CompareTag("Player"))
+            {
+                Player player = colliders[i].GetComponent<Player>();
+                player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
+                player.OnStunned(true, stunnedTime);
+            }
+        }
+    }
+
+    void IndirectAttack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, indirectDamageRadius);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].CompareTag("Player"))
+            {
+                Player player = colliders[i].GetComponent<Player>();
+                player.abilityStatus.AttackedBy(OwnerAbilityStatus, indirectDamageRate);
+
+                print("슬로우 상태!");
+                //player.OnStunned(true, stunnedTime);
+            }
+        }
     }
 }

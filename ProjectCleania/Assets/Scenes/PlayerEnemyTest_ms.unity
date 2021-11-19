@@ -224,10 +224,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2125404220037949000, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
-      propertyPath: SkillList.Array.size
+    - target: {fileID: 5094565500672693811, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
+      propertyPath: effectController.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5094565500672693811, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
+      propertyPath: effectController.Array.data[0]
+      value: 
+      objectReference: {fileID: 981948548}
+    - target: {fileID: 5094565500672693811, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
+      propertyPath: effectController.Array.data[1]
+      value: 
+      objectReference: {fileID: 981948547}
     - target: {fileID: 6206510397842369729, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -275,10 +283,6 @@ PrefabInstance:
     - target: {fileID: 6206510397842665697, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
       propertyPath: m_Name
       value: Enemy_TheDusty
-      objectReference: {fileID: 0}
-    - target: {fileID: 6206510397842665697, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
@@ -620,6 +624,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85ec4ec3dbfb95a49a260ec8faff50b4, type: 3}
+--- !u!114 &981948547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7558705486454645534, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
+  m_PrefabInstance: {fileID: 544260469}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &981948548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2729397351371099190, guid: 838eab193b863ea46be31d8c223a06a6, type: 3}
+  m_PrefabInstance: {fileID: 544260469}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1021039307
 GameObject:
   m_ObjectHideFlags: 0

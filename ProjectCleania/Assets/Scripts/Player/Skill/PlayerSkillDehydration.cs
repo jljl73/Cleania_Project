@@ -81,7 +81,8 @@ public class PlayerSkillDehydration : PlayerSkill
         animator.SetTrigger("DehydrationEnd");
         animator.SetBool("OnSkillR", false);
         animator.SetBool("OnSkill", false);
-        attackArea.enabled = false;
+        if (attackArea != null)
+            attackArea.enabled = false;
     }
 
     void OnTriggerStay(Collider other)

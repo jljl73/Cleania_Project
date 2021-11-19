@@ -53,6 +53,9 @@ public class TheDustyDustStorm : EnemySkill
 
     public override bool AnimationActivate()
     {
+        if (!(Random.Range(0.0f, 1.0f) <= triggerProbability))
+            return false;
+
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("DustStorm");
         return true;
@@ -61,11 +64,34 @@ public class TheDustyDustStorm : EnemySkill
     public override void Activate()
     {
         base.Activate();
+
+        DoBreatheInAttack();
     }
 
     public override void Deactivate()
     {
+        enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
         animator.SetBool("OnSkill", false);
         return;
+    }
+
+    void DoBreatheInAttack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRadius);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].CompareTag("Player"))
+            {
+                Player player = colliders[i].GetComponent<Player>();
+
+                print("몇초간 빨려들어감");
+            }
+        }
+    }
+
+    void HitByDustStrom()
+    {
+        // 끌려들어감 풀림
+        // 밀려남 & N만큼 피해, 시야 N% 좁아지는 암흑 상태
     }
 }

@@ -140,7 +140,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
         Physics.IgnoreLayerCollision(3, 6, false);
         animator.SetBool("OnSkill4", false);
         animator.SetBool("OnSkill", false);
-        attackArea.enabled = false;
+        if (attackArea != null)
+            attackArea.enabled = false;
     }
 
     void OnTriggerEnter(Collider other)
