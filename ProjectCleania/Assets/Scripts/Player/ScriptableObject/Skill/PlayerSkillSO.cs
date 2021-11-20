@@ -40,10 +40,10 @@ public class PlayerSkillSO : PlayerSkillIDSO
     Rune[] runes;
     public Rune[] Runes { get { return runes; } }
 
-    [SerializeField]
-    protected List<AudioClip> skillSound = new List<AudioClip>();
-    public AudioClip GetSkillSound(int index) { return skillSound[index]; }
-    public int GetSkillSoundCount() { return skillSound.Count; }
+    //[SerializeField]
+    //protected List<AudioClip> skillSound = new List<AudioClip>();
+    //public AudioClip GetSkillSound(int index) { return skillSound[index]; }
+    //public int GetSkillSoundCount() { return skillSound.Count; }
 
     [Header("¿€µø ≈∞")]
     [SerializeField]

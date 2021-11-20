@@ -16,6 +16,7 @@ public class SkillStopper : StateMachineBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        playerSkillManager.StopSkill(skillID);
+        if (stateInfo.IsName("SkillR Set"))
+            playerSkillManager.StopSkill(skillID);
     }
 }

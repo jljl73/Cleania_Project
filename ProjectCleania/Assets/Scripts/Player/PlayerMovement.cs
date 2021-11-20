@@ -243,14 +243,15 @@ public class PlayerMovement : MonoBehaviour, IStunned
     public void Pulled(bool value, Vector3 position)
     {
         bPulled = value;
-        SetRigidBody(!value);
         if (value)
+        {
+            SetRigidBody(!value);
             TargetPose = position;
+            player.playerSkillManager.DeactivateAllSkill();
+        }
         else
             TargetPose = this.transform.position;
 
-        if (value)
-            player.playerSkillManager.DeactivateAllSkill();
         animator.SetBool("Pulled", value);
     }
 

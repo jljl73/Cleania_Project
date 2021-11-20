@@ -17,8 +17,9 @@ public class PlayerSkillIDSO : SkillIDSO
 
     public enum PlayerSkillTriggerType
     {
+        SkillR = 0,
         SkillC = 1,
-        SkillR = 2,
+        SkillMouseR = 2,
         Skill1 = 3,
         Skill2 = 4,
         Skill3 = 5,

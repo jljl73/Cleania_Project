@@ -26,9 +26,9 @@ public class InputManager : MonoBehaviour
         // 죽으면 플레이어 입력 불가
         if (player.abilityStatus.HP == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha9))
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                player.Revive();
+                player.PlaySkill(1190);
             }
             return;
         }
@@ -90,6 +90,8 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1197);
         }
+
+        
         // 키보드 <<<<<
 
         if (Input.GetKeyDown(KeyCode.Alpha0))

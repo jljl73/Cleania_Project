@@ -78,6 +78,7 @@ public class PlayerSkillDehydration : PlayerSkill
         animator.SetBool("OnSkill", false);
         if (attackArea != null)
             attackArea.enabled = false;
+        print("hahahaha");
     }
 
     void OnTriggerStay(Collider other)

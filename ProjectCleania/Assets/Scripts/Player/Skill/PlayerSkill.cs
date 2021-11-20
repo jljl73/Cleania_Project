@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public abstract class PlayerSkill : Skill
 {
-    protected AudioSource audioSource;
-    protected List<AudioClip> audioClips = new List<AudioClip>();
+    //protected AudioSource audioSource;
+    //protected List<AudioClip> audioClips = new List<AudioClip>();
 
     // ¿€µø ≈∞
     protected KeyCode SkillSlotDependency = KeyCode.Alpha1;
@@ -14,9 +14,9 @@ public abstract class PlayerSkill : Skill
 
     protected void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-            throw new System.Exception("PlayerSkill audioSource is null!");
+        //audioSource = GetComponent<AudioSource>();
+        //if (audioSource == null)
+        //    throw new System.Exception("PlayerSkill audioSource is null!");
     }
 
     protected new void Start()
@@ -36,28 +36,28 @@ public abstract class PlayerSkill : Skill
 
         SkillSlotDependency = skillData.GetTriggerKey();
 
-        for (int i = 0; i < skillData.GetSkillSoundCount(); i++)
-        {
-            audioClips.Add(skillData.GetSkillSound(i));
-        }
+        //for (int i = 0; i < skillData.GetSkillSoundCount(); i++)
+        //{
+        //    audioClips.Add(skillData.GetSkillSound(i));
+        //}
     }
 
-    public override void ActivateSound(int index)
-    {
-        if (audioClips.Count == 0)
-            return;
+    //public override void ActivateSound(int index)
+    //{
+    //    if (audioClips.Count == 0)
+    //        return;
 
-        audioSource.clip = audioClips[index];
-        audioSource.Play();
-        print("activateSkill sound!");
-    }
+    //    audioSource.clip = audioClips[index];
+    //    audioSource.Play();
+    //    print("activateSkill sound!");
+    //}
 
-    public override void DeactivateSound(int index)
-    {
-        if (audioClips.Count == 0)
-            return;
+    //public override void DeactivateSound(int index)
+    //{
+    //    if (audioClips.Count == 0)
+    //        return;
 
-        audioSource.clip = audioClips[index];
-        audioSource.Stop();
-    }
+    //    audioSource.clip = audioClips[index];
+    //    audioSource.Stop();
+    //}
 }
