@@ -59,9 +59,6 @@ public class EnemyMove : MonoBehaviour, IStunned
         else
             nav.isStopped = true;
 
-        // print("dist in enemyMove : " + Vector3.Distance(TargetPosition, transform.position));
-        // print("Magnitude in enemyMove : " + Vector3.Magnitude(TargetPosition - transform.position));
-
         AccelerateRotation();
         nav.SetDestination(TargetPosition);
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);

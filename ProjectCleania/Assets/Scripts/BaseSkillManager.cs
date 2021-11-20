@@ -269,7 +269,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             return false;
     }
 
-    public bool IsSpecificSkillAvailable(int id)
+    public virtual bool IsSpecificSkillAvailable(int id)
     {
         return availableSkillDict.ContainsKey(id) && skillDict[id].IsAvailable();
     }

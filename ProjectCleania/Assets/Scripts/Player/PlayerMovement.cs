@@ -4,36 +4,22 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class PlayerMovement : MonoBehaviour, IStunned
+public class PlayerMovement : MovementController, IStunned
 {
-    [Header("움직임 사용 스킬")]
-    public PlayerSkillRefreshingLeapForward LeapForwardSkill;
-    public PlayerSkillRoll rollSkill;
-
-    [Header("회전 계수")]
-    public float rotateCoef = 360f;
-
-    bool isStunned = false;
-    RaycastHit hit;
-    Player player;
-
-    Animator animator;            // 애니메이터 컴포넌트
-    NavMeshAgent navMeshAgent;    // path 계산 컴포턴트
+    NavMeshAgent navMeshAgent;             // 네비 매시 컴포넌트
     Rigidbody characterRigidBody;          // 리지드바디 컴포넌트
+    PlayerSkillManager playerSkillManager; // 스킬 매니저 컴포넌트
     float beforeFrameVelocity = -1;
     float currentFrameVelocity;
 
-    Vector3 targetPose;                 // 목표 위치
-    public Vector3 TargetPose { get => targetPose; private set { targetPose = value; } }
     bool bChasing = false;
     bool bPulled = false;
     bool bPushed = false;
 
-    private void Awake()
+    protected new void Awake()
     {
         // 컴포넌트 불러오기
-        player = GetComponent<Player>();
-        animator = GetComponent<Animator>();
+        base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
         characterRigidBody = GetComponent<Rigidbody>();
     }
@@ -54,7 +40,11 @@ public class PlayerMovement : MonoBehaviour, IStunned
         if (!CanMove())
             return;
 
+        // 속도 설정
+        SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6);
+
         ActivateNavigation();
+
         #region
         //#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
         //        if (!EventSystem.current.IsPointerOverGameObject())
@@ -72,17 +62,13 @@ public class PlayerMovement : MonoBehaviour, IStunned
             animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
     }
 
-    bool CanMove()
+    protected override bool CanMove()
     {
         if (IscharacterRigidBodyOn())
             return false;
 
-        if (player.stateMachine.CompareState(StateMachine.enumState.Dead) ||
-            player.stateMachine.CompareState(StateMachine.enumState.Attacking))
-        {
-            ResetNavigation(this.transform.position);
+        if (!IsMovableState())
             return false;
-        }
 
         if (isStunned)
         {
@@ -90,6 +76,23 @@ public class PlayerMovement : MonoBehaviour, IStunned
             return false;
         }
 
+        return true;
+    }
+
+    protected override void SetSpeed(float value)
+    {
+        base.SetSpeed(value);
+        navMeshAgent.speed = value;
+    }
+
+    protected override bool IsMovableState()
+    {
+        if (stateMachine.CompareState(StateMachine.enumState.Dead) ||
+            stateMachine.CompareState(StateMachine.enumState.Attacking))
+        {
+            ResetNavigation(this.transform.position);
+            return false;
+        }
         return true;
     }
 
@@ -117,17 +120,10 @@ public class PlayerMovement : MonoBehaviour, IStunned
         }
     }
 
-    public void Move(Vector3 pose)
-    {
-        if (bPulled)
-            return;
-        MoveToPosition(pose);
-    }
-
-    public void StopMoving()
-    {
-        TargetPose = transform.position;
-    }
+    //public void StopMoving()
+    //{
+    //    TargetPose = transform.position;
+    //}
 
     void ResetNavigation(Vector3 newPose)
     {
@@ -137,93 +133,108 @@ public class PlayerMovement : MonoBehaviour, IStunned
 
     private void ActivateNavigation()
     {
-        if (!navMeshAgent.SetDestination(TargetPose))
-            print("navMeshAgent.SetDestination(TargetPose) FAILED!!!!");
+        navMeshAgent.SetDestination(TargetPose);
     }
 
-    private void AccelerateRotation()
+    public override void Move(Vector3 pose)
     {
-        Vector3 rotateForward; //= Vector3.zero;
-
-        rotateForward = Vector3.Normalize(TargetPose - transform.position);
-
-        // 목표 회전 벡터 결정
-        rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
-
-        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward,
-            rotateCoef * 180.0f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
-
-        // 회전
-        transform.LookAt(this.transform.position + limit);
+        if (bPulled)
+            return;
+        MoveToPosition(pose);
     }
 
-    public void MoveToPosition(Vector3 position)
-    {
-        int layerMask = 0;
-        layerMask = 1 << 5 | 1 << 7;
+    #region
 
-        Ray ray = Camera.main.ScreenPointToRay(position);
+    //public void JumpForward(float dist)
+    //{
+    //    TargetPose = transform.position + transform.forward * dist;
+    //}
 
-        if (Physics.Raycast(ray, out hit, 500.0f, layerMask))
-        {
-            if (hit.collider.tag == "Ground")
-            {
-                TargetPose = hit.point;
-                //print("Ground Hit");
-            }
-            else if (hit.collider.CompareTag("Enemy"))
-                TargetPose = hit.collider.transform.position;
-        }
 
-        if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
-        {
-            animator.SetBool("Walk", true);
-        }
-    }
+    //private void AccelerateRotation()
+    //{
+    //    Vector3 rotateForward; //= Vector3.zero;
 
-    public void JumpForward(float dist)
-    {
-        TargetPose = transform.position + transform.forward * dist;
-    }
+    //    rotateForward = Vector3.Normalize(TargetPose - transform.position);
 
-    bool IsMovableLayer(string collideTag, out RaycastHit rayhitInfo)
-    {
-        bool result = false;
+    //    // 목표 회전 벡터 결정
+    //    rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
 
-        int layerMask = 0;
-        layerMask = 1 << 5 | 1 << 7;
+    //    Vector3 limit = Vector3.Slerp(transform.forward, rotateForward,
+    //        rotateCoef * 180.0f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit raycastHit;
-        if (Physics.Raycast(ray, out raycastHit, 500.0f, layerMask))
-        {
-            if (raycastHit.collider.CompareTag(collideTag))
-                result = true;
-        }
-        rayhitInfo = raycastHit;
+    //    // 회전
+    //    transform.LookAt(this.transform.position + limit);
+    //}
 
-        return result;
-    }
 
-    public void ImmediateLookAtMouse()
-    {
-        RaycastHit rayhitInfo;
-        if (IsMovableLayer("Ground", out rayhitInfo))
-        {
-            print("ImmediateLookAtMouse it's ground!");
-            Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
-            player.gameObject.transform.LookAt(lookAtPointOnSameY);
-        }
-    }
 
-    public void LeapForwardSkillJumpForward()
-    {
-        print("LeapForwardSkillJumpForward!");
-        if (LeapForwardSkill == null)
-            throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
-        float dist = LeapForwardSkill.GetJumpDistance();
-        TargetPose = transform.position + transform.forward * dist;
-    }
+    //public void MoveToPosition(Vector3 position)
+    //{
+    //    int layerMask = 0;
+    //    layerMask = 1 << 5 | 1 << 7;
+
+    //    Ray ray = Camera.main.ScreenPointToRay(position);
+
+    //    if (Physics.Raycast(ray, out hit, 500.0f, layerMask))
+    //    {
+    //        if (hit.collider.tag == "Ground")
+    //        {
+    //            TargetPose = hit.point;
+    //            //print("Ground Hit");
+    //        }
+    //        else if (hit.collider.CompareTag("Enemy"))
+    //            TargetPose = hit.collider.transform.position;
+    //    }
+
+    //    if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
+    //    {
+    //        animator.SetBool("Walk", true);
+    //    }
+    //}
+
+
+
+    //bool IsMovableLayer(string collideTag, out RaycastHit rayhitInfo)
+    //{
+    //    bool result = false;
+
+    //    int layerMask = 0;
+    //    layerMask = 1 << 5 | 1 << 7;
+
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    RaycastHit raycastHit;
+    //    if (Physics.Raycast(ray, out raycastHit, 500.0f, layerMask))
+    //    {
+    //        if (raycastHit.collider.CompareTag(collideTag))
+    //            result = true;
+    //    }
+    //    rayhitInfo = raycastHit;
+
+    //    return result;
+    //}
+
+    //public void ImmediateLookAtMouse()
+    //{
+    //    RaycastHit rayhitInfo;
+    //    if (IsMovableLayer("Ground", out rayhitInfo))
+    //    {
+    //        print("ImmediateLookAtMouse it's ground!");
+    //        Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
+    //        player.gameObject.transform.LookAt(lookAtPointOnSameY);
+    //    }
+    //}
+
+    //public void LeapForwardSkillJumpForward()
+    //{
+    //    print("LeapForwardSkillJumpForward!");
+    //    if (LeapForwardSkill == null)
+    //        throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
+    //    float dist = LeapForwardSkill.GetJumpDistance();
+    //    TargetPose = transform.position + transform.forward * dist;
+    //}
+
+    #endregion
 
     public void AddForce(Vector3 force)
     {
@@ -247,30 +258,31 @@ public class PlayerMovement : MonoBehaviour, IStunned
         {
             SetRigidBody(!value);
             TargetPose = position;
-            player.playerSkillManager.DeactivateAllSkill();
+            playerSkillManager.DeactivateAllSkill();
         }
         else
             TargetPose = this.transform.position;
 
         animator.SetBool("Pulled", value);
     }
+    #region
+    //public void Stunned(bool isStunned, float stunnedTime)
+    //{
+    //    if (isStunned)
+    //    {
+    //        StartCoroutine(StunnedFor(stunnedTime));
+    //    }
+    //    else
+    //    {
+    //        isStunned = false;
+    //    }
+    //}
 
-    public void Stunned(bool isStunned, float stunnedTime)
-    {
-        if (isStunned)
-        {
-            StartCoroutine(StunnedFor(stunnedTime));
-        }
-        else
-        {
-            isStunned = false;
-        }
-    }
-
-    public IEnumerator StunnedFor(float time)
-    {
-        isStunned = true;
-        yield return new WaitForSeconds(time);
-        isStunned = false;
-    }
+    //public IEnumerator StunnedFor(float time)
+    //{
+    //    isStunned = true;
+    //    yield return new WaitForSeconds(time);
+    //    isStunned = false;
+    //}
+    #endregion
 }

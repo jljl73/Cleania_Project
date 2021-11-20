@@ -63,10 +63,10 @@ public class Player : MonoBehaviour
             PlayerMoveWithoutNav.Move(position);
     }
 
-    public void StopMoving()
-    {
-        playerMove.StopMoving();
-    }
+    //public void StopMoving()
+    //{
+    //    playerMove.StopMoving();
+    //}
 
 
     public void PlaySkill(int id)
