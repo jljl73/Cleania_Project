@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     EnemySpawnerManager enemySpawnerManager;
+    public bool PlayerMovable;
 
     public Vector3 force = Vector3.right;
 
@@ -36,6 +37,7 @@ public class InputManager : MonoBehaviour
         // ¸¶¿ì½º >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
+            if(PlayerMovable)
             player.Move(Input.mousePosition);
         }
 

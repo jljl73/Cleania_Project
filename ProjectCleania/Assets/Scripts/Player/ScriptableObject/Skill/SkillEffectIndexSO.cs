@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SkillEffectIndex", menuName = "Scriptable Object/PlayerSkill/Effect/SkillEffect")]
+[CreateAssetMenu(fileName = "SkillEffectIndex", menuName = "Scriptable Object/SkillEffect")]
 public class SkillEffectIndexSO : ScriptableObject
 {
     [SerializeField]

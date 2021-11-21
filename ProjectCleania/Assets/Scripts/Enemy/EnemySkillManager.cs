@@ -57,7 +57,9 @@ public class EnemySkillManager : BaseSkillManager
         if (!IsSkillAvailable()) return false;
         if (!IsSpecificSkillAvailable(skillID)) return false;
 
-        skillDict[skillID].AnimationActivate();
+        if (skillDict[skillID].AnimationActivate())
+            enemyStateMachine.Transition(StateMachine.enumState.Attacking);
+
         ResetSkill(skillID);
 
         return true;

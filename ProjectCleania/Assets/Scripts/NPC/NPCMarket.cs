@@ -56,7 +56,7 @@ public class NPCMarket : MonoBehaviour
         UI_Currency inventoryCurrency = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>();
         if(inventoryCurrency.Crystal < totalPrice)
         {
-            UI_MessageBox.Message("클린이 부족합니다.");
+            UI_MessageBox.Show("클린이 부족합니다.");
             return;
         }
         else
@@ -79,7 +79,7 @@ public class NPCMarket : MonoBehaviour
                         inventoryCurrency.AddCrystal(-i.itemInstance.SO.Price * (originCount - i.itemInstance.Count));
                     }
 
-                    UI_MessageBox.Message("인벤토리가 꽉 찼습니다.");
+                    UI_MessageBox.Show("인벤토리가 꽉 찼습니다.");
                     break;
                 }
 

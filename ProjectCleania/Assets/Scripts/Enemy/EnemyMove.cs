@@ -46,6 +46,12 @@ public class EnemyMove : MonoBehaviour, IStunned
 
     void FixedUpdate()
     {
+        if (stateMachine.CompareState(StateMachine.enumState.Attacking))
+        {
+            nav.SetDestination(this.transform.position);
+            return;
+        }
+
         if (TargetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
 
         // Nav 우선순위 선정

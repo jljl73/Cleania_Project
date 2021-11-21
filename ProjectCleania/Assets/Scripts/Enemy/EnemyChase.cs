@@ -13,9 +13,10 @@ public class EnemyChase : MonoBehaviour
             enemySpawner = value;
             myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
             myGroupManager.AddMember(gameObject);
+
         }
     }
-    // GameObject enemy;
+    Enemy enemy;
     EnemyGroupManager myGroupManager;
     AbilityStatus targetObjAbility;
 
@@ -23,10 +24,9 @@ public class EnemyChase : MonoBehaviour
 
     Collider[] overlappedColiders;
 
-    private void OnDisable()
+    private void Awake()
     {
-        if (myGroupManager != null)
-            myGroupManager.DeleteMember(this.gameObject);
+        enemy = GetComponent<Enemy>();
     }
 
     private void Update()
@@ -39,9 +39,15 @@ public class EnemyChase : MonoBehaviour
                 if (targetObjAbility != null)
                     break;
 
-                //myGroupManager.SetTarget(collider.gameObject);
-                myGroupManager.Target = collider.gameObject;
-                //targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
+                if (enemySpawner == null)
+                    enemy.SetTarget(collider.gameObject);
+                else
+                {
+                    enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(collider.gameObject);
+                    myGroupManager.Target = collider.gameObject;
+                }
+
+                targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
                 break;
             }
         }

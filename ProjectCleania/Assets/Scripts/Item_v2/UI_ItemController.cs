@@ -227,6 +227,12 @@ public class UI_ItemController : MonoBehaviour,
             }
         }
 
+        //StartCoroutine(_ThrowItemInInventory());
+        var refer = GetComponentInParent<ItemInventory>();
+        refer.ThrowPanel.controller = this;
+        refer.ThrowPanel.gameObject.SetActive(true);
+
+
         // raycast with offset and choose action
         // if tag is slot, call Add and Remove of each containers.
     }
@@ -238,7 +244,10 @@ public class UI_ItemController : MonoBehaviour,
         switch (currentContainer.SyncWith)
         {
             case UI_ItemContainer.SyncType.Inventory:
-                GameManager.Instance.npcManager.Dosmth(this);
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                    _DevideItemInInventory();
+                else
+                    GameManager.Instance.npcManager.Dosmth(this);
                 break;
             case UI_ItemContainer.SyncType.Storage:
                 MoveToInventory();
@@ -249,5 +258,46 @@ public class UI_ItemController : MonoBehaviour,
         }
 
         return;
+    }
+
+    IEnumerator _ThrowItemInInventory()
+    {
+        yield return StartCoroutine(UI_MessageBox.Instance.Show_Coroutine("버릴거야?", MessageBoxButtons.OKCancel));
+
+        switch(UI_MessageBox.Result)
+        {
+            case DialogResult.OK:
+                ItemInstance item = itemInstance;
+                currentContainer.Remove(this);
+                SavedData.Instance.Item_World.Add(item);
+                break;
+
+            case DialogResult.Cancel:
+                break;
+        }
+    }
+
+    IEnumerator _DevideItemInInventory()
+    {
+        //if (itemInstance.Count < 2)
+        //{
+        //    UI_MessageBox.Show("반토막내지는 말아주세요.");
+        //    return;
+        //}
+
+        //ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
+
+        //if(!currentContainer.Add(devided))
+        //{
+        //    UI_MessageBox.Show("공간이 부족합니다.");
+        //    return;
+        //}
+        //currentContainer.Remove(currentContainer[devided]);
+
+        //ItemDividePanel devidePanel = currentContainer.GetComponentInChildren<ItemDividePanel>();
+
+        //devidePanel.gameObject.SetActive(true);
+        ////devidePanel.
+        return null;
     }
 }
