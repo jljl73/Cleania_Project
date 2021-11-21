@@ -187,6 +187,11 @@ public class Enemy : MonoBehaviour
 
     public void SetTarget(GameObject target)
     {
+        if (target == null)
+            navMeshAgent.enabled = false;
+        else
+            navMeshAgent.enabled = true;
+
         enemyMove.SetTarget(target);
     }
 

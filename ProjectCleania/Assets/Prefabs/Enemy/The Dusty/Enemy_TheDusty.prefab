@@ -2602,6 +2602,7 @@ GameObject:
   - component: {fileID: 5094565500672693811}
   - component: {fileID: 2729397351371099190}
   - component: {fileID: 7558705486454645534}
+  - component: {fileID: 6552274021247091931}
   m_Layer: 0
   m_Name: Dust Storm
   m_TagString: Untagged
@@ -2674,6 +2675,20 @@ MonoBehaviour:
   ParticleObject: {fileID: 2600161726305026245}
   scale: 1
   IsEnabledOnAwake: 0
+--- !u!136 &6552274021247091931
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8790178542006779828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 6.5
+  m_Direction: 2
+  m_Center: {x: 0, y: 1, z: 4}
 --- !u!1001 &1316950551618499792
 PrefabInstance:
   m_ObjectHideFlags: 0

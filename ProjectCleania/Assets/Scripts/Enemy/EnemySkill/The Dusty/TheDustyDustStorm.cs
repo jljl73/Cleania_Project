@@ -7,6 +7,8 @@ public class TheDustyDustStorm : EnemySkill
     [SerializeField]
     DustStormSO skillData;
 
+    CapsuleCollider breatheOutAttackCollider;
+
     float damageScale;
     float damageRadius = 1;
     float pulledSpeed = 5;
@@ -18,19 +20,41 @@ public class TheDustyDustStorm : EnemySkill
     float sightHindDuration = 4f;
     float triggerProbability = 0.3f;
 
+    bool isBreatheInAttackPlaying = false;
+    bool isBreatheOutAttackPlaying = false;
+
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()
     {
         base.Awake();
+        breatheOutAttackCollider = GetComponent<CapsuleCollider>();
+    }
+
+    private void OnEnable()
+    {
+        Start();
     }
 
     private new void Start()
     {
         base.Start();
 
+        breatheOutAttackCollider.enabled = false;
+
         UpdateSkillData();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isBreatheInAttackPlaying)
+            DoBreatheInAttack(true);
+
+        if (isBreatheOutAttackPlaying)
+            breatheOutAttackCollider.enabled = true;
+        else
+            breatheOutAttackCollider.enabled = false;
     }
 
     public void UpdateSkillData()
@@ -61,21 +85,45 @@ public class TheDustyDustStorm : EnemySkill
         return true;
     }
 
-    public override void Activate()
+    public override void Activate(int idx)
     {
         base.Activate();
 
-        DoBreatheInAttack();
+        switch (idx)
+        {
+            case 0:
+                isBreatheInAttackPlaying = true;
+                break;
+            case 1:
+                isBreatheOutAttackPlaying = true;
+                break;
+            default:
+                break;
+        }
     }
 
-    public override void Deactivate()
+    public override void Deactivate(int idx)
     {
-        enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
-        animator.SetBool("OnSkill", false);
+        print("Deactivate id: " + idx);
+        switch (idx)
+        {
+            case 0:
+                isBreatheInAttackPlaying = false;
+                DoBreatheInAttack(false);
+                break;
+            case 1:
+                isBreatheOutAttackPlaying = false;
+                print("Deactivate id 1");
+                enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
+                animator.SetBool("OnSkill", false);
+                break;
+            default:
+                break;
+        }
         return;
     }
 
-    void DoBreatheInAttack()
+    void DoBreatheInAttack(bool value)
     {
         Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRadius);
         for (int i = 0; i < colliders.Length; i++)
@@ -83,15 +131,18 @@ public class TheDustyDustStorm : EnemySkill
             if (colliders[i].CompareTag("Player"))
             {
                 Player player = colliders[i].GetComponent<Player>();
-
-                print("몇초간 빨려들어감");
+                player.playerMove.Pulled(value, this.transform.position);
             }
         }
     }
 
-    void HitByDustStrom()
+    private void OnTriggerStay(Collider other)
     {
-        // 끌려들어감 풀림
-        // 밀려남 & N만큼 피해, 시야 N% 좁아지는 암흑 상태
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponent<Player>();
+            Vector3 hitVector = Vector3.Normalize(other.transform.position - this.transform.position) * stormForce;
+            player.playerMove.AddForce(hitVector);
+        }
     }
 }

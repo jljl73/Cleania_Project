@@ -31,6 +31,7 @@ public class EnemyMove : MonoBehaviour, IStunned
         nav = GetComponent<NavMeshAgent>();
         if (nav == null)
             throw new System.Exception("EnemyMove doesnt have nav");
+
         // animator = GetComponent<Animator>();
         if (stateMachine == null)
             throw new System.Exception("EnemyMove doesnt have stateMachine");
@@ -41,7 +42,15 @@ public class EnemyMove : MonoBehaviour, IStunned
 
     private void OnEnable()
     {
+        Start();
+
         StartCoroutine(SetPositionToTarget());
+    }
+
+    void Start()
+    {
+        // 초기에 꺼두기
+        nav.enabled = false;
     }
 
     void FixedUpdate()
