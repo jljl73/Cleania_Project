@@ -11,7 +11,10 @@ public class InputManager : MonoBehaviour
     EnemySpawnerManager enemySpawnerManager;
     public bool PlayerMovable;
 
-    public Vector3 force = Vector3.right;
+    private void Awake()
+    {
+        GameManager.Instance.inputManager = this;
+    }
 
     void Start()
     {
@@ -21,10 +24,10 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        // UI Å¬¸¯½Ã ¸®ÅÏ
+        // UI í´ë¦­ì‹œ ë¦¬í„´
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
-        // Á×À¸¸é ÇÃ·¹ÀÌ¾î ÀÔ·Â ºÒ°¡
+        // ì£½ìœ¼ë©´ í”Œë ˆì´ì–´ ìž…ë ¥ ë¶ˆê°€
         if (player.abilityStatus.HP == 0)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -34,7 +37,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        // ¸¶¿ì½º >>>>>
+        // ë§ˆìš°ìŠ¤ >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
             if(PlayerMovable)
@@ -50,10 +53,10 @@ public class InputManager : MonoBehaviour
         {
             player.StopSkill(1102);
         }
-        // ¸¶¿ì½º <<<<<
+        // ë§ˆìš°ìŠ¤ <<<<<
 
 
-        // Å°º¸µå >>>>>
+        // í‚¤ë³´ë“œ >>>>>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             player.PlaySkill(1103);
@@ -94,7 +97,7 @@ public class InputManager : MonoBehaviour
         }
 
         
-        // Å°º¸µå <<<<<
+        // í‚¤ë³´ë“œ <<<<<
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {

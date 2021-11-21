@@ -260,44 +260,44 @@ public class UI_ItemController : MonoBehaviour,
         return;
     }
 
-    IEnumerator _ThrowItemInInventory()
-    {
-        yield return StartCoroutine(UI_MessageBox.Instance.Show_Coroutine("버릴거야?", MessageBoxButtons.OKCancel));
+    //IEnumerator _ThrowItemInInventory()
+    //{
+    //    yield return StartCoroutine(UI_MessageBox.Instance.Show_Coroutine("버릴거야?", MessageBoxButtons.OKCancel));
 
-        switch(UI_MessageBox.Result)
+    //    switch(UI_MessageBox.Result)
+    //    {
+    //        case DialogResult.OK:
+    //            ItemInstance item = itemInstance;
+    //            currentContainer.Remove(this);
+    //            SavedData.Instance.Item_World.Add(item);
+    //            break;
+
+    //        case DialogResult.Cancel:
+    //            break;
+    //    }
+    //}
+
+    void _DevideItemInInventory()
+    {
+        if (itemInstance.Count < 2)
         {
-            case DialogResult.OK:
-                ItemInstance item = itemInstance;
-                currentContainer.Remove(this);
-                SavedData.Instance.Item_World.Add(item);
-                break;
-
-            case DialogResult.Cancel:
-                break;
+            UI_MessageBox.Show("반토막내지는 말아주세요.");
+            return;
         }
-    }
 
-    IEnumerator _DevideItemInInventory()
-    {
-        //if (itemInstance.Count < 2)
-        //{
-        //    UI_MessageBox.Show("반토막내지는 말아주세요.");
-        //    return;
-        //}
+        ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
 
-        //ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
+        if (!currentContainer.AddSeparated(devided))
+        {
+            UI_MessageBox.Show("공간이 부족합니다.");
+            return;
+        }
+        currentContainer.Remove(currentContainer[devided]);
 
-        //if(!currentContainer.Add(devided))
-        //{
-        //    UI_MessageBox.Show("공간이 부족합니다.");
-        //    return;
-        //}
-        //currentContainer.Remove(currentContainer[devided]);
+        ItemDividePanel devidePanel = currentContainer.gameObject.GetComponent<ItemInventory>().DividePanel;
 
-        //ItemDividePanel devidePanel = currentContainer.GetComponentInChildren<ItemDividePanel>();
-
-        //devidePanel.gameObject.SetActive(true);
-        ////devidePanel.
-        return null;
+        devidePanel.controller = this;
+        devidePanel.gameObject.SetActive(true);
+        return;
     }
 }
