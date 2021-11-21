@@ -11,6 +11,11 @@ public class InputManager : MonoBehaviour
     EnemySpawnerManager enemySpawnerManager;
     public bool PlayerMovable;
 
+    private void Awake()
+    {
+        GameManager.Instance.inputManager = this;
+    }
+
     void Start()
     {
         player = GameManager.Instance.player;
