@@ -67,7 +67,8 @@ public class PlayerSkillDusting : PlayerSkill
     {
         animator.SetBool("OnSkillC", false);
         animator.SetBool("OnSkill", false);
-        attackArea.enabled = false;
+        if (attackArea != null)
+            attackArea.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -16,7 +16,7 @@ public class TestPlayerMove : MonoBehaviour, IStunned
     BoxCollider attackBoxCollider;      // 공격 시 쓰이는 박스 콜라이더
 
     GameObject targetObj;               // 공격 대상
-    Vector3 targetPos;                 // 목표 위치
+    Vector3 targetPos;                  // 목표 위치
     RaycastHit hit;
 
     [Header("회전 계수")]
