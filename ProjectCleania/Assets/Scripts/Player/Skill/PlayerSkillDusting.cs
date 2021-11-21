@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillDusting : PlayerSkill
 {
-    public PlayerSkillDustingSO SkillData;
+    [SerializeField]
+    PlayerSkillDustingSO skillData;
 
     Collider attackArea;
 
@@ -12,16 +13,17 @@ public class PlayerSkillDusting : PlayerSkill
     float damageRate = 5.4f;
     public float GetDamageRate() { return damageRate; }
 
-    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    new void Awake()
     {
+        base.Awake();
+
         UpdateSkillData();
     }
 
     new void Start()
     {
-        //initialNavAgentR = navMeshAgent.radius;
         base.Start();
 
         GameManager.Instance.player.OnLevelUp += UpdateSkillData;
@@ -31,17 +33,9 @@ public class PlayerSkillDusting : PlayerSkill
 
     public void UpdateSkillData()
     {
-        ID = SkillData.ID;
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = SkillData.GetTriggerKey();
-
-        damageRate = SkillData.GetDamageRate();
+        damageRate = skillData.GetDamageRate();
     }
 
     // Update is called once per frame
@@ -60,7 +54,8 @@ public class PlayerSkillDusting : PlayerSkill
 
     public override void Activate()
     {
-        attackArea.enabled = true;
+        if (attackArea != null)
+            attackArea.enabled = true;
     }
 
     public override void Deactivate()

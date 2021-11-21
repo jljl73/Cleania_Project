@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class PlayerSkillManager : BaseSkillManager
 {
     public StateMachine playerStateMachine;
-    public PlayerMovement playerMove;
+    public PlayerMovement playerMoveWithNav;
     public TestPlayerMove PlayerMoveWithoutNav;
     Collider objectCollider;
 
@@ -34,8 +34,8 @@ public class PlayerSkillManager : BaseSkillManager
         if (playerStateMachine == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerStateMachine");
 
-        playerMove = GetComponent<PlayerMovement>();
-        if (playerMove == null)
+        playerMoveWithNav = GetComponent<PlayerMovement>();
+        if (playerMoveWithNav == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerMove");
 
         PlayerMoveWithoutNav = GetComponent<TestPlayerMove>();
@@ -59,7 +59,7 @@ public class PlayerSkillManager : BaseSkillManager
     protected override void SkillEventConnect()
     {
         // 1106 = 상쾌한 도약
-        skillStorage.GetNormalSkill(1106).OnPlaySkill += playerMove.LeapForwardSkillJumpForward;
+        skillStorage.GetNormalSkill(1106).OnPlaySkill += PlayerMoveWithoutNav.LeapForwardSkillJumpForward;
 
         // 1199 = 카타르시스
         skillStorage.GetNormalSkill(1199).OnSkillEnd += playKatarsis;
@@ -77,14 +77,14 @@ public class PlayerSkillManager : BaseSkillManager
 
     void playRoll()
     {
-        playerMove.enabled = false;
+        playerMoveWithNav.enabled = false;
         PlayerMoveWithoutNav.enabled = true;
         objectCollider.enabled = false;
     }
 
     void EndRoll()
     {
-        playerMove.enabled = true;
+        playerMoveWithNav.enabled = true;
         PlayerMoveWithoutNav.enabled = false;
         objectCollider.enabled = true;
     }
@@ -154,16 +154,20 @@ public class PlayerSkillManager : BaseSkillManager
     public override bool PlaySkill(int id)
     {
         if (!IsSpecificSkillAvailable(id)) return false;
-        if (!IsSkillAvailable()) return false;
+
+        // 부활 스킬이 아니면, 스킬 쓸 수 있는 상태인지 확인
+        if (id != 1190)
+            if (!IsSkillAvailable()) return false;
+
         // MP가 없으면 실행 불가
         if (!abilityStatus.ConsumeMP(skillDict[id].GetConsumMP()))
             return false;
 
-        // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번), 1199 = 카타르시스(F), 1198 = 구르기(Space), 1197 = 마을귀환(T), 1196 = 정제수(Q)
-        if (id != 1106 && id != 1102 && id != 1199 && id != 1198 && id != 1196 && id != 1197) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번), 1199 = 카타르시스(F), 1198 = 구르기(Space), 1197 = 마을귀환(T), 1196 = 정제수(Q), 1190 = 부활(R)
+        if (id != 1106 && id != 1102 && id != 1199 && id != 1198 && id != 1196 && id != 1197 && id != 1190) playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
-        if (playerMove.enabled)
-            playerMove.ImmediateLookAtMouse();
+        if (playerMoveWithNav.enabled)
+            playerMoveWithNav.ImmediateLookAtMouse();
         else
             PlayerMoveWithoutNav.ImmediateLookAtMouse();
 
@@ -175,6 +179,12 @@ public class PlayerSkillManager : BaseSkillManager
     public void StopSkill(int id)
     {
         skillDict[id].StopSkill();
+    }
+
+    public override void AnimationDeactivate()
+    {
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
+        playerStateMachine.ResetState();
     }
 
     #region
@@ -253,9 +263,10 @@ public class PlayerSkillManager : BaseSkillManager
 
     public override void DeactivateSkill(int id)
     {
-        playerStateMachine.Transition(StateMachine.enumState.Idle);
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
         skillDict[id].Deactivate();
     }
+
 
     #region
     // ---------------------------------------------------------------------------------------------- //

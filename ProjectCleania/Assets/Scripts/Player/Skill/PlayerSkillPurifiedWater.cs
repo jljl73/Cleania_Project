@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerSkillPurifiedWater : PlayerSkill
 {
+    [SerializeField]
+    PlayerSkillPurifiedWaterSO skillData;
+
     float HPRecoveryRate;
     float MPRecoveryRate;
 
-    public PlayerSkillPurifiedWaterSO skillData;
-
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         UpdateskillData();
     }
 
@@ -23,13 +25,8 @@ public class PlayerSkillPurifiedWater : PlayerSkill
 
     public void UpdateskillData()
     {
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = skillData.GetTriggerKey();
         HPRecoveryRate = skillData.GetHPRecoveryRate();
         MPRecoveryRate = skillData.GetMPRecoveryRate();
     }

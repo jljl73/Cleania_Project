@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillSweeping : PlayerSkill
 {
-    public PlayerSkillSweepingSO SkillData;
+    [SerializeField]
+    PlayerSkillSweepingSO skillData;
     float skillScale = 0.0f;
 
     CapsuleCollider col;
@@ -17,10 +18,11 @@ public class PlayerSkillSweeping : PlayerSkill
     float sweepRange = 2f;
     public float GetSweepRange() { return sweepRange; }
 
-    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         col = GetComponent<CapsuleCollider>();
         UpdateSkillData();
     }
@@ -36,19 +38,10 @@ public class PlayerSkillSweeping : PlayerSkill
     
     public void UpdateSkillData()
     {
-        ID = SkillData.ID;
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = SkillData.GetTriggerKey();
-
-        stunTime = SkillData.GetStunTime();
-        sweepRange = SkillData.GetSweepRange();
-        //col.radius = sweepRange;
+        stunTime = skillData.GetStunTime();
+        sweepRange = skillData.GetSweepRange();
     }
 
     public override bool AnimationActivate()

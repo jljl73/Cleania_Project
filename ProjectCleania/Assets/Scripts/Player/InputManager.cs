@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour
     EnemySpawnerManager enemySpawnerManager;
     public bool PlayerMovable;
 
+    public Vector3 force = Vector3.right;
+
     void Start()
     {
         player = GameManager.Instance.player;
@@ -25,9 +27,9 @@ public class InputManager : MonoBehaviour
         // 죽으면 플레이어 입력 불가
         if (player.abilityStatus.HP == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha9))
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                player.Revive();
+                player.PlaySkill(1190);
             }
             return;
         }
@@ -90,11 +92,28 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1197);
         }
+
+        
         // 키보드 <<<<<
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             enemySpawnerManager.SpawnStart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            player.playerMove.AddForce(force);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            player.playerMove.Pulled(false, Vector3.zero);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
         }
     }
 

@@ -5,9 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillEffectIndex", menuName = "Scriptable Object/SkillEffect")]
 public class SkillEffectIndexSO : ScriptableObject
 {
-    public int SkillID;
-    public int GetSkillID() { return SkillID; }
+    [SerializeField]
+    int skillID;
+    public int GetSkillID() { return skillID; }
 
-    public int EffectID;
-    public int GetEffectID() { return EffectID; }
+    [SerializeField]
+    int effectID;
+    public int GetEffectID() { return effectID; }
 }

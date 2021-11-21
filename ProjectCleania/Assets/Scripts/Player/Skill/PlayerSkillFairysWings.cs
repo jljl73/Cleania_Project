@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerSkillFairysWings : PlayerSkill
 {
-    public PlayerSkillFairysWingsSO SkillData;
+    [SerializeField]
+    PlayerSkillFairysWingsSO skillData;
 
     public Buffable buffManager;
-    // public float speed = 10.0f;
 
     // "지속 시간"
     float duration = 0f;
@@ -24,10 +24,11 @@ public class PlayerSkillFairysWings : PlayerSkill
     bool bSkill = false;
     int nDeadEnemy = 0;
 
-    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         UpdateSkillData();
     }
 
@@ -44,21 +45,14 @@ public class PlayerSkillFairysWings : PlayerSkill
 
     public void UpdateSkillData()
     {
-        ID = SkillData.ID;
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
-        HandsUpReadyMultiplier = SkillData.GetHandsUpReadyMultiplier();
-        HandsUpAndDownMultiplier = SkillData.GetHandsUpAndDownMultiplier();
-        PostDelayMultiplier = SkillData.GetPostDelayMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = SkillData.GetTriggerKey();
+        HandsUpReadyMultiplier = skillData.GetHandsUpReadyMultiplier();
+        HandsUpAndDownMultiplier = skillData.GetHandsUpAndDownMultiplier();
+        PostDelayMultiplier = skillData.GetPostDelayMultiplier();
 
-        duration = SkillData.GetDuration();
-        speedUpRate = SkillData.GetSpeedUpRate();
+        duration = skillData.GetDuration();
+        speedUpRate = skillData.GetSpeedUpRate();
     }
 
     public override bool AnimationActivate()

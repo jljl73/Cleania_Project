@@ -68,6 +68,14 @@ public abstract class Skill : MonoBehaviour
 
     public List<SkillEffectController> effectController;
 
+    public virtual void ActivateSound(int index)
+    {
+    }
+
+    public virtual void DeactivateSound(int index)
+    {
+    }
+
     protected void Start()
     {
     }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerSkillRoll : PlayerSkill
 {
+    [SerializeField]
+    PlayerSkillRollSO skillData;
+
     // public Status status;
     bool bSkill = false;
 
@@ -11,13 +14,12 @@ public class PlayerSkillRoll : PlayerSkill
     float avoidSpeedMultiplier;
     public float AvoidSpeedMultiplier { get => avoidSpeedMultiplier; }
 
-    public PlayerSkillRollSO skillData;
-
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
-        UpdateskillData();
+        base.Awake();
+        UpdateSkillData();
     }
 
     protected new void Start()
@@ -25,15 +27,10 @@ public class PlayerSkillRoll : PlayerSkill
         base.Start();
     }
 
-    public void UpdateskillData()
+    public void UpdateSkillData()
     {
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
-
-        SkillSlotDependency = skillData.GetTriggerKey();
+        base.UpdateSkillData(skillData);
+        
         avoidDistance = skillData.GetAvoidDistance();
         avoidSpeedMultiplier = skillData.GetAvoidSpeedMultiplier();
     }

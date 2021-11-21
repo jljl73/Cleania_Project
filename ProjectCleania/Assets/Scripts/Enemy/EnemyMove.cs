@@ -39,11 +39,9 @@ public class EnemyMove : MonoBehaviour, IStunned
             throw new System.Exception("EnemyMove doesnt have myEnemy");
     }
 
-    void Start()
+    private void OnEnable()
     {
         StartCoroutine(SetPositionToTarget());
-
-        
     }
 
     void FixedUpdate()
@@ -66,9 +64,6 @@ public class EnemyMove : MonoBehaviour, IStunned
         }
         else
             nav.isStopped = true;
-
-        // print("dist in enemyMove : " + Vector3.Distance(TargetPosition, transform.position));
-        // print("Magnitude in enemyMove : " + Vector3.Magnitude(TargetPosition - transform.position));
 
         AccelerateRotation();
         nav.SetDestination(TargetPosition);
