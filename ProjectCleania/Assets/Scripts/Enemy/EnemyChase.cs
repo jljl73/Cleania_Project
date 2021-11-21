@@ -43,7 +43,7 @@ public class EnemyChase : MonoBehaviour
                     enemy.SetTarget(collider.gameObject);
                 else
                 {
-                    enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(collider.gameObject);
+                    enemySpawner.GetComponent<EnemyGroupManager>().Target = collider.gameObject;
                     myGroupManager.Target = collider.gameObject;
                 }
 
