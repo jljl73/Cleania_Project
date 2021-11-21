@@ -15,6 +15,7 @@ public class EnemyStateMachine : StateMachine
 
     [SerializeField]
     MonsterType monsterType;
+    public MonsterType GetMonsterType() { return monsterType; }
 
     public enum enumRank
     {

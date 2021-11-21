@@ -29,7 +29,9 @@ public class EnemySkillStorage : SkillStorage
 
     void Awake()
     {
+        if (isSkillUploaded) return;
         UploadSkills();
+        isSkillUploaded = true;
     }
   
     protected override void UploadSkills()

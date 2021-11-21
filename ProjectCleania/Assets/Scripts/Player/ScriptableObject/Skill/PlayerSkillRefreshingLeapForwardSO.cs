@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerSkillRefreshingLeapForward", menuName = "Scriptable Object/PlayerSkill/PlayerSkillRefreshingLeapForward")]
-public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
+public class PlayerSkillRefreshingLeapForwardSO : PlayerSkillSO
 {
-    
-
-    [Header("Tip: 변수명을 입력할 수 있습니다.")]
-    [TextArea]
-    public string SkillDetails;
-    public string GetSkillDetails()
+    public override string GetSkillDetails()
     {
         string tempString = SkillDetails;
 
@@ -37,37 +32,6 @@ public class PlayerSkillRefreshingLeapForwardSO : PlayerSKillIDSO
 
         return tempString;
     }
-
-    [Header("작동 키")]
-    public KeyCode TriggerKey;
-    public KeyCode GetTriggerKey() { return TriggerKey; }
-
-    // public bool isAttacking;
-    [Header("쿨타임")]
-    public float CoolTime;  // 추후 private 처리
-    public float GetCoolTime() { return CoolTime; }
-
-    [Header("생성 고유 자원")]
-    public float CreatedMP = 0f;
-    public float GetCreatedMP() { return CreatedMP; }
-
-    [Header("소모 고유 자원")]
-    public float ConsumMP = 0f;
-    public float GetConsumMP() { return ConsumMP; }
-
-    [Header("전체 애니메이션 배속")]
-    public float SpeedMultiplier = 1.0f;
-    public float GetSpeedMultiplier() { return SpeedMultiplier; }
-
-    //[Header("부분 애니메이션 배속")]
-    //public float LiftUpSpeedMultiplier = 1.0f;
-    //public float GetLiftUpSpeedMultiplier() { return LiftUpSpeedMultiplier; }
-
-    //public float SwingDownSpeedMultiplier = 1.0f;
-    //public float GetSwingDownSpeedMultiplier() { return SwingDownSpeedMultiplier; }
-
-    //public float OtherSpeedMultiplier = 1.0f;
-    //public float GetOtherSpeedMultiplier() { return OtherSpeedMultiplier; }
 
     [Header("도약 이팩트 반경")]
     public float JumpEffectSize = 1f;

@@ -16,7 +16,7 @@ public class EnemyChase : MonoBehaviour
 
         }
     }
-    // GameObject enemy;
+    Enemy enemy;
     EnemyGroupManager myGroupManager;
     AbilityStatus targetObjAbility;
 
@@ -26,10 +26,7 @@ public class EnemyChase : MonoBehaviour
 
     private void Awake()
     {
-        // enemySpawner = transform.parent.GetComponent<Enemy>().EnemySpawner;
-        // myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
-        // enemy = transform.parent.gameObject;
-
+        enemy = GetComponent<Enemy>();
     }
 
     private void Update()
@@ -42,8 +39,14 @@ public class EnemyChase : MonoBehaviour
                 if (targetObjAbility != null)
                     break;
 
-                enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(collider.gameObject);
-                myGroupManager.Target = collider.gameObject;
+                if (enemySpawner == null)
+                    enemy.SetTarget(collider.gameObject);
+                else
+                {
+                    enemySpawner.GetComponent<EnemyGroupManager>().Target = collider.gameObject;
+                    myGroupManager.Target = collider.gameObject;
+                }
+
                 targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
                 break;
             }

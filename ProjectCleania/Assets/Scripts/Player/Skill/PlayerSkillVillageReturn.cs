@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillVillageReturn : PlayerSkill
 {
-    public PlayerSkillVillageReturnSO skillData;
+    [SerializeField]
+    PlayerSkillVillageReturnSO skillData;
 
     float timeCost;
     string villageName;
@@ -12,9 +13,10 @@ public class PlayerSkillVillageReturn : PlayerSkill
 
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
-        UpdateskillData();
+        base.Awake();
+        UpdateSkillData();
     }
 
     protected new void Start()
@@ -22,15 +24,10 @@ public class PlayerSkillVillageReturn : PlayerSkill
         base.Start();
     }
 
-    public void UpdateskillData()
+    public void UpdateSkillData()
     {
-        ID = skillData.ID;
-        SkillName = skillData.GetSkillName();
-        SkillDetails = skillData.GetSkillDetails();
-        CoolTime = skillData.GetCoolTime();
-        SpeedMultiplier = skillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = skillData.GetTriggerKey();
         timeCost = skillData.GetTimeCost();
         villageName = skillData.GetVillageName();
         returnPosition = skillData.GetReturnPosition();

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillCleaningWind : PlayerSkill
 {
-    public PlayerSkillCleaningWindSO SkillData;
+    [SerializeField]
+    PlayerSkillCleaningWindSO skillData;
 
     public GameObject hurricanePrefabs;
 
@@ -39,10 +40,11 @@ public class PlayerSkillCleaningWind : PlayerSkill
     float projectilePositionY = 0.5f;
     public float GetprojectilePositionY() { return projectilePositionY; }
 
-    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         UpdateSkillData();
     }
 
@@ -63,26 +65,18 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     public void UpdateSkillData()
     {
-        ID = SkillData.ID;
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = SkillData.GetTriggerKey();
+        duration = skillData.GetDuration();
 
-        duration = SkillData.GetDuration();
-
-        gatherEnergySize = SkillData.GetGatherEnergySize();
-        smashDamageRate = SkillData.GetSmashDamageRate();
-        smashRange = SkillData.GetSmashRange();
-        projectilePositionY = SkillData.GetProjectilePositionY();
-        count = SkillData.GetCount();
-        projectileDamageScale = SkillData.GetProjectileDamageScale();
-        projectileSize = SkillData.GetProjectileSize();
-        maxHitPerSameObject = SkillData.GetMaxHitPerSameObject();
+        gatherEnergySize = skillData.GetGatherEnergySize();
+        smashDamageRate = skillData.GetSmashDamageRate();
+        smashRange = skillData.GetSmashRange();
+        projectilePositionY = skillData.GetProjectilePositionY();
+        count = skillData.GetCount();
+        projectileDamageScale = skillData.GetProjectileDamageScale();
+        projectileSize = skillData.GetProjectileSize();
+        maxHitPerSameObject = skillData.GetMaxHitPerSameObject();
 
     }
 
@@ -128,10 +122,13 @@ public class PlayerSkillCleaningWind : PlayerSkill
             Quaternion tempYAngle = yAngle;
             tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (count + 1)) * i, 0f);
 
-            newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
-            Projectile proj = newProjectile.GetComponent<Projectile>();
-            proj.SetUp(maxHitPerSameObject, duration, OwnerAbilityStatus, projectileDamageScale);
-            proj.Resize(projectileSize);
+
+            //newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            //CleaningWind cleaningWind = newProjectile.GetComponent<CleaningWind>();
+            CleaningWind cleaningWind = ObjectPool.SpawnFromPool<CleaningWind>(ObjectPool.enumPoolObject.CleaningWind, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            //Projectile proj = ObjectPool.SpawnFromPool<Projectile>(ObjectPool.enumPoolObject.)
+            cleaningWind.SetUp(maxHitPerSameObject, duration, OwnerAbilityStatus, projectileDamageScale);
+            cleaningWind.Resize(projectileSize);
         }
     }
 }
