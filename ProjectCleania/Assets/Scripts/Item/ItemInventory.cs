@@ -57,7 +57,7 @@ public class ItemInventory : MonoBehaviour
     {
         currentItem = item;
         //Debug.Log(currentItem.name);
-        DividePanel.SetMaxValue(item.count);
+        //DividePanel.SetMaxValue(item.count);
         DividePanel.gameObject.SetActive(true);
     }
 
