@@ -40,7 +40,7 @@ public class NPCTrigger : MonoBehaviour
                     GameManager.Instance.ChangeScene(npc.GetComponent<NPC>().Value);
                     break;
                 case NPC.TYPE.Quest:
-                    dialogManager.ShowQuestDialog(npc.GetComponent<NPC>().Value);
+                    dialogManager.ShowQuestDialog(true);
                     break;
                 case NPC.TYPE.Dungeon:
                     

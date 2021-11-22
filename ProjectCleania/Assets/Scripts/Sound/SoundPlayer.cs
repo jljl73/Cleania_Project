@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundPlayer : MonoBehaviour
 {
     AudioSource audioSource;
+
     [Header("효과음")]
     [SerializeField] AudioClip m_QuestAssign;
     [SerializeField] AudioClip m_QuestClear;
@@ -12,6 +13,20 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] AudioClip m_Inventory;
     [SerializeField] AudioClip m_Storage;
     [SerializeField] AudioClip m_NPCInteraction;
+    [SerializeField] AudioClip m_Equip;
+    [SerializeField] AudioClip m_ItemClick;
+    [SerializeField] AudioClip m_ItemBuySell;
+
+    [Header("플레이어")]
+    [SerializeField] AudioClip playerskill1;
+    [SerializeField] AudioClip playerskill2;
+    [SerializeField] AudioClip playerskill3;
+    [SerializeField] AudioClip playerskill4;
+    //[SerializeField] AudioClip m_Storage;
+    //[SerializeField] AudioClip m_NPCInteraction;
+    //[SerializeField] AudioClip m_Equip;
+    //[SerializeField] AudioClip m_ItemClick;
+    //[SerializeField] AudioClip m_ItemBuySell;
 
     void Start()
     {
@@ -19,27 +34,34 @@ public class SoundPlayer : MonoBehaviour
         GameManager.Instance.soundPlayer = this;
     }
 
-    public void PlaySound(string value)
+    public enum TYPE { QuestAssign, QuestClear, QuestReward, Inventory, Storage, NPCInteraction, Equip,
+        ItemClick, ItemBuySell,
+    };
+
+    public void PlaySound(TYPE type)
     {
-        switch(value)
+        switch (type)
         {
-            case "QuestAssign":
+            case TYPE.QuestAssign:
                 audioSource.clip = m_QuestAssign;
                 break;
-            case "QuestClear":
+            case TYPE.QuestClear:
                 audioSource.clip = m_QuestClear;
                 break;
-            case "QuestReward":
+            case TYPE.QuestReward:
                 audioSource.clip = m_QuestReward;
                 break;
-            case "Inventory":
+            case TYPE.Inventory:
                 audioSource.clip = m_Inventory;
                 break;
-            case "Storage":
-                audioSource.clip = m_Storage;
+            case TYPE.Storage:
+                audioSource.clip = m_Inventory;
                 break;
-            case "NPCInteraction":
+            case TYPE.NPCInteraction:
                 audioSource.clip = m_NPCInteraction;
+                break;
+            case TYPE.Equip:
+                audioSource.clip = m_Equip;
                 break;
         }
         audioSource.Play();
