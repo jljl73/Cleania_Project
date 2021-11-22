@@ -30,7 +30,7 @@ public class DustStormSO : EnemySkillSO
     float stormDamageRadius = 1;
     public float GetStormDamageRadius() { return stormDamageRadius; }
 
-    [Header("ÆøÇ³ ¹ĞÄ§ Èû")]
+    [Header("ÆøÇ³ ¹ĞÄ§ Èû ex) ÇÇ°İÃ¼ = 100kg & 10 drag ÀÏ¶§, 62,500ÈûÀº 1Ä­À» ¹Ğ¾îº¸³¿")]
     [SerializeField]
     float stormForce = 100f;
     public float GetStormForce() { return stormForce; }

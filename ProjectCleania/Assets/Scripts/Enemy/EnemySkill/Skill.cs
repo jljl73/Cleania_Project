@@ -42,7 +42,7 @@ public abstract class Skill : MonoBehaviour
     public virtual float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     public virtual void Activate() { }
-    public virtual void Activate(int dependedEffectIdx = 0) { }
+    public virtual void Activate(int idx = 0) { }
 
     public virtual bool IsAvailable()
     {
@@ -64,6 +64,8 @@ public abstract class Skill : MonoBehaviour
             OnSkillEnd();
     }
 
+    public virtual void Deactivate(int idx = 0) { }
+
     public virtual void StopSkill() { }
 
     public List<SkillEffectController> effectController;
@@ -83,18 +85,10 @@ public abstract class Skill : MonoBehaviour
     public void PlayEffects(int effectIdx)
     {
         effectController[effectIdx].PlaySkillEffect();
-        //foreach (SkillEffectController skillEffect in effectController)
-        //{
-        //    skillEffect.PlaySkillEffect();
-        //}
     }
 
     public void StopEffects(int effectIdx)
     {
         effectController[effectIdx].StopSKillEffect();
-        //foreach (SkillEffectController skillEffect in effectController)
-        //{
-        //    skillEffect.StopSKillEffect();
-        //}
     }
 }

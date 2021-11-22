@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     EnemySpawnerManager enemySpawnerManager;
     public bool PlayerMovable;
 
+    //public Vector3 force = Vector3.right;
     private void Awake()
     {
         GameManager.Instance.inputManager = this;
@@ -104,20 +105,20 @@ public class InputManager : MonoBehaviour
             enemySpawnerManager.SpawnStart();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            player.playerMove.AddForce(force);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //{
+        //    player.playerMove.AddForce(force);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            player.playerMove.Pulled(false, Vector3.zero);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    player.playerMove.Pulled(false, Vector3.zero);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
+        //}
     }
 
 }

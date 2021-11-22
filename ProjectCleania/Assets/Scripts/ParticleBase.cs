@@ -18,6 +18,11 @@ public class ParticleBase : MonoBehaviour
 
     public bool IsEnabledOnAwake = false;
 
+    public float NormalizedPlayTime()
+    {
+        return ParticleObjectWithPS.time;
+    }
+
     protected virtual void Awake()
     {
         particleChildrens = ParticleObject.GetComponentsInChildren<ParticleSystem>(true);
