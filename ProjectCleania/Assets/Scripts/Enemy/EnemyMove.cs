@@ -60,7 +60,7 @@ public class EnemyMove : MonoBehaviour, IStunned
     {
         if (stateMachine.CompareState(StateMachine.enumState.Attacking))
         {
-            nav.SetDestination(this.transform.position);
+            SetDestination(this.transform.position);
             return;
         }
 
@@ -78,9 +78,18 @@ public class EnemyMove : MonoBehaviour, IStunned
         else
             nav.isStopped = true;
 
+        print("nav.enabled: " + nav.enabled);
+        print("nav.isStopped: " + nav.isStopped);
+
         AccelerateRotation();
-        nav.SetDestination(TargetPosition);
+        SetDestination(TargetPosition);
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
+    }
+
+    void SetDestination(Vector3 position)
+    {
+        if (nav.enabled)
+            nav.SetDestination(position);
     }
 
     void SetNavAvoidancePriority()

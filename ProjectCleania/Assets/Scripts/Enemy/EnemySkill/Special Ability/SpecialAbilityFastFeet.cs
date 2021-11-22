@@ -45,6 +45,7 @@ public class SpecialAbilityFastFeet : EnemySkill
 
     public override void Deactivate()
     {
+        base.Deactivate();
         return;
     }
 }
