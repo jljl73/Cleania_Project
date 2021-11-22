@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System;
 
 public class UI_CombatGUI : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class UI_CombatGUI : MonoBehaviour
     public GameObject HugeMap;
 
     public Text Level;
+    public Text CurrentTime;
+    public Text LocationName;
 
     GameObject player;
     AbilityStatus playerStatus;
@@ -34,10 +38,13 @@ public class UI_CombatGUI : MonoBehaviour
 
         Skills_CoolPercent = new float[Skills.Length];
         playerStatus = player.GetComponent<Player>().abilityStatus;
+
+        LocationName.text = SceneManager.GetActiveScene().name;
     }
 
     void Update()
     {
+        CurrentTime.text = DateTime.Now.ToString(("HH:mm:ss"));
         if (playerStatus != null)
         {
             // 체력 구슬

@@ -34,7 +34,7 @@ public class MouseParticle : ParticleBase
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit raycastHit;
-        if (Physics.Raycast(ray, out raycastHit))
+        if (Physics.Raycast(ray, out raycastHit, 100.0f, 1 << 7))
         {
             if (raycastHit.collider.CompareTag(collideTag))
                 result = true;
