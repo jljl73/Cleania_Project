@@ -106,7 +106,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            player.playerMove.AddForce(force);
+            //player.playerMove.AddForce(force);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha8))

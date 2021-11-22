@@ -44,6 +44,7 @@ public class DialogManager : MonoBehaviour
 
     public void ShowDialog(GameObject dialog, bool bActive)
     {
+        if (dialog == null) return;
         dialog.SetActive(bActive);
         if (bActive)
             currentDialog = dialog;
