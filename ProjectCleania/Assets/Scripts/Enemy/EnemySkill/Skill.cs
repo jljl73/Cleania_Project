@@ -10,6 +10,7 @@ public abstract class Skill : MonoBehaviour
 
     public delegate void DelegateVoid();
     public event DelegateVoid OnPlaySkill;
+    public event DelegateVoid OnSkillEnd;
 
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
@@ -41,17 +42,41 @@ public abstract class Skill : MonoBehaviour
     public virtual float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     public virtual void Activate() { }
-    public virtual void Activate(int dependedEffectIdx = 0) { }
+    public virtual void Activate(int idx = 0) { }
 
-    public virtual void AnimationActivate()
+    public virtual bool IsAvailable()
+    {
+        return true;
+    }
+
+    // Return true if i have to update cooltime
+    public virtual bool AnimationActivate()
     {
         if (OnPlaySkill != null)
             OnPlaySkill();
+
+        return true;
     }
 
-    public virtual void Deactivate() { }
+    public virtual void Deactivate()
+    {
+        if (OnSkillEnd != null)
+            OnSkillEnd();
+    }
+
+    public virtual void Deactivate(int idx = 0) { }
+
+    public virtual void StopSkill() { }
 
     public List<SkillEffectController> effectController;
+
+    public virtual void ActivateSound(int index)
+    {
+    }
+
+    public virtual void DeactivateSound(int index)
+    {
+    }
 
     protected void Start()
     {
@@ -60,18 +85,10 @@ public abstract class Skill : MonoBehaviour
     public void PlayEffects(int effectIdx)
     {
         effectController[effectIdx].PlaySkillEffect();
-        //foreach (SkillEffectController skillEffect in effectController)
-        //{
-        //    skillEffect.PlaySkillEffect();
-        //}
     }
 
     public void StopEffects(int effectIdx)
     {
         effectController[effectIdx].StopSKillEffect();
-        //foreach (SkillEffectController skillEffect in effectController)
-        //{
-        //    skillEffect.StopSKillEffect();
-        //}
     }
 }

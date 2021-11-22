@@ -8,9 +8,6 @@ public class Enemy : MonoBehaviour
 {
     Animator animator;
 
-    // GameObject enemySpawner;
-    // public GameObject EnemySpawner { get { return enemySpawner; } set { enemySpawner = value; } }
-
     [Header("Need Drag")]
     public AbilityStatus abilityStatus;
     public EnemySkillManager skillManager;
@@ -44,6 +41,18 @@ public class Enemy : MonoBehaviour
             throw new System.Exception("Enemy doesnt have enemyStateMachine");
     }
 
+    private void OnEnable()
+    {
+        //StartCoroutine("InvincibleFor", 2f);
+        Revive();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ReturnToObjectPool();
+    }
+
     private void Start()
     {
         OnDead += Die;
@@ -51,8 +60,6 @@ public class Enemy : MonoBehaviour
 
         OnStunned += enemyMove.Stunned;
         OnStunned += skillManager.Stunned;
-
-        StartCoroutine("InvincibleFor", 2f);
     }
 
     private void Update()
@@ -64,6 +71,25 @@ public class Enemy : MonoBehaviour
             OnDead();
         }
     }
+    
+    void ReturnToObjectPool()
+    {
+        switch (enemyStateMachine.GetMonsterType())
+        {
+            case EnemyStateMachine.MonsterType.HighDusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.HighDusty, this.gameObject);
+                break;
+            case EnemyStateMachine.MonsterType.SummonerDusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.SummonerDusty, this.gameObject);
+                break;
+            case EnemyStateMachine.MonsterType.Dusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Dusty, this.gameObject);
+                break;
+            default:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.WildInti, this.gameObject);
+                break;
+        }
+    }
 
     IEnumerator InvincibleFor(float time)
     {
@@ -71,32 +97,11 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(time);
         ActivateColliders(true);
     }
-    //public void Stunned(bool isStunned, float stunnedTime)
-    //{
-    //    if (isStunned)
-    //    {
-    //        StartCoroutine("StunnedFor", stunnedTime);
-    //    }
-    //    else
-    //    {
-    //        animator.speed = 1;
-    //        navMeshAgent.enabled = true;
-    //    }
-    //}
 
-    //IEnumerator StunnedFor(float time)
-    //{
-    //    animator.speed = 0;
-    //    navMeshAgent.enabled = false;
-    //    yield return new WaitForSeconds(time);
-    //    animator.speed = 1;
-    //    navMeshAgent.enabled = true;
-    //}
 
     public void Die()
     {
         if (enemyStateMachine.CompareState(EnemyStateMachine.enumState.Dead)) return;
-
 
         if (enemyStateMachine.CompareState(EnemyStateMachine.enumRank.Rare))
         {
@@ -106,30 +111,50 @@ public class Enemy : MonoBehaviour
         else
             GameManager.Instance.uiManager.GetComponent<QuestManager>().Acheive(QuestNeed.TYPE.Monster, enemyStateMachine.ID);
 
+        SetTarget(null);
+
         ExpManager.Acquire(100);
-        // ³×ºñ°ÔÀÌ¼Ç Off
+        // ë„¤ë¹„ê²Œì´ì…˜ Off
         navMeshAgent.enabled = false;
 
-        // Ãæµ¹Ã¼ ²ô±â
+        // ì¶©ëŒì²´ ë„ê¸°
         ActivateColliders(false);
 
-        // »óÅÂ Á×À½À¸·Î ÀüÈ¯
+        // ìƒíƒœ ì£½ìŒìœ¼ë¡œ ì „í™˜
         enemyStateMachine.Transition(EnemyStateMachine.enumState.Dead);
 
-        // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ¹ßµ¿
+        // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ë°œë™
         animator.SetTrigger("Die");
 
-        // 3ÃÊ ÈÄ¿¡ ¿ÜÇü ²ô±â
+        // 3ì´ˆ í›„ì— ì™¸í˜• ë„ê¸°
         Invoke("DeactivateSkin", 3.0f);
 
-        // 10ÃÊ ÈÄ¿¡ ÆÄ±«
-        Destroy(gameObject, 10.0f);
+        // 10ì´ˆ í›„ì— íŒŒê´´
+        Invoke("DeactivateDelay", 10.0f);
+        // Destroy(gameObject, 10.0f);
     }
+
+    void DeactivateDelay() => this.gameObject.SetActive(false);
 
     public void Revive()
     {
-        // ³×ºñ°ÔÀÌ¼Ç On
+        abilityStatus.FullHP();
+
+        // ë„¤ë¹„ê²Œì´ì…˜ On
         navMeshAgent.enabled = true;
+
+        // ì¶©ëŒì²´ ë„ê¸°
+        ActivateColliders(true);
+
+        // ìƒíƒœ ì£½ìŒìœ¼ë¡œ ì „í™˜
+        enemyStateMachine.ResetState();
+
+        // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ë°œë™
+        //animator.SetTrigger("Die");
+
+        ActivateSkin();
+
+        StartCoroutine("InvincibleFor", 2f);
     }
 
     void ActivateColliders(bool value = true)
@@ -147,20 +172,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void DeactivateSkin()
-    {
-        // ¿ÜÇü ²ô±â
-        skinnedMeshRenderer.enabled = false;
-    }
-
     void ActivateSkin()
     {
-        // ¿ÜÇü ²ô±â
+        // ì™¸í˜• ë„ê¸°
         skinnedMeshRenderer.enabled = true;
+    }
+
+    void DeactivateSkin()
+    {
+        // ì™¸í˜• ë„ê¸°
+        skinnedMeshRenderer.enabled = false;
     }
 
     public void SetTarget(GameObject target)
     {
+        if (target == null)
+            navMeshAgent.enabled = false;
+        else
+            navMeshAgent.enabled = true;
+
         enemyMove.SetTarget(target);
     }
 
@@ -169,49 +199,28 @@ public class Enemy : MonoBehaviour
         enemyMove.ReleaseTarget();
     }
 
-    //public void ActivateSkillEffect(AnimationEvent myEvent)
-    //{
-    //    skillManager.ActivateSkillEffect(myEvent);
-    //}
-
-    //public void DeactivateSkillEffect(AnimationEvent myEvent)
-    //{
-    //    skillManager.DeactivateSkillEffect(myEvent);
-    //}
-
-    //// Listener
-    //public void ActivateSkill(int type)
-    //{
-    //    skillManager.ActivateSkill(type);
-    //}
-
-    //public void DeactivateSkill(int type)
-    //{
-    //    skillManager.DeactivateSkill(type);
-    //}
-
     public static string GetName(int ID)
     {
         switch(ID)
         {
             case 5001:
-                return "´õ½ºÆ¼";
+                return "ë”ìŠ¤í‹°";
             case 5002:
-                return "¾ß»ı ÀÎÆ¼";
+                return "ì•¼ìƒ ì¸í‹°";
             case 5003:
-                return "»óÀ§ ´õ½ºÆ¼";
+                return "ìƒìœ„ ë”ìŠ¤í‹°";
             case 5004:
-                return "¼ÒÈ¯»ç ´õ½ºÆ¼";
+                return "ì†Œí™˜ì‚¬ ë”ìŠ¤í‹°";
             case 6001:
-                return "(Èñ±Í)´õ½ºÆ¼";
+                return "(í¬ê·€)ë”ìŠ¤í‹°";
             case 6002:
-                return "(Èñ±Í)¾ß»ı ÀÎÆ¼";
+                return "(í¬ê·€)ì•¼ìƒ ì¸í‹°";
             case 6003:
-                return "(Èñ±Í)»óÀ§ ´õ½ºÆ¼";
+                return "(í¬ê·€)ìƒìœ„ ë”ìŠ¤í‹°";
             case 6004:
-                return "(Èñ±Í)¼ÒÈ¯»ç ´õ½ºÆ¼";
+                return "(í¬ê·€)ì†Œí™˜ì‚¬ ë”ìŠ¤í‹°";
             case 7001:
-                return "´õ ´õ½ºÆ¼";
+                return "ë” ë”ìŠ¤í‹°";
         }
         return "";
     }

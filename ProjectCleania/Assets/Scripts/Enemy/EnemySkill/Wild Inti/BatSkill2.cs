@@ -56,9 +56,11 @@ public class BatSkill2 : EnemySkill
         return center;
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         // animator.SetTrigger("Attack Soundwave");
+
+        return true;
     }
 
     override public void Activate()
@@ -70,13 +72,14 @@ public class BatSkill2 : EnemySkill
 
         for (int i = 0; i < divisionCount; i++)
         {
-            GameObject bat1 = Instantiate(enemy.gameObject);
-            Enemy batEnemy = bat1.GetComponent<Enemy>();
+
+            //GameObject bat1 = Instantiate(enemy.gameObject);
+            Enemy batEnemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.WildInti, GetRandPosition(transform.position, SummonRange), transform.rotation);
             // bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
-            bat1.transform.position = GetRandPosition(transform.position, SummonRange);
-            bat1.transform.localScale *= 0.5f;
-            bat1.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
-            bat1.GetComponentInChildren<BatSkill2>().DivisionAvailableCount = divisionAvailableCount;
+            batEnemy.transform.position = GetRandPosition(transform.position, SummonRange);
+            batEnemy.transform.localScale *= 0.5f;
+            batEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;
+            batEnemy.GetComponentInChildren<BatSkill2>().DivisionAvailableCount = divisionAvailableCount;
             if (batEnemy != null)
             {
                 batEnemy.Revive();

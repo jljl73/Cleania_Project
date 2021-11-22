@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7149265830415715797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7149265830415715799}
+  - component: {fileID: 7149265830415715796}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7149265830415715799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149265830415715797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7149265830415715796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149265830415715797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57b3ac8374bf814b9cb949b7a6a4dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - EnumType: 0
+    GameObject: {fileID: 8297807747605905360, guid: ccaca47c06e55d441ba812a52044a097, type: 3}
+    Count: 1
+  cleaningWindPrefab: {fileID: 8297807747605905360, guid: ccaca47c06e55d441ba812a52044a097, type: 3}
+  startCount: 3
+  dustyPrefab: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
+  wildIntiPrefab: {fileID: 4185383675751946793, guid: 131aefd223eb95f40acbf3b22a5a0bbf, type: 3}
+  highDustyPrefab: {fileID: 4972137587626881287, guid: 00f4fd09a9455e24ba12113392307658, type: 3}
+  summonerDustyPrefab: {fileID: 726093934847360227, guid: c5b4bb9c24529dd49885d48530283943, type: 3}
+  toxicityPondPrefab: {fileID: 2300191780678816601, guid: 40aa3fe6746651443a51dc4a7624b5c1, type: 3}
+  sealPrefab: {fileID: 4267116547748194425, guid: b7e234e0ac568c84f810add62324d6d9, type: 3}
+  minePrefab: {fileID: 7390694090417859158, guid: 981d5d179731b8645ad90f6842f54317, type: 3}
+  stormWindGroupPrefab: {fileID: 403762427136887610, guid: 0dfdce933fdc88f4eb71e9cb2613d455, type: 3}
+  stormWindPrefab: {fileID: 7948181236296635446, guid: c67e26a510685524dbbbe85328af4922, type: 3}
+  turretPrefab: {fileID: 1422128474858723307, guid: a649cdb7a70063c449c31374adaa44b0, type: 3}
+  turretProjectilePrefab: {fileID: 3162082563259578547, guid: 1a6285253a41c664685f4b38ca116daf, type: 3}
+  decompositionPrefab: {fileID: 4847115326797821916, guid: be87fcfef9dec844dbf3ddad31a0e478, type: 3}
+  stainPrefab: {fileID: 8230123336037000848, guid: 412cc08393b3b734aae9b7386a23f187, type: 3}
+  pollutionPrefab: {fileID: 4705225340911326131, guid: 3ef2a2f6a0aeced4fbd72704fe4223a0, type: 3}

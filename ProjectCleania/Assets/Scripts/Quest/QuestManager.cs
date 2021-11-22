@@ -14,7 +14,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField]
     List<Quest> assignQuests = new List<Quest>();
     [SerializeField]
-    Quest[] quests_All;
+    List<Quest> quests_All;
         
 
     // UI
@@ -44,36 +44,36 @@ public class QuestManager : MonoBehaviour
             buttons[i].onClick.AddListener(() => ShowDetailQuest(temp));
         }
 
-        for(int i = 0; i < quests_All.Length; ++i)
+        QuestDB.Instance.Load(quests_All);
+
+        for(int i = 0; i < quests_All.Count; ++i)
         {
             if (quests_All[i].State == Quest.STATE.Assign || quests_All[i].State == Quest.STATE.Clear)
-                Add(quests_All[i]);
+                AddList(quests_All[i]);
             else if (quests_All[i].State == Quest.STATE.Reward)
                 clearQuests.Add(quests_All[i]);
         }
 
+        //QuestDB.Instance.Load();
         SetListHeight();
-        ExpManager.Initailize(0);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Acheive(QuestNeed.TYPE.Monster, 0);
-        }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            ExpManager.Acquire(100);
+            
         }
     }
 
-    public void Add(Quest quest)
+    public void Assign(Quest quest)
     {
-        assignQuests.Add(quest);
         quest.Assign();
         AddList(quest);
-        GameManager.Instance.soundPlayer.PlaySound("QuestAssign");
+
+        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestAssign);
+
+        QuestDB.Instance.Save(quests_All);
     }
     
     public void Acheive(QuestNeed.TYPE type, int target)
@@ -82,6 +82,7 @@ public class QuestManager : MonoBehaviour
         {
             assignQuests[i].Achieve(type, target);
         }
+        QuestDB.Instance.Save(quests_All);
         SetMiniList();
     }
 
@@ -111,6 +112,7 @@ public class QuestManager : MonoBehaviour
         GameObject newText = Instantiate(TextPrefab, details[index].transform);
         newText.GetComponent<Text>().text = quest.Name;
         newText.GetComponent<QuestSlot>().Initialize(quest);
+        assignQuests.Add(quest);
         SetListHeight();
     }
 
@@ -126,6 +128,7 @@ public class QuestManager : MonoBehaviour
                 break;
             }
         }
+        QuestDB.Instance.Save(quests_All);
         SetListHeight();
     }
 
@@ -144,7 +147,7 @@ public class QuestManager : MonoBehaviour
         clearQuests.Add(quest);
         DeleteList(quest);
 
-        GameManager.Instance.soundPlayer.PlaySound("QuestReward");
+        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
 
         // 보상받기
         foreach (var q in quest.QuestRewards)
@@ -152,7 +155,8 @@ public class QuestManager : MonoBehaviour
             switch (q.type)
             {
                 case QuestReward.TYPE.clean:
-                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
+                    Debug.Log("크리스탈 위치 설정해야댐");
+                    //GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
                     break;
                 case QuestReward.TYPE.exp:
                     ExpManager.Acquire(q.value);

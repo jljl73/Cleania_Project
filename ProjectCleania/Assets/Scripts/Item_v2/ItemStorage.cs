@@ -50,13 +50,21 @@ public abstract class ItemStorage<T> : iItemStorage
         SynchronizeEvent += newDelegate;
         SynchronizeEvent?.Invoke(this, SyncOperator.Refresh, garbageParam);
     }
+    public virtual void QuitSubscribe(Action<iItemStorage, SyncOperator, T> newDelegate)
+    {
+        SynchronizeEvent -= newDelegate;
+    }
     public virtual void ShareSubscribers(ItemStorage<T> other)
     {
-        var i = SynchronizeEvent.GetInvocationList();
+        var i = SynchronizeEvent?.GetInvocationList();
+
+        if (i == null || i.Length == 0)
+            return;
 
         foreach (var e in i)
         {
             other.SynchronizeEvent += (Action<iItemStorage, SyncOperator, T>)e;
         }
+
     }
 }

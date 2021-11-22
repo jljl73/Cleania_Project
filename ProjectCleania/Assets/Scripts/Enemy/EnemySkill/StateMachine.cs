@@ -10,6 +10,7 @@ public class StateMachine : MonoBehaviour
         Idle, MoveAttack, Walk, Attacking, Chasing, Attacked, ReadyAttack, Dead
     };
 
+    [SerializeField]
     enumState state = enumState.Idle;
     public enumState State { get { return state; } }
 
@@ -17,6 +18,11 @@ public class StateMachine : MonoBehaviour
     {
         if (state == enumState.Dead) return;
         state = nextState;
+    }
+
+    public virtual void ResetState()
+    {
+        state = enumState.Idle;
     }
 
     public bool CompareState(enumState state)

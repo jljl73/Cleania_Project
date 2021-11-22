@@ -10,8 +10,8 @@ public class ItemInventory : MonoBehaviour
 
     public GameObject[] slots;
     public GameObject[] EquipmentSlots;
-    public GameObject ThrowPanel;
-    public GameObject DividePanel;
+    public ItemThrowPanel ThrowPanel;
+    public ItemDividePanel DividePanel;
     public GameObject InvenAlarmPanel;
     public Transform SlotsParent;
 
@@ -50,15 +50,15 @@ public class ItemInventory : MonoBehaviour
     {
         currentItem = item;
         //Debug.Log(currentItem.name);
-        ThrowPanel.SetActive(true);
+        ThrowPanel.gameObject.SetActive(true);
     }
 
     public void ShowDividePanel(ItemController item)
     {
         currentItem = item;
         //Debug.Log(currentItem.name);
-        DividePanel.GetComponent<ItemDividePanel>().SetMaxValue(item.count);
-        DividePanel.SetActive(true);
+        //DividePanel.SetMaxValue(item.count);
+        DividePanel.gameObject.SetActive(true);
     }
 
     public void ShowInvenAlarmPanel()

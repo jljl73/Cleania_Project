@@ -33,7 +33,10 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public NPCManager npcManager;
     public SoundPlayer soundPlayer;
+    public PlayerSoundPlayer playerSoundPlayer;
     public string nextSceneName;
+
+    public InputManager inputManager;
 
     public InputField IF_Chat;
     public bool isChatting

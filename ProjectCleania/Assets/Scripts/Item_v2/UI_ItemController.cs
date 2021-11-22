@@ -4,6 +4,7 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 /// <summary>
@@ -11,7 +12,6 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class UI_ItemController : MonoBehaviour,
     IDragHandler, IBeginDragHandler, IEndDragHandler, // drag and drop
-    IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,   // item infromation show
     IPointerClickHandler    // item auto move
 {
     public ItemInstance itemInstance
@@ -22,6 +22,8 @@ public class UI_ItemController : MonoBehaviour,
     Image itemImage;
     [SerializeField]
     Image backgroundImage;
+    [SerializeField]
+    TextMeshProUGUI countText;
 
     Vector3 prevPosition;
     Canvas canvas;
@@ -55,6 +57,7 @@ public class UI_ItemController : MonoBehaviour,
 
             controller = newControllerObject.GetComponent<UI_ItemController>();
             controller.canvas = GameManager.Instance.MainCanvas;
+            //DontDestroyOnLoad(newControllerObject);
         }
         else
         {
@@ -64,7 +67,7 @@ public class UI_ItemController : MonoBehaviour,
         }
 
         // refresh data of controller
-        controller.ItemChange(item, container, index);
+        controller._ItemChange(item, container, index);
         controller.gameObject.SetActive(true);
         //controller.transform.localScale *= CanvasScaler.;
 
@@ -72,13 +75,13 @@ public class UI_ItemController : MonoBehaviour,
     }
     static public void Delete(UI_ItemController controller)
     {
-        controller.ItemChange(null, null);
+        controller._ItemChange(null, null);
         _objectPool.Push(controller.gameObject);
 
         controller.gameObject.SetActive(false);
     }
 
-    void ItemChange(ItemInstance item, UI_ItemContainer container, int index = -1)
+    void _ItemChange(ItemInstance item, UI_ItemContainer container, int index = -1)
     {
         itemInstance = item;
         currentContainer = container;
@@ -86,7 +89,32 @@ public class UI_ItemController : MonoBehaviour,
         if (item != null)
         {
             itemImage.sprite = itemInstance.SO.ItemImage;
-            /*backgroundImage.sprite change code*/
+
+            if (item.SO.BackgroundImage == null)
+                switch (item.SO.Rank)
+                {
+                    case ItemSO.enumRank.Common:
+                        backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_green_item_slot");
+                        break;
+                    case ItemSO.enumRank.Rare:
+                        backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_blue_item_slot");
+                        break;
+                    case ItemSO.enumRank.Legendary:
+                        backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_orange_item_slot");
+                        break;
+                }
+        else
+            backgroundImage.sprite = item.SO.BackgroundImage;
+
+            if (item.Count > 1)
+            {
+                countText.enabled = true;
+                countText.text = item.Count.ToString();
+            }
+            else
+            {
+                countText.enabled = false;
+            }
         }
 
 
@@ -96,6 +124,9 @@ public class UI_ItemController : MonoBehaviour,
             {
                 backgroundImage.rectTransform.sizeDelta = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().sizeDelta;
                 backgroundImage.rectTransform.position = container.SlotParent.transform.GetChild(index).GetComponent<RectTransform>().position;
+                backgroundImage.rectTransform.sizeDelta = new Vector2(
+                    backgroundImage.rectTransform.sizeDelta.x * item.SO.GridSize.Width,
+                    backgroundImage.rectTransform.sizeDelta.y * item.SO.GridSize.Height);
             }
             prevPosition = backgroundImage.rectTransform.position;
         }
@@ -134,12 +165,22 @@ public class UI_ItemController : MonoBehaviour,
 
 
 
+    private void OnDestroy()
+    {
+        _objectPool.Clear();
+    }
 
     // event
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
         transform.SetAsLastSibling();
+
+        //backgroundImage.raycastTarget = false;
+        //itemImage.raycastTarget = false;
+        //countText.raycastTarget = false;
+        //GameManager.Instance.inputManager.PlayerMovable = false;
+
 
         if (currentContainer.SyncWith == UI_ItemContainer.SyncType.Equipment)
             GameManager.Instance.uiManager.InventoryPanel.transform.SetAsLastSibling();
@@ -156,9 +197,18 @@ public class UI_ItemController : MonoBehaviour,
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
-        List<RaycastResult> results = new List<RaycastResult>();
+        //backgroundImage.raycastTarget = true;
+        //itemImage.raycastTarget = true;
+        //countText.raycastTarget = true;
+        //GameManager.Instance.inputManager.PlayerMovable = true;
+
 
         eventData.position = backgroundImage.rectTransform.position;
+        eventData.position +=
+            new Vector2( backgroundImage.rectTransform.sizeDelta.x / itemInstance.SO.GridSize.Width / 2, 
+                         -backgroundImage.rectTransform.sizeDelta.y / itemInstance.SO.GridSize.Height / 2);
+
+        List<RaycastResult> results = new List<RaycastResult>();
         canvas.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
 
         for (int i = 0; i < results.Count; ++i)
@@ -177,24 +227,14 @@ public class UI_ItemController : MonoBehaviour,
             }
         }
 
+        //StartCoroutine(_ThrowItemInInventory());
+        var refer = GetComponentInParent<ItemInventory>();
+        refer.ThrowPanel.controller = this;
+        refer.ThrowPanel.gameObject.SetActive(true);
+
+
         // raycast with offset and choose action
         // if tag is slot, call Add and Remove of each containers.
-    }
-
-    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-    {
-        // enable detail ui
-        // refresh detail ui
-    }
-
-    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
-    {
-        // disable detail ui
-    }
-
-    void IPointerMoveHandler.OnPointerMove(PointerEventData eventData)
-    {
-        // ?
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
@@ -204,7 +244,10 @@ public class UI_ItemController : MonoBehaviour,
         switch (currentContainer.SyncWith)
         {
             case UI_ItemContainer.SyncType.Inventory:
-                GameManager.Instance.npcManager.Dosmth(this);
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                    _DevideItemInInventory();
+                else
+                    GameManager.Instance.npcManager.Dosmth(this);
                 break;
             case UI_ItemContainer.SyncType.Storage:
                 MoveToInventory();
@@ -214,6 +257,47 @@ public class UI_ItemController : MonoBehaviour,
                 break;
         }
 
+        return;
+    }
+
+    //IEnumerator _ThrowItemInInventory()
+    //{
+    //    yield return StartCoroutine(UI_MessageBox.Instance.Show_Coroutine("버릴거야?", MessageBoxButtons.OKCancel));
+
+    //    switch(UI_MessageBox.Result)
+    //    {
+    //        case DialogResult.OK:
+    //            ItemInstance item = itemInstance;
+    //            currentContainer.Remove(this);
+    //            SavedData.Instance.Item_World.Add(item);
+    //            break;
+
+    //        case DialogResult.Cancel:
+    //            break;
+    //    }
+    //}
+
+    void _DevideItemInInventory()
+    {
+        if (itemInstance.Count < 2)
+        {
+            UI_MessageBox.Show("반토막내지는 말아주세요.");
+            return;
+        }
+
+        ItemInstance devided = ItemInstance.Instantiate(itemInstance.SO.ID, 1);
+
+        if (!currentContainer.AddSeparated(devided))
+        {
+            UI_MessageBox.Show("공간이 부족합니다.");
+            return;
+        }
+        currentContainer.Remove(currentContainer[devided]);
+
+        ItemDividePanel devidePanel = currentContainer.gameObject.GetComponent<ItemInventory>().DividePanel;
+
+        devidePanel.controller = this;
+        devidePanel.gameObject.SetActive(true);
         return;
     }
 }

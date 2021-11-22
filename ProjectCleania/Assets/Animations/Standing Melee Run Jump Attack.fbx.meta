@@ -74,10 +74,24 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.1739865
+      - time: 0.07977736
+        functionName: ActivateSound
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: b69ba66123eabd34899df26afd2e214b, type: 2}
+        floatParameter: 0
+        intParameter: 1106
+        messageOptions: 0
+      - time: 0.19369093
         functionName: ActivateSkillEffect
         data: 
         objectReferenceParameter: {fileID: 11400000, guid: 2f753e4d8b1ba98459dbb8670c483c50, type: 2}
+        floatParameter: 0
+        intParameter: 1106
+        messageOptions: 0
+      - time: 0.2607682
+        functionName: ActivateSound
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: b359dfface55edd4faea37a44c82d66e, type: 2}
         floatParameter: 0
         intParameter: 1106
         messageOptions: 0
@@ -102,12 +116,19 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1106
         messageOptions: 0
-      - time: 0.86388516
+      - time: 0.5769945
         functionName: DeactivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1106
+        messageOptions: 0
+      - time: 1
+        functionName: AnimationDeactivate
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
         messageOptions: 0
       transformMask: []
       maskType: 3

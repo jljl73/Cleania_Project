@@ -81,7 +81,7 @@ public class ItemInstance
     protected int id;
     [SerializeField]
     protected int count;
-    public int Count { get { return count; } }
+    public int Count { get { return count; } set { count = value; if (count < 1) CurrentStorage.Remove(this); } }
     
     public iItemStorage CurrentStorage;
 }

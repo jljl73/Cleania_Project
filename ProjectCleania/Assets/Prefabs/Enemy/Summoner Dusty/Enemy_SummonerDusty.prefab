@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 3992148417218650346}
   - component: {fileID: 3311330247883225873}
   - component: {fileID: 3537628762620244096}
+  - component: {fileID: 6290623052519877450}
   - component: {fileID: 5168778977410964324}
   - component: {fileID: 617524599341566950}
   m_Layer: 6
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37aa8875d5f5e2440b535f37d2bc3d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   monsterType: 5004
   rank: 0
 --- !u!95 &726093934847360224
@@ -263,7 +265,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726093934847360227}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186d842e4449a2846b404b72d89f267d, type: 3}
   m_Name: 
@@ -302,8 +304,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6b4be465483834793c24a6c8aeeafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SO: {fileID: 11400000, guid: df5c569380dd492469d09d26da0e4e23, type: 2}
   level: 1
+  Strength: 24
+  levelUpStrength: 4
+  Vitality: 0
+  levelUpVitality: 10
+  Atk: 10
+  Def: 0
+  CriticalChance: 10
+  CriticalScale: 200
+  AttackSpeed: 0
+  MoveSpeed: 1
+  Accuracy: 100
+  Dodge: 10
+  Tenacity: 100
+  BasicHP: 1
+  BasicMP: 100
 --- !u!114 &3537628762620244096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +332,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6290623052519877450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726093934847360227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c6a2624a6db3742b1f199c48e43976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncWith: 0
+  SD_equipments: []
 --- !u!114 &5168778977410964324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,7 +481,7 @@ CapsuleCollider:
   m_Radius: 1.5
   m_Height: 1.2
   m_Direction: 1
-  m_Center: {x: 0, y: 1.2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4282285903623584745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593e820359c88594b9fa24c38b8227c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleObject: {fileID: 323021909646354228}
+  ParticleObject: {fileID: 4282285903623584744}
   scale: 1
   IsEnabledOnAwake: 0
 --- !u!1 &9173193034927305026
@@ -576,6 +606,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
       propertyPath: looping
       value: 0
@@ -584,9 +622,33 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 19800002, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.3137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.78039217
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
       propertyPath: playOnAwake
@@ -606,11 +668,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
---- !u!1 &323021909646354228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}
-  m_PrefabInstance: {fileID: 323021909646254486}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &323021909646392086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9d35aaed7dbb6f14fbf391d3b0377ab2, type: 3}

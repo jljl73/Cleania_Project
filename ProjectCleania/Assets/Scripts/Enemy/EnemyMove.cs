@@ -15,7 +15,10 @@ public class EnemyMove : MonoBehaviour, IStunned
     public GameObject TargetObject { get; private set; }
     public Vector3 TargetPosition { get; private set; }
 
-    public float SupposedSmallestEnemySize = 0.1f;
+    [SerializeField]
+    float supposedSmallestEnemySize = 0.1f;
+    [SerializeField]
+    bool isFixedNavPriority = false;
 
     bool isRunAway = false;
     bool isStopMoving = false;
@@ -31,6 +34,7 @@ public class EnemyMove : MonoBehaviour, IStunned
         nav = GetComponent<NavMeshAgent>();
         if (nav == null)
             throw new System.Exception("EnemyMove doesnt have nav");
+
         // animator = GetComponent<Animator>();
         if (stateMachine == null)
             throw new System.Exception("EnemyMove doesnt have stateMachine");
@@ -39,19 +43,32 @@ public class EnemyMove : MonoBehaviour, IStunned
             throw new System.Exception("EnemyMove doesnt have myEnemy");
     }
 
+    private void OnEnable()
+    {
+        Start();
+
+        StartCoroutine(SetPositionToTarget());
+    }
+
     void Start()
     {
-        StartCoroutine(SetPositionToTarget());
-
-        
+        // 초기에 꺼두기
+        nav.enabled = false;
     }
 
     void FixedUpdate()
     {
+        if (stateMachine.CompareState(StateMachine.enumState.Attacking))
+        {
+            nav.SetDestination(this.transform.position);
+            return;
+        }
+
         if (TargetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
 
         // Nav 우선순위 선정
-        SetNavAvoidancePriority();
+        if (!isFixedNavPriority)
+            SetNavAvoidancePriority();
 
         if (stateMachine.CompareState(StateMachine.enumState.Idle))
         {
@@ -60,9 +77,6 @@ public class EnemyMove : MonoBehaviour, IStunned
         }
         else
             nav.isStopped = true;
-
-        // print("dist in enemyMove : " + Vector3.Distance(TargetPosition, transform.position));
-        // print("Magnitude in enemyMove : " + Vector3.Magnitude(TargetPosition - transform.position));
 
         AccelerateRotation();
         nav.SetDestination(TargetPosition);
@@ -77,7 +91,7 @@ public class EnemyMove : MonoBehaviour, IStunned
             avoidancePriority = 0;
         else if (TargetObject != null)
         {
-            avoidancePriority = (int)(Vector3.Distance(transform.position, TargetObject.transform.position) / SupposedSmallestEnemySize);
+            avoidancePriority = (int)(Vector3.Distance(transform.position, TargetObject.transform.position) / supposedSmallestEnemySize);
             if (avoidancePriority == 0)
                 avoidancePriority = 1;
             if (avoidancePriority >= 99)

@@ -54,10 +54,10 @@ public partial class ItemStorage_Equipments
 {
     void _Add(ItemInstance_Equipment item)
     {
-        if (item.CurrentStorage == null)
-            item.CurrentStorage = this;
-        else
-            Debug.Log("Logic error in ItemStorage_LocalGrid : _Add");
+        if (item.CurrentStorage != null)
+            item.CurrentStorage.Remove(item);
+
+        item.CurrentStorage = this;
 
         // reserve grid
         _reference[(int)item.EquipmentType] = item;
@@ -95,6 +95,10 @@ public partial class ItemStorage_Equipments
     void iSavedData.AfterLoad()
     {
         _items.Clear();
+
+        for (int i = 0; i < _reference.Length; ++i)
+            _reference[i] = null;
+
         OnSynchronize(this, SyncOperator.Refresh, ItemInstance_Equipment.Type.EnumTotal);
 
         foreach (var i in SD_equipments)

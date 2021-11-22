@@ -18,12 +18,14 @@ public class PlayerSkill2 : PlayerSkill
         animator.SetFloat("Sweeping multiplier", SpeedMultiplier);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         //animator.SetInteger("Skill", 2);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill2", true);
         animator.SetTrigger("Sweeping");
+
+        return true;
     }
 
     override public void Activate()

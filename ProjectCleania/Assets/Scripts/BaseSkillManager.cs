@@ -162,14 +162,40 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         return true;
     }
 
-    public virtual void ActivateSkill(int id)
+    public virtual void AnimationDeactivate()
     {
-        skillDict[id].Activate();
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 
-    public virtual void DeactivateSkill(int id)
+    //public virtual void ActivateSkill(int id)
+    //{
+    //    skillDict[id].Activate();
+    //}
+
+    public virtual void ActivateSkill(AnimationEvent myEvent)
     {
-        skillDict[id].Deactivate();
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        if (skillEffectIndexSet != null)
+            skillDict[skillEffectIndexSet.GetSkillID()].Activate(skillEffectIndexSet.GetEffectID());
+        else
+            skillDict[myEvent.intParameter].Activate();
+    }
+
+    //public virtual void DeactivateSkill(int id)
+    //{
+    //    print("DeactivateSkill id");
+    //    skillDict[id].Deactivate();
+    //}
+
+    public virtual void DeactivateSkill(AnimationEvent myEvent)
+    {
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        if (skillEffectIndexSet != null)
+            skillDict[skillEffectIndexSet.GetSkillID()].Deactivate(skillEffectIndexSet.GetEffectID());
+        else
+            skillDict[myEvent.intParameter].Deactivate();
     }
 
     public void DeactivateAllSkill()
@@ -188,7 +214,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
         if (skillEffectIndexSet != null)
             skillDict[skillEffectIndexSet.GetSkillID()].PlayEffects(skillEffectIndexSet.GetEffectID());
         else
@@ -204,7 +229,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
         if (skillEffectIndexSet != null)
             skillDict[skillEffectIndexSet.GetSkillID()].StopEffects(skillEffectIndexSet.GetEffectID());
         else
@@ -214,6 +238,33 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
                 skillDict[myEvent.intParameter].StopEffects(i);
             }
         }
+    }
+
+    public virtual void ActivateSound(int id)
+    {
+        skillDict[id].ActivateSound(0);
+
+    }
+
+    public virtual void DeactivateSound(int id)
+    {
+        skillDict[id].DeactivateSound(0);
+    }
+
+    public virtual void ActivateSound(AnimationEvent myEvent)
+    {
+        SkillSoundIndexSO skillSoundIndexSet = myEvent.objectReferenceParameter as SkillSoundIndexSO;
+
+        if (skillSoundIndexSet != null)
+            skillDict[skillSoundIndexSet.GetSkillID()].ActivateSound(skillSoundIndexSet.GetSoundIndex());
+    }
+
+    public virtual void DeactivateSound(AnimationEvent myEvent)
+    {
+        SkillSoundIndexSO skillSoundIndexSet = myEvent.objectReferenceParameter as SkillSoundIndexSO;
+
+        if (skillSoundIndexSet != null)
+            skillDict[skillSoundIndexSet.GetSkillID()].DeactivateSound(skillSoundIndexSet.GetSoundIndex());
     }
 
     protected void initializeSkillSetting(int id)
@@ -239,9 +290,9 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             return false;
     }
 
-    public bool IsSpecificSkillAvailable(int id)
+    public virtual bool IsSpecificSkillAvailable(int id)
     {
-        return availableSkillDict.ContainsKey(id);
+        return availableSkillDict.ContainsKey(id) && skillDict[id].IsAvailable();
     }
 
     protected void ResetSkill(int skillID)

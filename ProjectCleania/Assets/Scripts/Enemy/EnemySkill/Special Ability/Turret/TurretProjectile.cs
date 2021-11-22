@@ -7,12 +7,24 @@ public class TurretProjectile : DamagingProperty
     float moveSpeed;
     float destroyTime = 8;
 
-    public void SetUp(float moveSpeed, AbilityStatus abil, float damageScale)
+    private void OnEnable()
     {
-        this.moveSpeed = moveSpeed;
-
-        base.SetUp(abil, damageScale);
+        if (!isSetUp) return;
+        Start();
     }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.TurretProjectile, this.gameObject);
+    }
+
+    private void Start()
+    {
+        Invoke("DeactivateDelay", destroyTime);
+    }
+
+    void DeactivateDelay() => gameObject.SetActive(false);
 
     private void Update()
     {
@@ -20,6 +32,14 @@ public class TurretProjectile : DamagingProperty
             return;
 
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+    }
+
+    public void SetUp(float destroyTime, float moveSpeed, AbilityStatus abil, float damageScale)
+    {
+        this.destroyTime = destroyTime;
+        this.moveSpeed = moveSpeed;
+
+        base.SetUp(abil, damageScale);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +51,8 @@ public class TurretProjectile : DamagingProperty
             if (playerAbil != null)
                 playerAbil.AttackedBy(ownerAbility, damageScale);
             print("damageScale: " + damageScale);
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

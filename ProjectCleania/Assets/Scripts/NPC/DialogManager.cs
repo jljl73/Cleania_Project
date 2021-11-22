@@ -4,50 +4,58 @@ using UnityEngine;
 
 public class DialogManager : MonoBehaviour
 {
-    public GameObject MarketDialog;
-    public GameObject RepairDialog;
-    public GameObject EnchantDialog;
-    public GameObject StorageDialog;
-    GameObject QuestDialog = null;
+    GameObject currentDialog = null;
+    public DialogSelector MarketDialog;
+    public DialogSelector RepairDialog;
+    public DialogSelector EnchantDialog;
+    public DialogSelector StorageDialog;
+    public DialogSelector QuestDialog;
+    public GameObject DungeonDialog;
 
     public void ShowMarketDialog(bool bActive)
     {
-        ShowDialog(MarketDialog, bActive);
+        MarketDialog.ShowDialog();
     }
 
     public void ShowRepairDialog(bool bActive)
     {
-        ShowDialog(RepairDialog, bActive);
+        RepairDialog.ShowDialog();
     }
 
     public void ShowEnchantDialog(bool bActive)
     {
-        ShowDialog(EnchantDialog, bActive);
+        EnchantDialog.ShowDialog();
     }
 
     public void ShowStorageDialog(bool bActive)
     {
-        ShowDialog(StorageDialog, bActive);
+        StorageDialog.ShowDialog();
     }
 
-    public void ShowQuestDialog(string dialogName)
+    public void ShowQuestDialog(bool bActive)
     {
-        QuestDialog = transform.Find(dialogName).gameObject; ;
-        ShowDialog(QuestDialog, true);
+        QuestDialog.ShowDialog();
     }
 
-    void ShowDialog(GameObject dialog, bool bActive)
+    public void ShowDungeonDialog(bool bActive)
     {
+        ShowDialog(DungeonDialog, true);
+    }
+
+    public void ShowDialog(GameObject dialog, bool bActive)
+    {
+        if (dialog == null) return;
         dialog.SetActive(bActive);
+        if (bActive)
+            currentDialog = dialog;
+        else
+            currentDialog = null;
+
+        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
     }
 
     public void OffDialog()
     {
-        MarketDialog.SetActive(false);
-        RepairDialog.SetActive(false);
-        EnchantDialog.SetActive(false);
-        StorageDialog.SetActive(false);
-        if(QuestDialog != null)
-            QuestDialog.SetActive(false);
+        ShowDialog(currentDialog, false);
     }
 }

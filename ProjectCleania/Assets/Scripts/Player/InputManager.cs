@@ -7,35 +7,57 @@ public class InputManager : MonoBehaviour
 {
     Player player;
 
+    [SerializeField]
+    EnemySpawnerManager enemySpawnerManager;
+    public bool PlayerMovable;
+
+    //public Vector3 force = Vector3.right;
+    private void Awake()
+    {
+        GameManager.Instance.inputManager = this;
+    }
+
     void Start()
     {
         player = GameManager.Instance.player;
+        enemySpawnerManager = FindObjectOfType<EnemySpawnerManager>();
     }
 
     void Update()
     {
-        // UI Å¬¸¯½Ã ¸®ÅÏ
+        // UI í´ë¦­ì‹œ ë¦¬í„´
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
-        // Á×À¸¸é ÇÃ·¹ÀÌ¾î ÀÔ·Â ºÒ°¡
+        // ì£½ìœ¼ë©´ í”Œë ˆì´ì–´ ìž…ë ¥ ë¶ˆê°€
         if (player.abilityStatus.HP == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha9))
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                player.Revive();
+                player.PlaySkill(1190);
             }
             return;
         }
 
-        // ¸¶¿ì½º >>>>>
+        // ë§ˆìš°ìŠ¤ >>>>>
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
+            if(PlayerMovable)
             player.Move(Input.mousePosition);
         }
-        // ¸¶¿ì½º <<<<<
+
+        if (Input.GetMouseButton(1))
+        {
+            player.PlaySkill(1102);
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            player.StopSkill(1102);
+        }
+        // ë§ˆìš°ìŠ¤ <<<<<
 
 
-        // Å°º¸µå >>>>>
+        // í‚¤ë³´ë“œ >>>>>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             player.PlaySkill(1103);
@@ -56,11 +78,47 @@ public class InputManager : MonoBehaviour
         {
             player.PlaySkill(1101);
         }
-        if (Input.GetMouseButton(1))
+        
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            player.PlaySkill(1102);
+            player.PlaySkill(1199);
         }
-        // Å°º¸µå <<<<<
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.PlaySkill(1198);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            player.PlaySkill(1196);
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            player.PlaySkill(1197);
+        }
+
+        
+        // í‚¤ë³´ë“œ <<<<<
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            enemySpawnerManager.SpawnStart();
+        }
+
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //{
+        //    player.playerMove.AddForce(force);
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    player.playerMove.Pulled(false, Vector3.zero);
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
+        //}
     }
 
 }

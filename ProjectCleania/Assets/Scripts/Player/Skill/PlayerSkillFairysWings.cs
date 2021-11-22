@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerSkillFairysWings : PlayerSkill
 {
-    public PlayerSkillFairysWingsSO SkillData;
+    [SerializeField]
+    PlayerSkillFairysWingsSO skillData;
 
     public Buffable buffManager;
-    // public float speed = 10.0f;
 
     // "지속 시간"
     float duration = 0f;
@@ -24,10 +24,11 @@ public class PlayerSkillFairysWings : PlayerSkill
     bool bSkill = false;
     int nDeadEnemy = 0;
 
-    public override int ID { get { return SkillData.ID; } protected set { id = value; } }
+    public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         UpdateSkillData();
     }
 
@@ -44,24 +45,17 @@ public class PlayerSkillFairysWings : PlayerSkill
 
     public void UpdateSkillData()
     {
-        ID = SkillData.ID;
-        SkillName = SkillData.GetSkillName();
-        SkillDetails = SkillData.GetSkillDetails();
-        CoolTime = SkillData.GetCoolTime();
-        CreatedMP = SkillData.GetCreatedMP();
-        ConsumMP = SkillData.GetConsumMP();
-        SpeedMultiplier = SkillData.GetSpeedMultiplier();
-        HandsUpReadyMultiplier = SkillData.GetHandsUpReadyMultiplier();
-        HandsUpAndDownMultiplier = SkillData.GetHandsUpAndDownMultiplier();
-        PostDelayMultiplier = SkillData.GetPostDelayMultiplier();
+        base.UpdateSkillData(skillData);
 
-        SkillSlotDependency = SkillData.GetTriggerKey();
+        HandsUpReadyMultiplier = skillData.GetHandsUpReadyMultiplier();
+        HandsUpAndDownMultiplier = skillData.GetHandsUpAndDownMultiplier();
+        PostDelayMultiplier = skillData.GetPostDelayMultiplier();
 
-        duration = SkillData.GetDuration();
-        speedUpRate = SkillData.GetSpeedUpRate();
+        duration = skillData.GetDuration();
+        speedUpRate = skillData.GetSpeedUpRate();
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         base.AnimationActivate();
 
@@ -69,25 +63,26 @@ public class PlayerSkillFairysWings : PlayerSkill
         animator.SetBool("OnSkill1", true);
         //animator.SetInteger("Skill", 1);
         animator.SetTrigger("FairysWings");
+
+        return true;
     }
 
-    override public void Activate(int dependedEffectIdx)
+    override public void Activate(int idx)
     {
         if (!bSkill)
         {
-            StartCoroutine(SpeedUp(dependedEffectIdx));
+            StartCoroutine(SpeedUp(idx));
         }
     }
 
     IEnumerator SpeedUp(int effectIdx)
     {
         bSkill = true;
-        duration = 5.0f;
         nDeadEnemy = 0;
 
         base.PlayEffects(effectIdx);
 
-        buffManager.AddBuff(speedUpRate, Ability.Buff.MoveSpeed_Buff, 5.0f);
+        buffManager.AddBuff(speedUpRate, Ability.Buff.MoveSpeed_Buff, duration);
 
         yield return new WaitForSeconds(duration);
 

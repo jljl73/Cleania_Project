@@ -17,12 +17,14 @@ public class PlayerSkill1 : PlayerSkill
         animator.SetFloat("FairysWings multiplier", SpeedMultiplier);
     }
 
-    public override void AnimationActivate()
+    public override bool AnimationActivate()
     {
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill1", true);
         //animator.SetInteger("Skill", 1);
         animator.SetTrigger("FairysWings");
+
+        return true;
     }
 
     override public void Activate()

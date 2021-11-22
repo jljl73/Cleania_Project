@@ -2,28 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Dialog : MonoBehaviour
 {
-    Transform pages;
-    int index = 0;
-
-    void Awake()
+    [System.Serializable]
+    public struct fButton
     {
-        pages = transform.GetChild(transform.childCount - 1);
-        pages.GetChild(0).gameObject.SetActive(true);
+        public DialogButton.TYPE type;
+        public string content;
+        public string value;
     }
 
-    public void NextPage(int nextIdx)
+    [System.Serializable]
+    public struct Page
     {
-        pages.GetChild(index).gameObject.SetActive(false);
-        pages.GetChild(nextIdx).gameObject.SetActive(true);
-        index = nextIdx;
+        [TextArea]
+        public string content;
+        public fButton[] buttons;
     }
 
+    [SerializeField]
+    Quest quest;
+    public Page[] pages;
+    public Transform PageTransform;
 
-    void OnEnable()
+    private void OnEnable()
     {
-        NextPage(0);
+        ChangePage(0);
+    }
+
+    public void ChangePage(int index)
+    {
+        //Debug.Log(index.ToString() + "Page");
+        PageTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = pages[index].content;
+
+        int b = 0;
+        int length = pages[index].buttons.Length;
+        for (; b < length; ++b)
+        {
+            DialogButton button = PageTransform.GetChild(1).GetChild(length - b - 1).GetComponent<DialogButton>();
+            button.Initialize(pages[index].buttons[b].type, quest, pages[index].buttons[b].value);
+            button.GetComponentInChildren<TextMeshProUGUI>().text = pages[index].buttons[b].content;
+            button.gameObject.SetActive(true);
+        }
+
+        for(; b < PageTransform.GetChild(1).childCount; ++b)
+        {
+            PageTransform.GetChild(1).GetChild(b).gameObject.SetActive(false);
+        }
     }
 }

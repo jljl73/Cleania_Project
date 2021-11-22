@@ -18,6 +18,11 @@ public class ParticleBase : MonoBehaviour
 
     public bool IsEnabledOnAwake = false;
 
+    public float NormalizedPlayTime()
+    {
+        return ParticleObjectWithPS.time;
+    }
+
     protected virtual void Awake()
     {
         particleChildrens = ParticleObject.GetComponentsInChildren<ParticleSystem>(true);
@@ -83,6 +88,9 @@ public class ParticleBase : MonoBehaviour
 
         Vector3 changedScale = new Vector3(value, value, value);
         ParticleObject.transform.localScale = changedScale;
+
+        if (particleChildrens == null)
+            return;
 
         foreach (ParticleSystem particle in particleChildrens)
         {

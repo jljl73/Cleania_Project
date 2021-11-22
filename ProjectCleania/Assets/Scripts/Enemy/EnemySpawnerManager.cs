@@ -31,6 +31,12 @@ public class EnemySpawnerManager : MonoBehaviour
         SpawnStart();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SpawnStart();
+    }
+
     void SetWeightPerCategories()
     {
         switch (CurrentCategoriesCount)
@@ -73,7 +79,7 @@ public class EnemySpawnerManager : MonoBehaviour
         }
     }
 
-    void SpawnStart()
+    public void SpawnStart()
     {
         for (int i = 0; i < enemySpawners.Count; i++)
         {
