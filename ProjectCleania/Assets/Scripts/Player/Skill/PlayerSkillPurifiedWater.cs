@@ -44,4 +44,9 @@ public class PlayerSkillPurifiedWater : PlayerSkill
         
         return true;
     }
+
+    public override void ActivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.DrinkPotion);
+    }
 }

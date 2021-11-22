@@ -102,6 +102,21 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
             attackArea.enabled = false;
     }
 
+    public override void ActivateSound(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.RefreshingLeapForward, 0);
+                break;
+            case 1:
+                GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.RefreshingLeapForward, 1);
+                break;
+            default:
+                break;
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
