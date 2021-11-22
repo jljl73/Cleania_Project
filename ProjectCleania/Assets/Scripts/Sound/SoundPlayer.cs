@@ -17,11 +17,6 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] AudioClip m_ItemClick;
     [SerializeField] AudioClip m_ItemBuySell;
 
-    [Header("플레이어")]
-    [SerializeField] AudioClip playerskill1;
-    [SerializeField] AudioClip playerskill2;
-    [SerializeField] AudioClip playerskill3;
-    [SerializeField] AudioClip playerskill4;
     //[SerializeField] AudioClip m_Storage;
     //[SerializeField] AudioClip m_NPCInteraction;
     //[SerializeField] AudioClip m_Equip;

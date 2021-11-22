@@ -30,13 +30,15 @@ public struct QuestNeed
     public int target;
     public int targetValue;
     public int curValue;
+    public string content;
 
-    public QuestNeed(TYPE type, int target, int curValue, int targetValue)
+    public QuestNeed(TYPE type, int target, int curValue, int targetValue, string content)
     {
         this.type = type;
         this.target = target;
         this.curValue = curValue;
         this.targetValue = targetValue;
+        this.content = content;
     }
 
     public void Achieve()
@@ -60,8 +62,10 @@ public struct QuestNeed
         {
             if (this.type == TYPE.Monster)
                 return String.Format("{0} Ã³Ä¡ ({1}/{2})", Enemy.GetName(target), curValue, targetValue);
+            else if (this.type == TYPE.Item)
+                return String.Format("{0} È¹µæ ({1}/{2})", content, curValue, targetValue);
             else
-                return String.Format("{0} È¹µæ ({1}/{2})", target, curValue, targetValue);
+                return String.Format("{0} ({1}/{2})", content, curValue, targetValue);
         }
     }
 }
