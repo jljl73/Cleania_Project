@@ -43,7 +43,7 @@ public class NPCTrigger : MonoBehaviour
                     dialogManager.ShowQuestDialog(true);
                     break;
                 case NPC.TYPE.Dungeon:
-                    
+                    dialogManager.ShowDungeonDialog(true);
                     break;
             }
         }

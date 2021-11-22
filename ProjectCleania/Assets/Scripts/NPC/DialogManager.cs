@@ -10,7 +10,7 @@ public class DialogManager : MonoBehaviour
     public DialogSelector EnchantDialog;
     public DialogSelector StorageDialog;
     public DialogSelector QuestDialog;
-    public GameObject DungeonDialog;
+    public DialogSelector DungeonDialog;
 
     public void ShowMarketDialog(bool bActive)
     {
@@ -39,7 +39,7 @@ public class DialogManager : MonoBehaviour
 
     public void ShowDungeonDialog(bool bActive)
     {
-        ShowDialog(DungeonDialog, true);
+        DungeonDialog.ShowDialog();
     }
 
     public void ShowDialog(GameObject dialog, bool bActive)

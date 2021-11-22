@@ -17,6 +17,10 @@ public class NPC : MonoBehaviour
 
     public string Value;
 
+    private void Start()
+    {
+        transform.Find("Marker").rotation = Camera.main.transform.rotation;
+    }
 
     void Update()
     {
