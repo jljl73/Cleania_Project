@@ -167,14 +167,35 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 
-    public virtual void ActivateSkill(int id)
+    //public virtual void ActivateSkill(int id)
+    //{
+    //    skillDict[id].Activate();
+    //}
+
+    public virtual void ActivateSkill(AnimationEvent myEvent)
     {
-        skillDict[id].Activate();
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        if (skillEffectIndexSet != null)
+            skillDict[skillEffectIndexSet.GetSkillID()].Activate(skillEffectIndexSet.GetEffectID());
+        else
+            skillDict[myEvent.intParameter].Activate();
     }
 
-    public virtual void DeactivateSkill(int id)
+    //public virtual void DeactivateSkill(int id)
+    //{
+    //    print("DeactivateSkill id");
+    //    skillDict[id].Deactivate();
+    //}
+
+    public virtual void DeactivateSkill(AnimationEvent myEvent)
     {
-        skillDict[id].Deactivate();
+        SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        if (skillEffectIndexSet != null)
+            skillDict[skillEffectIndexSet.GetSkillID()].Deactivate(skillEffectIndexSet.GetEffectID());
+        else
+            skillDict[myEvent.intParameter].Deactivate();
     }
 
     public void DeactivateAllSkill()

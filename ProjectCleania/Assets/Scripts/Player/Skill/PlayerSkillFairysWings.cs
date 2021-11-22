@@ -67,11 +67,11 @@ public class PlayerSkillFairysWings : PlayerSkill
         return true;
     }
 
-    override public void Activate(int dependedEffectIdx)
+    override public void Activate(int idx)
     {
         if (!bSkill)
         {
-            StartCoroutine(SpeedUp(dependedEffectIdx));
+            StartCoroutine(SpeedUp(idx));
         }
     }
 
@@ -82,7 +82,7 @@ public class PlayerSkillFairysWings : PlayerSkill
 
         base.PlayEffects(effectIdx);
 
-        buffManager.AddBuff(speedUpRate, Ability.Buff.MoveSpeed_Buff, 5.0f);
+        buffManager.AddBuff(speedUpRate, Ability.Buff.MoveSpeed_Buff, duration);
 
         yield return new WaitForSeconds(duration);
 

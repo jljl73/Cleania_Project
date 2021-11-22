@@ -17,15 +17,15 @@ public class EnemyAnimationEvent : MonoBehaviour
     }
 
     
-    public void ActivateSkill(int type)
-    {
-        skillManager.ActivateSkill(type);
-    }
+    //public override void ActivateSkill(int type)
+    //{
+    //    skillManager.ActivateSkill(type);
+    //}
 
-    public void DeactivateSkill(int type)
-    {
-        skillManager.DeactivateSkill(type);
-    }
+    //public override void DeactivateSkill(int type)
+    //{
+    //    skillManager.DeactivateSkill(type);
+    //}
 
     public void Die()
     {

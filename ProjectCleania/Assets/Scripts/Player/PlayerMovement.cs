@@ -22,6 +22,7 @@ public class PlayerMovement : MovementController, IStunned
         base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
         characterRigidBody = GetComponent<Rigidbody>();
+        playerSkillManager = GetComponent<PlayerSkillManager>();
     }
 
     private void OnEnable()
@@ -264,6 +265,7 @@ public class PlayerMovement : MovementController, IStunned
             TargetPose = this.transform.position;
 
         animator.SetBool("Pulled", value);
+        print("animator set pulled: " + value);
     }
     #region
     //public void Stunned(bool isStunned, float stunnedTime)
