@@ -24,7 +24,7 @@ public class SavedData : MonoBehaviour
         }
     }
 
-    public string characterName;    
+    public string characterName;
     string Path
     {
         get
@@ -50,6 +50,7 @@ public class SavedData : MonoBehaviour
     public ItemStorage_World Item_World { get => item_World; private set => item_World = value; }
 
 
+    public int PlayerExp;
 
     //AbilityStatus vulnerable;
     //[SerializeField]
@@ -106,6 +107,8 @@ public class SavedData : MonoBehaviour
         //GameManager.Instance.SinglePlayer.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
         //GameManager.Instance.player.playerMove.StopMoving();
 
+        ExpManager.Initailize(PlayerExp);
+
         GameManager.Instance.PlayerAbility.FullHP();
         GameManager.Instance.PlayerAbility.FullMP();
     }
@@ -121,6 +124,8 @@ public class SavedData : MonoBehaviour
         //vulnerableString = JsonUtility.ToJson(vulnerable);
 
         //playerPosition = GameManager.Instance.SinglePlayer.transform.position;
+
+        PlayerExp = ExpManager.Exp;
     }
 
     private void Awake()
