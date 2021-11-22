@@ -42,10 +42,7 @@ public class EnemyChase : MonoBehaviour
                 if (enemySpawner == null)
                     enemy.SetTarget(collider.gameObject);
                 else
-                {
-                    enemySpawner.GetComponent<EnemyGroupManager>().Target = collider.gameObject;
                     myGroupManager.Target = collider.gameObject;
-                }
 
                 targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
                 break;

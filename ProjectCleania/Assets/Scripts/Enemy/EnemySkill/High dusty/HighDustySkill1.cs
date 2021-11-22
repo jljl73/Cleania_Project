@@ -62,6 +62,7 @@ public class HighDustySkill1 : EnemySkill
 
     public override void Deactivate()
     {
+        base.Deactivate();
         animator.SetBool("OnSkill", false);
     }
 }

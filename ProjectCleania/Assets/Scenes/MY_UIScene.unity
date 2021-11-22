@@ -244,7 +244,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5601783, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1220,10 +1220,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!4 &399729171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4471477726922377633, guid: 2cf7c570d6d78af4d9d6a6208d92c750, type: 3}
@@ -1378,10 +1374,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!4 &448643631 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3200293083645811820, guid: cb1bb2c0a8630474e9d8dd945e57bc1e, type: 3}
@@ -1671,6 +1663,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnerInMapSize (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 747713416578333366, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 747713416578333367, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -1744,6 +1740,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
     - target: {fileID: 4902611266747037017, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
+      propertyPath: NormalMonsters.Array.data[0]
+      value: 
+      objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
+    - target: {fileID: 4902611266747037017, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
       propertyPath: NormalMonsters.Array.data[1]
       value: 
       objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
@@ -1756,6 +1756,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
     - target: {fileID: 4902611267411882041, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
+      propertyPath: NormalMonsters.Array.data[0]
+      value: 
+      objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
+    - target: {fileID: 4902611267411882041, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
       propertyPath: NormalMonsters.Array.data[1]
       value: 
       objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
@@ -1765,6 +1769,10 @@ PrefabInstance:
       objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
     - target: {fileID: 6877955746244713334, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
       propertyPath: RareMonsters.Array.data[1]
+      value: 
+      objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
+    - target: {fileID: 6877955746244713334, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
+      propertyPath: NormalMonsters.Array.data[0]
       value: 
       objectReference: {fileID: 7717416709024651367, guid: f7287a42147e6f54eb7be4e5613a9977, type: 3}
     - target: {fileID: 6877955746244713334, guid: 552913ebc3e98d444abe9707140250ee, type: 3}
@@ -3016,10 +3024,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!1 &1023479692
 GameObject:
   m_ObjectHideFlags: 0
@@ -4391,10 +4395,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!1 &1609563814
 GameObject:
   m_ObjectHideFlags: 0
@@ -5169,10 +5169,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!1001 &1981527191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5470,10 +5466,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!1001 &2046085811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6077,10 +6069,6 @@ MonoBehaviour:
   m_Equip: {fileID: 8300000, guid: 11a5f24543a764f4f98895fb386f98bc, type: 3}
   m_ItemClick: {fileID: 0}
   m_ItemBuySell: {fileID: 0}
-  playerskill1: {fileID: 8300000, guid: 065e376cd7ab6b543927f2ec1a986223, type: 3}
-  playerskill2: {fileID: 0}
-  playerskill3: {fileID: 0}
-  playerskill4: {fileID: 0}
 --- !u!1001 &4944885585791779954
 PrefabInstance:
   m_ObjectHideFlags: 0
