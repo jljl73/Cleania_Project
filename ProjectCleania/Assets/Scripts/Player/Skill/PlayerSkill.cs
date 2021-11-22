@@ -5,35 +5,59 @@ using UnityEngine.Events;
 
 public abstract class PlayerSkill : Skill
 {
-    //public enum SkillID { Dusting, Dehydration, FairysWings, Sweeping, CleaningWind, RefreshingLeapForward };
-    //public SkillID ID = SkillID.Dusting;
+    //protected AudioSource audioSource;
+    //protected List<AudioClip> audioClips = new List<AudioClip>();
 
     // ¿€µø ≈∞
     protected KeyCode SkillSlotDependency = KeyCode.Alpha1;
     public KeyCode GetSkillSlotDependency() { return SkillSlotDependency; }
+
+    protected void Awake()
+    {
+        //audioSource = GetComponent<AudioSource>();
+        //if (audioSource == null)
+        //    throw new System.Exception("PlayerSkill audioSource is null!");
+    }
 
     protected new void Start()
     {
         base.Start();
     }
 
-    //public List<SkillEffectController> effectController;
+    public virtual void UpdateSkillData(PlayerSkillSO skillData)
+    {
+        ID = skillData.ID;
+        SkillName = skillData.GetSkillName();
+        SkillDetails = skillData.GetSkillDetails();
+        CoolTime = skillData.GetCoolTime();
+        CreatedMP = skillData.GetCreatedMP();
+        ConsumMP = skillData.GetConsumMP();
+        SpeedMultiplier = skillData.GetSpeedMultiplier();
 
-    //public void PlayEffects(int effectIdx)
+        SkillSlotDependency = skillData.GetTriggerKey();
+
+        //for (int i = 0; i < skillData.GetSkillSoundCount(); i++)
+        //{
+        //    audioClips.Add(skillData.GetSkillSound(i));
+        //}
+    }
+
+    //public override void ActivateSound(int index)
     //{
-    //    effectController[effectIdx].PlaySkillEffect();
-    //    //foreach (SkillEffectController skillEffect in effectController)
-    //    //{
-    //    //    skillEffect.PlaySkillEffect();
-    //    //}
+    //    if (audioClips.Count == 0)
+    //        return;
+
+    //    audioSource.clip = audioClips[index];
+    //    audioSource.Play();
+    //    print("activateSkill sound!");
     //}
 
-    //public void StopEffects(int effectIdx)
+    //public override void DeactivateSound(int index)
     //{
-    //    effectController[effectIdx].StopSKillEffect();
-    //    //foreach (SkillEffectController skillEffect in effectController)
-    //    //{
-    //    //    skillEffect.StopSKillEffect();
-    //    //}
+    //    if (audioClips.Count == 0)
+    //        return;
+
+    //    audioSource.clip = audioClips[index];
+    //    audioSource.Stop();
     //}
 }

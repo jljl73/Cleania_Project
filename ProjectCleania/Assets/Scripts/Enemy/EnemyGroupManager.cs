@@ -20,6 +20,11 @@ public class EnemyGroupManager : MonoBehaviour
     }
     const float chasingDistance = 10.0f;
 
+    private void OnDisable()
+    {
+        target = null;
+    }
+
     public void AddMember(GameObject enemy)
     {
         enemies.Add(enemy);
@@ -28,16 +33,18 @@ public class EnemyGroupManager : MonoBehaviour
     public void DeleteMember(GameObject enemy)
     {
         enemies.Remove(enemy);
+        if (enemies.Count == 0)
+            Target = null;
     }
 
-    public void SetTarget(GameObject target)
-    {
-        foreach (var e in enemies)
-        {
-            e.GetComponent<Enemy>().SetTarget(target);
-        }
-        this.target = target;
-    }
+    //public void SetTarget(GameObject target)
+    //{
+    //    foreach (var e in enemies)
+    //    {
+    //        e.GetComponent<Enemy>().SetTarget(target);
+    //    }
+    //    this.target = target;
+    //}
 
     public void ReleaseTarget()
     {

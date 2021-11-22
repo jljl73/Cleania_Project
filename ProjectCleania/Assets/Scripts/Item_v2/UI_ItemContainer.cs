@@ -136,6 +136,18 @@ public partial class UI_ItemContainer : MonoBehaviour
 
         return Add(item, index, sync);
     }
+    public bool AddSeparated(ItemInstance item)
+    {
+        switch(syncWith)
+        {
+            case SyncType.Inventory:
+                return SavedData.Instance.Item_Inventory.AddSeparated(item);
+            case SyncType.Storage:
+                return SavedData.Instance.Item_Storage.AddSeparated(item);
+            default:
+                return false;
+        }
+    }
 
 
     public bool Remove(int index, bool sync = true)

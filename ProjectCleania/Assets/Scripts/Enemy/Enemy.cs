@@ -8,9 +8,6 @@ public class Enemy : MonoBehaviour
 {
     Animator animator;
 
-    // GameObject enemySpawner;
-    // public GameObject EnemySpawner { get { return enemySpawner; } set { enemySpawner = value; } }
-
     [Header("Need Drag")]
     public AbilityStatus abilityStatus;
     public EnemySkillManager skillManager;
@@ -44,6 +41,18 @@ public class Enemy : MonoBehaviour
             throw new System.Exception("Enemy doesnt have enemyStateMachine");
     }
 
+    private void OnEnable()
+    {
+        //StartCoroutine("InvincibleFor", 2f);
+        Revive();
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+        ReturnToObjectPool();
+    }
+
     private void Start()
     {
         OnDead += Die;
@@ -51,8 +60,6 @@ public class Enemy : MonoBehaviour
 
         OnStunned += enemyMove.Stunned;
         OnStunned += skillManager.Stunned;
-
-        StartCoroutine("InvincibleFor", 2f);
     }
 
     private void Update()
@@ -62,6 +69,25 @@ public class Enemy : MonoBehaviour
             // Stunned(false, 0);
             OnStunned(false, 0);
             OnDead();
+        }
+    }
+    
+    void ReturnToObjectPool()
+    {
+        switch (enemyStateMachine.GetMonsterType())
+        {
+            case EnemyStateMachine.MonsterType.HighDusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.HighDusty, this.gameObject);
+                break;
+            case EnemyStateMachine.MonsterType.SummonerDusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.SummonerDusty, this.gameObject);
+                break;
+            case EnemyStateMachine.MonsterType.Dusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Dusty, this.gameObject);
+                break;
+            default:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.WildInti, this.gameObject);
+                break;
         }
     }
 
@@ -86,6 +112,8 @@ public class Enemy : MonoBehaviour
         //else
         GameManager.Instance.uiManager.GetComponent<QuestManager>().Acheive(QuestNeed.TYPE.Monster, enemyStateMachine.ID);
 
+        SetTarget(null);
+
         ExpManager.Acquire(100);
         // 네비게이션 Off
         navMeshAgent.enabled = false;
@@ -103,13 +131,31 @@ public class Enemy : MonoBehaviour
         Invoke("DeactivateSkin", 3.0f);
 
         // 10초 후에 파괴
-        Destroy(gameObject, 10.0f);
+        Invoke("DeactivateDelay", 10.0f);
+        // Destroy(gameObject, 10.0f);
     }
+
+    void DeactivateDelay() => this.gameObject.SetActive(false);
 
     public void Revive()
     {
+        abilityStatus.FullHP();
+
         // 네비게이션 On
         navMeshAgent.enabled = true;
+
+        // 충돌체 끄기
+        ActivateColliders(true);
+
+        // 상태 죽음으로 전환
+        enemyStateMachine.ResetState();
+
+        // 죽음 애니메이션 발동
+        //animator.SetTrigger("Die");
+
+        ActivateSkin();
+
+        StartCoroutine("InvincibleFor", 2f);
     }
 
     void ActivateColliders(bool value = true)
@@ -127,16 +173,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void DeactivateSkin()
-    {
-        // 외형 끄기
-        skinnedMeshRenderer.enabled = false;
-    }
-
     void ActivateSkin()
     {
         // 외형 끄기
         skinnedMeshRenderer.enabled = true;
+    }
+
+    void DeactivateSkin()
+    {
+        // 외형 끄기
+        skinnedMeshRenderer.enabled = false;
     }
 
     public void SetTarget(GameObject target)

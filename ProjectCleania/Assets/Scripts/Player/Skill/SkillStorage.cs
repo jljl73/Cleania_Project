@@ -9,6 +9,8 @@ public class SkillStorage : MonoBehaviour
 
     Dictionary<int, Skill> skillDictionary = new Dictionary<int, Skill>();
 
+    protected bool isSkillUploaded = false;
+
     public Skill GetNormalSkill(int id)
     {
         return skillDictionary[id];
@@ -24,7 +26,9 @@ public class SkillStorage : MonoBehaviour
 
     void Awake()
     {
+        if (isSkillUploaded) return;
         UploadSkills();
+        isSkillUploaded = true;
     }
 
     protected virtual void UploadSkills()

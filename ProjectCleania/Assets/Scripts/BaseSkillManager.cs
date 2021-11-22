@@ -162,6 +162,11 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         return true;
     }
 
+    public virtual void AnimationDeactivate()
+    {
+        //playerStateMachine.Transition(StateMachine.enumState.Idle);
+    }
+
     public virtual void ActivateSkill(int id)
     {
         skillDict[id].Activate();
@@ -188,7 +193,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
         if (skillEffectIndexSet != null)
             skillDict[skillEffectIndexSet.GetSkillID()].PlayEffects(skillEffectIndexSet.GetEffectID());
         else
@@ -204,7 +208,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
-        // n번 스킬 칸에 있는 스킬의 N번째 스킬 이팩트를 써라
         if (skillEffectIndexSet != null)
             skillDict[skillEffectIndexSet.GetSkillID()].StopEffects(skillEffectIndexSet.GetEffectID());
         else
@@ -214,6 +217,33 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
                 skillDict[myEvent.intParameter].StopEffects(i);
             }
         }
+    }
+
+    public virtual void ActivateSound(int id)
+    {
+        skillDict[id].ActivateSound(0);
+
+    }
+
+    public virtual void DeactivateSound(int id)
+    {
+        skillDict[id].DeactivateSound(0);
+    }
+
+    public virtual void ActivateSound(AnimationEvent myEvent)
+    {
+        SkillSoundIndexSO skillSoundIndexSet = myEvent.objectReferenceParameter as SkillSoundIndexSO;
+
+        if (skillSoundIndexSet != null)
+            skillDict[skillSoundIndexSet.GetSkillID()].ActivateSound(skillSoundIndexSet.GetSoundIndex());
+    }
+
+    public virtual void DeactivateSound(AnimationEvent myEvent)
+    {
+        SkillSoundIndexSO skillSoundIndexSet = myEvent.objectReferenceParameter as SkillSoundIndexSO;
+
+        if (skillSoundIndexSet != null)
+            skillDict[skillSoundIndexSet.GetSkillID()].DeactivateSound(skillSoundIndexSet.GetSoundIndex());
     }
 
     protected void initializeSkillSetting(int id)
@@ -239,7 +269,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             return false;
     }
 
-    public bool IsSpecificSkillAvailable(int id)
+    public virtual bool IsSpecificSkillAvailable(int id)
     {
         return availableSkillDict.ContainsKey(id) && skillDict[id].IsAvailable();
     }

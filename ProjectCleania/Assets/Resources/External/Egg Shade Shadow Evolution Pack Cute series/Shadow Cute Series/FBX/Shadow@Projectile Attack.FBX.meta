@@ -420,6 +420,12 @@ ModelImporter:
   - first:
       137: 13700000
     second: Shadow
+  - first:
+      74: 1737396480512968048
+    second: Dust Storm breathe In
+  - first:
+      74: 1220336552602055096
+    second: Dust Storm breathe Out
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -478,14 +484,114 @@ ModelImporter:
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 1
+        intParameter: 2502
         messageOptions: 0
       - time: 0.84556794
         functionName: DeactivateSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 1
+        intParameter: 2502
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Dust Storm breathe In
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 5.5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: d2de160b38aabaf4cbdcaa4ab117959a, type: 2}
+        floatParameter: 0
+        intParameter: 2502
+        messageOptions: 0
+      - time: 0.36624062
+        functionName: ActivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 2502
+        messageOptions: 0
+      - time: 0.7044001
+        functionName: DeactivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: d2de160b38aabaf4cbdcaa4ab117959a, type: 2}
+        floatParameter: 0
+        intParameter: 2502
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Dust Storm breathe Out
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 5.6
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0
+        functionName: ActivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: aa9f1a88a4e8613449e9a1a059179ea6, type: 2}
+        floatParameter: 0
+        intParameter: 2502
+        messageOptions: 0
+      - time: 0.77397263
+        functionName: DeactivateSkillEffect
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: aa9f1a88a4e8613449e9a1a059179ea6, type: 2}
+        floatParameter: 0
+        intParameter: 2502
+        messageOptions: 0
+      - time: 0.791096
+        functionName: DeactivateSkill
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 2502
         messageOptions: 0
       transformMask: []
       maskType: 3

@@ -25,11 +25,6 @@ public class EnemySpawner : MonoBehaviour
     public float Weight { get { return weight; } set { weight = value; } }
     public int RareMonsterCount { set { rareMonsterCount = value; } }
 
-    private void Awake()
-    {
-        print("RareMonsters[Random.Range(0, RareMonsters.Count)].name: " + RareMonsters[Random.Range(0, RareMonsters.Count)].name);
-    }
-
     public void Spawn()
     {
         float tempTotalWeight = weight;
@@ -40,9 +35,9 @@ public class EnemySpawner : MonoBehaviour
         {
             if (tempTotalWeight < 0)
                 break;
-            GameObject newMonster = Instantiate(RareMonsters[Random.Range(0, RareMonsters.Count)], GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
+            // GameObject newMonster = Instantiate(RareMonsters[Random.Range(0, RareMonsters.Count)], GetRandomPointInCircle(this.transform.position, SpawnRadius), this.transform.rotation);
             // newMonster.GetComponent<Enemy>().EnemySpawner = gameObject;
-            // GameObject newMonster = GenerateObject(RareMonsters[Random.Range(0, RareMonsters.Count)]);
+            GameObject newMonster = GenerateObject(RareMonsters[Random.Range(0, RareMonsters.Count)]);
             newMonster.GetComponentInChildren<EnemyChase>().EnemySpawner = gameObject;
             tempTotalWeight -= RareMonsterWeight;
 
@@ -71,16 +66,18 @@ public class EnemySpawner : MonoBehaviour
     GameObject GenerateObject(GameObject obj)
     {
         Vector3 generatedPose = GetRandomPointInCircle(this.transform.position, SpawnRadius);
+        EnemyStateMachine.MonsterType monsterType = obj.GetComponent<EnemyStateMachine>().GetMonsterType();
         Enemy enemy;
-        switch (obj.name)
+        switch (monsterType)
         {
-            case "Enemy_HighDusty":
+            case EnemyStateMachine.MonsterType.HighDusty
+            :
                 enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.HighDusty, generatedPose, this.transform.rotation);
                 break;
-            case "Enemy_SummonerDusty":
+            case EnemyStateMachine.MonsterType.SummonerDusty:
                 enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.SummonerDusty, generatedPose, this.transform.rotation);
                 break;
-            case "Enemy_Dusty":
+            case EnemyStateMachine.MonsterType.Dusty:
                 enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.Dusty, generatedPose, this.transform.rotation);
                 break;
             default:

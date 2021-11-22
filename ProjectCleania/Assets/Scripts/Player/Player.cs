@@ -16,14 +16,17 @@ public class Player : MonoBehaviour
     public delegate void DelegateVoid();
     public event DelegateVoid OnLevelUp;
     public event DelegateVoid OnDead;
+    public event DelegateVoid OnRevive;
     public UnityAction<bool, float> OnStunned;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
 
-        OnDead += RunDieAnimation;
+        OnDead += Die;
         OnDead += playerSkillManager.DeactivateAllSkill;
+
+        OnRevive += Revive;
 
         OnStunned += playerMove.Stunned;
         OnStunned += PlayerMoveWithoutNav.Stunned;
@@ -32,7 +35,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (abilityStatus.HP == 0)
+        if (abilityStatus.HP == 0 && !stateMachine.CompareState(StateMachine.enumState.Dead))
         {
             OnDead();
         }
@@ -40,12 +43,16 @@ public class Player : MonoBehaviour
 
     public void Revive()
     {
-        animator.SetTrigger("Revive");
+        //animator.SetTrigger("Revive");
+        // stateMachine.ResetState();
+        abilityStatus.FullHP();
+        abilityStatus.FullMP();
     }
 
-    void RunDieAnimation()
+    void Die()
     {
         animator.SetTrigger("Die");
+        stateMachine.Transition(StateMachine.enumState.Dead);
     }
 
     public void Move(Vector3 position)
@@ -56,19 +63,24 @@ public class Player : MonoBehaviour
             PlayerMoveWithoutNav.Move(position);
     }
 
-    public void StopMoving()
-    {
-        playerMove.StopMoving();
-    }
+    //public void StopMoving()
+    //{
+    //    playerMove.StopMoving();
+    //}
 
 
     public void PlaySkill(int id)
     {
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
-            && !animator.IsInTransition(0))
-        {
-            playerSkillManager.PlaySkill(id);
-        }
+        // 부활 스킬일 경우
+        if (id == 1190)
+            OnRevive();
+
+        //if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+        //    && !animator.IsInTransition(0))
+        //{
+        //    playerSkillManager.PlaySkill(id);
+        //}
+        playerSkillManager.PlaySkill(id);
     }
 
     public void StopSkill(int id)
