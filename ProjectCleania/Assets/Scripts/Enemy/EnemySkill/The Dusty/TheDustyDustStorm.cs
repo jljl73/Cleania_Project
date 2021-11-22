@@ -52,9 +52,17 @@ public class TheDustyDustStorm : EnemySkill
             DoBreatheInAttack(true);
 
         if (isBreatheOutAttackPlaying)
+        {
             breatheOutAttackCollider.enabled = true;
+            //breatheOutAttackCollider.center = new Vector3(0, 1, 1.75f);
+            //breatheOutAttackCollider.height = 2;
+        }
         else
+        {
             breatheOutAttackCollider.enabled = false;
+            //breatheOutAttackCollider.center = new Vector3(0, 1, 1.75f);
+            //breatheOutAttackCollider.height = 2;
+        }
     }
 
     public void UpdateSkillData()
@@ -104,7 +112,6 @@ public class TheDustyDustStorm : EnemySkill
 
     public override void Deactivate(int idx)
     {
-        print("Deactivate id: " + idx);
         switch (idx)
         {
             case 0:
@@ -113,7 +120,6 @@ public class TheDustyDustStorm : EnemySkill
                 break;
             case 1:
                 isBreatheOutAttackPlaying = false;
-                print("Deactivate id 1");
                 enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
                 animator.SetBool("OnSkill", false);
                 break;
@@ -132,6 +138,7 @@ public class TheDustyDustStorm : EnemySkill
             {
                 Player player = colliders[i].GetComponent<Player>();
                 player.playerMove.Pulled(value, this.transform.position);
+                print("player pulled: " + value);
             }
         }
     }

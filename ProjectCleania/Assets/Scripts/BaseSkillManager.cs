@@ -167,10 +167,10 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 
-    public virtual void ActivateSkill(int id)
-    {
-        skillDict[id].Activate();
-    }
+    //public virtual void ActivateSkill(int id)
+    //{
+    //    skillDict[id].Activate();
+    //}
 
     public virtual void ActivateSkill(AnimationEvent myEvent)
     {
@@ -182,10 +182,11 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             skillDict[myEvent.intParameter].Activate();
     }
 
-    public virtual void DeactivateSkill(int id)
-    {
-        skillDict[id].Deactivate();
-    }
+    //public virtual void DeactivateSkill(int id)
+    //{
+    //    print("DeactivateSkill id");
+    //    skillDict[id].Deactivate();
+    //}
 
     public virtual void DeactivateSkill(AnimationEvent myEvent)
     {

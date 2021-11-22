@@ -15,7 +15,10 @@ public class EnemyMove : MonoBehaviour, IStunned
     public GameObject TargetObject { get; private set; }
     public Vector3 TargetPosition { get; private set; }
 
-    public float SupposedSmallestEnemySize = 0.1f;
+    [SerializeField]
+    float supposedSmallestEnemySize = 0.1f;
+    [SerializeField]
+    bool isFixedNavPriority = false;
 
     bool isRunAway = false;
     bool isStopMoving = false;
@@ -64,7 +67,8 @@ public class EnemyMove : MonoBehaviour, IStunned
         if (TargetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
 
         // Nav 우선순위 선정
-        SetNavAvoidancePriority();
+        if (!isFixedNavPriority)
+            SetNavAvoidancePriority();
 
         if (stateMachine.CompareState(StateMachine.enumState.Idle))
         {
@@ -87,7 +91,7 @@ public class EnemyMove : MonoBehaviour, IStunned
             avoidancePriority = 0;
         else if (TargetObject != null)
         {
-            avoidancePriority = (int)(Vector3.Distance(transform.position, TargetObject.transform.position) / SupposedSmallestEnemySize);
+            avoidancePriority = (int)(Vector3.Distance(transform.position, TargetObject.transform.position) / supposedSmallestEnemySize);
             if (avoidancePriority == 0)
                 avoidancePriority = 1;
             if (avoidancePriority >= 99)

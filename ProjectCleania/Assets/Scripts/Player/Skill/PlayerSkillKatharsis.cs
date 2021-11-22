@@ -73,16 +73,18 @@ public class PlayerSkillKatharsis : PlayerSkill
         animator.SetBool("OnSkill", false);
     }
 
-    public override void Activate()
+    public override void Activate(int Idx)
     {
-        StartCoroutine(OnSkill());
+        StartCoroutine(OnSkill(Idx));
     }
 
-    IEnumerator OnSkill()
+    IEnumerator OnSkill(int effectIdx)
     {
         bSkill = true;
         // 스킬 On으로 인한 버프 발생
         print("스킬 On으로 인한 버프 발생");
+
+        base.PlayEffects(effectIdx);
 
         while (bSkill)
         {
@@ -94,6 +96,8 @@ public class PlayerSkillKatharsis : PlayerSkill
             OwnerAbilityStatus.ConsumeMP(consumMPPerSec);
             yield return new WaitForSeconds(1.0f);
         }
+
+        base.StopEffects(effectIdx);
     }
 
     void OffSkill()

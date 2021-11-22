@@ -238,7 +238,7 @@ public class PlayerSkillManager : BaseSkillManager
     //}
     #endregion
 
-    public void ActivateSkill(AnimationEvent myEvent)
+    public override void ActivateSkill(AnimationEvent myEvent)
     {
         SkillEffectIndexSO skillEffectIndex = myEvent.objectReferenceParameter as SkillEffectIndexSO;
 
@@ -261,11 +261,11 @@ public class PlayerSkillManager : BaseSkillManager
         // abilityStatus.ConsumeMP(skills[index].ConsumMP);
     }
 
-    public override void DeactivateSkill(int id)
-    {
-        //playerStateMachine.Transition(StateMachine.enumState.Idle);
-        skillDict[id].Deactivate();
-    }
+    //public override void DeactivateSkill(int id)
+    //{
+    //    //playerStateMachine.Transition(StateMachine.enumState.Idle);
+    //    skillDict[id].Deactivate();
+    //}
 
 
     #region
