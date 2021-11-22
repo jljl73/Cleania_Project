@@ -107,4 +107,9 @@ public class PlayerSkillFairysWings : PlayerSkill
         animator.SetBool("OnSkill1", false);
         animator.SetBool("OnSkill", false);
     }
+
+    public override void ActivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.FairyWings);
+    }
 }

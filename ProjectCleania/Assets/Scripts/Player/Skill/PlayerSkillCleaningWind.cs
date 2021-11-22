@@ -131,4 +131,9 @@ public class PlayerSkillCleaningWind : PlayerSkill
             cleaningWind.Resize(projectileSize);
         }
     }
+
+    public override void ActivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.CleaningWind);
+    }
 }

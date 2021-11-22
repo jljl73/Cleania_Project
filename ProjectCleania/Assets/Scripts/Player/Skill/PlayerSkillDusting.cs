@@ -66,6 +66,11 @@ public class PlayerSkillDusting : PlayerSkill
             attackArea.enabled = false;
     }
 
+    public override void ActivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Dusting);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
