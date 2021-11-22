@@ -28,7 +28,12 @@ public class NPCManager : MonoBehaviour
         switch (GameManager.Instance.uiManager.GetCurrentNPC())
         {
             case NPC.TYPE.None:
-                Equip(item);
+                switch (item.itemInstance.SO.MainCategory)
+                {
+                    case ItemSO.enumMainCategory.Equipment:
+                        Equip(item);
+                        break;
+                }
                 break;
             case NPC.TYPE.Repair:
                 Repair(item);

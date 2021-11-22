@@ -114,22 +114,22 @@ public class Enemy : MonoBehaviour
         SetTarget(null);
 
         ExpManager.Acquire(100);
-        // ³×ºñ°ÔÀÌ¼Ç Off
+        // ë„¤ë¹„ê²Œì´ì…˜ Off
         navMeshAgent.enabled = false;
 
-        // Ãæµ¹Ã¼ ²ô±â
+        // ì¶©ëŒì²´ ë„ê¸°
         ActivateColliders(false);
 
-        // »óÅÂ Á×À½À¸·Î ÀüÈ¯
+        // ìƒíƒœ ì£½ìŒìœ¼ë¡œ ì „í™˜
         enemyStateMachine.Transition(EnemyStateMachine.enumState.Dead);
 
-        // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ¹ßµ¿
+        // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ë°œë™
         animator.SetTrigger("Die");
 
-        // 3ÃÊ ÈÄ¿¡ ¿ÜÇü ²ô±â
+        // 3ì´ˆ í›„ì— ì™¸í˜• ë„ê¸°
         Invoke("DeactivateSkin", 3.0f);
 
-        // 10ÃÊ ÈÄ¿¡ ÆÄ±«
+        // 10ì´ˆ í›„ì— íŒŒê´´
         Invoke("DeactivateDelay", 10.0f);
         // Destroy(gameObject, 10.0f);
     }
@@ -140,16 +140,16 @@ public class Enemy : MonoBehaviour
     {
         abilityStatus.FullHP();
 
-        // ³×ºñ°ÔÀÌ¼Ç On
+        // ë„¤ë¹„ê²Œì´ì…˜ On
         navMeshAgent.enabled = true;
 
-        // Ãæµ¹Ã¼ ²ô±â
+        // ì¶©ëŒì²´ ë„ê¸°
         ActivateColliders(true);
 
-        // »óÅÂ Á×À½À¸·Î ÀüÈ¯
+        // ìƒíƒœ ì£½ìŒìœ¼ë¡œ ì „í™˜
         enemyStateMachine.ResetState();
 
-        // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ¹ßµ¿
+        // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ë°œë™
         //animator.SetTrigger("Die");
 
         ActivateSkin();
@@ -174,13 +174,13 @@ public class Enemy : MonoBehaviour
 
     void ActivateSkin()
     {
-        // ¿ÜÇü ²ô±â
+        // ì™¸í˜• ë„ê¸°
         skinnedMeshRenderer.enabled = true;
     }
 
     void DeactivateSkin()
     {
-        // ¿ÜÇü ²ô±â
+        // ì™¸í˜• ë„ê¸°
         skinnedMeshRenderer.enabled = false;
     }
 
@@ -204,23 +204,23 @@ public class Enemy : MonoBehaviour
         switch(ID)
         {
             case 5001:
-                return "´õ½ºÆ¼";
+                return "ë”ìŠ¤í‹°";
             case 5002:
-                return "¾ß»ı ÀÎÆ¼";
+                return "ì•¼ìƒ ì¸í‹°";
             case 5003:
-                return "»óÀ§ ´õ½ºÆ¼";
+                return "ìƒìœ„ ë”ìŠ¤í‹°";
             case 5004:
-                return "¼ÒÈ¯»ç ´õ½ºÆ¼";
+                return "ì†Œí™˜ì‚¬ ë”ìŠ¤í‹°";
             case 6001:
-                return "(Èñ±Í)´õ½ºÆ¼";
+                return "(í¬ê·€)ë”ìŠ¤í‹°";
             case 6002:
-                return "(Èñ±Í)¾ß»ı ÀÎÆ¼";
+                return "(í¬ê·€)ì•¼ìƒ ì¸í‹°";
             case 6003:
-                return "(Èñ±Í)»óÀ§ ´õ½ºÆ¼";
+                return "(í¬ê·€)ìƒìœ„ ë”ìŠ¤í‹°";
             case 6004:
-                return "(Èñ±Í)¼ÒÈ¯»ç ´õ½ºÆ¼";
+                return "(í¬ê·€)ì†Œí™˜ì‚¬ ë”ìŠ¤í‹°";
             case 7001:
-                return "´õ ´õ½ºÆ¼";
+                return "ë” ë”ìŠ¤í‹°";
         }
         return "";
     }

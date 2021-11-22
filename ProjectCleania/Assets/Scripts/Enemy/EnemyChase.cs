@@ -62,7 +62,7 @@ public class EnemyChase : MonoBehaviour
 
     //void OnTriggerEnter(Collider other)
     //{
-    //    if(other.CompareTag("Player"))
+    //    if (other.CompareTag("Player"))
     //    {
     //        if (enemySpawner != null)
     //        {

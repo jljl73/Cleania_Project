@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Text;
 using System.Collections.ObjectModel;
 
 [System.Serializable]
@@ -22,7 +23,7 @@ public struct QuestReward
 [System.Serializable]
 public struct QuestNeed
 {
-    public enum TYPE { Monster, Item };
+    public enum TYPE { Monster, Item, Trigger };
     public bool IsClear { get { return targetValue <= curValue; } }
 
     public TYPE type;
@@ -42,10 +43,15 @@ public struct QuestNeed
     {
         if(this.type == TYPE.Monster)
             ++curValue;
+        else if(type == TYPE.Trigger)
+        {
+            targetValue = curValue;
+        }
         else
         {
             curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().GetNumberItem(this.target);
         }
+
     }
 
     public string Contents
@@ -59,11 +65,17 @@ public struct QuestNeed
         }
     }
 }
+
 [CreateAssetMenu(fileName = "Quest", menuName = "Scriptable Object/Quest")]
+[System.Serializable]
 public class Quest : ScriptableObject
 {
     public enum STATE { Unassign, Assign, Clear, Reward };
     public enum CATEGORY { Tutorial, Main, Sub, Sudden };
+
+    [SerializeField]
+    int id;
+    public int ID { get { return id; } }
 
     [SerializeField]
     STATE state;
@@ -84,24 +96,14 @@ public class Quest : ScriptableObject
     QuestNeed[] questNeeds;
     public QuestNeed[] QuestNeeds { get { return questNeeds; } }
 
-
-    UnityEvent updateEvent;
-
-    public void AddListener(UnityAction action)
-    {
-        updateEvent.AddListener(action);
-    }
-    
     public void Assign()
     {
         state = STATE.Assign;
-        updateEvent.Invoke();
     }
 
     public void GetReward()
     {
         state = STATE.Reward;
-        updateEvent.Invoke();
     }
 
     // 몬스터 잡는거만 체크
@@ -121,7 +123,6 @@ public class Quest : ScriptableObject
 
         if (IsClear())
             state = STATE.Clear;
-        updateEvent.Invoke();
     }
 
     public void Reset()
@@ -131,7 +132,34 @@ public class Quest : ScriptableObject
             questNeeds[i].curValue = 0;
         }
         state = STATE.Unassign;
-        updateEvent.Invoke();
+    }
+
+    public void Load(STATE state, string data)
+    {
+        string[] datas = data.Split(' ');
+        int value;
+        for (int i = 0; i < questNeeds.Length; ++i)
+        {
+            if (int.TryParse(datas[i], out value))
+                questNeeds[i].curValue = value;
+            else
+                Debug.Log("QuestNeed data is Error");
+        }
+        this.state = state;
+    }
+
+    public string Incoding()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(questNeeds[0].curValue);
+        for (int i = 1; i < questNeeds.Length; ++i)
+        {
+            sb.Append(" ");
+            sb.Append(questNeeds[i].curValue);
+        }
+
+        return sb.ToString();
     }
 
     public bool IsClear()

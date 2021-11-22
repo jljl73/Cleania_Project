@@ -139,6 +139,24 @@ public partial class ItemStorage_LocalGrid : ItemStorage<Point>, iSavedData, IEn
         return true;
     }
 
+    public bool AddSeparated(ItemInstance item)
+    {
+        if (item == null)
+            return false;
+
+        for (int y = 0; y + item.SO.GridSize.Height <= gridSizeY; ++y)
+            for (int x = 0; x + item.SO.GridSize.Width <= gridSizeX; ++x)
+            {
+                if (_IsAreaEmpty(item.SO.GridSize, new Point(x, y)))
+                {
+                    _Add(item, new Point(x, y));
+                    return true;
+                }
+            }
+
+        return false;
+    }
+
     /// <summary>
     /// Default Remove function.<para></para>
     /// ItemStorage will find out 'item' and remove it.<para></para>

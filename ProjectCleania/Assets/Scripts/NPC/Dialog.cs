@@ -34,7 +34,7 @@ public class Dialog : MonoBehaviour
 
     public void ChangePage(int index)
     {
-        Debug.Log(index.ToString() + "Page");
+        //Debug.Log(index.ToString() + "Page");
         PageTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = pages[index].content;
 
         int b = 0;
