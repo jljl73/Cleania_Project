@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
 
     void Die()
     {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Die, 0);
         animator.SetTrigger("Die");
         stateMachine.Transition(StateMachine.enumState.Dead);
     }

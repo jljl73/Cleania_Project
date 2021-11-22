@@ -80,6 +80,11 @@ public class PlayerSkillDehydration : PlayerSkill
             attackArea.enabled = false;
     }
 
+    public override void ActivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Dehydration);
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Enemy")
