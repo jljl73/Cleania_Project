@@ -5,7 +5,7 @@ using UnityEngine;
 public class Vulnerable : AbilityStatus, iSavedData
 {
     [SerializeField]
-    StatusSO status = null;          // status is essential unlike equips or buffs
+    Status status = null;          // status is essential unlike equips or buffs
     [SerializeField]
     Equipable equipments = null;
     Buffable buffs = null;
