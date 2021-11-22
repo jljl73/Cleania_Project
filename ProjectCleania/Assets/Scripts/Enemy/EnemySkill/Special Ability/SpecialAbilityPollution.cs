@@ -69,6 +69,7 @@ public class SpecialAbilityPollution : EnemySkill
 
     public override void Deactivate()
     {
+        base.Deactivate();
         return;
     }
 }

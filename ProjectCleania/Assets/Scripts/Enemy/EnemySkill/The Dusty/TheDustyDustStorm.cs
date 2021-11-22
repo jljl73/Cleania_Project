@@ -120,7 +120,8 @@ public class TheDustyDustStorm : EnemySkill
                 break;
             case 1:
                 isBreatheOutAttackPlaying = false;
-                enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
+                //enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
+                base.Deactivate();
                 animator.SetBool("OnSkill", false);
                 break;
             default:

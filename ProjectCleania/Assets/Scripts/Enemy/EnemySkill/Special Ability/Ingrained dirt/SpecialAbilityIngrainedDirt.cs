@@ -50,6 +50,7 @@ public class SpecialAbilityIngrainedDirt : EnemySkill
 
     public override void Deactivate()
     {
+        base.Deactivate();
         return;
     }
 }

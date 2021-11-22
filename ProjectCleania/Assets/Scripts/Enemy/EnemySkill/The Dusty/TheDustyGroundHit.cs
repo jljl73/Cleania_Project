@@ -65,7 +65,7 @@ public class TheDustyGroundHit : EnemySkill
 
     public override void Deactivate()
     {
-        enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
+        base.Deactivate();
         animator.SetBool("OnSkill", false);
         return;
     }
