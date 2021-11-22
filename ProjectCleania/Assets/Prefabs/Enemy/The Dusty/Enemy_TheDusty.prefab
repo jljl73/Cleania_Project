@@ -1172,7 +1172,6 @@ GameObject:
   - component: {fileID: 7802204731265616912}
   - component: {fileID: 7321774980216721902}
   - component: {fileID: 860356809616947652}
-  - component: {fileID: 5011066178981936413}
   - component: {fileID: 6305365895392000946}
   m_Layer: 6
   m_Name: Enemy_TheDusty
@@ -1324,7 +1323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 5485028085720020921}
   myEnemy: {fileID: 7698646001147554570}
-  SupposedSmallestEnemySize: 0.1
+  supposedSmallestEnemySize: 0.1
+  isFixedNavPriority: 0
 --- !u!114 &2562348653363206714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,22 +1371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6b4be465483834793c24a6c8aeeafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SO: {fileID: 11400000, guid: 896c2a015a78edd4fab0c9c4eeb1bb31, type: 2}
   level: 1
-  Strength: 24
-  levelUpStrength: 4
-  Vitality: 0
-  levelUpVitality: 10
-  Atk: 10
-  Def: 0
-  CriticalChance: 10
-  CriticalScale: 200
-  AttackSpeed: 0
-  MoveSpeed: 1
-  Accuracy: 100
-  Dodge: 10
-  Tenacity: 100
-  BasicHP: 1
-  BasicMP: 100
 --- !u!114 &860356809616947652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,20 +1385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5011066178981936413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6206510397842665697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18c6a2624a6db3742b1f199c48e43976, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncWith: 0
-  SD_equipments: []
 --- !u!114 &6305365895392000946
 MonoBehaviour:
   m_ObjectHideFlags: 0
