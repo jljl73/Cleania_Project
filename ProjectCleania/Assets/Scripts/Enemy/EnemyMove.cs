@@ -15,14 +15,29 @@ public class EnemyMove : MonoBehaviour, IStunned
     public GameObject TargetObject { get; private set; }
     public Vector3 TargetPosition { get; private set; }
 
+
     [SerializeField]
     float supposedSmallestEnemySize = 0.1f;
     [SerializeField]
     bool isFixedNavPriority = false;
 
-    bool isRunAway = false;
-    bool isStopMoving = false;
-    bool isOnlyChasePositionMode = false;
+    //bool isRunAway = false;
+    //bool isStopMoving = false;
+    //bool isOnlyChasePositionMode = false;
+
+    [SerializeField]
+    MoveMode moveMode = MoveMode.Idle;
+    enum MoveMode
+    {
+        Idle,
+        Chasing,
+        RunAway,
+        StopMoving,
+        OnlyChasePosition
+    }
+
+    Vector3 moveAwayDistVector;
+    Vector3 chaseOnlyPosition;
 
     private void Awake()
     {
@@ -35,7 +50,6 @@ public class EnemyMove : MonoBehaviour, IStunned
         if (nav == null)
             throw new System.Exception("EnemyMove doesnt have nav");
 
-        // animator = GetComponent<Animator>();
         if (stateMachine == null)
             throw new System.Exception("EnemyMove doesnt have stateMachine");
 
@@ -58,32 +72,69 @@ public class EnemyMove : MonoBehaviour, IStunned
 
     void FixedUpdate()
     {
-        if (stateMachine.CompareState(StateMachine.enumState.Attacking))
-        {
-            SetDestination(this.transform.position);
-            return;
-        }
+        #region
+        //if (stateMachine.CompareState(StateMachine.enumState.Attacking))
+        //{
+        //    SetDestination(this.transform.position);
+        //    return;
+        //}
 
-        if (TargetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
+        //if (TargetObject == null || stateMachine.CompareState(StateMachine.enumState.Dead) || !nav.enabled) return;
+        #endregion
+        animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
+
+        if (!CanMove())
+            return;
 
         // Nav 우선순위 선정
         if (!isFixedNavPriority)
             SetNavAvoidancePriority();
 
-        if (stateMachine.CompareState(StateMachine.enumState.Idle))
-        {
-            nav.isStopped = false;
-            Rotate();
-        }
-        else
-            nav.isStopped = true;
-
-        print("nav.enabled: " + nav.enabled);
-        print("nav.isStopped: " + nav.isStopped);
+        #region
+        //if (stateMachine.CompareState(StateMachine.enumState.Idle))
+        //{
+        //    nav.isStopped = false;
+        //    Rotate();
+        //}
+        //else
+        //    nav.isStopped = true;
+        #endregion
 
         AccelerateRotation();
-        SetDestination(TargetPosition);
-        animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
+        //SetDestination(TargetPosition);
+    }
+
+    protected bool CanMove()
+    {
+        if (!IsMovableState())
+            return false;
+
+        if (TargetObject == null || !nav.enabled || nav.isStopped)
+            return false;
+
+        return true;
+    }
+
+    protected virtual bool IsMovableState()
+    {
+        bool result = true;
+
+        switch (stateMachine.State)
+        {
+            case StateMachine.enumState.Attacking:
+                SetDestination(this.transform.position);
+                //moveMode = MoveMode.StopMoving;
+                // nav.isStopped = true;
+                result = false;
+                break;
+            case StateMachine.enumState.Dead:
+                result = false;
+                break;
+            default:
+                break;
+        }
+
+        return result;
     }
 
     void SetDestination(Vector3 position)
@@ -96,7 +147,7 @@ public class EnemyMove : MonoBehaviour, IStunned
     {
         int avoidancePriority = 0;
 
-        if (isRunAway)
+        if (moveMode == MoveMode.StopMoving)
             avoidancePriority = 0;
         else if (TargetObject != null)
         {
@@ -114,17 +165,17 @@ public class EnemyMove : MonoBehaviour, IStunned
 
     void AccelerateRotation()
     {
-
         Vector3 rotateForward; //= Vector3.zero;
 
-        if (!isRunAway)
-            rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
-        else
-            rotateForward = Vector3.Normalize(TargetPosition - transform.position);
+        //if (!isRunAway)
+        //    rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
+        //else
+        //    rotateForward = Vector3.Normalize(TargetPosition - transform.position);
+        rotateForward = Vector3.Normalize(TargetPosition - transform.position);
 
         rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
-        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward, 
-            360f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
+        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward,
+            180 * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
 
         transform.LookAt(transform.position + limit);
     }
@@ -132,12 +183,14 @@ public class EnemyMove : MonoBehaviour, IStunned
     public void SetTarget(GameObject target)
     {
         TargetObject = target;
+        moveMode = MoveMode.Chasing;
     }
 
     public void ReleaseTarget()
     {
         TargetObject = null;
         stateMachine.Transition(StateMachine.enumState.Idle);
+        moveMode = MoveMode.Idle;
     }
 
     public void RunAway()
@@ -145,43 +198,68 @@ public class EnemyMove : MonoBehaviour, IStunned
         if (TargetObject == null) return;
 
         animator.SetBool("OnSkill", false);
-        isRunAway = true;
+        //isRunAway = true;
+        moveMode = MoveMode.RunAway;
 
-        Vector3 MoveAwayDistVector = (transform.position - TargetObject.transform.position) * 3;
-        TargetPosition = transform.position + MoveAwayDistVector;
+        moveAwayDistVector = (transform.position - TargetObject.transform.position) * 3;
+        //TargetPosition = transform.position + MoveAwayDistVector;
 
-        // TargetPosition = (transform.position - TargetObject.transform.position) * 3;
-        // TargetPosition += transform.position;
         Invoke("StopRunAway", 5.0f);
     }
 
     void StopRunAway()
     {
-        isRunAway = false;
+        //isRunAway = false;
+        moveMode = MoveMode.Idle;
     }
 
     public void SetOnlyChasePositionMode(bool value, Vector3 targetPose)
     {
         if (value)
         {
-            isOnlyChasePositionMode = true;
-            TargetPosition = targetPose;
+            //isOnlyChasePositionMode = true;
+            moveMode = MoveMode.OnlyChasePosition;
+            // TargetPosition = targetPose;
+            chaseOnlyPosition = targetPose;
             nav.stoppingDistance = 0f;
         }
         else
         {
-            isOnlyChasePositionMode = false;
-            SetTargetPose();
+            //isOnlyChasePositionMode = false;
+            moveMode = MoveMode.Idle;
+            // SetTargetPose(TargetObject.transform.position);
             nav.stoppingDistance = 2f;
         }
     }
 
-    void SetTargetPose()
+    void SetTargetPosition()
     {
-        if (isOnlyChasePositionMode)
+        switch (moveMode)
+        {
+            case MoveMode.Idle:
+            case MoveMode.StopMoving:
+                TargetPosition = transform.position;
+                break;
+            case MoveMode.Chasing:
+                TargetPosition = TargetObject.transform.position;
+                break;
+            case MoveMode.RunAway:
+                TargetPosition = transform.position + moveAwayDistVector;
+                break;
+            case MoveMode.OnlyChasePosition:
+                TargetPosition = chaseOnlyPosition;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void SetTargetPose(Vector3 position)
+    {
+        if (moveMode == MoveMode.OnlyChasePosition)
             return;
 
-        if (TargetObject != null && !isStopMoving)
+        if (TargetObject != null && !(moveMode == MoveMode.StopMoving))
             TargetPosition = TargetObject.transform.position;
     }
 
@@ -189,13 +267,15 @@ public class EnemyMove : MonoBehaviour, IStunned
     {
         if (value)
         {
-            isStopMoving = true;
-            TargetPosition = transform.position;
+            //isStopMoving = true;
+            moveMode = MoveMode.StopMoving;
+            //TargetPosition = transform.position;
         }
         else
         {
-            isStopMoving = false;
-            SetTargetPose();
+            //isStopMoving = false;
+            moveMode = MoveMode.Idle;
+            //SetTargetPose(TargetObject.transform.position);
         }
         
     }
@@ -209,20 +289,21 @@ public class EnemyMove : MonoBehaviour, IStunned
     {
         while(true)
         {
-            SetTargetPose();
+            //SetTargetPose(TargetObject.transform.position);
+            SetTargetPosition();
+            SetDestination(TargetPosition);
 
-            yield return new WaitForSeconds(Random.Range(4.0f, 6.0f));
+            yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
         }
     }
 
     private void Rotate()
     {
         Vector3 rotateForward = Vector3.zero;
-        //if (TargetObject == null) return;
 
         // 타겟 유무에 따른 회전 벡터 결정
-        // rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
-        if (!isRunAway)
+        //if (!isRunAway)
+        if (moveMode != MoveMode.RunAway)
             rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
         else
             rotateForward = Vector3.Normalize(TargetPosition - transform.position);

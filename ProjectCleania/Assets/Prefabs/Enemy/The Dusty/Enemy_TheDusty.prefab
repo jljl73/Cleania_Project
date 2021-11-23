@@ -1228,7 +1228,7 @@ NavMeshAgent:
   m_Radius: 1
   m_Speed: 4
   m_Acceleration: 8
-  avoidancePriority: 48
+  avoidancePriority: 0
   m_AngularSpeed: 120
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
@@ -1324,7 +1324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 5485028085720020921}
   myEnemy: {fileID: 7698646001147554570}
-  SupposedSmallestEnemySize: 0.1
+  supposedSmallestEnemySize: 0.1
+  isFixedNavPriority: 1
 --- !u!114 &2562348653363206714
 MonoBehaviour:
   m_ObjectHideFlags: 0
