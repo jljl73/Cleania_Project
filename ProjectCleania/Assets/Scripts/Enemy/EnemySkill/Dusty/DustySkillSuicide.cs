@@ -47,7 +47,7 @@ public class DustySkillSuicide : EnemySkill
         if (isFlying)
         {
             // print("dist: " + Vector3.Distance(this.transform.position, enemyMove.TargetPosition));
-            if (Vector3.Distance(this.transform.position, enemyMove.TargetPosition) < 0.1f)
+            if (Vector3.Distance(this.transform.position, enemyMove.TargetPose) < 0.1f)
             {
                 animator.SetTrigger("Suicide");
                 isFlying = false;

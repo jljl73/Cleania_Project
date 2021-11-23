@@ -4,26 +4,45 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
-public class EnemyMove : MonoBehaviour, IStunned
+public class EnemyMove : CharacterMovement, IStunned
 {
-    // Enemy enemy;
+    /*
+     
+    
+     Deprecated!
+     Use EnemyMovement!
+
+
+     */
+    /*
+     
+    
+     Deprecated!
+     Use EnemyMovement!
+
+
+     */
+    /*
+     
+    
+     Deprecated!
+     Use EnemyMovement!
+
+
+     */
+    [SerializeField]
+    Enemy myEnemy;
+
     NavMeshAgent nav;
-    public StateMachine stateMachine;
-    public Enemy myEnemy;
     Animator animator;
-    // GameObject TargetObject = null;
+
     public GameObject TargetObject { get; private set; }
-    public Vector3 TargetPosition { get; private set; }
 
 
     [SerializeField]
     float supposedSmallestEnemySize = 0.1f;
     [SerializeField]
     bool isFixedNavPriority = false;
-
-    //bool isRunAway = false;
-    //bool isStopMoving = false;
-    //bool isOnlyChasePositionMode = false;
 
     [SerializeField]
     MoveMode moveMode = MoveMode.Idle;
@@ -39,9 +58,11 @@ public class EnemyMove : MonoBehaviour, IStunned
     Vector3 moveAwayDistVector;
     Vector3 chaseOnlyPosition;
 
-    private void Awake()
+    protected override void Awake()
     {
         // enemy = transform.parent.GetComponent<Enemy>();
+        base.Awake();
+
         animator = GetComponent<Animator>();
         if (animator == null)
             throw new System.Exception("EnemyMove doesnt have animator");
@@ -49,9 +70,6 @@ public class EnemyMove : MonoBehaviour, IStunned
         nav = GetComponent<NavMeshAgent>();
         if (nav == null)
             throw new System.Exception("EnemyMove doesnt have nav");
-
-        if (stateMachine == null)
-            throw new System.Exception("EnemyMove doesnt have stateMachine");
 
         if (myEnemy == null)
             throw new System.Exception("EnemyMove doesnt have myEnemy");
@@ -101,10 +119,9 @@ public class EnemyMove : MonoBehaviour, IStunned
         #endregion
 
         AccelerateRotation();
-        //SetDestination(TargetPosition);
     }
 
-    protected bool CanMove()
+    protected override bool CanMove()
     {
         if (!IsMovableState())
             return false;
@@ -115,7 +132,7 @@ public class EnemyMove : MonoBehaviour, IStunned
         return true;
     }
 
-    protected virtual bool IsMovableState()
+    protected override bool IsMovableState()
     {
         bool result = true;
 
@@ -137,10 +154,10 @@ public class EnemyMove : MonoBehaviour, IStunned
         return result;
     }
 
-    void SetDestination(Vector3 position)
+    protected override void SetSpeed(float value)
     {
-        if (nav.enabled)
-            nav.SetDestination(position);
+        speed = value;
+        nav.speed = speed;
     }
 
     void SetNavAvoidancePriority()
@@ -163,21 +180,10 @@ public class EnemyMove : MonoBehaviour, IStunned
         nav.avoidancePriority = avoidancePriority;
     }
 
-    void AccelerateRotation()
+    void SetDestination(Vector3 position)
     {
-        Vector3 rotateForward; //= Vector3.zero;
-
-        //if (!isRunAway)
-        //    rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
-        //else
-        //    rotateForward = Vector3.Normalize(TargetPosition - transform.position);
-        rotateForward = Vector3.Normalize(TargetPosition - transform.position);
-
-        rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
-        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward,
-            180 * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
-
-        transform.LookAt(transform.position + limit);
+        if (nav.enabled)
+            nav.SetDestination(position);
     }
 
     public void SetTarget(GameObject target)
@@ -198,91 +204,66 @@ public class EnemyMove : MonoBehaviour, IStunned
         if (TargetObject == null) return;
 
         animator.SetBool("OnSkill", false);
-        //isRunAway = true;
         moveMode = MoveMode.RunAway;
 
         moveAwayDistVector = (transform.position - TargetObject.transform.position) * 3;
-        //TargetPosition = transform.position + MoveAwayDistVector;
 
         Invoke("StopRunAway", 5.0f);
     }
 
     void StopRunAway()
     {
-        //isRunAway = false;
-        moveMode = MoveMode.Idle;
+        moveMode = MoveMode.Chasing;
     }
 
     public void SetOnlyChasePositionMode(bool value, Vector3 targetPose)
     {
         if (value)
         {
-            //isOnlyChasePositionMode = true;
             moveMode = MoveMode.OnlyChasePosition;
-            // TargetPosition = targetPose;
             chaseOnlyPosition = targetPose;
             nav.stoppingDistance = 0f;
         }
         else
         {
-            //isOnlyChasePositionMode = false;
             moveMode = MoveMode.Idle;
-            // SetTargetPose(TargetObject.transform.position);
             nav.stoppingDistance = 2f;
         }
     }
 
-    void SetTargetPosition()
+    void SetTargetPose()
     {
         switch (moveMode)
         {
             case MoveMode.Idle:
             case MoveMode.StopMoving:
-                TargetPosition = transform.position;
+                TargetPose = transform.position;
                 break;
             case MoveMode.Chasing:
-                TargetPosition = TargetObject.transform.position;
+                TargetPose = TargetObject.transform.position;
                 break;
             case MoveMode.RunAway:
-                TargetPosition = transform.position + moveAwayDistVector;
+                TargetPose = transform.position + moveAwayDistVector;
                 break;
             case MoveMode.OnlyChasePosition:
-                TargetPosition = chaseOnlyPosition;
+                TargetPose = chaseOnlyPosition;
                 break;
             default:
                 break;
         }
     }
 
-    void SetTargetPose(Vector3 position)
-    {
-        if (moveMode == MoveMode.OnlyChasePosition)
-            return;
-
-        if (TargetObject != null && !(moveMode == MoveMode.StopMoving))
-            TargetPosition = TargetObject.transform.position;
-    }
-
     public void StopMoving(bool value)
     {
         if (value)
         {
-            //isStopMoving = true;
             moveMode = MoveMode.StopMoving;
-            //TargetPosition = transform.position;
         }
         else
         {
-            //isStopMoving = false;
             moveMode = MoveMode.Idle;
-            //SetTargetPose(TargetObject.transform.position);
         }
         
-    }
-
-    public void WarpToPosition(Vector3 target)
-    {
-        transform.position = target;
     }
 
     IEnumerator SetPositionToTarget()
@@ -290,39 +271,14 @@ public class EnemyMove : MonoBehaviour, IStunned
         while(true)
         {
             //SetTargetPose(TargetObject.transform.position);
-            SetTargetPosition();
-            SetDestination(TargetPosition);
+            SetTargetPose();
+            SetDestination(TargetPose);
 
             yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
         }
     }
 
-    private void Rotate()
-    {
-        Vector3 rotateForward = Vector3.zero;
-
-        // 타겟 유무에 따른 회전 벡터 결정
-        //if (!isRunAway)
-        if (moveMode != MoveMode.RunAway)
-            rotateForward = Vector3.Normalize(TargetObject.transform.position - transform.position);
-        else
-            rotateForward = Vector3.Normalize(TargetPosition - transform.position);
-
-        // 목표 회전 벡터 결정
-        rotateForward = Vector3.ProjectOnPlane(rotateForward, Vector3.up);
-        // 회전
-        Vector3 limit = Vector3.Slerp(transform.forward, rotateForward,
-            180.0f * Time.deltaTime / Vector3.Angle(transform.forward, rotateForward));
-
-        transform.LookAt(this.transform.position + limit);
-    }
-
-    public bool ExistTarget()
-    {
-        return TargetObject != null;
-    }
-
-    public void Stunned(bool isStunned, float stunnedTime)
+    public override void Stunned(bool isStunned, float stunnedTime)
     {
         if (isStunned)
         {
@@ -334,10 +290,31 @@ public class EnemyMove : MonoBehaviour, IStunned
         }
     }
 
-    public IEnumerator StunnedFor(float time)
+    public override IEnumerator StunnedFor(float time)
     {
         nav.enabled = false;
         yield return new WaitForSeconds(time);
         nav.enabled = true;
     }
+
+    #region
+    //void SetTargetPose(Vector3 position)
+    //{
+    //    if (moveMode == MoveMode.OnlyChasePosition)
+    //        return;
+
+    //    if (TargetObject != null && !(moveMode == MoveMode.StopMoving))
+    //        TargetPose = TargetObject.transform.position;
+    //}
+
+    //public void WarpToPosition(Vector3 target)
+    //{
+    //    transform.position = target;
+    //}
+
+    //public bool ExistTarget()
+    //{
+    //    return TargetObject != null;
+    //}
+    #endregion
 }

@@ -7,7 +7,6 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
     // WaitForSeconds SummonWaitForSeconds;
     // WaitForSeconds SpinAttackWaitForSeconds;
 
-    public EnemyMove enemyMove;
     public EnemyStateMachine stateMachine;
     Collider[] overlappedColliders;
 

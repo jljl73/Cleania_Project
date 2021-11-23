@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 5230367245399787318}
   - component: {fileID: 4388122920729891846}
   - component: {fileID: 1372266458}
-  - component: {fileID: 8061522710790896003}
   - component: {fileID: 8069016946488588372}
+  - component: {fileID: 906908091207954286}
   - component: {fileID: 4728413963125753563}
   - component: {fileID: 6970234015541870300}
   - component: {fileID: 5942481381382728102}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37aa8875d5f5e2440b535f37d2bc3d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   monsterType: 5003
   rank: 0
 --- !u!136 &2740891262376652219
@@ -146,23 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatus: {fileID: 9203879108659677650}
   skillManager: {fileID: 6970234015541870300}
-  enemyMove: {fileID: 8061522710790896003}
+  enemyMove: {fileID: 906908091207954286}
   enemyStateMachine: {fileID: 6877608270242394641}
---- !u!114 &8061522710790896003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4972137587626881287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8a1c8b790a92604999c2bdb6c63e862, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachine: {fileID: 6877608270242394641}
-  myEnemy: {fileID: 1372266458}
-  SupposedSmallestEnemySize: 0.1
 --- !u!114 &8069016946488588372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +162,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CognitiveRange: 7
+--- !u!114 &906908091207954286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972137587626881287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 654b004efa26dcc40a818e0eaf48193b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateCoef: 1
+  supposedSmallestEnemySize: 0.1
+  isFixedNavPriority: 0
+  moveMode: 0
 --- !u!114 &4728413963125753563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +207,7 @@ MonoBehaviour:
   abilityStatus: {fileID: 9203879108659677650}
   animator: {fileID: 4972137587626881284}
   skillStorage: {fileID: 6146316884540506697}
-  enemyMove: {fileID: 8061522710790896003}
+  enemyMove: {fileID: 906908091207954286}
   myEnemy: {fileID: 1372266458}
   nav: {fileID: 5230367245399787318}
 --- !u!114 &5942481381382728102

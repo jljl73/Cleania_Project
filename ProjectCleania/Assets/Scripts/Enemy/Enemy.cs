@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [Header("Need Drag")]
     public AbilityStatus abilityStatus;
     public EnemySkillManager skillManager;
-    public EnemyMove enemyMove;
+    public EnemyMovement enemyMove;
     public EnemyStateMachine enemyStateMachine;
 
     public delegate void DelegateVoid();

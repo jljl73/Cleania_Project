@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class EnemySkill : Skill
 {
     public Enemy enemy;
-    protected EnemyMove enemyMove;
+    protected EnemyMovement enemyMove;
     protected EnemyChase enemyChase;
 
     protected void Awake()
