@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class EnemySkillManager : BaseSkillManager
 {
     //public EnemySkillStorage skillStorage;
-    public EnemyMove enemyMove;
+    public EnemyMovement enemyMove;
     public Enemy myEnemy;
     public NavMeshAgent nav;
 

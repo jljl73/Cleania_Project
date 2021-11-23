@@ -1167,11 +1167,12 @@ GameObject:
   - component: {fileID: 5485028085720020921}
   - component: {fileID: 7698646001147554570}
   - component: {fileID: 606540895471945178}
-  - component: {fileID: 8627356320568345826}
+  - component: {fileID: 6271929839223789220}
   - component: {fileID: 2562348653363206714}
   - component: {fileID: 7802204731265616912}
   - component: {fileID: 7321774980216721902}
   - component: {fileID: 860356809616947652}
+  - component: {fileID: 5011066178981936413}
   - component: {fileID: 6305365895392000946}
   m_Layer: 6
   m_Name: Enemy_TheDusty
@@ -1227,7 +1228,7 @@ NavMeshAgent:
   m_Radius: 1
   m_Speed: 4
   m_Acceleration: 8
-  avoidancePriority: 48
+  avoidancePriority: 0
   m_AngularSpeed: 120
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
@@ -1294,7 +1295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatus: {fileID: 6305365895392000946}
   skillManager: {fileID: 7802204731265616912}
-  enemyMove: {fileID: 8627356320568345826}
+  enemyMove: {fileID: 6271929839223789220}
   enemyStateMachine: {fileID: 5485028085720020921}
 --- !u!114 &606540895471945178
 MonoBehaviour:
@@ -1309,7 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CognitiveRange: 7
---- !u!114 &8627356320568345826
+--- !u!114 &6271929839223789220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1318,13 +1319,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6206510397842665697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8a1c8b790a92604999c2bdb6c63e862, type: 3}
+  m_Script: {fileID: 11500000, guid: 654b004efa26dcc40a818e0eaf48193b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 5485028085720020921}
+  rotateCoef: 1
   myEnemy: {fileID: 7698646001147554570}
   supposedSmallestEnemySize: 0.1
-  isFixedNavPriority: 0
+  isFixedNavPriority: 1
+  moveMode: 0
 --- !u!114 &2562348653363206714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1356,7 +1358,7 @@ MonoBehaviour:
   abilityStatus: {fileID: 6305365895392000946}
   animator: {fileID: 6206510397852173089}
   skillStorage: {fileID: 2125404220037949000}
-  enemyMove: {fileID: 8627356320568345826}
+  enemyMove: {fileID: 6271929839223789220}
   myEnemy: {fileID: 7698646001147554570}
   nav: {fileID: 8473451873532257197}
 --- !u!114 &7321774980216721902
@@ -1371,7 +1373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6b4be465483834793c24a6c8aeeafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SO: {fileID: 11400000, guid: 896c2a015a78edd4fab0c9c4eeb1bb31, type: 2}
+  SO: {fileID: 0}
   level: 1
 --- !u!114 &860356809616947652
 MonoBehaviour:
@@ -1385,6 +1387,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5011066178981936413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206510397842665697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c6a2624a6db3742b1f199c48e43976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncWith: 0
+  SD_equipments: []
 --- !u!114 &6305365895392000946
 MonoBehaviour:
   m_ObjectHideFlags: 0

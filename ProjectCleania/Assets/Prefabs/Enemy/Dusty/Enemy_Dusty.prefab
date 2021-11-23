@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 6326862986949197801}
   - component: {fileID: 3404450377915123936}
   - component: {fileID: 4572762132410720402}
-  - component: {fileID: 7515162526521476993}
+  - component: {fileID: 1227204802912907935}
   - component: {fileID: 7670077597629424506}
   - component: {fileID: 3434215120216279253}
   - component: {fileID: 7454554861356505669}
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatus: {fileID: 6824819401899668243}
   skillManager: {fileID: 3434215120216279253}
-  enemyMove: {fileID: 7515162526521476993}
+  enemyMove: {fileID: 1227204802912907935}
   enemyStateMachine: {fileID: 6326862986949197801}
 --- !u!114 &4572762132410720402
 MonoBehaviour:
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CognitiveRange: 4
---- !u!114 &7515162526521476993
+--- !u!114 &1227204802912907935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -398,13 +398,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7717416709024651367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8a1c8b790a92604999c2bdb6c63e862, type: 3}
+  m_Script: {fileID: 11500000, guid: 654b004efa26dcc40a818e0eaf48193b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 6326862986949197801}
-  myEnemy: {fileID: 3404450377915123936}
+  rotateCoef: 1
   supposedSmallestEnemySize: 0.1
   isFixedNavPriority: 0
+  moveMode: 0
 --- !u!114 &7670077597629424506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 7717416709024651364}
   ability: {fileID: 6824819401899668243}
-  stateMachine: {fileID: 0}
+  stateMachine: {fileID: 6326862986949197801}
   TriggerRange: 5
 --- !u!114 &3434215120216279253
 MonoBehaviour:
@@ -436,7 +436,7 @@ MonoBehaviour:
   abilityStatus: {fileID: 6824819401899668243}
   animator: {fileID: 7717416709024651364}
   skillStorage: {fileID: 1209345108155595449}
-  enemyMove: {fileID: 7515162526521476993}
+  enemyMove: {fileID: 1227204802912907935}
   myEnemy: {fileID: 3404450377915123936}
   nav: {fileID: 716707945987861651}
 --- !u!114 &7454554861356505669
