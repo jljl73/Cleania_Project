@@ -84,7 +84,7 @@ public class EnemyMove : CharacterMovement, IStunned
 
     void Start()
     {
-        // ÃÊ±â¿¡ ²¨µÎ±â
+        // ì´ˆê¸°ì— êº¼ë‘ê¸°
         nav.enabled = false;
     }
 
@@ -104,7 +104,7 @@ public class EnemyMove : CharacterMovement, IStunned
         if (!CanMove())
             return;
 
-        // Nav ¿ì¼±¼øÀ§ ¼±Á¤
+        // Nav ìš°ì„ ìˆœìœ„ ì„ ì •
         if (!isFixedNavPriority)
             SetNavAvoidancePriority();
 

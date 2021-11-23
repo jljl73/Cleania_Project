@@ -15,25 +15,6 @@ public class DroppedItemTrigger : MonoBehaviour
             droppedItem = FindCloseDroppedItem();
             if (droppedItem == null) return;
 
-            //switch (droppedItem.GetComponent<NPC>().NPCType)
-            //{
-            //    case NPC.TYPE.Repair:
-            //        ui.ShowRepairPanel();
-            //        break;
-            //    case NPC.TYPE.Buy:
-            //        ui.ShowBuyPanel();
-            //        break;
-            //    case NPC.TYPE.Sell:
-            //        ui.ShowSellPanel();
-            //        break;
-            //    case NPC.TYPE.Enchant:
-            //        ui.ShowEnchantPanel();
-            //        break;
-            //    case NPC.TYPE.Storage:
-            //        ui.ShowStoragePanel();
-            //        break;
-            //}
-
             ItemObject_v2 container = droppedItem.GetComponent<ItemObject_v2>();
             ItemInstance itemData = container.ItemData;
 
