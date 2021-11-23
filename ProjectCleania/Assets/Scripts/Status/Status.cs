@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
+    public StatusSO SO;
+
     [Range(1, 50)]
     public int level = 1;
 
@@ -14,33 +16,33 @@ public class Status : MonoBehaviour
             switch(index)
             {
                 case Ability.Stat.Strength:
-                    return Strength + (level - 1) * levelUpStrength;
+                    return SO.Strength + (level - 1) * SO.LevelUpStrength;
                 case Ability.Stat.Vitality:
-                    return Vitality + (level - 1) * levelUpVitality;
+                    return SO.Vitality + (level - 1) * SO.LevelUpVitality;
                 case Ability.Stat.Attack:
-                    return Atk;
+                    return SO.Atk;
                 case Ability.Stat.Defense:
-                    return Def;
+                    return SO.Def;
                 case Ability.Stat.CriticalChance:
-                    return CriticalChance / 100;
+                    return SO.CriticalChance / 100;
                 case Ability.Stat.CriticalScale:
-                    return CriticalScale / 100;
+                    return SO.CriticalScale / 100;
                 case Ability.Stat.AttackSpeed:
-                    return AttackSpeed;
+                    return SO.AttackSpeed;
                 case Ability.Stat.MoveSpeed:
-                    return MoveSpeed;
+                    return SO.MoveSpeed;
 
                 case Ability.Stat.Accuracy:
-                    return Accuracy / 100;
+                    return SO.Accuracy / 100;
                 case Ability.Stat.Dodge:
-                    return Dodge / 100;
+                    return SO.Dodge / 100;
                 case Ability.Stat.Tenacity:
-                    return Tenacity / 100;
+                    return SO.Tenacity / 100;
 
                 case Ability.Stat.MaxHP:
-                    return BasicHP;
+                    return SO.BasicHP;
                 case Ability.Stat.MaxMP:
-                    return BasicMP;
+                    return SO.BasicMP;
 
 
                 default:
@@ -49,23 +51,23 @@ public class Status : MonoBehaviour
         }
     }
 
-    public float Strength = 24;
-    public float levelUpStrength = 4;
+    //public float Strength = 24;
+    //public float levelUpStrength = 4;
 
-    public float Vitality = 50;
-    public float levelUpVitality = 10;
+    //public float Vitality = 50;
+    //public float levelUpVitality = 10;
 
-    public float Atk = 0;
-    public float Def = 0;
-    public float CriticalChance = 10;
-    public float CriticalScale = 200;
-    public float AttackSpeed = 0.0f;
-    public float MoveSpeed = 1.0f;
+    //public float Atk = 0;
+    //public float Def = 0;
+    //public float CriticalChance = 10;
+    //public float CriticalScale = 200;
+    //public float AttackSpeed = 0.0f;
+    //public float MoveSpeed = 1.0f;
 
-    public float Accuracy = 100;
-    public float Dodge = 10;
-    public float Tenacity = 0;
+    //public float Accuracy = 100;
+    //public float Dodge = 10;
+    //public float Tenacity = 0;
 
-    public float BasicHP = 0;
-    public float BasicMP = 100;
+    //public float BasicHP = 0;
+    //public float BasicMP = 100;
 }
