@@ -4,17 +4,23 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class PlayerMovement : MovementController, IStunned
+public class PlayerMovement : CharacterMovement, IStunned
 {
-    NavMeshAgent navMeshAgent;             // 네비 매시 컴포넌트
-    Rigidbody characterRigidBody;          // 리지드바디 컴포넌트
-    PlayerSkillManager playerSkillManager; // 스킬 매니저 컴포넌트
+    NavMeshAgent navMeshAgent;              // 네비 매시 컴포넌트
+    Rigidbody characterRigidBody;           // 리지드바디 컴포넌트
+    PlayerSkillManager playerSkillManager;  // 스킬 매니저 컴포넌트
+    Animator animator;                      // 애니메이터 컴포넌트
+    AbilityStatus abilityStatus;            // 어빌리티스테이터스 컴포넌트
+
+    RaycastHit hit;
+
     float beforeFrameVelocity = -1;
     float currentFrameVelocity;
 
     bool bChasing = false;
     bool bPulled = false;
     bool bPushed = false;
+    bool isStunned = false;
 
     protected new void Awake()
     {
@@ -23,6 +29,8 @@ public class PlayerMovement : MovementController, IStunned
         navMeshAgent = GetComponent<NavMeshAgent>();
         characterRigidBody = GetComponent<Rigidbody>();
         playerSkillManager = GetComponent<PlayerSkillManager>();
+        animator = GetComponent<Animator>();
+        abilityStatus = GetComponent<AbilityStatus>();
     }
 
     private void OnEnable()
@@ -137,11 +145,64 @@ public class PlayerMovement : MovementController, IStunned
         navMeshAgent.SetDestination(TargetPose);
     }
 
-    public override void Move(Vector3 pose)
+    public void Move(Vector3 pose)
     {
         if (bPulled)
             return;
         MoveToPosition(pose);
+    }
+
+    void MoveToPosition(Vector3 position)
+    {
+        int layerMask = 0;
+        layerMask = 1 << 5 | 1 << 7;
+
+        Ray ray = Camera.main.ScreenPointToRay(position);
+
+        if (Physics.Raycast(ray, out hit, 500.0f, layerMask))
+        {
+            if (hit.collider.tag == "Ground")
+            {
+                TargetPose = hit.point;
+                //print("Ground Hit");
+            }
+            else if (hit.collider.CompareTag("Enemy"))
+                TargetPose = hit.collider.transform.position;
+        }
+
+        if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
+        {
+            animator.SetBool("Walk", true);
+        }
+    }
+
+    bool IsMovableLayer(string collideTag, out RaycastHit rayhitInfo)
+    {
+        bool result = false;
+
+        int layerMask = 0;
+        layerMask = 1 << 5 | 1 << 7;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit raycastHit;
+        if (Physics.Raycast(ray, out raycastHit, 500.0f, layerMask))
+        {
+            if (raycastHit.collider.CompareTag(collideTag))
+                result = true;
+        }
+        rayhitInfo = raycastHit;
+
+        return result;
+    }
+
+    public void ImmediateLookAtMouse()
+    {
+        RaycastHit rayhitInfo;
+        if (IsMovableLayer("Ground", out rayhitInfo))
+        {
+            Vector3 lookAtPointOnSameY = new Vector3(rayhitInfo.point.x, transform.position.y, rayhitInfo.point.z);
+            this.transform.LookAt(lookAtPointOnSameY);
+        }
     }
 
     #region
