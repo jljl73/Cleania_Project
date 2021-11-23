@@ -78,9 +78,7 @@ public class EnemyMove : MonoBehaviour, IStunned
         else
             nav.isStopped = true;
 
-        print("nav.enabled: " + nav.enabled);
-        print("nav.isStopped: " + nav.isStopped);
-
+        
         AccelerateRotation();
         SetDestination(TargetPosition);
         animator.SetFloat("Speed", nav.velocity.sqrMagnitude);
