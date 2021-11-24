@@ -8,6 +8,8 @@ public class PollutionGroup : DamagingProperty
 
     [SerializeField]
     int abilityCount = 0;
+    [SerializeField]
+    int prevAbilityCount = 0;
 
     AbilityStatus abilityStatus;
 
@@ -35,29 +37,67 @@ public class PollutionGroup : DamagingProperty
     {
         abilityCount -= 1;
         if (abilityCount == 0)
+        {
             abilityStatus = null;
+        }
     }
 
     float timePassed = 0f;
 
     void GiveDamage()
     {
-        if (abilityCount == 0)
+        if (abilityCount < 0)
+            throw new System.Exception("ability count is under 0");
+        else if (abilityCount == 0)
         {
             timePassed = 0f;
             return;
         }
-        else if (abilityCount < 0)
-            throw new System.Exception("ability count is under 0");
+        else if (abilityCount > 0 && prevAbilityCount != 0)
+        {
+            timePassed += Time.deltaTime;
 
-        timePassed += Time.deltaTime;
+            if (timePassed < 1f)
+                return;
+            else
+                timePassed = 0f;
+        }
+        //else
+        //    print("First Hit!");
 
-        if (timePassed < 1f)
-            return;
-        else
-            timePassed = 0f;
+        //if (abilityCount == 0)
+        //{
+        //    timePassed = 0f;
+        //    return;
+        //}
+        //else if (abilityCount > 0 && prevAbilityCount == 0)
+        //{
+        //    abilityStatus.AttackedBy(ownerAbility, damageScale);
+        //    return;
+        //}
+        //else if (abilityCount < 0)
+        //    throw new System.Exception("ability count is under 0");
+        //else
+        //{
+        //    timePassed += Time.deltaTime;
 
+        //    if (timePassed < 1f)
+        //        return;
+        //    else
+        //        timePassed = 0f;
+        //}
         abilityStatus.AttackedBy(ownerAbility, damageScale);
+    }
+
+    public void Activate(bool value)
+    {
+        abilityActivate = value;
+    }
+
+    public void SetUp(float duration, AbilityStatus ownerabil, float damageRate)
+    {
+        this.pollutionDuration = duration;
+        base.SetUp(ownerabil, damageRate);
     }
 
     private void FixedUpdate()
@@ -68,5 +108,6 @@ public class PollutionGroup : DamagingProperty
         pollution.Resize(damageRange);
 
         GiveDamage();
+        prevAbilityCount = abilityCount;
     }
 }

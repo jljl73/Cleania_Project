@@ -33,6 +33,16 @@ public class Pollution : ContactStayDamage
         this.pollutionGroup = pollutionGroup;
         this.duration = duration;
         base.SetUp(abil, damageScale);
+
+        OnEnable();
+    }
+
+    void Reset()
+    {
+        this.pollutionGroup = null;
+        this.duration = 0;
+        base.SetUp(null, 0);
+        isSetUp = false;
     }
 
     private void OnDisable()
@@ -45,8 +55,7 @@ public class Pollution : ContactStayDamage
                 pollutionGroup.PopAbility();
                 enrolledAbility = false;
             }
-            SetUp(null, 0, null, 0);
-            isSetUp = false;
+            Reset();
         }
         ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Pollution, this.gameObject);
         CancelInvoke();
@@ -59,11 +68,28 @@ public class Pollution : ContactStayDamage
             AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
             if (abil != null)
             {
-                abil.AttackedBy(ownerAbility, damageScale);
+                //abil.AttackedBy(ownerAbility, damageScale);
                 pollutionGroup.AddAbility(abil);
                 enrolledAbility = true;
             }
         }
+    }
+
+    protected override void OnTriggerStay(Collider other)
+    {
+        //if (other.CompareTag("Player"))
+        //{
+        //    timePassed += Time.deltaTime;
+
+        //    if (timePassed < 5f)
+        //        return;
+        //    else
+        //        timePassed = 0f;
+
+        //    AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
+        //    if (abil != null)
+        //        abil.AttackedBy(ownerAbility, damageScale);
+        //}
     }
 
     protected void OnTriggerExit(Collider other)
