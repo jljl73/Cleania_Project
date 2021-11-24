@@ -42,8 +42,8 @@ public class TheDustySkillTrigger : EnemySkillTrigger
                 if (enemySkillManager.PlaySkill(2501))
                     return;
 
-                if (enemySkillManager.PlaySkill(2502))
-                    return;
+                //if (enemySkillManager.PlaySkill(2502))
+                //    return;
             }
         }
 

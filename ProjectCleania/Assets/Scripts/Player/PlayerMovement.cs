@@ -326,7 +326,6 @@ public class PlayerMovement : CharacterMovement, IStunned
             TargetPose = this.transform.position;
 
         animator.SetBool("Pulled", value);
-        print("animator set pulled: " + value);
     }
     #region
     //public void Stunned(bool isStunned, float stunnedTime)
