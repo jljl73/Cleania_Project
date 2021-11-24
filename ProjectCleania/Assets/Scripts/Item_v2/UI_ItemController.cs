@@ -179,7 +179,7 @@ public class UI_ItemController : MonoBehaviour,
         //backgroundImage.raycastTarget = false;
         //itemImage.raycastTarget = false;
         //countText.raycastTarget = false;
-        //GameManager.Instance.inputManager.PlayerMovable = false;
+        GameManager.Instance.inputManager.PlayerMovable = false;
 
 
         if (currentContainer.SyncWith == UI_ItemContainer.SyncType.Equipment)
@@ -200,7 +200,7 @@ public class UI_ItemController : MonoBehaviour,
         //backgroundImage.raycastTarget = true;
         //itemImage.raycastTarget = true;
         //countText.raycastTarget = true;
-        //GameManager.Instance.inputManager.PlayerMovable = true;
+        GameManager.Instance.inputManager.PlayerMovable = true;
 
 
         eventData.position = backgroundImage.rectTransform.position;

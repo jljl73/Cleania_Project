@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class AbilityStatus : MonoBehaviour, iSavedData
+public class AbilityStatus : MonoBehaviour
 {
     Status status;          // status is essential unlike equips or buffs
     Equipable equipments;
@@ -270,15 +270,5 @@ public class AbilityStatus : MonoBehaviour, iSavedData
             default:
                 return "error";
         }
-    }
-
-    void iSavedData.AfterLoad()
-    {
-        print("abilitystatus al");
-    }
-
-    void iSavedData.BeforeSave()
-    {
-        print("abilitystatus bs");
     }
 }
