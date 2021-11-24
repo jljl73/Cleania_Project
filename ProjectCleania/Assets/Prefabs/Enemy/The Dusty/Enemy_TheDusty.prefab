@@ -1174,6 +1174,7 @@ GameObject:
   - component: {fileID: 860356809616947652}
   - component: {fileID: 5011066178981936413}
   - component: {fileID: 6305365895392000946}
+  - component: {fileID: 4940095261238348478}
   m_Layer: 6
   m_Name: Enemy_TheDusty
   m_TagString: Enemy
@@ -1323,7 +1324,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateCoef: 1
-  myEnemy: {fileID: 7698646001147554570}
   supposedSmallestEnemySize: 0.1
   isFixedNavPriority: 1
   moveMode: 0
@@ -1415,6 +1415,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _HP: 1
   _MP: 100
+--- !u!114 &4940095261238348478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206510397842665697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d59aeb7103ae24da5c22763da45021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DropRadius: 1
+  DropTableData: {fileID: 11400000, guid: ed99f7dd47e35d2429322228334f8ffa, type: 2}
+  myEnemy: {fileID: 7698646001147554570}
 --- !u!1 &6206510397842665699
 GameObject:
   m_ObjectHideFlags: 0
