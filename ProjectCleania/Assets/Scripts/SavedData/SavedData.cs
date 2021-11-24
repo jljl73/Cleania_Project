@@ -17,7 +17,7 @@ public class SavedData : MonoBehaviour
 
                 _singleton.characterName = "debug";
 
-                _singleton.OnEnable();
+                _singleton.Start();
             }
 
             return _singleton;
@@ -142,7 +142,7 @@ public class SavedData : MonoBehaviour
         _singleton = this;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
         Load();

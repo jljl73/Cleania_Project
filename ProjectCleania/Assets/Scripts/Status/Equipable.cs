@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public partial class Equipable : MonoBehaviour, iSavedData
+public partial class Equipable : MonoBehaviour
 {
     public enum SyncType
     {
@@ -13,7 +12,7 @@ public partial class Equipable : MonoBehaviour, iSavedData
     [SerializeField]
     SyncType syncWith;
 
-    //[System.NonSerialized]
+
     ItemInstance_Equipment[] _equipments = new ItemInstance_Equipment[(int)ItemInstance_Equipment.Type.EnumTotal];
     /// <summary>
     /// Get & Set current equipments with this indexer.<para></para>
@@ -296,40 +295,4 @@ public partial class Equipable
 
 
 
-
-
-    // SAVE DATA IMPLEMENTATION
-
-    [SerializeField]
-    List<ItemInstance_Equipment> SD_equipments = new List<ItemInstance_Equipment>();
-
-    void iSavedData.AfterLoad()
-    {
-        foreach (ItemInstance_Equipment e in SD_equipments)
-        {
-            ((iSavedData)e).AfterLoad();
-
-            _equipments[(int)e.EquipmentType] = e;
-        }
-
-        Refresh();
-
-        //SD_equipments.Clear();
-    }
-
-    void iSavedData.BeforeSave()
-    {
-        SD_equipments.Clear();
-
-        for (ItemInstance_Equipment.Type i = ItemInstance_Equipment.Type.MainWeapon; i < ItemInstance_Equipment.Type.EnumTotal; i++)
-        {
-            ItemInstance_Equipment e = _equipments[(int)i];
-
-            if (e != null)
-            {
-                ((iSavedData)e).BeforeSave();
-                SD_equipments.Add(e);
-            }
-        }
-    }
 }

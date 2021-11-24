@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StatusData", menuName = "Scriptable Object/Status")]
-public class StatusSO : ScriptableObject
+public class StatusSO_ArithmeticProgress : ScriptableObject
 {
     public float Strength = 24;
     public float LevelUpStrength = 4;
