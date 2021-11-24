@@ -51,16 +51,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas_: {fileID: 0}
-  InventoryPanel: {fileID: 0}
-  SkillPanel: {fileID: 0}
-  ExpandMapPanel: {fileID: 0}
-  QuestPanel: {fileID: 0}
-  RepairPanel: {fileID: 0}
-  MarketPanel: {fileID: 0}
-  EnchantPanel: {fileID: 0}
   StoragePanel: {fileID: 0}
+  QuestPanel: {fileID: 0}
+  SkillPanel: {fileID: 0}
+  MarketPanel: {fileID: 0}
   MenuPanel: {fileID: 0}
   SettingPanel: {fileID: 0}
+  RepairPanel: {fileID: 0}
+  ExpandMapPanel: {fileID: 0}
+  EnchantPanel: {fileID: 0}
+  InventoryPanel: {fileID: 0}
 --- !u!114 &776187425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
   enchant: {fileID: 0}
   storage: {fileID: 0}
   inventory: {fileID: 0}
-  equpiments: {fileID: 0}
+  equipments: {fileID: 0}
 --- !u!114 &776187426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,9 +91,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1484488d0e409c43bd4af9b2e1e15e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quests: []
+  assignQuests: []
   quests_All:
   - {fileID: 11400000, guid: 321c6c85c21dfca4895cfa3dcaa51a1d, type: 2}
+  - {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  - {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  - {fileID: 11400000, guid: fae6ff86f8e062845a079cf79b58f72e, type: 2}
+  - {fileID: 11400000, guid: 8d54a171038498b438fe0ed1041ea905, type: 2}
+  - {fileID: 11400000, guid: 683e86372b5eca5498c36cae1a28fc08, type: 2}
+  - {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
+  - {fileID: 11400000, guid: 7da5e236735b3754788d19d56c423788, type: 2}
+  - {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
+  - {fileID: 11400000, guid: 178eec63e57071e46a502ff15f505386, type: 2}
+  - {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
+  - {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
+  - {fileID: 11400000, guid: 0d8c2ca47553fb6408e2d0addc7da665, type: 2}
+  - {fileID: 11400000, guid: 732544b7e0d8dd246aaab2c99b8201c4, type: 2}
+  spritePlus: {fileID: 21300000, guid: bc719d010ac82f444a0a4706627334d0, type: 3}
+  spriteMinus: {fileID: 21300000, guid: 5868fded234285341b592aef05ff1fde, type: 3}
   buttons:
   - {fileID: 0}
   - {fileID: 0}
@@ -107,4 +122,7 @@ MonoBehaviour:
   TextPrefab: {fileID: 1473115851529185394, guid: 207536324127de640a860f924a93c34a, type: 3}
   QuestName: {fileID: 0}
   QuestDetail: {fileID: 0}
+  RewardExp: {fileID: 0}
+  RewardClean: {fileID: 0}
+  RewardItem: {fileID: 0}
   miniLists: {fileID: 0}

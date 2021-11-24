@@ -63,6 +63,7 @@ public class DustySkillHittingByBody : EnemySkill
 
     public override void Deactivate()
     {
+        base.Deactivate();
         col.enabled = false;
         animator.SetBool("OnSkill", false);
     }

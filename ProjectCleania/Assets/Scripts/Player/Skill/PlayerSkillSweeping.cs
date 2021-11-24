@@ -87,4 +87,9 @@ public class PlayerSkillSweeping : PlayerSkill
         animator.SetBool("OnSkill", false);
         OffSkill();
     }
+
+    public override void ActivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Sweeping);
+    }
 }

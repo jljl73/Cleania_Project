@@ -37,10 +37,10 @@ public class PlayerSkill2 : PlayerSkill
     {
         if(other.tag == "Enemy")
         {
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
-                other.GetComponent<Enemy>().Die();
-            else
-                other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);
+            //if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+            //    other.GetComponent<Enemy>().Die();
+            //else
+            //    other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);
         }
     }
 

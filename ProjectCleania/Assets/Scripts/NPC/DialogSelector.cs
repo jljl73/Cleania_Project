@@ -9,6 +9,11 @@ public class DialogSelector : MonoBehaviour
     [SerializeField]
     Quest[] quests;
 
+
+    void Start()
+    {
+        dialogManager = transform.parent.GetComponent<DialogManager>();
+    }
     //[System.Serializable]
     //public struct Decorator
     //{

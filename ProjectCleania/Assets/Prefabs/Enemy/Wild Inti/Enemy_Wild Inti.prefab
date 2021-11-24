@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 6443105551693911329}
   - component: {fileID: 338930018133428618}
   - component: {fileID: 2202353817470447178}
-  - component: {fileID: 8847498011433636488}
+  - component: {fileID: 4382777070779692115}
   - component: {fileID: 5675800119126199197}
   - component: {fileID: 6954736579375192304}
   - component: {fileID: 6766307809330903351}
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatus: {fileID: 4661569931696314050}
   skillManager: {fileID: 6954736579375192304}
-  enemyMove: {fileID: 8847498011433636488}
+  enemyMove: {fileID: 4382777070779692115}
   enemyStateMachine: {fileID: 6443105551693911329}
 --- !u!114 &2202353817470447178
 MonoBehaviour:
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CognitiveRange: 3
---- !u!114 &8847498011433636488
+--- !u!114 &4382777070779692115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,13 +317,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4185383675751946793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8a1c8b790a92604999c2bdb6c63e862, type: 3}
+  m_Script: {fileID: 11500000, guid: 654b004efa26dcc40a818e0eaf48193b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 6443105551693911329}
-  myEnemy: {fileID: 338930018133428618}
+  rotateCoef: 1
   supposedSmallestEnemySize: 0.1
   isFixedNavPriority: 0
+  moveMode: 0
 --- !u!114 &5675800119126199197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4185383675751946793}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64a59020999fd38488ab926cb2a42367, type: 3}
   m_Name: 
@@ -354,7 +354,7 @@ MonoBehaviour:
   abilityStatus: {fileID: 4661569931696314050}
   animator: {fileID: 4185383675751946794}
   skillStorage: {fileID: 7768286042605899856}
-  enemyMove: {fileID: 8847498011433636488}
+  enemyMove: {fileID: 4382777070779692115}
   myEnemy: {fileID: 338930018133428618}
   nav: {fileID: 6388554048509417175}
 --- !u!114 &6766307809330903351
@@ -428,7 +428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4185383677180586502
 Transform:
   m_ObjectHideFlags: 0

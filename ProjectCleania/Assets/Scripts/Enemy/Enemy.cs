@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [Header("Need Drag")]
     public AbilityStatus abilityStatus;
     public EnemySkillManager skillManager;
-    public EnemyMove enemyMove;
+    public EnemyMovement enemyMove;
     public EnemyStateMachine enemyStateMachine;
 
     public delegate void DelegateVoid();
@@ -76,6 +76,9 @@ public class Enemy : MonoBehaviour
     {
         switch (enemyStateMachine.GetMonsterType())
         {
+            case EnemyStateMachine.MonsterType.WildInti:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.WildInti, this.gameObject);
+                break;
             case EnemyStateMachine.MonsterType.HighDusty:
                 ObjectPool.ReturnObject(ObjectPool.enumPoolObject.HighDusty, this.gameObject);
                 break;
@@ -85,8 +88,10 @@ public class Enemy : MonoBehaviour
             case EnemyStateMachine.MonsterType.Dusty:
                 ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Dusty, this.gameObject);
                 break;
+            case EnemyStateMachine.MonsterType.TheDusty:
+                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.TheDusty, this.gameObject);
+                break;
             default:
-                ObjectPool.ReturnObject(ObjectPool.enumPoolObject.WildInti, this.gameObject);
                 break;
         }
     }

@@ -59,6 +59,11 @@ public class PlayerSkillCleaningWindSO : PlayerSkillSO
     float ProjectilePositionY = 0.5f;
     public float GetProjectilePositionY() { return ProjectilePositionY; }
 
+    [Header("회오리 속도")]
+    [SerializeField]
+    float speed = 5f;
+    public float GetSpeed() { return speed; }
+
     [Header("회오리 유지 시간")]
     [SerializeField]
     float Duration = 2f;

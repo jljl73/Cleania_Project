@@ -11,6 +11,8 @@ public class MouseController : MonoBehaviour
     GraphicRaycaster raycaster;
     PointerEventData pointerEventData;
     EventSystem eventSystem;
+    RaycastHit raycastHit;
+    Ray ray;
 
     enum CURSORSTATE { Default, Enemy, Entrance, Loot, BlackSmith, Merchant, Storage, Talk, Activate };
     [SerializeField]
@@ -29,8 +31,15 @@ public class MouseController : MonoBehaviour
     TextMeshProUGUI itemDetails;
     [SerializeField]
     TextMeshProUGUI itemOptions;
+    [SerializeField]
+    TextMeshProUGUI hpBarText;
+    [SerializeField]
+    Image hpBarGauage;
+    [SerializeField]
+    TextMeshProUGUI itemNameOnField;
 
     CURSORSTATE cursorState = CURSORSTATE.Default;
+
     void Start()
     {
         raycaster = GetComponent<GraphicRaycaster>();
@@ -40,53 +49,73 @@ public class MouseController : MonoBehaviour
 
     void Update()
     {
-        // UI ¸¶¿ì½º
         cursorState = CURSORSTATE.Default;
         itemToolTip.SetActive(false);
         iconToolTip.SetActive(false);
 
         if (EventSystem.current.IsPointerOverGameObject(-1))
         {
-            List<RaycastResult> results = new List<RaycastResult>();
-            pointerEventData = new PointerEventData(eventSystem);
-            pointerEventData.position = Input.mousePosition;
-            raycaster.Raycast(pointerEventData, results);
-
-            for (int i = 0; i < results.Count; ++i)
-            {
-                if (results[i].gameObject.CompareTag("Item"))
-                {
-                    itemToolTip.SetActive(true);
-                    itemToolTip.transform.position = Input.mousePosition;
-                    SetItemTip(results[i].gameObject, out cursorState);
-                    
-                }
-                else if(results[i].gameObject.CompareTag("Icon"))
-                {
-                    iconToolTip.SetActive(true);
-                    iconToolTip.transform.position = Input.mousePosition;
-                    SetIconTip(results[i].gameObject);
-                }
-                else if(results[i].gameObject.TryGetComponent<Button>(out Button button))
-                {
-                    cursorState = CURSORSTATE.Activate;
-                }
-            }
+            OnGUI();
         }
-        //
         else
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit raycastHit;
-
-            int layerMask = 1;
-            if (Physics.Raycast(ray, out raycastHit, 100.0f, layerMask))
-            {
-            }
+            OnField();   
         }
 
         ChangeCursor(cursorState);
     }
+
+    void OnGUI()
+    {
+        List<RaycastResult> results = new List<RaycastResult>();
+        pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+        raycaster.Raycast(pointerEventData, results);
+
+        for (int i = 0; i < results.Count; ++i)
+        {
+            if (results[i].gameObject.CompareTag("Item"))
+            {
+                itemToolTip.SetActive(true);
+                itemToolTip.transform.position = Input.mousePosition;
+                SetItemTip(results[i].gameObject, out cursorState);
+
+            }
+            else if (results[i].gameObject.CompareTag("Icon"))
+            {
+                iconToolTip.SetActive(true);
+                iconToolTip.transform.position = Input.mousePosition;
+                SetIconTip(results[i].gameObject);
+            }
+            else if (results[i].gameObject.TryGetComponent<Button>(out Button button))
+            {
+                cursorState = CURSORSTATE.Activate;
+            }
+        }
+    }
+
+    void OnField()
+    {
+        hpBarGauage.transform.parent.gameObject.SetActive(false);
+        itemNameOnField.transform.parent.gameObject.SetActive(false);
+
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        int layerMask = 1 << 10 | 1 << 6 | 1 << 15;
+        if (Physics.Raycast(ray, out raycastHit, 300.0f, layerMask))
+        {
+            if (raycastHit.collider.CompareTag("NPC"))
+                SetNPCTag(raycastHit.collider);
+
+            else if(raycastHit.collider.CompareTag("Enemy"))
+                SetEnemyTag(raycastHit.collider);
+
+            else if(raycastHit.collider.CompareTag("DroppedItem"))
+                SetDroppedItemTag(raycastHit.collider);
+        }
+    }
+
+    
 
     void ChangeCursor(CURSORSTATE target)
     { 
@@ -175,5 +204,43 @@ public class MouseController : MonoBehaviour
     void SetIconTip(GameObject icon)
     {
         iconToolTip.GetComponentInChildren<TextMeshProUGUI>().text = icon.GetComponent<IconData>().GetString();
+    }
+
+    void SetNPCTag(Collider collider)
+    {
+        hpBarText.text = collider.GetComponent<NPC>().Name;
+        hpBarGauage.fillAmount = 1.0f;
+        hpBarGauage.transform.parent.gameObject.SetActive(true);
+    }
+
+    void SetEnemyTag(Collider collider)
+    {
+        hpBarText.text = collider.GetComponent<Enemy>().name;
+        hpBarGauage.fillAmount =
+            collider.GetComponent<AbilityStatus>().HP /
+            collider.GetComponent<AbilityStatus>()[Ability.Stat.MaxHP];
+        hpBarGauage.transform.parent.gameObject.SetActive(true);
+    }
+
+    void SetDroppedItemTag(Collider collider)
+    {
+        sb.Clear();
+        switch (collider.GetComponent<ItemObject_v2>().ItemData.SO.Rank)
+        {
+            case ItemSO.enumRank.Rare:
+                sb.Append("<color=#4169E1>");
+                break;
+            case ItemSO.enumRank.Legendary:
+                sb.Append("<color=#FFD700>");
+                break;
+            case ItemSO.enumRank.Common:
+                sb.Append("<color=#FFFFFF>");
+                break;
+        }
+        sb.Append(collider.GetComponent<ItemObject_v2>().ItemData.SO.ItemName);
+        sb.Append("</color>");
+        itemNameOnField.text = sb.ToString();
+        itemNameOnField.transform.parent.position = Input.mousePosition;
+        itemNameOnField.transform.parent.gameObject.SetActive(true);
     }
 }

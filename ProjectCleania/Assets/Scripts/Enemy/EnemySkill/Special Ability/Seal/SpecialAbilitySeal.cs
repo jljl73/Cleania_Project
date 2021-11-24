@@ -100,6 +100,7 @@ public class SpecialAbilitySeal : EnemySkill
 
     public override void Deactivate()
     {
+        base.Deactivate();
         animator.SetBool("OnSpecialSkill", false);
         animator.SetBool("OnSkill", false);
     }

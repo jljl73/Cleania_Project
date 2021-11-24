@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CleaningWind : DamagingProperty
+public class CleaningWind : ContactStayDamage
 {
     Collider damageCollider;
     SkillEffectController skillEffectController;
@@ -44,9 +44,10 @@ public class CleaningWind : DamagingProperty
 
     void DeactivateDelay() => this.gameObject.SetActive(false);
 
-    public void SetUp(float maxHitPerSameObject, float duration, AbilityStatus abil, float skillScale)
+    public void SetUp(float maxHitPerSameObject, float speed, float duration, AbilityStatus abil, float skillScale)
     {
         this.maxHitPerSameObject = maxHitPerSameObject;
+        moveSpeed = speed;
         this.duration = duration;
 
         base.SetUp(abil, skillScale);
@@ -59,16 +60,30 @@ public class CleaningWind : DamagingProperty
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerStay(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (!isSetUp) return;
-
-        if (other.tag == "Enemy")
+        if (other.CompareTag("Enemy"))
         {
-            AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
+            AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
+            if (abil != null)
+                abil.AttackedBy(ownerAbility, damageScale);
+        }
+    }
 
-            if (enemyAbil.HP != 0)
-                enemyAbil.AttackedBy(ownerAbility, damageScale * Time.fixedDeltaTime);
+    protected override void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            timePassed += Time.deltaTime;
+
+            if (timePassed < 1f)
+                return;
+            else
+                timePassed = 0f;
+
+            AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
+            if (abil != null)
+                abil.AttackedBy(ownerAbility, damageScale);
         }
     }
 

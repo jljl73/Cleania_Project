@@ -27,7 +27,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
 
         skillStorage = GetComponentInChildren<SkillStorage>();
         if (skillStorage == null)
-            throw new System.Exception("PlayerSkillManager doesnt have skillStorage");
+            throw new System.Exception("BaseSkillManager doesnt have skillStorage");
 
     }
 

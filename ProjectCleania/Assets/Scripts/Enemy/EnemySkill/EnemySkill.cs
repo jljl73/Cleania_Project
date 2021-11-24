@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class EnemySkill : Skill
 {
     public Enemy enemy;
-    protected EnemyMove enemyMove;
+    protected EnemyMovement enemyMove;
     protected EnemyChase enemyChase;
 
     protected void Awake()
@@ -31,13 +31,18 @@ public abstract class EnemySkill : Skill
         SpeedMultiplier = skillData.GetSpeedMultiplier();
     }
 
-        //public override void AnimationActivate()
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public override void Deactivate()
-        //{
-        //    throw new System.NotImplementedException();
-        //}
+    public override void Deactivate()
+    {
+        enemy.enemyStateMachine.Transition(EnemyStateMachine.enumState.Idle);
     }
+
+    //public override void AnimationActivate()
+    //{
+    //    throw new System.NotImplementedException();
+    //}
+
+    //public override void Deactivate()
+    //{
+    //    throw new System.NotImplementedException();
+    //}
+}
