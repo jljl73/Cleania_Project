@@ -34,14 +34,9 @@ public class SpecialAbilityPollution : EnemySkill
     private void FixedUpdate()
     {
         if (!abilityActivate) return;
-        //GameObject obj = Instantiate(pollutionPrefab, transform.position, transform.rotation);
-        //GameObject obj = ObjectPool.GetObject(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
-        Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
-        //Pollution pollution = obj.GetComponent<Pollution>();
-        pollution.SetUp(pollutionDuration, OwnerAbilityStatus, damageRate);
-        pollution.Resize(damageRange);
-
-        //Destroy(obj, pollutionDuration);
+        //Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
+        //pollution.SetUp(pollutionDuration, OwnerAbilityStatus, damageRate);
+        //pollution.Resize(damageRange);
     }
 
     public void UpdateSkillData()
