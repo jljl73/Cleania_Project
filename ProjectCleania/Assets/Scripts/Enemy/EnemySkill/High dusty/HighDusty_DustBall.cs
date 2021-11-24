@@ -25,6 +25,8 @@ public class HighDusty_DustBall : DamagingProperty
     float projectileSize;
     float pondSize;
 
+    float timePassed = 0;
+
     private void Start()
     {
         ballProjectile.Scale = projectileSize * 2f;
@@ -81,15 +83,31 @@ public class HighDusty_DustBall : DamagingProperty
                 Destroy(gameObject, 5.0f);
             }
         }
+        else
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                playerAbility.AttackedBy(ownerAbility, damageScale);
+            }
+        }
     }
 
     void OnTriggerStay(Collider other)
     {
         if (!isSetUp) return;
         if (!isBall)
+        {
             if (other.gameObject.CompareTag("Player"))
             {
-                playerAbility.AttackedBy(ownerAbility, Time.deltaTime * damageScale);
+                timePassed += Time.deltaTime;
+
+                if (timePassed < 5f)
+                    return;
+                else
+                    timePassed = 0f;
+
+                playerAbility.AttackedBy(ownerAbility, damageScale);
             }
+        }
     }
 }
