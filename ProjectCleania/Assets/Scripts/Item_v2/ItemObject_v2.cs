@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ItemObject_v2 : MonoBehaviour
+public class ItemObject_v2 : MonoBehaviour 
 {
     private ItemInstance itemData;
     public ItemInstance ItemData
@@ -41,4 +42,18 @@ public class ItemObject_v2 : MonoBehaviour
             }
         }
     }
+
+    //public void PickUp(GameObject item)
+    //{
+
+    //    ItemObject_v2 container = item.GetComponent<ItemObject_v2>();
+    //    ItemInstance itemData = container.ItemData;
+
+    //    if (SavedData.Instance.Item_Inventory.Add(itemData))
+    //    {
+    //        container.Parent.Remove(itemData);
+    //        droppedItems.Remove(item);
+    //    }
+    //}
+
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Text;
 using TMPro;
+using System.Drawing;
 
 public class QuestManager : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class QuestManager : MonoBehaviour
             buttons[i].onClick.AddListener(() => ShowDetailQuest(temp));
         }
 
+        QuestDB.Instance.SetNickName(SavedData.Instance.characterName);
         QuestDB.Instance.Load(quests_All);
 
         for(int i = 0; i < quests_All.Count; ++i)
@@ -56,6 +58,12 @@ public class QuestManager : MonoBehaviour
 
         //QuestDB.Instance.Load();
         SetListHeight();
+    }
+
+    private void OnEnable()
+    {
+        
+        SavedData.Instance.Item_Inventory.Subscribe(Synchronize, Point.Empty);
     }
 
     void Update()
@@ -85,6 +93,14 @@ public class QuestManager : MonoBehaviour
         QuestDB.Instance.Save(quests_All);
         SetMiniList();
     }
+
+
+    void Synchronize(iItemStorage sender, ItemStorage_LocalGrid.SyncOperator oper, Point index)
+    {
+        Debug.Log("Quest Item Synchronize");
+        Acheive(QuestNeed.TYPE.Item, 0);
+    }
+
 
     #region UI
     void ShowDetailQuest(int index)

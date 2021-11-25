@@ -38,6 +38,7 @@ public class MouseController : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI itemNameOnField;
 
+
     CURSORSTATE cursorState = CURSORSTATE.Default;
 
     void Start()
@@ -55,7 +56,7 @@ public class MouseController : MonoBehaviour
 
         if (EventSystem.current.IsPointerOverGameObject(-1))
         {
-            OnGUI();
+            OnUI();
         }
         else
         {
@@ -65,7 +66,7 @@ public class MouseController : MonoBehaviour
         ChangeCursor(cursorState);
     }
 
-    void OnGUI()
+    void OnUI()
     {
         List<RaycastResult> results = new List<RaycastResult>();
         pointerEventData = new PointerEventData(eventSystem);
@@ -101,13 +102,10 @@ public class MouseController : MonoBehaviour
 
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        int layerMask = 1 << 10 | 1 << 6 | 1 << 15;
+        int layerMask = 1 << 6 | 1 << 15;
         if (Physics.Raycast(ray, out raycastHit, 300.0f, layerMask))
         {
-            if (raycastHit.collider.CompareTag("NPC"))
-                SetNPCTag(raycastHit.collider);
-
-            else if(raycastHit.collider.CompareTag("Enemy"))
+            if(raycastHit.collider.CompareTag("Enemy"))
                 SetEnemyTag(raycastHit.collider);
 
             else if(raycastHit.collider.CompareTag("DroppedItem"))
@@ -204,13 +202,6 @@ public class MouseController : MonoBehaviour
     void SetIconTip(GameObject icon)
     {
         iconToolTip.GetComponentInChildren<TextMeshProUGUI>().text = icon.GetComponent<IconData>().GetString();
-    }
-
-    void SetNPCTag(Collider collider)
-    {
-        hpBarText.text = collider.GetComponent<NPC>().Name;
-        hpBarGauage.fillAmount = 1.0f;
-        hpBarGauage.transform.parent.gameObject.SetActive(true);
     }
 
     void SetEnemyTag(Collider collider)

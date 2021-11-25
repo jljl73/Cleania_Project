@@ -8,6 +8,7 @@ public class TheDustyGroundHit : EnemySkill
     [SerializeField]
     GroundHitSO skillData;
 
+    float attackPoseFromTrigger = 2f;
     float damageScale;
     float damageRadius;
     float stunnedTime;
@@ -28,7 +29,7 @@ public class TheDustyGroundHit : EnemySkill
         base.Start();
 
         UpdateSkillData();
-        effectController[0].Scale = damageRadius * 0.3333f;
+        //effectController[0].Scale = damageRadius * 0.3333f;
     }
 
     public void UpdateSkillData()
@@ -39,6 +40,7 @@ public class TheDustyGroundHit : EnemySkill
         base.UpdateSkillData(skillData);
         damageScale = skillData.GetDamageRate();
         damageRadius = skillData.GetDamageRadius();
+        attackPoseFromTrigger = skillData.GetAttackPoseFromTrigger();
         stunnedTime = skillData.GetStunnedTime();
         indirectDamageRate = skillData.GetIndirectDamageRate();
         indirectDamageRadius = skillData.GetIndirectDamageRadius();
@@ -53,6 +55,12 @@ public class TheDustyGroundHit : EnemySkill
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("GroundHit");
         return true;
+    }
+
+    public override void PlayEffects()
+    {
+        base.PlayEffects();
+        ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit, transform.position + transform.forward * attackPoseFromTrigger, transform.rotation);
     }
 
     public override void Activate()
@@ -72,7 +80,7 @@ public class TheDustyGroundHit : EnemySkill
 
     void DirectAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward * attackPoseFromTrigger, damageRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
@@ -86,7 +94,7 @@ public class TheDustyGroundHit : EnemySkill
 
     void IndirectAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, indirectDamageRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward * attackPoseFromTrigger, indirectDamageRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))

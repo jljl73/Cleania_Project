@@ -40,9 +40,8 @@ public class PlayerSkillVillageReturn : PlayerSkill
         //animator.SetBool("OnSkill", true);
         //animator.SetBool("OnSkillEtc", true);
         // animator.SetTrigger("VillageReturn");
-        GameManager.Instance.ChangeScene(villageName);
-        Player player = FindObjectOfType<Player>();
-        player.gameObject.transform.position = returnPosition;
+
+        ReturnToVillage();
 
         return true;
     }
@@ -50,12 +49,18 @@ public class PlayerSkillVillageReturn : PlayerSkill
     public override void Activate()
     {
         //StartCoroutine(OnSkill());
-        print("∏∂¿ª ±Õ»Ø!");
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
         //effectController[0].PlaySkillEffect();
+    }
+
+    public void ReturnToVillage()
+    {
+        GameManager.Instance.ChangeScene(villageName);
+        Player player = FindObjectOfType<Player>();
+        player.gameObject.transform.position = returnPosition;
     }
 }

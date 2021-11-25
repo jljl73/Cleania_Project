@@ -20,8 +20,13 @@ public class TheDustyDustStorm : EnemySkill
     float sightHindDuration = 4f;
     float triggerProbability = 0.3f;
 
-    bool isBreatheInAttackPlaying = false;
-    bool isBreatheOutAttackPlaying = false;
+    AttackType attackType = AttackType.None;
+    enum AttackType
+    {
+        None,
+        BreatheIn,
+        BreatheOut
+    }
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -48,21 +53,7 @@ public class TheDustyDustStorm : EnemySkill
 
     private void FixedUpdate()
     {
-        if (isBreatheInAttackPlaying)
-            DoBreatheInAttack(true);
-
-        if (isBreatheOutAttackPlaying)
-        {
-            breatheOutAttackCollider.enabled = true;
-            //breatheOutAttackCollider.center = new Vector3(0, 1, 1.75f);
-            //breatheOutAttackCollider.height = 2;
-        }
-        else
-        {
-            breatheOutAttackCollider.enabled = false;
-            //breatheOutAttackCollider.center = new Vector3(0, 1, 1.75f);
-            //breatheOutAttackCollider.height = 2;
-        }
+        AttackByState();
     }
 
     public void UpdateSkillData()
@@ -100,10 +91,10 @@ public class TheDustyDustStorm : EnemySkill
         switch (idx)
         {
             case 0:
-                isBreatheInAttackPlaying = true;
+                attackType = AttackType.BreatheIn;
                 break;
             case 1:
-                isBreatheOutAttackPlaying = true;
+                attackType = AttackType.BreatheOut;
                 break;
             default:
                 break;
@@ -115,12 +106,11 @@ public class TheDustyDustStorm : EnemySkill
         switch (idx)
         {
             case 0:
-                isBreatheInAttackPlaying = false;
+                attackType = AttackType.None;
                 DoBreatheInAttack(false);
                 break;
             case 1:
-                isBreatheOutAttackPlaying = false;
-                //enemy.enemyStateMachine.Transition(StateMachine.enumState.Idle);
+                attackType = AttackType.None;
                 base.Deactivate();
                 animator.SetBool("OnSkill", false);
                 break;
@@ -128,6 +118,25 @@ public class TheDustyDustStorm : EnemySkill
                 break;
         }
         return;
+    }
+
+    void AttackByState()
+    {
+        switch (attackType)
+        {
+            case AttackType.None:
+                breatheOutAttackCollider.enabled = false;
+                break;
+            case AttackType.BreatheIn:
+                breatheOutAttackCollider.enabled = false;
+                DoBreatheInAttack(true);
+                break;
+            case AttackType.BreatheOut:
+                breatheOutAttackCollider.enabled = true;
+                break;
+            default:
+                break;
+        }
     }
 
     void DoBreatheInAttack(bool value)
@@ -139,7 +148,6 @@ public class TheDustyDustStorm : EnemySkill
             {
                 Player player = colliders[i].GetComponent<Player>();
                 player.playerMove.Pulled(value, this.transform.position);
-                print("player pulled: " + value);
             }
         }
     }
