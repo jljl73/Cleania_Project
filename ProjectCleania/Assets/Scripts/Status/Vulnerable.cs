@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Vulnerable : AbilityStatus
 {
-    [SerializeField]
     Status status = null;          // status is essential unlike equips or buffs
-    [SerializeField]
     Equipable equipments = null;
     Buffable buffs = null;
 

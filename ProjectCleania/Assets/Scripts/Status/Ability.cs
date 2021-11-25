@@ -80,6 +80,15 @@ public class Ability
     }
 
 
+    public struct AffectResult
+    {
+        public bool Dodged;
+        public bool Critical;
+        public bool Heal;
+        public float Value;
+    }
+
+
 
     public static KeyValuePair<Ability.Stat, Ability.Enhance> EquipmentOptionToAbility(EquipmentOption.Option opt)
     {
