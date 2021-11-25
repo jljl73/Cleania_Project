@@ -26,6 +26,7 @@ public class ObjectPool : MonoBehaviour
         Decomposition,
         Stain,
         Pollution,
+        GroundHit,
         EndIndex
     }
     

@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     public GameObject RepairPanel;
     public GameObject ExpandMapPanel;
     public GameObject EnchantPanel;
+    public GameObject DiePanel;
 
     [Header ("오른쪽 창")]
     public GameObject InventoryPanel;
@@ -125,6 +126,13 @@ public class UIManager : MonoBehaviour
     {
         OffMiddlePanel();
         ShowPanel(MenuPanel, bActive);
+    }
+
+    public void ShowDiePanel(bool bActive)
+    {
+        DiePanel.SetActive(bActive);
+        if (bActive)
+            DiePanel.transform.SetAsLastSibling();
     }
    
 

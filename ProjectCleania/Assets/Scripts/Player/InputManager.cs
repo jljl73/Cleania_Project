@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                player.PlaySkill(1190);
+                player.PlaySkill(1194);
             }
             return;
         }
@@ -110,15 +110,15 @@ public class InputManager : MonoBehaviour
         //    player.playerMove.AddForce(force);
         //}
 
-        //if (Input.GetKeyDown(KeyCode.Alpha8))
-        //{
-        //    player.playerMove.Pulled(false, Vector3.zero);
-        //}
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            player.playerMove.Pulled(false, Vector3.zero);
+        }
 
-        //if (Input.GetKeyDown(KeyCode.Alpha7))
-        //{
-        //    player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
-        //}
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
+        }
     }
 
 }

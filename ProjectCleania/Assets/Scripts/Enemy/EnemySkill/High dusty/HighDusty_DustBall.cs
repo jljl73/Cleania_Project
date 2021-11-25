@@ -101,7 +101,7 @@ public class HighDusty_DustBall : DamagingProperty
             {
                 timePassed += Time.deltaTime;
 
-                if (timePassed < 5f)
+                if (timePassed < 1f)
                     return;
                 else
                     timePassed = 0f;

@@ -12,12 +12,23 @@ public class PlayerSkillReviveSO : PlayerSkillSO
         //string coolTime = CoolTime.ToString();
         //tempString = tempString.Replace("CoolTime", coolTime);
 
-        
+
 
         return tempString;
     }
 
-    //[Header("도약 이팩트 반경")]
-    //public float JumpEffectSize = 1f;
-    //public float GetJumpEffectSize() { return JumpEffectSize; }
+    [Header("소모 경험치율")]
+    [SerializeField]
+    protected float consumedXPRate = 0.05f;
+    public float GetConsumedXPRate() { return consumedXPRate; }
+
+    [Header("소모 내구도율")]
+    [SerializeField]
+    protected float consumedDurabilityRate = 0.1f;
+    public float GetConsumedDurabilityRate() { return consumedDurabilityRate; }
+
+    [Header("소모 클린")]
+    [SerializeField]
+    protected int consumedClean = 1000;
+    public int GetConsumedClean() { return consumedClean; }
 }
