@@ -68,6 +68,7 @@ public class NPCMarket : MonoBehaviour
                 if (inventory.Add(i.itemInstance))
                 {
                     inventoryCurrency.AddCrystal(-i.itemInstance.SO.Price * originCount);
+
                     if (soldItems.Contains(i))
                         soldItems.Remove(i);
                     Destroy(i.gameObject);
