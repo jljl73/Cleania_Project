@@ -38,6 +38,7 @@ public class MouseController : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI itemNameOnField;
 
+
     CURSORSTATE cursorState = CURSORSTATE.Default;
 
     void Start()
@@ -55,7 +56,7 @@ public class MouseController : MonoBehaviour
 
         if (EventSystem.current.IsPointerOverGameObject(-1))
         {
-            OnGUI();
+            OnUI();
         }
         else
         {
@@ -65,7 +66,7 @@ public class MouseController : MonoBehaviour
         ChangeCursor(cursorState);
     }
 
-    void OnGUI()
+    void OnUI()
     {
         List<RaycastResult> results = new List<RaycastResult>();
         pointerEventData = new PointerEventData(eventSystem);
