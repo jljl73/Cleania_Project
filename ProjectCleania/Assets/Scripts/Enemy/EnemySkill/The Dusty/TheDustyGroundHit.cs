@@ -29,7 +29,7 @@ public class TheDustyGroundHit : EnemySkill
         base.Start();
 
         UpdateSkillData();
-        effectController[0].Scale = damageRadius * 0.3333f;
+        //effectController[0].Scale = damageRadius * 0.3333f;
     }
 
     public void UpdateSkillData()

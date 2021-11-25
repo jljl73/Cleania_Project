@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public event DelegateVoid OnLevelUp;
     public event DelegateVoid OnDead;
     public event DelegateVoid OnRevive;
+    public event DelegateVoid OnVillageRevive;
     public UnityAction<bool, float> OnStunned;
 
     void Awake()
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
         OnDead += playerSkillManager.DeactivateAllSkill;
 
         OnRevive += Revive;
+        OnVillageRevive += VillageRevive;
 
         OnStunned += playerMove.Stunned;
         OnStunned += PlayerMoveWithoutNav.Stunned;
@@ -46,7 +48,13 @@ public class Player : MonoBehaviour
         //animator.SetTrigger("Revive");
         // stateMachine.ResetState();
         abilityStatus.FullHP();
-        abilityStatus.FullMP();
+        CloseDiePanel();
+    }
+
+    public void VillageRevive()
+    {
+        abilityStatus.FullHP();
+        CloseDiePanel();
     }
 
     void Die()
@@ -54,6 +62,18 @@ public class Player : MonoBehaviour
         GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Die, 0);
         animator.SetTrigger("Die");
         stateMachine.Transition(StateMachine.enumState.Dead);
+
+        Invoke("ShowDiePanel", 2f);
+    }
+
+    void ShowDiePanel()
+    {
+        GameManager.Instance.uiManager.ShowDiePanel(true);
+    }
+
+    void CloseDiePanel()
+    {
+        GameManager.Instance.uiManager.ShowDiePanel(false);
     }
 
     public void Move(Vector3 position)
@@ -73,8 +93,10 @@ public class Player : MonoBehaviour
     public void PlaySkill(int id)
     {
         // 부활 스킬일 경우
-        if (id == 1190)
+        if (id == 1194)
             OnRevive();
+        else if (id == 1195)
+            OnVillageRevive();
 
         //if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
         //    && !animator.IsInTransition(0))

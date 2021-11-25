@@ -57,7 +57,7 @@ public class PlayerSkillHereRevive : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetTrigger("Revive");
+        animator.SetTrigger("HereRevive");
         return true;
     }
 
@@ -68,5 +68,6 @@ public class PlayerSkillHereRevive : PlayerSkill
     public override void Deactivate()
     {
         base.Deactivate();
+        // 몇초간 무적
     }
 }

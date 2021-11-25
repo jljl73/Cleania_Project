@@ -9,6 +9,9 @@ public class PlayerSkillVillageRevive : PlayerSkill
     [SerializeField]
     PlayerSkillVillageReturnSO referenceSkillData;
 
+    [SerializeField]
+    PlayerSkillVillageReturn playerSkillVillageReturn;
+
     float timeCost;
     float consumedXPRate = 0;
     float consumedDurabilityRate = 0;
@@ -22,6 +25,10 @@ public class PlayerSkillVillageRevive : PlayerSkill
     private new void Awake()
     {
         base.Awake();
+
+        if (playerSkillVillageReturn == null)
+            throw new System.Exception("PlayerSkillVillageRevive doesnt have playerSkillVillageReturn!");
+
         UpdateSkillData();
     }
 
@@ -45,7 +52,9 @@ public class PlayerSkillVillageRevive : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetTrigger("Revive");
+        animator.SetTrigger("VillageRevive");
+
+        playerSkillVillageReturn.ReturnToVillage();
         return true;
     }
 

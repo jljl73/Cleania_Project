@@ -2347,6 +2347,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80298091}
   m_CullTransparentMesh: 1
+--- !u!114 &83506146 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+  m_PrefabInstance: {fileID: 2026717315151131561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &84859070
 GameObject:
   m_ObjectHideFlags: 0
@@ -3672,6 +3683,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120426227}
   m_CullTransparentMesh: 1
+--- !u!114 &129219313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+  m_PrefabInstance: {fileID: 2026717315151131561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &129439493
 GameObject:
   m_ObjectHideFlags: 0
@@ -59053,9 +59075,81 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2026717315151131564}
+    - target: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HereRevive
+      objectReference: {fileID: 0}
+    - target: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DiePanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 311390299678962368, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 396474694309442872, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: hereReviveButton
+      value: 
+      objectReference: {fileID: 129219313}
+    - target: {fileID: 396474694309442872, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: villageReviveButton
+      value: 
+      objectReference: {fileID: 83506146}
+    - target: {fileID: 1186164753805768374, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2026717315151131564}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: VillageRevive
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DiePanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735712635021269240, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4683905536588925030, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
       propertyPath: m_Name
       value: DiePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683905536588925030, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
@@ -59064,6 +59158,22 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 229762463056814983, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
   m_PrefabInstance: {fileID: 2026717315151131561}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026717315151131563 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4683905536588925030, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+  m_PrefabInstance: {fileID: 2026717315151131561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2026717315151131564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 396474694309442872, guid: f8581786a7839974bbeec0a2522cfb23, type: 3}
+  m_PrefabInstance: {fileID: 2026717315151131561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026717315151131563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596d410c19e051041a481be50d0fc7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2470096244331327975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65082,6 +65192,10 @@ PrefabInstance:
       propertyPath: canvas_
       value: 
       objectReference: {fileID: 6206314628919760625}
+    - target: {fileID: 3783792633871469594, guid: a30582d5f4580f747953ffb643ade110, type: 3}
+      propertyPath: DiePanel
+      value: 
+      objectReference: {fileID: 2026717315151131563}
     - target: {fileID: 3783792633871469594, guid: a30582d5f4580f747953ffb643ade110, type: 3}
       propertyPath: MenuPanel
       value: 
