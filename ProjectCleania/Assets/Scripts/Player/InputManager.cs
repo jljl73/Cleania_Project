@@ -12,6 +12,10 @@ public class InputManager : MonoBehaviour
     public bool PlayerMovable;
 
     //public Vector3 force = Vector3.right;
+    static public GameObject clickedObject = null;
+    Ray ray;
+    RaycastHit raycastHit;
+
     private void Awake()
     {
         GameManager.Instance.inputManager = this;
@@ -25,6 +29,8 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        
+        
         // UI 클릭시 리턴
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
@@ -39,10 +45,23 @@ public class InputManager : MonoBehaviour
         }
 
         // 마우스 >>>>>
+        if (Input.GetMouseButtonDown(0))
+        {
+            clickedObject = null;
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            int layerMask = 1 << 10 | 1 << 6 | 1 << 15;
+            if (Physics.Raycast(ray, out raycastHit, 300.0f, layerMask))
+            {
+                clickedObject = raycastHit.collider.gameObject;
+                Debug.Log(clickedObject.name);
+            }
+        }
+
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            if(PlayerMovable)
-            player.Move(Input.mousePosition);
+            
+            if (PlayerMovable)
+                player.Move(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(1))

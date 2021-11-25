@@ -44,6 +44,7 @@ public class QuestManager : MonoBehaviour
             buttons[i].onClick.AddListener(() => ShowDetailQuest(temp));
         }
 
+        QuestDB.Instance.SetNickName(SavedData.Instance.characterName);
         QuestDB.Instance.Load(quests_All);
 
         for(int i = 0; i < quests_All.Count; ++i)

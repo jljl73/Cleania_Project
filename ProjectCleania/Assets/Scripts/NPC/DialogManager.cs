@@ -5,12 +5,12 @@ using UnityEngine;
 public class DialogManager : MonoBehaviour
 {
     GameObject currentDialog = null;
-    public DialogSelector MarketDialog;
-    public DialogSelector RepairDialog;
-    public DialogSelector EnchantDialog;
-    public DialogSelector StorageDialog;
-    public DialogSelector QuestDialog;
-    public DialogSelector DungeonDialog;
+    public QuestProgressChecker MarketDialog;
+    public QuestProgressChecker RepairDialog;
+    public QuestProgressChecker EnchantDialog;
+    public QuestProgressChecker StorageDialog;
+    public QuestProgressChecker QuestDialog;
+    public QuestProgressChecker DungeonDialog;
 
     public void ShowMarketDialog(bool bActive)
     {

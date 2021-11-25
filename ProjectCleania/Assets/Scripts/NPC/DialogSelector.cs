@@ -5,47 +5,15 @@ using UnityEngine;
 public class DialogSelector : MonoBehaviour
 {
     [SerializeField]
-    DialogManager dialogManager;
-    [SerializeField]
-    Quest[] quests;
-
-
-    void Start()
-    {
-        dialogManager = transform.parent.GetComponent<DialogManager>();
-    }
-    //[System.Serializable]
-    //public struct Decorator
-    //{
-    //    public Quest quest;
-    //    public bool IsSuccess()
-    //    {
-    //        return quest.State == Quest.STATE.Reward;
-    //    }
-
-    //    bool isRewarded()
-    //    { return quest.State == Quest.STATE.Reward; }
-    //    bool isAssigned()
-    //    { return quest.State != Quest.STATE.Unassign; }
-    //}
-
-    //[SerializeField]
-    //Decorator[] decorators;
+    Quest quest;
 
     public void ShowDialog()
     {
-        dialogManager.ShowDialog(GetDialog(), true);
-    }
+        int index = 0;
+        if (quest != null)
+            index = (int)quest.State;
 
-    GameObject GetDialog()
-    {
-        int i = 0;
-        for (;i < quests.Length; ++i)
-        {
-            if (quests[i].State != Quest.STATE.Reward)
-                break;
-        }
-        return transform.GetChild(i).gameObject;
+        transform.GetChild(index).gameObject.SetActive(true);
     }
 
 }
