@@ -57,11 +57,15 @@ public class TheDustyGroundHit : EnemySkill
         return true;
     }
 
+    public override void PlayEffects()
+    {
+        base.PlayEffects();
+        ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit, transform.position + transform.forward * attackPoseFromTrigger, transform.rotation);
+    }
+
     public override void Activate()
     {
         base.Activate();
-
-        ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit, transform.position + transform.forward * attackPoseFromTrigger, transform.rotation);
 
         DirectAttack();
         IndirectAttack();

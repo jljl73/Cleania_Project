@@ -218,27 +218,16 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             skillDict[skillEffectIndexSet.GetSkillID()].PlayEffects(skillEffectIndexSet.GetEffectID());
         else
         {
-            for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
+            if (skillDict[myEvent.intParameter].effectController.Count == 0)
+                skillDict[myEvent.intParameter].PlayEffects();
+            else
             {
-                skillDict[myEvent.intParameter].PlayEffects(i);
+                for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
+                {
+                    skillDict[myEvent.intParameter].PlayEffects(i);
+                }
             }
         }
-    }
-
-    public virtual void ActivateSkillEffect2(AnimationEvent myEvent)
-    {
-        //skillDict[myEvent.intParameter].PlayEffects(i);
-        //SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
-
-        //if (skillEffectIndexSet != null)
-        //    skillDict[skillEffectIndexSet.GetSkillID()].PlayEffects(skillEffectIndexSet.GetEffectID());
-        //else
-        //{
-        //    for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
-        //    {
-        //        skillDict[myEvent.intParameter].PlayEffects(i);
-        //    }
-        //}
     }
 
     public virtual void DeactivateSkillEffect(AnimationEvent myEvent)
@@ -249,9 +238,14 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             skillDict[skillEffectIndexSet.GetSkillID()].StopEffects(skillEffectIndexSet.GetEffectID());
         else
         {
-            for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
+            if (skillDict[myEvent.intParameter].effectController.Count == 0)
+                skillDict[myEvent.intParameter].StopEffects();
+            else
             {
-                skillDict[myEvent.intParameter].StopEffects(i);
+                for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
+                {
+                    skillDict[myEvent.intParameter].StopEffects(i);
+                }
             }
         }
     }

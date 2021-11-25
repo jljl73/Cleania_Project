@@ -50,7 +50,7 @@ public class PlayerMovement : CharacterMovement, IStunned
             return;
 
         // 속도 설정
-        SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6);
+        // SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6);
 
         ActivateNavigation();
 
@@ -327,6 +327,21 @@ public class PlayerMovement : CharacterMovement, IStunned
 
         animator.SetBool("Pulled", value);
     }
+
+    public void MakeNavRadius(float value)
+    {
+        navMeshAgent.radius = value;
+    }
+
+    public void SpeedUp(float value)
+    {
+        SetSpeed(value);
+    }
+    public void ResetSpeed()
+    {
+        SetSpeed(7.5f);
+    }
+
     #region
     //public void Stunned(bool isStunned, float stunnedTime)
     //{

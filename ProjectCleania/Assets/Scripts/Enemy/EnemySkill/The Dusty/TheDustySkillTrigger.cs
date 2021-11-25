@@ -39,11 +39,11 @@ public class TheDustySkillTrigger : EnemySkillTrigger
                 //if (enemySkillManager.PlayRandomSpecialSkill())
                 //    return;
 
-                if (enemySkillManager.PlaySkill(2501))
-                    return;
-
-                //if (enemySkillManager.PlaySkill(2502))
+                //if (enemySkillManager.PlaySkill(2501))
                 //    return;
+
+                if (enemySkillManager.PlaySkill(2502))
+                    return;
             }
         }
 
