@@ -14,6 +14,14 @@ public class EnemySpawnTest : MonoBehaviour
     [SerializeField]
     EnemyStateMachine.MonsterType monsterType = EnemyStateMachine.MonsterType.WildInti;
 
+    [Header("몬스터 등급")]
+    [SerializeField]
+    EnemyStateMachine.enumRank monsterRank = EnemyStateMachine.enumRank.Normal;
+
+    [Header("몬스터 레벨")]
+    [SerializeField]
+    int level = 1;
+
     [Header("몬스터 수")]
     [SerializeField]
     int count = 0;
@@ -49,6 +57,10 @@ public class EnemySpawnTest : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             GameObject monster = ObjectPool.SpawnFromPool<Enemy>(enumPoolObject, GetRandomPointInCircle(this.transform.position, spawnedRadius), transform.rotation).gameObject;
+            EnemyStateMachine enemyState = monster.GetComponent<EnemyStateMachine>();
+            enemyState.Rank = monsterRank;
+            Status_ArithmeticProgress levelComponent = monster.GetComponent<Status_ArithmeticProgress>();
+            levelComponent.Level = level;
             mostersStack.Push(monster);
         }
     }
@@ -92,6 +104,29 @@ public class EnemySpawnTest : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void OnMonsterRankEdited(Dropdown sender)
+    {
+        switch (sender.value)
+        {
+            case 0:
+                monsterRank = EnemyStateMachine.enumRank.Normal;
+                break;
+            case 1:
+                monsterRank = EnemyStateMachine.enumRank.Rare;
+                break;
+            case 2:
+                monsterRank = EnemyStateMachine.enumRank.Bose;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnMonsterLevelEdited(InputField sender)
+    {
+        level = int.Parse(sender.text);
     }
 
     public void OnMonsterCountEdited(InputField sender)
