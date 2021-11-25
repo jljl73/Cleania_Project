@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                player.PlaySkill(1190);
+                player.PlaySkill(1194);
             }
             return;
         }
