@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
+using TMPro;
 
 public class DroppedItemTrigger : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class DroppedItemTrigger : MonoBehaviour
     List<GameObject> droppedItems = new List<GameObject>();
 
     GameObject droppedItem;
+    StringBuilder sb = new StringBuilder();
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))
@@ -15,15 +19,30 @@ public class DroppedItemTrigger : MonoBehaviour
             droppedItem = FindCloseDroppedItem();
             if (droppedItem == null) return;
 
-            ItemObject_v2 container = droppedItem.GetComponent<ItemObject_v2>();
-            ItemInstance itemData = container.ItemData;
+            PickUp(droppedItem);
+        }
+                
+    }
+    void LateUpdate()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (droppedItems.Contains(InputManager.clickedObject))
+                PickUp(InputManager.clickedObject);
+        }
+    }
 
-            if (SavedData.Instance.Item_Inventory.Add(itemData))
-            {
-                container.Parent.Remove(itemData);
-                droppedItems.Remove(droppedItem);
-            }
+    public void PickUp(GameObject item)
+    {
+        if (!droppedItems.Contains(item)) return;
 
+        ItemObject_v2 container = item.GetComponent<ItemObject_v2>();
+        ItemInstance itemData = container.ItemData;
+
+        if (SavedData.Instance.Item_Inventory.Add(itemData))
+        {
+            container.Parent.Remove(itemData);
+            droppedItems.Remove(item);
         }
     }
 
@@ -47,12 +66,16 @@ public class DroppedItemTrigger : MonoBehaviour
         return droppedItem;
     }
 
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("DroppedItem"))
         {
             droppedItems.Add(other.gameObject);
+
+            Debug.Log(InputManager.clickedObject);
+            Debug.Log(other.gameObject);
+            if (InputManager.clickedObject == other.gameObject)
+                PickUp(other.gameObject);
             //other.GetComponent<NPC>().ShowName(true);
         }
     }
@@ -66,4 +89,6 @@ public class DroppedItemTrigger : MonoBehaviour
             //other.GetComponent<NPC>().ShowName(false);
         }
     }
+
+
 }
