@@ -77,16 +77,24 @@ public class PlayerSkillManager : BaseSkillManager
 
     void playRoll()
     {
-        playerMoveWithNav.enabled = false;
-        PlayerMoveWithoutNav.enabled = true;
-        objectCollider.enabled = false;
+        //playerMoveWithNav.enabled = false;
+        //PlayerMoveWithoutNav.enabled = true;
+        //objectCollider.enabled = false;
+        //playerMoveWithNav.
+
+        playerMoveWithNav.SpeedUp(10);
+        //playerMoveWithNav.MakeNavRadius(0.001f);
+        
     }
 
     void EndRoll()
     {
-        playerMoveWithNav.enabled = true;
-        PlayerMoveWithoutNav.enabled = false;
-        objectCollider.enabled = true;
+        //playerMoveWithNav.enabled = true;
+        //PlayerMoveWithoutNav.enabled = false;
+        //objectCollider.enabled = true;
+
+        playerMoveWithNav.SpeedUp(6.8f);
+        //playerMoveWithNav.MakeNavRadius(0.5f);
     }
 
     protected new bool IsSkillAvailable()

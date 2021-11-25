@@ -82,6 +82,10 @@ public abstract class Skill : MonoBehaviour
     {
     }
 
+    public virtual void PlayEffects() { }
+
+    public virtual void StopEffects() { }
+
     public void PlayEffects(int effectIdx)
     {
         effectController[effectIdx].PlaySkillEffect();
