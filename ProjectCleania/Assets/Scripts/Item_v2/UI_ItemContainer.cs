@@ -360,11 +360,11 @@ public partial class UI_ItemContainer
         {
             case SyncType.Inventory:
                 _LoadControllers(SavedData.Instance.Item_Inventory);
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
                 break;
             case SyncType.Storage:
                 _LoadControllers(SavedData.Instance.Item_Storage);
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
                 break;
             case SyncType.Equipment:
                 _LoadControllers(SavedData.Instance.Item_Equipments);

@@ -225,6 +225,22 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         }
     }
 
+    public virtual void ActivateSkillEffect2(AnimationEvent myEvent)
+    {
+        //skillDict[myEvent.intParameter].PlayEffects(i);
+        //SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+        //if (skillEffectIndexSet != null)
+        //    skillDict[skillEffectIndexSet.GetSkillID()].PlayEffects(skillEffectIndexSet.GetEffectID());
+        //else
+        //{
+        //    for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
+        //    {
+        //        skillDict[myEvent.intParameter].PlayEffects(i);
+        //    }
+        //}
+    }
+
     public virtual void DeactivateSkillEffect(AnimationEvent myEvent)
     {
         SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;

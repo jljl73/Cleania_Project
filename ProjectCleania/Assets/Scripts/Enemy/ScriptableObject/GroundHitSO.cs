@@ -10,6 +10,11 @@ public class GroundHitSO : EnemySkillSO
     float damageRadius;
     public float GetDamageRadius() { return damageRadius; }
 
+    [Header("내려침 위치 거리")]
+    [SerializeField]
+    float attackPoseFromTrigger = 2f;
+    public float GetAttackPoseFromTrigger() { return attackPoseFromTrigger; }
+
     [Header("스턴 시간")]
     [SerializeField]
     float stunnedTime;
