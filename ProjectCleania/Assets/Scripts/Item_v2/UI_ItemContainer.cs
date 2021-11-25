@@ -250,6 +250,7 @@ public partial class UI_ItemContainer : MonoBehaviour
                 Debug.Log(controllers[i].itemInstance.SO.ItemName);
                 sum += controllers[i].itemInstance.Count;
             }
+            Debug.Log(controllers[i]);
         }
         Debug.Log(sum);
         return sum;

@@ -43,4 +43,14 @@ public class NPC : MonoBehaviour
             fieldName.SetActive(false);
     }
 
+    void OnMouseEnter()
+    {
+        ShowName(true);
+    }
+
+    private void OnMouseExit()
+    {
+        ShowName(false);
+    }
+
 }
