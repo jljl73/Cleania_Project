@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vulnerable : AbilityStatus, iSavedData
+public class Vulnerable : AbilityStatus
 {
     [SerializeField]
     Status status = null;          // status is essential unlike equips or buffs
@@ -145,15 +145,5 @@ public class Vulnerable : AbilityStatus, iSavedData
         }
 
         return _stats[(int)stat];
-    }
-
-    void iSavedData.AfterLoad()
-    {
-        print("vulnerable al");
-    }
-
-    void iSavedData.BeforeSave()
-    {
-        print("vulnerable bs");
     }
 }
