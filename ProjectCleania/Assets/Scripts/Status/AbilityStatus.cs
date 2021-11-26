@@ -217,13 +217,19 @@ public class AbilityStatus : MonoBehaviour
         ret.Value = attacker[Ability.Stat.Attack] * skillScale;
 
         if (Random.Range(0.0f, 1.0f) < attacker[Ability.Stat.CriticalChance])
+        {
             ret.Value *= attacker[Ability.Stat.CriticalScale];
+            ret.Critical = true;
+        }
 
         ret.Value *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
 
         ret.Value *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
 
         //
+
+        if (ret.Value < 0)
+            ret.Heal = true;
 
         if (_HP > ret.Value)
             _HP -= ret.Value;
