@@ -231,7 +231,7 @@ public class AbilityStatus : MonoBehaviour
             _HP = 0;
 
         GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
-        damage.GetComponent<TextDamage>().SetDamageText(ret.Value.ToString());
+        damage.GetComponent<TextDamage>().SetDamageText(ret);
         Instantiate(damage, transform.position, transform.rotation);
 
         return ret;

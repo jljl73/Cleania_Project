@@ -13,7 +13,6 @@ public class EnemyChase : MonoBehaviour
             enemySpawner = value;
             myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
             myGroupManager.AddMember(gameObject);
-
         }
     }
     Enemy enemy;
