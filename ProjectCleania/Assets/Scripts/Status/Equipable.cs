@@ -74,6 +74,9 @@ public partial class Equipable : MonoBehaviour
                 SavedData.Instance.Item_Equipments.Subscribe(Synchronize, ItemInstance_Equipment.Type.EnumTotal);
                 break;
         }
+
+        GameManager.Instance.PlayerAbility?.FullHP();
+        GameManager.Instance.PlayerAbility?.FullMP();
     }
 
     private void OnDestroy()

@@ -51,7 +51,19 @@ public struct QuestNeed
         }
         else
         {
-            curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().GetNumberItem(this.target);
+            //curValue = GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().GetNumberItem(this.target);
+
+            int sum = 0;
+
+            foreach (var item in SavedData.Instance.Item_Inventory.Items)
+            {
+                if (item.Key.SO.ID == this.target)  
+                {
+                    sum += item.Key.Count;
+                }
+            }
+
+            curValue = sum;
         }
 
     }

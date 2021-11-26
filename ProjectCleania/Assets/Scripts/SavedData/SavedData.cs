@@ -108,9 +108,6 @@ public class SavedData : MonoBehaviour
         //GameManager.Instance.player.playerMove.StopMoving();
 
         ExpManager.Initailize(PlayerExp);
-
-        GameManager.Instance.PlayerAbility.FullHP();
-        GameManager.Instance.PlayerAbility.FullMP();
     }
 
     void BeforeSave()
