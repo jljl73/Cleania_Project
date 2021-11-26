@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class AbilityStatus : MonoBehaviour
 {
     Status status;          // status is essential unlike equips or buffs
@@ -181,7 +180,7 @@ public class AbilityStatus : MonoBehaviour
         _MP = this[Ability.Stat.MaxMP];
     }
 
-    // deprecated function. use AttackedBy() or this[Ability.Stat.Attack].
+
     virtual public float DPS()
     {
         float tot = this[Ability.Stat.Attack];
@@ -192,32 +191,50 @@ public class AbilityStatus : MonoBehaviour
         return tot;
     }
 
-    virtual public float AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
+    virtual public float Toughness()
     {
-        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))
-            return 0;
+        float tot = this[Ability.Stat.MaxHP];
 
-        float finalDamage = attacker[Ability.Stat.Attack] * skillScale;
+        tot /= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);
+
+        tot *= this[Ability.Stat.ReduceDamage];
+
+        return tot;
+    }
+
+
+
+    virtual public Ability.AffectResult AttackedBy(AbilityStatus attacker, float skillScale)      // returns reduced HP value
+    {
+        Ability.AffectResult ret = new Ability.AffectResult();
+
+        if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))
+        {
+            ret.Dodged = true;
+            return ret;
+        }
+
+        ret.Value = attacker[Ability.Stat.Attack] * skillScale;
 
         if (Random.Range(0.0f, 1.0f) < attacker[Ability.Stat.CriticalChance])
-            finalDamage *= attacker[Ability.Stat.CriticalScale];
+            ret.Value *= attacker[Ability.Stat.CriticalScale];
 
-        finalDamage *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
+        ret.Value *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
 
-        finalDamage *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
+        ret.Value *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
 
         //
 
-        if (_HP > finalDamage)
-            _HP -= finalDamage;
+        if (_HP > ret.Value)
+            _HP -= ret.Value;
         else
             _HP = 0;
 
         GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
-        damage.GetComponent<TextDamage>().SetDamageText(finalDamage.ToString());
+        damage.GetComponent<TextDamage>().SetDamageText(ret.Value.ToString());
         Instantiate(damage, transform.position, transform.rotation);
 
-        return finalDamage;
+        return ret;
     }
 
     public bool ConsumeMP(float usingMP)
