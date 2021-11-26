@@ -122,8 +122,8 @@ public class EnemySkillManager : BaseSkillManager
             skill.AnimationActivate();
             return;
         }
-
-        selectedSpecialSkillID.Add(id, true);
+        if (!selectedSpecialSkillID.ContainsKey(id))
+            selectedSpecialSkillID.Add(id, true);
     }
 
     protected override void SkillEventConnect()

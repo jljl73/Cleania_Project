@@ -6,6 +6,19 @@ using UnityEngine.UI;
 
 public class EnemySpawnTest : MonoBehaviour
 {
+    enum enumMonsterSpecialSkillType
+    {
+        Toxicity = 2901,
+        StormWind,
+        IngrainedDirt,
+        Pollution,
+        FastFeet,
+        Seal = 2906,
+        Decomposition = 2908,
+        HPShare = 2909,
+        Mine = 2910
+    }
+
     [Header("스폰 범위")]
     [SerializeField]
     float spawnedRadius = 3f;
@@ -18,6 +31,10 @@ public class EnemySpawnTest : MonoBehaviour
     [SerializeField]
     EnemyStateMachine.enumRank monsterRank = EnemyStateMachine.enumRank.Normal;
 
+    [Header("특수 스킬")]
+    [SerializeField]
+    List<enumMonsterSpecialSkillType> specialSkills = new List<enumMonsterSpecialSkillType>();
+
     [Header("몬스터 레벨")]
     [SerializeField]
     int level = 1;
@@ -26,8 +43,23 @@ public class EnemySpawnTest : MonoBehaviour
     [SerializeField]
     int count = 0;
 
+    EnemyGroupManager enemyGroupManager;
+
     //List<GameObject> monsters = new List<GameObject>();
-    Stack<GameObject> mostersStack = new Stack<GameObject>();
+    Stack<GameObject> monsterStack = new Stack<GameObject>();
+
+    private void Awake()
+    {
+        enemyGroupManager = GetComponent<EnemyGroupManager>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            print("total count: " + monsterStack.Count);
+        }
+    }
 
     public void Spawn()
     {
@@ -57,29 +89,64 @@ public class EnemySpawnTest : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             GameObject monster = ObjectPool.SpawnFromPool<Enemy>(enumPoolObject, GetRandomPointInCircle(this.transform.position, spawnedRadius), transform.rotation).gameObject;
+
+            // 스포너 설정
+            EnemyChase enemyChase = monster.GetComponent<EnemyChase>();
+            enemyChase.EnemySpawner = this.gameObject;
+
+            // 등급 설정
             EnemyStateMachine enemyState = monster.GetComponent<EnemyStateMachine>();
             enemyState.Rank = monsterRank;
+
+            // 특수 스킬 성정
+            if (enemyState.Rank == EnemyStateMachine.enumRank.Rare)
+            {
+                EnemySkillManager enemySkillManager = monster.GetComponent<EnemySkillManager>();
+                for (int j = 0; j < specialSkills.Count; j++)
+                {
+                    enemySkillManager.MakeSpecialSkillAvailable((int)specialSkills[j]);
+                }
+            }
+
+            // 레벨 성정
             Status_ArithmeticProgress levelComponent = monster.GetComponent<Status_ArithmeticProgress>();
             levelComponent.Level = level;
-            mostersStack.Push(monster);
+
+            monsterStack.Push(monster);
+        }
+    }
+
+    public void GroupMosters()
+    {
+        if (monsterStack.Count == enemyGroupManager.Count())
+            return;
+
+        foreach (GameObject monster in monsterStack)
+        {
+            if (!enemyGroupManager.IsMemberExist(monster))
+                enemyGroupManager.AddMember(monster);
         }
     }
 
     public void ClearMonster()
     {
-        GameObject monster = mostersStack.Pop();
+        GameObject monster = monsterStack.Pop();
         monster.SetActive(false);
+        if (enemyGroupManager.IsMemberExist(monster))
+            enemyGroupManager.DeleteMember(monster);
     }
 
     public void ClearAllMonster()
     {
-        while (mostersStack.Count > 0)
+        while (monsterStack.Count > 0)
         {
-            GameObject monster = mostersStack.Pop();
+            GameObject monster = monsterStack.Pop();
             monster.SetActive(false);
+            if (enemyGroupManager.IsMemberExist(monster))
+                enemyGroupManager.DeleteMember(monster);
         }
        
-        mostersStack.Clear();
+        monsterStack.Clear();
     }
 
     public void OnMonsterTypeSelected(Dropdown sender)

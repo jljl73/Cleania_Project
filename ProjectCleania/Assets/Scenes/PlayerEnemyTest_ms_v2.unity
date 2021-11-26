@@ -199,12 +199,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 367356752488972320, guid: cd554a856f12723488dd4511824d4748, type: 3}
-      propertyPath: count
-      value: 1
+      propertyPath: monsterRank
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 367356752488972320, guid: cd554a856f12723488dd4511824d4748, type: 3}
-      propertyPath: monsterType
-      value: 5002
+      propertyPath: specialSkills.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 367356752488972320, guid: cd554a856f12723488dd4511824d4748, type: 3}
+      propertyPath: specialSkills.Array.data[0]
+      value: 2901
+      objectReference: {fileID: 0}
+    - target: {fileID: 367356752488972320, guid: cd554a856f12723488dd4511824d4748, type: 3}
+      propertyPath: specialSkills.Array.data[1]
+      value: 2904
       objectReference: {fileID: 0}
     - target: {fileID: 367356752488972321, guid: cd554a856f12723488dd4511824d4748, type: 3}
       propertyPath: m_RootOrder
@@ -724,7 +732,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020510918}
-  m_LocalRotation: {x: 0.45034933, y: 0.000000015362758, z: -0.000000007748883, w: 0.8928525}
+  m_LocalRotation: {x: 0.45034933, y: -0.000000015362762, z: 0.000000007748884, w: 0.8928525}
   m_LocalPosition: {x: 23.5, y: 12.08, z: -5.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1247,7 +1255,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320781507}
-  m_LocalRotation: {x: 0.45034933, y: 0.000000015362758, z: -0.000000007748883, w: 0.8928525}
+  m_LocalRotation: {x: 0.45034933, y: -0.000000015362762, z: 0.000000007748884, w: 0.8928525}
   m_LocalPosition: {x: 23.5, y: 12.08, z: -5.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1537,6 +1545,18 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 548150242}
+    - target: {fileID: 2439240037610084791, guid: 79e3bf279167a7945b4ee34710e34d7b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 548150242}
+    - target: {fileID: 2439240037610084791, guid: 79e3bf279167a7945b4ee34710e34d7b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GroupMosters
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077803108418275992, guid: 79e3bf279167a7945b4ee34710e34d7b, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 548150241}
     - target: {fileID: 7656745482720582241, guid: 79e3bf279167a7945b4ee34710e34d7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1641,6 +1661,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 548150241}
+    - target: {fileID: 9061263080319538969, guid: 79e3bf279167a7945b4ee34710e34d7b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79e3bf279167a7945b4ee34710e34d7b, type: 3}
 --- !u!224 &1893937116 stripped
