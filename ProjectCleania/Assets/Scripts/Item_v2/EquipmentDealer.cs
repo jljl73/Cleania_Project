@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EquipmentDealer
 {
+    private EquipmentDealer() { }
+
     // instantiating ItemInstance_Equipment
     static public ItemInstance_Equipment ShuffleStatics (ItemInstance_Equipment equipment)
     {

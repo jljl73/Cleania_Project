@@ -47,7 +47,7 @@ public partial class UI_ItemContainer : MonoBehaviour
         get
         {
             for (int i = 0; i < controllers.Length; ++i)
-                if (controllers[i].itemInstance == item)
+                if (controllers[i] != null && controllers[i].itemInstance == item)
                     return i;
 
             return -1;

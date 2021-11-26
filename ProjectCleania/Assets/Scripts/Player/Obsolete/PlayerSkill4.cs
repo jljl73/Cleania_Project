@@ -55,7 +55,9 @@ public class PlayerSkill4 : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
-            if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale) == 0)
+            other.GetComponent<Enemy>().abilityStatus.AttackedBy(abilityStatus, skillScale);
+
+            if (other.GetComponent<Enemy>().abilityStatus.HP == 0)
                 other.GetComponent<Enemy>().Die();
         }
     }
