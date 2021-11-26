@@ -29,6 +29,7 @@ public class Dialog : MonoBehaviour
 
     private void OnEnable()
     {
+        quest = transform.parent.GetComponent<DialogSelector>().quest;
         ChangePage(0);
     }
 

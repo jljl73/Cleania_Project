@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogSelector : MonoBehaviour
 {
     [SerializeField]
-    Quest quest;
+    public Quest quest;
 
     public void ShowDialog()
     {
