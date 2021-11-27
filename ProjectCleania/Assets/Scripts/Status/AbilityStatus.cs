@@ -55,7 +55,19 @@ public class AbilityStatus : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Orders <para></para>
+    /// 1 - Stats <para></para>
+    /// 1.1 - Stats : Vitality relate MaxHP <para></para>
+    /// 2 - Equipment absolute <para></para>
+    /// 2.1 - Equipment options except additional <para></para>
+    /// 2.2 - Status : Strength relate Atk <para></para>
+    /// 3 - Buff <para></para>
+    /// 4 - Equipment additional <para></para>
+    /// 5 - refresh relative <para></para>
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <returns></returns>
     virtual protected float RefreshStat(Ability.Stat stat)
     {
         if (status == null)
@@ -67,17 +79,9 @@ public class AbilityStatus : MonoBehaviour
 
         switch (stat)                            // special values
         {
-            case Ability.Stat.Attack:
-                _stats[(int)Ability.Stat.Attack] *= 1 + _stats[(int)Ability.Stat.Strength] * 0.01f;
-                break;
-
             case Ability.Stat.MaxHP:
                 _stats[(int)Ability.Stat.MaxHP] += _stats[(int)Ability.Stat.Vitality] * 100;
                 break;
-
-            //case Ability.Stat.Defense:
-            //    _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
-            //    break;
 
             default:
                 break;
@@ -122,6 +126,16 @@ public class AbilityStatus : MonoBehaviour
                             break;
                     }
             }
+        }
+
+        switch (stat)                            // special values
+        {
+            case Ability.Stat.Attack:
+                _stats[(int)Ability.Stat.Attack] *= 1 + _stats[(int)Ability.Stat.Strength] * 0.01f;
+                break;
+
+            default:
+                break;
         }
 
         if (buffs != null)
