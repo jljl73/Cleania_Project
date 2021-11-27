@@ -36,13 +36,13 @@ public abstract class EnemySkill : Skill
         enemy.enemyStateMachine.Transition(EnemyStateMachine.enumState.Idle);
     }
 
-    //public override void AnimationActivate()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
+    void OnTriggerEnter(Collider other)
+    {
+        OnEnemyTriggerZone.Invoke(true, ID);
+    }
 
-    //public override void Deactivate()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
+    void OnTriggerExit(Collider other)
+    {
+        OnEnemyTriggerZone.Invoke(false, ID);
+    }
 }

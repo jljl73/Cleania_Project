@@ -12,6 +12,8 @@ public abstract class Skill : MonoBehaviour
     public event DelegateVoid OnPlaySkill;
     public event DelegateVoid OnSkillEnd;
 
+    public UnityEvent<bool, int> OnEnemyTriggerZone;
+
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
 

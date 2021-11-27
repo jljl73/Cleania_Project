@@ -16,6 +16,9 @@ public class EnemySkillManager : BaseSkillManager
     EnemySkillStorage enemySkillStorage;
 
     Dictionary<int, bool> selectedSpecialSkillID = new Dictionary<int, bool>();
+    protected List<Skill> skillRunWaitingList = new List<Skill>();
+
+    //UnityEvent<int> OnEnrollAvailableSkill;
 
     protected override void Awake()
     {
@@ -44,12 +47,34 @@ public class EnemySkillManager : BaseSkillManager
 
         // skillData로 부터 쿨타임 관련 Dictionary 추가 및 초기화 & 스킬 animator 설정
         UpdateOtherDictBySkillDict();
+
+        // 등록된 스킬이 EnrollAvailableSkill 함수에 접근 할 수 있게 이벤트 설정
+        foreach (KeyValuePair<int, Skill> skillPair in skillDict)
+        {
+            skillPair.Value.OnEnemyTriggerZone.AddListener(EnrollAvailableSkill);
+        }
     }
 
     new void Update()
     {
         base.Update();
         
+    }
+
+    void EnrollAvailableSkill(bool value ,int id)
+    {
+        if (value)
+        {
+            if (skillRunWaitingList.Contains(skillDict[id]))
+                return;
+            else
+                skillRunWaitingList.Add(skillDict[id]);
+        }
+        else
+        {
+            if (skillRunWaitingList.Contains(skillDict[id]))
+                skillRunWaitingList.Remove(skillDict[id]);
+        }
     }
 
     public override bool PlaySkill(int skillID)
