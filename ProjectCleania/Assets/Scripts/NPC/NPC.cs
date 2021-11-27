@@ -19,17 +19,16 @@ public class NPC : MonoBehaviour
     public string Name { get { return m_Name; } }
 
     public string Value;
+    [SerializeField]
+    GameObject questMarker;
     int count = 0;
 
     private void Start()
     {
         transform.Find("Marker").rotation = Camera.main.transform.rotation;
         fieldName.GetComponent<TextMeshPro>().text = m_Name;
-    }
-
-    void Update()
-    {
         fieldName.transform.rotation = Camera.main.transform.rotation;
+        fieldName.gameObject.SetActive(false);
     }
     
     public void ShowName(bool value)
@@ -52,5 +51,7 @@ public class NPC : MonoBehaviour
     {
         ShowName(false);
     }
+
+
 
 }

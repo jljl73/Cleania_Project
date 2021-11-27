@@ -1296,6 +1296,7 @@ GameObject:
   - component: {fileID: 230230194}
   - component: {fileID: 230230193}
   - component: {fileID: 230230192}
+  - component: {fileID: 230230195}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -1378,6 +1379,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &230230195
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230230190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 2
+  m_FrequencyGain: 0
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &230513087
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1470,6 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bd283ff20311949a38d2248a184f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShakeDuration: 0.3
 --- !u!114 &238240852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1499,7 +1518,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7767857, y: 1}
+    m_SensorSize: {x: 1.7782516, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6055,7 +6074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6919b3a3560542b41a3c6c1442391f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 11
+  characterName: zzx
   item_Equipments:
     SD_equipments: []
   item_Inventory:
@@ -12993,7 +13012,8 @@ MonoBehaviour:
   fieldName: {fileID: 1877568146}
   npctype: 4
   m_Name: "\uD53C\uC8F5"
-  Value: 
+  Value: Storage
+  questMarker: {fileID: 0}
 --- !u!4 &6023421954465876984
 Transform:
   m_ObjectHideFlags: 0
@@ -13127,7 +13147,8 @@ MonoBehaviour:
   fieldName: {fileID: 317001037}
   npctype: 3
   m_Name: "\uD398\uBD80\uB9AC\uC988"
-  Value: 
+  Value: Enchant
+  questMarker: {fileID: 0}
 --- !u!136 &6023421954519362122
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13503,7 +13524,8 @@ MonoBehaviour:
   fieldName: {fileID: 296330240}
   npctype: 2
   m_Name: "\uB2E4\uC774\uC1A1"
-  Value: 
+  Value: Market
+  questMarker: {fileID: 0}
 --- !u!4 &6023421955322290010
 Transform:
   m_ObjectHideFlags: 0
@@ -13672,7 +13694,8 @@ MonoBehaviour:
   fieldName: {fileID: 1318111192}
   npctype: 6
   m_Name: "\uCCAD\uC18C\uAD50\uAD00"
-  Value: QuestDialog 1002
+  Value: Quest
+  questMarker: {fileID: 0}
 --- !u!136 &6023421955512282654
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13702,7 +13725,8 @@ MonoBehaviour:
   fieldName: {fileID: 6023421953980696349}
   npctype: 7
   m_Name: "\uB300\uCCAD\uC18C"
-  Value: 
+  Value: Dungeon
+  questMarker: {fileID: 0}
 --- !u!136 &6023421955640585463
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13767,7 +13791,8 @@ MonoBehaviour:
   fieldName: {fileID: 1997028260}
   npctype: 1
   m_Name: "\uD06C\uB9B0\uD1A0\uD53C\uC559"
-  Value: 
+  Value: Repair
+  questMarker: {fileID: 0}
 --- !u!136 &6023421955783363526
 CapsuleCollider:
   m_ObjectHideFlags: 0
