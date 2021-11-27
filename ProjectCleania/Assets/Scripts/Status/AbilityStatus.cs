@@ -293,7 +293,7 @@ public class AbilityStatus : MonoBehaviour
             case Ability.Stat.MaxMP:
             case Ability.Stat.Strength:
             case Ability.Stat.Vitality:
-                return $"{this[stat]}";
+                return $"{System.Math.Round(this[stat], 2)}";
 
             case Ability.Stat.Accuracy:
             case Ability.Stat.CriticalChance:
@@ -301,12 +301,14 @@ public class AbilityStatus : MonoBehaviour
             case Ability.Stat.Dodge:
             case Ability.Stat.MoveSpeed:
             case Ability.Stat.Tenacity:
-                return $"{this[stat] * 100} %";
+                return $"{System.Math.Round(this[stat] * 100, 2)} %";
+
+            case Ability.Stat.SkillCooldown:
+                return $"{System.Math.Round((1.0f - this[stat]) * 100, 2)} %";
 
             case Ability.Stat.ReduceDamage:
             case Ability.Stat.IncreaseDamage:
-            case Ability.Stat.SkillCooldown:
-                return $"{(1.0f - this[stat]) * 100} %";
+                return $"{System.Math.Round((this[stat] - 1.0f) * 100, 2)} %";
 
             default:
                 return "error";

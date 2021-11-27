@@ -88,7 +88,7 @@ public partial class UI_ItemContainer : MonoBehaviour
 
         }
 
-        Invoke("_SelfLoad", 0.1f);
+        Invoke("_SelfLoad", 0.01f);
     }
 
     private void OnDestroy()
@@ -371,6 +371,8 @@ public partial class UI_ItemContainer
                 _LoadControllers(SavedData.Instance.Item_Equipments);
                 break;
         }
+
+        gameObject.SetActive(false);
     }
 
     bool _AddSync(iItemStorage storage, ItemInstance item, int index)
