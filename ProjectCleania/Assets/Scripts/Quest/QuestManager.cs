@@ -58,14 +58,9 @@ public class QuestManager : MonoBehaviour
 
         //QuestDB.Instance.Load();
         SetListHeight();
-    }
-
-    private void OnEnable()
-    {
-        
         SavedData.Instance.Item_Inventory.Subscribe(Synchronize, Point.Empty);
     }
-
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))

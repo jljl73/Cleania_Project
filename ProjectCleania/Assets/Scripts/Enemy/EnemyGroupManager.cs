@@ -37,6 +37,27 @@ public class EnemyGroupManager : MonoBehaviour
             Target = null;
     }
 
+    public bool IsMemberExist(GameObject enemy)
+    {
+        if (enemies.Contains(enemy))
+            return true;
+        else
+            return false;
+    }
+
+    public bool IsEmpty()
+    {
+        if (enemies.Count == 0)
+            return true;
+        else
+            return false;
+    }
+
+    public int Count()
+    {
+        return enemies.Count;
+    }
+
     //public void SetTarget(GameObject target)
     //{
     //    foreach (var e in enemies)

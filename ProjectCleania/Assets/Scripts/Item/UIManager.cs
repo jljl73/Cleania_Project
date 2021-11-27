@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowInventory(bool bActive)
     {
-        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.Inventory);
+        GameManager.Instance.soundPlayer?.PlaySound(SoundPlayer.TYPE.Inventory);
         ShowPanel(InventoryPanel.gameObject, bActive);
     }
 
