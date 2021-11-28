@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     EnemySpawnerManager enemySpawnerManager;
-    public bool PlayerMovable;
+    public bool PlayerMovable = true;
 
     //public Vector3 force = Vector3.right;
     static public GameObject clickedObject = null;

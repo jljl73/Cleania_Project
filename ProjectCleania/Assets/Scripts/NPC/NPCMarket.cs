@@ -5,9 +5,19 @@ using UnityEngine.UI;
 
 public class NPCMarket : MonoBehaviour
 {
-    public ToggleGroup toggleGroup;
-    public ToggleGroup[] pages;
-    public GameObject prefab_Item;
+    [SerializeField]
+    ItemSO[] Items1;
+    [SerializeField]
+    ItemSO[] Items2;
+    [SerializeField]
+    ItemSO[] Items3;
+
+    [SerializeField]
+    ToggleGroup toggleGroup;
+    [SerializeField]
+    ToggleGroup[] pages;
+    [SerializeField]
+    GameObject prefab_Item;
     [SerializeField]
     ScrollRect pageScroll;
 
@@ -15,21 +25,27 @@ public class NPCMarket : MonoBehaviour
 
     private void Awake()
     {
-        ItemInMarket newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(1101001, pages[0]);
-        newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(1301001, pages[0]);
-        newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(1302001, pages[0]);
-        newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(1303001, pages[0]);
-        newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(1304001, pages[0]);
-        newItem = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
-        newItem.Initialize(1305001, pages[0]);
+        if (Items1 != null && Items1.Length != 0)
+            foreach (var i in Items1)
+            {
+                ItemInMarket Item = Instantiate(prefab_Item, pages[0].transform).GetComponent<ItemInMarket>();
+                Item.Initialize(i, pages[0]);
+            }
 
+        if (Items2 != null && Items2.Length != 0)
+            foreach (var i in Items2)
+            {
+                ItemInMarket Item = Instantiate(prefab_Item, pages[1].transform).GetComponent<ItemInMarket>();
+                Item.Initialize(i, pages[1]);
+            }
 
-        toggleGroup = pages[0];
+        if (Items3 != null && Items3.Length != 0)
+            foreach (var i in Items3)
+            {
+                ItemInMarket Item = Instantiate(prefab_Item, pages[2].transform).GetComponent<ItemInMarket>();
+                Item.Initialize(i, pages[2]);
+            }
+        
         ShowPage(0);
     }
 
@@ -56,7 +72,7 @@ public class NPCMarket : MonoBehaviour
             // ±¸¸Å
             var item = t.GetComponent<ItemInMarket>();
             itemsToBuy.Add(item);
-            totalPrice += ItemSO.Load(item.ItemID).Price;
+            totalPrice += item.ItemSO.Price;
         }
 
 
@@ -75,9 +91,9 @@ public class NPCMarket : MonoBehaviour
             foreach (var itemToBuyInMarket in itemsToBuy)
             {
 
-                if (inventory.Add(ItemInstance.Instantiate(itemToBuyInMarket.ItemID)))
+                if (inventory.Add(ItemInstance.Instantiate(itemToBuyInMarket.ItemSO)))
                 {
-                    inventoryCurrency.AddCrystal(-ItemSO.Load(itemToBuyInMarket.ItemID).Price/* * originCount*/);
+                    inventoryCurrency.AddCrystal(-itemToBuyInMarket.ItemSO.Price/* * originCount*/);
                     //if (soldItems.Contains(itemToBuyInMarket))
                     //    soldItems.Remove(itemToBuyInMarket);
                     //Destroy(itemToBuyInMarket.gameObject);
