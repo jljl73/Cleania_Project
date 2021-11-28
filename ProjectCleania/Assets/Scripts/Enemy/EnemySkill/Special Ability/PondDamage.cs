@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PondDamage : DamagingProperty
 {
-    public float damageRange = 3;
-
     private void Start()
     {
         if (!isSetUp) return; 

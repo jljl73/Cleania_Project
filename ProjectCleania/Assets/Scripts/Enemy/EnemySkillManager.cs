@@ -16,9 +16,9 @@ public class EnemySkillManager : BaseSkillManager
     EnemySkillStorage enemySkillStorage;
 
     Dictionary<int, bool> selectedSpecialSkillID = new Dictionary<int, bool>();
-    protected List<Skill> skillRunWaitingList = new List<Skill>();
 
-    //UnityEvent<int> OnEnrollAvailableSkill;
+    [SerializeField]
+    protected List<int> skillRunWaitingList = new List<int>();
 
     protected override void Awake()
     {
@@ -48,32 +48,45 @@ public class EnemySkillManager : BaseSkillManager
         // skillData로 부터 쿨타임 관련 Dictionary 추가 및 초기화 & 스킬 animator 설정
         UpdateOtherDictBySkillDict();
 
-        // 등록된 스킬이 EnrollAvailableSkill 함수에 접근 할 수 있게 이벤트 설정
-        foreach (KeyValuePair<int, Skill> skillPair in skillDict)
-        {
-            skillPair.Value.OnEnemyTriggerZone.AddListener(EnrollAvailableSkill);
-        }
+        // 스킬 내 이벤트 연결
+        SkillEventConnect();
     }
 
     new void Update()
     {
         base.Update();
-        
+    }
+
+    public int GetSkillRunWaitingListCount()
+    {
+        return skillRunWaitingList.Count;
+    }
+
+    public void PlaySkillRunWaitingListSkill()
+    {
+        // 실행 됬으면 Pop Front
+        if (PlaySkill(skillRunWaitingList[0]))
+            skillRunWaitingList.RemoveAt(0);
     }
 
     void EnrollAvailableSkill(bool value ,int id)
     {
         if (value)
         {
-            if (skillRunWaitingList.Contains(skillDict[id]))
+            // 쿨타임 됬는지 확인
+            if (!IsSpecificSkillAvailable(id))
+                return;
+
+            // 이미 갖고있는지 확인
+            if (skillRunWaitingList.Contains(id))
                 return;
             else
-                skillRunWaitingList.Add(skillDict[id]);
+                skillRunWaitingList.Add(id);
         }
         else
         {
-            if (skillRunWaitingList.Contains(skillDict[id]))
-                skillRunWaitingList.Remove(skillDict[id]);
+            if (skillRunWaitingList.Contains(id))
+                skillRunWaitingList.Remove(id);
         }
     }
 
@@ -82,7 +95,8 @@ public class EnemySkillManager : BaseSkillManager
         if (!IsSkillAvailable()) return false;
         if (!IsSpecificSkillAvailable(skillID)) return false;
 
-        if (skillDict[skillID].AnimationActivate())
+        // 더스티 자폭 스킬은 상태전환x
+        if (skillDict[skillID].AnimationActivate() && skillID != 2102)
             enemyStateMachine.Transition(StateMachine.enumState.Attacking);
 
         ResetSkill(skillID);
@@ -153,6 +167,11 @@ public class EnemySkillManager : BaseSkillManager
 
     protected override void SkillEventConnect()
     {
+        // 등록된 스킬이 EnrollAvailableSkill 함수에 접근 할 수 있게 이벤트 설정
+        foreach (KeyValuePair<int, Skill> skillPair in skillDict)
+        {
+            skillPair.Value.OnEnemyTriggerZone.AddListener(EnrollAvailableSkill);
+        }
         return;
     }
 

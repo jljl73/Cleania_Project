@@ -8,10 +8,10 @@ public class TheDustySuperDivision : EnemySkill
     public GameObject theDusty;
     public int nDivision = 3;
 
-    private void Start()
-    {
-        //enemyEvent.RegisterListener(Activate);
-    }
+    //private new void Start()
+    //{
+    //    //enemyEvent.RegisterListener(Activate);
+    //}
 
     public override void Activate()
     {

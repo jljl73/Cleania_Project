@@ -93,6 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3183052657fd85e4e974cbbc79150329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 6206510397852173089}
   OwnerAbilityStatus: {fileID: 6305365895392000946}
   effectController: []
@@ -110,6 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3636914607006347059}
   - component: {fileID: 2418572651082017351}
+  - component: {fileID: 1673976881}
   m_Layer: 0
   m_Name: Ground Hit
   m_TagString: Untagged
@@ -143,11 +147,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ee750c78e8c594780e764a9e731bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 6206510397852173089}
   OwnerAbilityStatus: {fileID: 6305365895392000946}
   effectController: []
   enemy: {fileID: 7698646001147554570}
   skillData: {fileID: 11400000, guid: d75c69b4280a8a14cad164503b04d311, type: 2}
+--- !u!135 &1673976881
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636914607006347058}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 1.8}
 --- !u!1 &6206510397842665601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,7 +1336,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6206510397842665697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55b152280a9a209479fe261b254feba1, type: 3}
   m_Name: 
@@ -1343,6 +1363,7 @@ MonoBehaviour:
   enemyMove: {fileID: 6271929839223789220}
   myEnemy: {fileID: 7698646001147554570}
   nav: {fileID: 8473451873532257197}
+  skillRunWaitingList: 
 --- !u!114 &7321774980216721902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2586,7 +2607,7 @@ GameObject:
   - component: {fileID: 5094565500672693811}
   - component: {fileID: 2729397351371099190}
   - component: {fileID: 7558705486454645534}
-  - component: {fileID: 6552274021247091931}
+  - component: {fileID: 3055642088605315031}
   m_Layer: 0
   m_Name: Dust Storm
   m_TagString: Untagged
@@ -2622,6 +2643,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7276b3eef46e249a76cc6991a880e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 6206510397852173089}
   OwnerAbilityStatus: {fileID: 6305365895392000946}
   effectController:
@@ -2659,8 +2683,8 @@ MonoBehaviour:
   ParticleObject: {fileID: 2600161726305026245}
   scale: 1
   IsEnabledOnAwake: 0
---- !u!136 &6552274021247091931
-CapsuleCollider:
+--- !u!135 &3055642088605315031
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2668,11 +2692,10 @@ CapsuleCollider:
   m_GameObject: {fileID: 8790178542006779828}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.75
-  m_Height: 4
-  m_Direction: 2
-  m_Center: {x: 0, y: 1, z: 2.75}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 1.8}
 --- !u!1001 &6126241608030390385
 PrefabInstance:
   m_ObjectHideFlags: 0

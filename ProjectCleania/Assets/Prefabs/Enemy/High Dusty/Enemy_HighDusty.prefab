@@ -210,6 +210,7 @@ MonoBehaviour:
   enemyMove: {fileID: 906908091207954286}
   myEnemy: {fileID: 1372266458}
   nav: {fileID: 5230367245399787318}
+  skillRunWaitingList: 
 --- !u!114 &5942481381382728102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4972137588133277434}
   - component: {fileID: 4972137588133277428}
+  - component: {fileID: 1065543533762082280}
   m_Layer: 0
   m_Name: HighDustySkill1
   m_TagString: Untagged
@@ -308,12 +310,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42218615faa3e09479fb1098297840f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 4972137587626881284}
   OwnerAbilityStatus: {fileID: 0}
   effectController: []
   enemy: {fileID: 1372266458}
   DustBall: {fileID: 870499553090971103, guid: 52b154e50b01fd748b924f58de1e2be5, type: 3}
   skillData: {fileID: 11400000, guid: f366f79b72c659b4987b38a3e1679291, type: 2}
+--- !u!135 &1065543533762082280
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972137588133277429}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 1.5}
 --- !u!1 &5644950459138557823
 GameObject:
   m_ObjectHideFlags: 0

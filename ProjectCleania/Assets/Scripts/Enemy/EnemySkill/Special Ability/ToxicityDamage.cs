@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ToxicityDamage : DamagingProperty
 {
-    public float damageRange = 3;
+    //public float damageRange = 3;
 
     protected virtual void Update()
     {

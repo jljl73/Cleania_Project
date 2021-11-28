@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 6008768842996009720}
   - component: {fileID: 4755104038347188109}
   - component: {fileID: 4970093580699952431}
-  - component: {fileID: 4138271596608298577}
   m_Layer: 0
   m_Name: DustySuicide
   m_TagString: Untagged
@@ -82,6 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdefaf103e48f74f94184f9ae1bf687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 7717416709024651364}
   OwnerAbilityStatus: {fileID: 6824819401899668243}
   effectController:
@@ -135,20 +137,6 @@ MonoBehaviour:
   ParticleObject: {fileID: 7539565309999471938}
   scale: 1
   IsEnabledOnAwake: 0
---- !u!136 &4138271596608298577
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4619993477941017753}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.8
-  m_Height: 1.67
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.41, z: 0}
 --- !u!1 &7717416708449175445
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,10 +180,10 @@ BoxCollider:
   m_GameObject: {fileID: 7717416708449175445}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 1, z: 0.5}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0.35}
 --- !u!114 &2533120371948066580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c6d64f27fe8264aa0fd0397a7baa82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 7717416709024651364}
   OwnerAbilityStatus: {fileID: 0}
   effectController:
@@ -439,6 +430,7 @@ MonoBehaviour:
   enemyMove: {fileID: 1227204802912907935}
   myEnemy: {fileID: 3404450377915123936}
   nav: {fileID: 716707945987861651}
+  skillRunWaitingList: 
 --- !u!114 &7454554861356505669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,6 +915,26 @@ PrefabInstance:
     - target: {fileID: 4941443694886112693, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941443694887202865, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941443694887237643, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941443694887239723, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941443694887258975, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941443694887283077, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fc716b2ef914dd418e4daa41e091b64, type: 3}

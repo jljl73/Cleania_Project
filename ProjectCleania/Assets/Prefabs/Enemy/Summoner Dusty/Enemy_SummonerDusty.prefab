@@ -43,8 +43,8 @@ CapsuleCollider:
   m_GameObject: {fileID: 726093934307533585}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 1.5
+  m_Enabled: 1
+  m_Radius: 4
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 1.2, z: 0}
@@ -60,6 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c7b0a06e80952943aea152b3e1a0f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 726093934847360224}
   OwnerAbilityStatus: {fileID: 0}
   effectController:
@@ -271,7 +274,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 726093934847360224}
-  enemyMove: {fileID: 0}
   stateMachine: {fileID: 529033232058252936}
   TriggerRange: 2
 --- !u!114 &3992148417218650346
@@ -292,6 +294,7 @@ MonoBehaviour:
   enemyMove: {fileID: 1072513074642165068}
   myEnemy: {fileID: 8539338589833389503}
   nav: {fileID: 690525582308477934}
+  skillRunWaitingList: 
 --- !u!114 &3311330247883225873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +452,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4282285903623584744}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 1.5
   m_Height: 1.2
   m_Direction: 1
@@ -466,6 +469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e986357d8bbe6c340a7245ac4d778641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 726093934847360224}
   OwnerAbilityStatus: {fileID: 0}
   effectController:

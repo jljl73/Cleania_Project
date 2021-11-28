@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class DustySkillSuicide : EnemySkill
 {
-    float damageScale = 10;
-    float angryDuration = 3;
-    float skillTriggerPercentage = 0.5f;
-
-    Collider bombCollider;
-
-    bool isFlying = false;
-
     [SerializeField]
     DustySuicideSO skillData;
+
+    float damageScale = 10;
+    float damageRange = 1.5f;
+    float angryDuration = 3;
+    float skillTriggerPercentage = 0.5f;
+    float triggerHPRate;
+
+    bool isTriggered = false;
+
+    Vector3 targetSuicidePosition;
+
+    [SerializeField]
+    enumSkillState skillState = enumSkillState.None;
+    enum enumSkillState
+    {
+        None,
+        Angry,
+        Fly,
+        Bomb
+    }
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -21,13 +33,6 @@ public class DustySkillSuicide : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        bombCollider = GetComponent<Collider>();
-        if (bombCollider == null)
-        {
-            throw new System.Exception("DustySkillSuicide doesnt have bombCollider");
-        }
-        else
-            bombCollider.enabled = false;
     }
 
     public void UpdateSkillData()
@@ -38,22 +43,32 @@ public class DustySkillSuicide : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
+        damageRange = skillData.GetDamageRange();
         skillTriggerPercentage = skillData.GetTriggerChance();
+        triggerHPRate = skillData.GetTriggerHPRate();
         angryDuration = skillData.GetAngryDuration();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (isFlying)
+        if (enemy.enemyStateMachine.CompareState(StateMachine.enumState.Dead))
+            return;
+
+        switch (skillState)
         {
-            // print("dist: " + Vector3.Distance(this.transform.position, enemyMove.TargetPosition));
-            if (Vector3.Distance(this.transform.position, enemyMove.TargetPose) < 0.1f)
-            {
-                animator.SetTrigger("Suicide");
-                isFlying = false;
-            }
+            case enumSkillState.Angry:
+                break;
+            case enumSkillState.Fly:
+                FlyToSuicide();
+                break;
+            case enumSkillState.Bomb:
+                break;
+            default:
+                break;
         }
     }
+
+    void DeactivateDelay() => enemy.gameObject.SetActive(false);
 
     public override bool AnimationActivate()
     {
@@ -62,57 +77,130 @@ public class DustySkillSuicide : EnemySkill
 
         animator.SetBool("OnSkill", true);
         animator.SetTrigger("Angry");
-        enemyMove.StopMoving(true); 
-
-        StartCoroutine("AngryToFlyForward", angryDuration);
 
         return true;
+    }
+
+    void FlyToSuicide()
+    {
+        if (Vector3.Distance(this.transform.position, targetSuicidePosition) < damageRange)
+        {
+            animator.SetTrigger("Suicide");
+            skillState = enumSkillState.None;
+        }
     }
 
     IEnumerator AngryToFlyForward(float angryDuration)
     {
         yield return new WaitForSeconds(angryDuration);
         animator.SetTrigger("AngryToFlyForward");
+        SetOnlyChasePositionMode();
 
-        isFlying = true;
-        enemyMove.StopMoving(false);
-        if(enemyMove.TargetObject != null)
-            enemyMove.SetOnlyChasePositionMode(true, enemyMove.TargetObject.transform.position);
     }
 
-    public override void Activate()
+    public override void Activate(int id)
     {
-        bombCollider.enabled = true;
+        base.Activate();
+        switch (id)
+        {
+            case 0:
+                skillState = enumSkillState.Angry;
+
+                enemyMove.StopMoving(true);
+                StartCoroutine("AngryToFlyForward", angryDuration);
+                break;
+            case 1:
+                skillState = enumSkillState.Fly;
+                break;
+            case 2:
+                skillState = enumSkillState.Bomb;
+                print("DoSuicide attack!");
+                DoSuicideAttack();
+                break;
+            default:
+                break;
+        }
+        //bombCollider.enabled = true;
     }
 
-    public override void Deactivate()
+    public override void Deactivate(int id)
     {
-        bombCollider.enabled = false;
+        base.Activate();
+        switch (id)
+        {
+            case 0:
+                skillState = enumSkillState.None;
+                enemyMove.StopMoving(false);
+                break;
+            case 1:
+                skillState = enumSkillState.None;
+                break;
+            case 2:
+                skillState = enumSkillState.None;
+                break;
+            default:
+                break;
+        }
+        //bombCollider.enabled = false;
         animator.SetBool("OnSkill", false);
     }
-
-    private void OnTriggerEnter(Collider other)
+    void SetOnlyChasePositionMode()
     {
-        if (other.CompareTag("Player"))
+        if (enemyMove.TargetObject != null)
         {
-            animator.SetTrigger("Suicide");
-            isFlying = false;
-
-            AbilityStatus playerAbil = other.GetComponentInChildren<AbilityStatus>();
-            if (playerAbil != null)
+            enemyMove.SetOnlyChasePositionMode(true, enemyMove.TargetObject.transform.position);
+            targetSuicidePosition = enemyMove.TargetObject.transform.position;
+        }
+    }
+    void DoSuicideAttack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRange);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].CompareTag("Player"))
             {
-                playerAbil.AttackedBy(enemy.abilityStatus, damageScale);
+                AbilityStatus playerAbil = colliders[i].GetComponentInChildren<AbilityStatus>();
+                if (playerAbil != null)
+                {
+                    playerAbil.AttackedBy(enemy.abilityStatus, damageScale);
+                    Invoke("DeactivateDelay", 3);
+                }
             }
         }
-        //else if (other.CompareTag("Ground"))
-        //{
-        //    animator.SetTrigger("Suicide");
-        //    AbilityStatus playerAbil = other.GetComponentInChildren<AbilityStatus>();
-        //    if (playerAbil != null)
-        //    {
-        //        playerAbil.AttackedBy(enemy.abilityStatus, damageScale);
-        //    }
-        //}
+    }
+
+    protected new void OnTriggerStay(Collider other)
+    {
+        
+    }
+
+    protected new void OnTriggerExit(Collider other)
+    {
 
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        animator.SetTrigger("Suicide");
+    //        isFlying = false;
+
+    //        AbilityStatus playerAbil = other.GetComponentInChildren<AbilityStatus>();
+    //        if (playerAbil != null)
+    //        {
+    //            playerAbil.AttackedBy(enemy.abilityStatus, damageScale);
+    //        }
+    //    }
+    //    //else if (other.CompareTag("Ground"))
+    //    //{
+    //    //    animator.SetTrigger("Suicide");
+    //    //    AbilityStatus playerAbil = other.GetComponentInChildren<AbilityStatus>();
+    //    //    if (playerAbil != null)
+    //    //    {
+    //    //        playerAbil.AttackedBy(enemy.abilityStatus, damageScale);
+    //    //    }
+    //    //}
+
+    //}
 }

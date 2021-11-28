@@ -43,6 +43,12 @@ public abstract class Skill : MonoBehaviour
     protected float SpeedMultiplier = 1.0f;
     public virtual float GetSpeedMultiplier() { return SpeedMultiplier; }
 
+    protected Vector3 triggerPosition = Vector3.zero;
+    public virtual Vector3 GetTriggerPosition() { return triggerPosition; }
+
+    protected float triggerRange = 1.0f;
+    public virtual float GetTriggerRange() { return triggerRange; }
+
     public virtual void Activate() { }
     public virtual void Activate(int idx = 0) { }
 
