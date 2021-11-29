@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class SpecialAbilityStormWind : EnemySkill
 {
+    [SerializeField]
+    SpecialAbilityStormWindSO skillData;
+    
     float damageScale = 10;
     float duration;
     float orbitOffset;
@@ -15,8 +18,8 @@ public class SpecialAbilityStormWind : EnemySkill
     //[SerializeField]
     //GameObject stormWindOrbitPrefab;
 
-    [SerializeField]
-    SpecialAbilityStormWindSO skillData;
+    SphereCollider triggerCollider;
+
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -33,6 +36,8 @@ public class SpecialAbilityStormWind : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()

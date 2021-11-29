@@ -158,8 +158,8 @@ public class TheDustyDustStorm : EnemySkill
     void DoBreatheOutAttack()
     {
         Collider[] colliders = Physics.OverlapCapsule(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f)),
-                                                      GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4 * animator.GetCurrentAnimatorStateInfo(0).normalizedTime)),
-                                                      0.75f);
+                                                      GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4)),
+                                                      1);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
@@ -171,18 +171,15 @@ public class TheDustyDustStorm : EnemySkill
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (attackType == AttackType.BreatheOut)
-        {
-            Gizmos.DrawSphere(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4 * animator.GetCurrentAnimatorStateInfo(0).normalizedTime)), 1);
-            AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
-            AnimatorClipInfo[] myAnimatorClip = animator.GetCurrentAnimatorClipInfo(0);
-            float myTime = myAnimatorClip[0].clip.length * animationState.normalizedTime;
-            print("myTime: " + myTime);
+    //private void OnDrawGizmos()
+    //{
+    //    if (attackType == AttackType.BreatheOut)
+    //    {
+    //        Gizmos.DrawSphere(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4 * animator.GetCurrentAnimatorClipInfo(0).Length)), 1);
+    //        print("animator.GetCurrentAnimatorClipInfo(0).Length): " + animator.GetCurrentAnimatorClipInfo(0).Length);
 
-        }
-    }
+    //    }
+    //}
 
     //private void OnTriggerStay(Collider other)
     //{

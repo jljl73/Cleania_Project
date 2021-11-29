@@ -73,6 +73,9 @@ public class EnemySkillManager : BaseSkillManager
     {
         if (value)
         {
+            if (enemyMove.TargetObject == null)
+                return;
+
             // 쿨타임 됬는지 확인
             if (!IsSpecificSkillAvailable(id))
                 return;

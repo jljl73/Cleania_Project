@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class SpecialAbilitySeal : EnemySkill
 {
+    [SerializeField]
+    SpecialAbilitySealSO skillData;
+    
     float damageScale = 10;
     float duration;
     float radius;
@@ -15,8 +18,8 @@ public class SpecialAbilitySeal : EnemySkill
 
     //public GameObject SealPond;
 
-    [SerializeField]
-    SpecialAbilitySealSO skillData;
+    SphereCollider triggerCollider;
+
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -24,6 +27,7 @@ public class SpecialAbilitySeal : EnemySkill
     private new void Awake()
     {
         base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
         //if (SealPond == null)
         //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
@@ -33,6 +37,8 @@ public class SpecialAbilitySeal : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()

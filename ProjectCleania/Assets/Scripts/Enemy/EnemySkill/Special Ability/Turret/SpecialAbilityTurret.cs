@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class SpecialAbilityTurret : EnemySkill
 {
+    [SerializeField]
+    SpecialAbilityTurretSO skillData;
+    
     float damageScale = 10;
     float duration;
     float creationRadius;
@@ -17,8 +20,8 @@ public class SpecialAbilityTurret : EnemySkill
     //[SerializeField]
     //GameObject turretPrefab;
 
-    [SerializeField]
-    SpecialAbilityTurretSO skillData;
+
+    SphereCollider triggerCollider;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -26,6 +29,7 @@ public class SpecialAbilityTurret : EnemySkill
     private new void Awake()
     {
         base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
         //if (turretPrefab == null)
         //    throw new System.Exception("SpecialAbilityTurret doesnt have turretPrefab");
     }
@@ -35,6 +39,8 @@ public class SpecialAbilityTurret : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()
