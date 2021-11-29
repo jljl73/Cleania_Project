@@ -6,6 +6,7 @@ public class IngameMenuUI : MonoBehaviour
 {
     public GameObject backToSelectScenePanel;
     public GameObject exitPanel;
+    public GameObject SettingPanel;
 
     GameObject clickedPanel;
 
@@ -23,8 +24,7 @@ public class IngameMenuUI : MonoBehaviour
 
     public void OnClickedSetting()
     {
-        if (GameManager.Instance.menuManager != null)
-            GameManager.Instance.menuManager.PopUpUserSettingUI();
+        SettingPanel.SetActive(true);
     }
 
     public void OnClickedBackToSelectScene()
