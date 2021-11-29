@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public event DelegateVoid OnVillageRevive;
     public UnityAction<bool, float> OnStunned;
 
+    IEnumerator stopSkillDelay = new WaitForSecondsRealtime(0.5f);
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -104,6 +105,12 @@ public class Player : MonoBehaviour
 
     public void StopSkill(int id)
     {
+        playerSkillManager.StopSkill(id);
+        StartCoroutine("StopSkillDelay", id);
+    }
+    IEnumerator StopSkillDelay(int id)
+    {
+        yield return stopSkillDelay;
         playerSkillManager.StopSkill(id);
     }
 
