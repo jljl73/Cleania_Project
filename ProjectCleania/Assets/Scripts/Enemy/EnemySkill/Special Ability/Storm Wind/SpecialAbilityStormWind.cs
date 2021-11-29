@@ -27,6 +27,7 @@ public class SpecialAbilityStormWind : EnemySkill
     private new void Awake()
     {
         base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
         //if (stormWindOrbitPrefab == null)
         //    throw new System.Exception("SpecialAbilityStormWind doesnt have stormWindOrbitPrefab");
     }
