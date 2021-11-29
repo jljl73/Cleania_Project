@@ -75,17 +75,14 @@ public class SpecialAbilityToxicity : EnemySkill
         Quaternion tempQuaternion = transform.rotation;
         for (int i = 1; i <= pondCount; i++)
         {
-            //GameObject initiatedPond = Instantiate(DustPond, tempPosition, tempQuaternion);
             Vector3 spawnedPos = tempPosition + (tempForward * distanceInterval * i + tempUp * 0.2f);
             ToxicityPond toxicityPond = ObjectPool.SpawnFromPool<ToxicityPond>(ObjectPool.enumPoolObject.Toxicity, spawnedPos, tempQuaternion);
-            //initiatedPond.transform.position += (initiatedPond.transform.forward * distanceInterval * i + initiatedPond.transform.up * 0.2f);
+
             if (enemy.abilityStatus == null)
                 print("enemy.abilityStatus is null");
             else
                 print("enemy.abilityStatus not null");
             toxicityPond.SetUp(duration ,OwnerAbilityStatus, damageScale, radius);
-
-            //Destroy(initiatedPond, duration);
 
             yield return new WaitForSeconds(generationTimeInterval);
         }

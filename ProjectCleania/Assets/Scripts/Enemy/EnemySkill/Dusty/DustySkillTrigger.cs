@@ -26,6 +26,7 @@ public class DustySkillTrigger : EnemySkillTrigger
         {
             if (enemySkillManager.PlaySkill(2102))
                 isHittingByBodySkillTriggered = true;
+            print("sucide trigger!");
         }
     }
 }
