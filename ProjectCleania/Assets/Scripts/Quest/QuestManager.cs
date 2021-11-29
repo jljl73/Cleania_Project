@@ -196,6 +196,7 @@ public class QuestManager : MonoBehaviour
     {
         StringBuilder sb = new StringBuilder();
         int q = 0;
+        if (miniLists == null) return;
         for (; q < miniLists.childCount && q < assignQuests.Count; ++q)
         {
             sb.Clear();
