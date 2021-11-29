@@ -43,7 +43,7 @@ public class EnemySkillManager : BaseSkillManager
     {
         // skillDict 추가
         UploadNormalSkill();
-        UploadSpecialSkill();
+        //UploadSpecialSkill();
 
         // skillData로 부터 쿨타임 관련 Dictionary 추가 및 초기화 & 스킬 animator 설정
         UpdateOtherDictBySkillDict();
@@ -107,6 +107,7 @@ public class EnemySkillManager : BaseSkillManager
         return true;
     }
 
+    // Deprecated
     public bool PlayRandomSpecialSkill()
     {
         if (!IsSkillAvailable()) return false;
@@ -143,13 +144,13 @@ public class EnemySkillManager : BaseSkillManager
         return true;
     }
 
-    void UploadSpecialSkill()
-    {
-        for (int i = 0; i < enemySkillStorage.SpecialSkillCandidates.Count; i++)
-        {
-            skillDict.Add(enemySkillStorage.SpecialSkillCandidates[i].ID, enemySkillStorage.SpecialSkillCandidates[i]);
-        }
-    }
+    //void UploadSpecialSkill()
+    //{
+    //    for (int i = 0; i < enemySkillStorage.SpecialSkillCandidates.Count; i++)
+    //    {
+    //        skillDict.Add(enemySkillStorage.SpecialSkillCandidates[i].ID, enemySkillStorage.SpecialSkillCandidates[i]);
+    //    }
+    //}
 
     public void MakeSpecialSkillAvailable(int id)
     {
@@ -164,8 +165,10 @@ public class EnemySkillManager : BaseSkillManager
             skill.AnimationActivate();
             return;
         }
-        if (!selectedSpecialSkillID.ContainsKey(id))
-            selectedSpecialSkillID.Add(id, true);
+        if (!skillDict.ContainsKey(id))
+        {
+            skillDict.Add(id, enemySkillStorage.GetSpeacialSkill(id));
+        }
     }
 
     protected override void SkillEventConnect()

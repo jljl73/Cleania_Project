@@ -10,7 +10,6 @@ public class PlayerSkillManager : BaseSkillManager
     public PlayerMovement playerMoveWithNav;
     public TestPlayerMove PlayerMoveWithoutNav;
     Collider objectCollider;
-    AbilityStatus abilityStatus;
 
     Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
@@ -46,10 +45,6 @@ public class PlayerSkillManager : BaseSkillManager
         objectCollider = GetComponent<Collider>();
         if (objectCollider == null)
             throw new System.Exception("PlayerSkillManager doesnt have Collider");
-
-        abilityStatus = GetComponent<AbilityStatus>();
-        if (abilityStatus == null)
-            throw new System.Exception("PlayerSkillManager doesnt have abilityStatus");
     }
 
     new void Start()
