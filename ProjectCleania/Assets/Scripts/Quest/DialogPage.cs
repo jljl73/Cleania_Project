@@ -122,7 +122,7 @@ public class DialogPage : MonoBehaviour
 
     public void GetQuestReward(Quest quest)
     {
-        GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest);
+        GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest, true);
         CloseDialog();
     }
 

@@ -45,7 +45,7 @@ public class QuestManager : MonoBehaviour
             buttons[i].onClick.AddListener(() => ShowDetailQuest(temp));
         }
 
-        QuestDB.Instance.SetNickName(SavedData.Instance.characterName);
+        QuestDB.Instance.SetNickName(SavedData.Instance.CharacterName);
         QuestDB.Instance.Load(quests_All);
 
         for(int i = 0; i < quests_All.Count; ++i)
@@ -61,18 +61,12 @@ public class QuestManager : MonoBehaviour
         SavedData.Instance.Item_Inventory.Subscribe(Synchronize, Point.Empty);
     }
     
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            
-        }
-    }
 
     public void Assign(Quest quest)
     {
         quest.Assign();
         AddList(quest);
+        Reward(quest, false);
 
         GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestAssign);
 
@@ -152,17 +146,21 @@ public class QuestManager : MonoBehaviour
         SetMiniList();
     }
 
-    public void Reward(Quest quest)
+    public void Reward(Quest quest, bool IsReward)
     {
-        quest.GetReward();
-        clearQuests.Add(quest);
-        DeleteList(quest);
-
-        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
+        if (IsReward)
+        {
+            quest.GetReward();
+            clearQuests.Add(quest);
+            DeleteList(quest);
+            GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
+        }
 
         // 보상받기
         foreach (var q in quest.QuestRewards)
         {
+            if (q.isReward != IsReward) continue;
+
             switch (q.type)
             {
                 case QuestReward.TYPE.clean:
@@ -173,9 +171,7 @@ public class QuestManager : MonoBehaviour
                     ExpManager.Acquire(q.value);
                     break;
                 case QuestReward.TYPE.item:
-                    ItemInstance itemInstance = ItemInstance.Instantiate(q.value);
-                    ItemController_v2 newItem = ItemController_v2.New(itemInstance, GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>());
-                    newItem.PutInventory();
+                    SavedData.Instance.Item_Inventory.Add(ItemInstance.Instantiate(q.value));
                     break;
             }
         }

@@ -83,6 +83,8 @@ public class QuestDB : MonoBehaviour
         string path = $"{Application.dataPath}/DB/{characterName}Quest.json";
         if (!File.Exists(path))
         {
+            for (int i = 0; i < quests.Count; ++i)
+                quests[i].Reset();
             return;
         }
 

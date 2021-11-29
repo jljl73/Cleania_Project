@@ -19,19 +19,38 @@ public class NPC : MonoBehaviour
     public string Name { get { return m_Name; } }
 
     public string Value;
+    [SerializeField]
+    GameObject questMarker;
     int count = 0;
+    [SerializeField]
+    QuestProgressChecker progressChecker;
+    int prevState = -2;
 
-    private void Start()
+    void Start()
     {
         transform.Find("Marker").rotation = Camera.main.transform.rotation;
         fieldName.GetComponent<TextMeshPro>().text = m_Name;
+        fieldName.transform.rotation = Camera.main.transform.rotation;
+        fieldName.gameObject.SetActive(false);
+
+        questMarker = transform.Find("QuestMarker").gameObject;
+        questMarker.transform.rotation = Camera.main.transform.rotation;
+        progressChecker = GameManager.Instance.dialogManager.transform.GetChild(transform.GetSiblingIndex()).GetComponent<QuestProgressChecker>();
     }
 
     void Update()
     {
-        fieldName.transform.rotation = Camera.main.transform.rotation;
+        int state = progressChecker.ExistQuest();
+        if(state != prevState)
+        {
+            prevState = state;
+            if (state == -1)
+            { questMarker.SetActive(false); return; }
+            questMarker.GetComponent<SpriteRenderer>().sprite = Resources.Load<DataSO>("ScriptableObject/AssetData").sprites[state];
+            questMarker.SetActive(true);
+        }
     }
-    
+
     public void ShowName(bool value)
     {
         if (value) ++count;
@@ -52,5 +71,7 @@ public class NPC : MonoBehaviour
     {
         ShowName(false);
     }
+
+
 
 }
