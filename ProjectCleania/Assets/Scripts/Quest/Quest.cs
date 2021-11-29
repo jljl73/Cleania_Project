@@ -12,12 +12,8 @@ public struct QuestReward
     public enum TYPE { clean, exp, item };
     public TYPE type;
     public int value;
+    public bool isReward;
 
-    public QuestReward(TYPE type, int value)
-    {
-        this.type = type;
-        this.value = value;
-    }
 }
 
 [System.Serializable]
@@ -32,14 +28,6 @@ public struct QuestNeed
     public int curValue;
     public string content;
 
-    public QuestNeed(TYPE type, int target, int curValue, int targetValue, string content)
-    {
-        this.type = type;
-        this.target = target;
-        this.curValue = curValue;
-        this.targetValue = targetValue;
-        this.content = content;
-    }
 
     public void Achieve()
     {

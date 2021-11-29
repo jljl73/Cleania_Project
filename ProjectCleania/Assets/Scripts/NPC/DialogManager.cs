@@ -12,6 +12,13 @@ public class DialogManager : MonoBehaviour
     public QuestProgressChecker QuestDialog;
     public QuestProgressChecker DungeonDialog;
 
+    void Awake()
+    {
+        GameManager.Instance.dialogManager = this;
+    }
+
+
+
     public void ShowMarketDialog(bool bActive)
     {
         MarketDialog.ShowDialog();
