@@ -19,12 +19,15 @@ public class SpecialAbilityStain : EnemySkill
     [SerializeField]
     SpecialAbilityStainSO skillData;
 
+    SphereCollider triggerCollider;
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()
     {
         base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
+
         if (StainProjectilePrefab == null)
             throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
@@ -34,6 +37,8 @@ public class SpecialAbilityStain : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()

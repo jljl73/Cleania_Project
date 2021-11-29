@@ -5,13 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DustWindSkill", menuName = "Scriptable Object/Enemy/DustWindSkill")]
 public class DustWindSO : EnemySkillSO
 {
-    //public string SkillName;
-    //public string GetSkillName() { return SkillName; }
-
-    //[Header("Tip: 변수명을 입력할 수 있습니다.")]
-    //[TextArea]
-    //public string SkillDetails;
-
     //public string GetSkillDetails()
     //{
     //    string tempString = SkillDetails;
@@ -27,27 +20,6 @@ public class DustWindSO : EnemySkillSO
 
     //    return tempString;
     //}
-
-    //// public bool isAttacking;
-    //[Header("쿨타임")]
-    //public float CoolTime;  // 추후 private 처리
-    //public float GetCoolTime() { return CoolTime; }
-
-    //[Header("생성 고유 자원")]
-    //public float CreatedMP = 0f;
-    //public float GetCreatedMP() { return CreatedMP; }
-
-    //[Header("소모 고유 자원")]
-    //public float ConsumMP = 0f;
-    //public float GetConsumMP() { return ConsumMP; }
-
-    //[Header("전체 애니메이션 배속")]
-    //public float SpeedMultiplier = 1.0f;
-    //public float GetSpeedMultiplier() { return SpeedMultiplier; }
-
-    //[Header("피해율")]
-    //public float DamageRate;
-    //public float GetDamageRate() { return DamageRate; }
 
     [Header("밀어치기 힘")]
     public float HitForce;

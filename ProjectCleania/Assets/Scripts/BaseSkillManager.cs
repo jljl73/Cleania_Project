@@ -13,10 +13,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     protected Dictionary<int, Skill> availableSkillDict = new Dictionary<int, Skill>();             // 현재 사용 가능 스킬
     protected Dictionary<int, Skill> needCoolTimePassedSkillDict = new Dictionary<int, Skill>();    // 쿨타임 업데이트 중인 스킬
     protected Dictionary<int, float> coolTimePassedDict = new Dictionary<int, float>();
-    // protected Dictionary<int, bool> skillAvailableDict = new Dictionary<int, bool>();
     protected Dictionary<int, float> CoolTimePassedRatioDict = new Dictionary<int, float>();
-
-    // protected Dictionary<int, Skill> availableSkillDict = new Dictionary<int, Skill>();
 
     public float GetCoolTimePassedRatio(int id) { return CoolTimePassedRatioDict[id]; }
 
@@ -167,11 +164,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 
-    //public virtual void ActivateSkill(int id)
-    //{
-    //    skillDict[id].Activate();
-    //}
-
     public virtual void ActivateSkill(AnimationEvent myEvent)
     {
         SkillEffectIndexSO skillEffectIndexSet = myEvent.objectReferenceParameter as SkillEffectIndexSO;
@@ -181,12 +173,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         else
             skillDict[myEvent.intParameter].Activate();
     }
-
-    //public virtual void DeactivateSkill(int id)
-    //{
-    //    print("DeactivateSkill id");
-    //    skillDict[id].Deactivate();
-    //}
 
     public virtual void DeactivateSkill(AnimationEvent myEvent)
     {

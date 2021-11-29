@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class ReaperSkill1 : EnemySkill
 {
+    [SerializeField]
+    SummonSkillSO skillData;
+
     GameObject highDusty;
     GameObject normalDusty;
 
     GameObject newEnemy;
     WaitForSeconds waitForSeconds;
 
-    // [Header("소환 주기")]
-    // public float timeInterval = 10.0f;
-
-    [SerializeField]
-    SummonSkillSO skillData;
+    SphereCollider triggerCollider;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
+
+    private new void Awake()
+    {
+        base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
+    }
 
     private new void Start()
     {
         base.Start();
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()

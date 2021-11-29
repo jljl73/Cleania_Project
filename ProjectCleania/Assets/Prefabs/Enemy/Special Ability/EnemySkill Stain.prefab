@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 808768157892191812}
   - component: {fileID: 1285310792857643023}
+  - component: {fileID: 1585918055493536260}
   m_Layer: 6
   m_Name: EnemySkill Stain
   m_TagString: Untagged
@@ -43,9 +44,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba2b1b22431e7a469a01b61444013ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 0}
   OwnerAbilityStatus: {fileID: 0}
   effectController: []
   enemy: {fileID: 0}
   StainProjectilePrefab: {fileID: 8230123336037000848, guid: 412cc08393b3b734aae9b7386a23f187, type: 3}
   skillData: {fileID: 11400000, guid: 36d5b17afbfa5a44cb5a32d291c1fd01, type: 2}
+--- !u!135 &1585918055493536260
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855695928872847773}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0.5, z: 0}

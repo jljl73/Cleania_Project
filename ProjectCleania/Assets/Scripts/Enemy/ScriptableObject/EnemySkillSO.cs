@@ -49,6 +49,16 @@ public class EnemySkillSO : EnemySkillIDSO
     public float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
+    [Header("발동 가능 위치")]
+    [SerializeField]
+    Vector3 triggerPosition = Vector3.zero;
+    public Vector3 GetTriggerPosition() { return triggerPosition; }
+
+    [Header("발동 가능 범위")]
+    [SerializeField]
+    float triggerRange = 1f;
+    public float GetTriggerRange() { return triggerRange; }
+
     [Header("피해율")]
     public float DamageRate;
     public float GetDamageRate() { return DamageRate; }

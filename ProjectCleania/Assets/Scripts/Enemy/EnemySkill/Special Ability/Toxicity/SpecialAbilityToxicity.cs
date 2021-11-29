@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class SpecialAbilityToxicity : EnemySkill
 {
+    [SerializeField]
+    SpecialAbilityToxicitySO skillData;
+
     float damageScale = 10;
     float duration;
     float radius;
     float distanceInterval;
     float generationTimeInterval;
     float pondCount;
-    
+
     //public GameObject DustPond;
 
-    [SerializeField]
-    SpecialAbilityToxicitySO skillData;
+    SphereCollider triggerCollider;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -22,6 +24,8 @@ public class SpecialAbilityToxicity : EnemySkill
     private new void Awake()
     {
         base.Awake();
+
+        triggerCollider = GetComponent<SphereCollider>();
         //if (DustPond == null)
         //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
@@ -31,6 +35,8 @@ public class SpecialAbilityToxicity : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()
