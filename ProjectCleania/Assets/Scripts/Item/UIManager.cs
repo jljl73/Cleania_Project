@@ -115,11 +115,14 @@ public class UIManager : MonoBehaviour
         if (bActive)
         {
             ShowPanel(InventoryPanel, true);
-
             GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.Storage);
-
         }
         ShowPanel(StoragePanel.gameObject, bActive);
+    }
+
+    public void ShowSettingPanel(bool bActive)
+    {
+        ShowPanel(SettingPanel, bActive);
     }
 
     public void ShowMenuPanel(bool bActive)
@@ -200,6 +203,12 @@ public class UIManager : MonoBehaviour
 
     void CloseLastPanel()
     {
+        if(DialogManager.currentDialog != null)
+        {
+            GameManager.Instance.dialogManager.OffDialog();
+            return;
+        }
+
         if (sPanels.Count > 0)
             ShowPanel(sPanels[sPanels.Count - 1], false);
         else
