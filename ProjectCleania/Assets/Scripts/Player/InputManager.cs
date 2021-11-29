@@ -29,8 +29,6 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        
-        
         // UI 클릭시 리턴
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 

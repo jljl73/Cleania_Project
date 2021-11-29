@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class SummonerDustySkillTrigger : EnemySkillTrigger
 {
-    // WaitForSeconds SummonWaitForSeconds;
-    // WaitForSeconds SpinAttackWaitForSeconds;
-
-    public EnemyStateMachine stateMachine;
-    Collider[] overlappedColliders;
-
-    public float TriggerRange = 5f;
-
     #region
     //[Header("소환 주기")]
     //public float SummonTimeInterval = 10.0f;
@@ -21,12 +13,6 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
     //public float SpinAttackTimeInterval = 7.0f;
     //bool isSpinAttackCoolTime = false;
     #endregion
-
-    void Start()
-    {
-        //SummonWaitForSeconds = new WaitForSeconds(SummonTimeInterval);
-        //SpinAttackWaitForSeconds = new WaitForSeconds(SpinAttackTimeInterval);
-    }
 
     #region
     //IEnumerator Summon()
@@ -42,34 +28,6 @@ public class SummonerDustySkillTrigger : EnemySkillTrigger
     //    }
     //}
     #endregion
-
-    private void Update()
-    {
-        if (stateMachine.CompareState(EnemyStateMachine.enumState.Dead))
-            return;
-
-        overlappedColliders = Physics.OverlapSphere(transform.position, TriggerRange);
-        foreach (Collider collider in overlappedColliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                //if (enemySkillManager.PlayRandomSpecialSkill())
-                //    return;
-
-                //if (enemySkillManager.PlaySkill(2902))
-                //    return;
-
-                //// 먼지바람
-                //if (enemySkillManager.PlaySkill(2402))
-                //    return;
-            }
-        }
-
-        //if (enemyMove.ExistTarget())
-        //{
-        //    enemySkillManager.PlaySkill(2401);    // 소환 스킬 발동
-        //}
-    }
 
     #region
     //IEnumerator Summon()

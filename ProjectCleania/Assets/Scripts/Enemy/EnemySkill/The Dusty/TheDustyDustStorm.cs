@@ -7,7 +7,7 @@ public class TheDustyDustStorm : EnemySkill
     [SerializeField]
     DustStormSO skillData;
 
-    CapsuleCollider breatheOutAttackCollider;
+    SphereCollider skillTriggerCollider;
 
     float damageScale;
     float damageRadius = 1;
@@ -34,7 +34,7 @@ public class TheDustyDustStorm : EnemySkill
     private new void Awake()
     {
         base.Awake();
-        breatheOutAttackCollider = GetComponent<CapsuleCollider>();
+        skillTriggerCollider = GetComponent<SphereCollider>();
     }
 
     private void OnEnable()
@@ -46,9 +46,11 @@ public class TheDustyDustStorm : EnemySkill
     {
         base.Start();
 
-        breatheOutAttackCollider.enabled = false;
+        //breatheOutAttackCollider.enabled = false;
 
         UpdateSkillData();
+        skillTriggerCollider.center = triggerPosition;
+        skillTriggerCollider.radius = triggerRange;
     }
 
     private void FixedUpdate()
@@ -125,14 +127,15 @@ public class TheDustyDustStorm : EnemySkill
         switch (attackType)
         {
             case AttackType.None:
-                breatheOutAttackCollider.enabled = false;
+                //breatheOutAttackCollider.enabled = false;
                 break;
             case AttackType.BreatheIn:
-                breatheOutAttackCollider.enabled = false;
+                //breatheOutAttackCollider.enabled = false;
                 DoBreatheInAttack(true);
                 break;
             case AttackType.BreatheOut:
-                breatheOutAttackCollider.enabled = true;
+                //breatheOutAttackCollider.enabled = true;
+                DoBreatheOutAttack();
                 break;
             default:
                 break;
@@ -141,7 +144,7 @@ public class TheDustyDustStorm : EnemySkill
 
     void DoBreatheInAttack(bool value)
     {
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRadius);
+        Collider[] colliders = Physics.OverlapSphere(GetWorldTriggerPosition(triggerPosition), damageRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
@@ -152,13 +155,39 @@ public class TheDustyDustStorm : EnemySkill
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    void DoBreatheOutAttack()
     {
-        if (other.CompareTag("Player"))
+        Collider[] colliders = Physics.OverlapCapsule(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f)),
+                                                      GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4)),
+                                                      1);
+        for (int i = 0; i < colliders.Length; i++)
         {
-            Player player = other.GetComponent<Player>();
-            Vector3 hitVector = Vector3.Normalize(other.transform.position - this.transform.position) * stormForce;
-            player.playerMove.AddForce(hitVector);
+            if (colliders[i].CompareTag("Player"))
+            {
+                Player player = colliders[i].GetComponent<Player>();
+                Vector3 hitVector = Vector3.Normalize(colliders[i].transform.position - this.transform.position) * stormForce;
+                player.playerMove.AddForce(hitVector);
+            }
         }
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    if (attackType == AttackType.BreatheOut)
+    //    {
+    //        Gizmos.DrawSphere(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4 * animator.GetCurrentAnimatorClipInfo(0).Length)), 1);
+    //        print("animator.GetCurrentAnimatorClipInfo(0).Length): " + animator.GetCurrentAnimatorClipInfo(0).Length);
+
+    //    }
+    //}
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Player player = other.GetComponent<Player>();
+    //        Vector3 hitVector = Vector3.Normalize(other.transform.position - this.transform.position) * stormForce;
+    //        player.playerMove.AddForce(hitVector);
+    //    }
+    //}
 }

@@ -6,11 +6,28 @@ public class EnemySkillTrigger : MonoBehaviour
 {
     //public Skill skill;
     public Animator animator;
+    protected EnemyStateMachine stateMachine;
     protected EnemySkillManager enemySkillManager;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         enemySkillManager = GetComponent<EnemySkillManager>();
+
+        stateMachine = GetComponent<EnemyStateMachine>();
+        if (stateMachine == null)
+            throw new System.Exception("TheDustySkillTrigger doesnt have stateMachine");
+    }
+
+    protected virtual void Update()
+    {
+        if (stateMachine.CompareState(EnemyStateMachine.enumState.Dead))
+            return;
+
+        if (enemySkillManager.GetSkillRunWaitingListCount() == 0)
+            return;
+
+        enemySkillManager.PlaySkillRunWaitingListSkill();
+
     }
 
     //protected bool IsSkillAvailable()

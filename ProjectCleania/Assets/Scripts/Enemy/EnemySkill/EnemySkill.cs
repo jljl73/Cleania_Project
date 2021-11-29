@@ -29,6 +29,8 @@ public abstract class EnemySkill : Skill
         CreatedMP = skillData.GetCreatedMP();
         ConsumMP = skillData.GetConsumMP();
         SpeedMultiplier = skillData.GetSpeedMultiplier();
+        triggerPosition = skillData.GetTriggerPosition();
+        triggerRange = skillData.GetTriggerRange();
     }
 
     public override void Deactivate()
@@ -36,13 +38,20 @@ public abstract class EnemySkill : Skill
         enemy.enemyStateMachine.Transition(EnemyStateMachine.enumState.Idle);
     }
 
-    //public override void AnimationActivate()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
+    protected virtual void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            OnEnemyTriggerZone.Invoke(true, ID);
+    }
 
-    //public override void Deactivate()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
+    protected virtual void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            OnEnemyTriggerZone.Invoke(false, ID);
+    }
+
+    protected Vector3 GetWorldTriggerPosition(Vector3 localTriggerPosition)
+    {
+        return transform.position + transform.right * localTriggerPosition.x + transform.up * localTriggerPosition.y + transform.forward * localTriggerPosition.z;
+    }
 }

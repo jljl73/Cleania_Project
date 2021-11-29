@@ -14,12 +14,15 @@ public class SpecialAbilityMine : EnemySkill
     [SerializeField]
     SpecialAbilityMineSO skillData;
 
+    SphereCollider triggerCollider;
+
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()
     {
         base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
         //if (MinePond == null)
         //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
@@ -29,6 +32,8 @@ public class SpecialAbilityMine : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()

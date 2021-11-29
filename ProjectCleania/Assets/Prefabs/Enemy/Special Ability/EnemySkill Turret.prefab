@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1978405231241367022}
   - component: {fileID: 648252112291900542}
+  - component: {fileID: 3391795752961230872}
   m_Layer: 6
   m_Name: EnemySkill Turret
   m_TagString: Untagged
@@ -43,9 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f36c00f33ae6bd4ca8b600a7526c4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 0}
   OwnerAbilityStatus: {fileID: 0}
   effectController: []
   enemy: {fileID: 0}
-  turretPrefab: {fileID: 1422128474858723307, guid: a649cdb7a70063c449c31374adaa44b0, type: 3}
   skillData: {fileID: 11400000, guid: f6ada02310b615147bc664528bf3b989, type: 2}
+--- !u!135 &3391795752961230872
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604679756813443301}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 8
+  m_Center: {x: 0, y: 0.5, z: 0}

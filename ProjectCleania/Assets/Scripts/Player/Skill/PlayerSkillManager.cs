@@ -10,6 +10,7 @@ public class PlayerSkillManager : BaseSkillManager
     public PlayerMovement playerMoveWithNav;
     public TestPlayerMove PlayerMoveWithoutNav;
     Collider objectCollider;
+    AbilityStatus abilityStatus;
 
     Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
@@ -45,6 +46,10 @@ public class PlayerSkillManager : BaseSkillManager
         objectCollider = GetComponent<Collider>();
         if (objectCollider == null)
             throw new System.Exception("PlayerSkillManager doesnt have Collider");
+
+        abilityStatus = GetComponent<AbilityStatus>();
+        if (abilityStatus == null)
+            throw new System.Exception("PlayerSkillManager doesnt have abilityStatus");
     }
 
     new void Start()
@@ -67,6 +72,10 @@ public class PlayerSkillManager : BaseSkillManager
         // 1198 = 구르기
         skillStorage.GetNormalSkill(1198).OnPlaySkill += playRoll;
         skillStorage.GetNormalSkill(1198).OnSkillEnd += EndRoll;
+
+        // 부활
+        skillStorage.GetNormalSkill(1194).OnSkillEnd += abilityStatus.FullHP;
+        skillStorage.GetNormalSkill(1195).OnPlaySkill += abilityStatus.FullHP;
     }
 
     void playKatarsis()

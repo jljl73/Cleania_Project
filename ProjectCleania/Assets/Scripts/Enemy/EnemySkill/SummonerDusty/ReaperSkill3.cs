@@ -5,10 +5,13 @@ using UnityEngine;
 public class ReaperSkill3 : EnemySkill
 {
     float damageScale = 10;
+    float damageRange = 1.5f;
     float hitForce = 1;
     float pushRadius;
 
-    CapsuleCollider col;
+    bool hasAttacked = false;
+
+    SphereCollider col;
 
     [SerializeField]
     public DustWindSO skillData;
@@ -19,17 +22,18 @@ public class ReaperSkill3 : EnemySkill
     private new void Awake()
     {
         base.Awake();
+        col = GetComponent<SphereCollider>();
+        if (col == null)
+            print("im in reaperskill3. col is null");
     }
 
     private new void Start()
     {
         base.Start();
-        col = GetComponent<CapsuleCollider>();
-        if (col != null)
-            print("im in reaperskill3. col is not null");
-        else
-            print("im in reaperskill3. col is null");
+        
         UpdateSkillData();
+        col.center = triggerPosition;
+        col.radius = triggerRange;
 
         effectController[0].Scale = pushRadius;
         animator.SetFloat("SpinAttack multiplier", SpeedMultiplier);
@@ -40,6 +44,7 @@ public class ReaperSkill3 : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
+        damageRange = triggerRange;
         hitForce = skillData.GetHitForce();
         pushRadius = skillData.GetPushRadius();
     }
@@ -54,24 +59,33 @@ public class ReaperSkill3 : EnemySkill
 
     override public void Activate()
     {
-        col.enabled = true;
+        if (hasAttacked)
+            return;
+        Push();
+        hasAttacked = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Push()
     {
-        if (other.tag == "Player")
+        Collider[] colliders = Physics.OverlapSphere(transform.position, damageRange);
+        for (int i = 0; i < colliders.Length; i++)
         {
-            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, damageScale);
-            other.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(other.transform.position - this.transform.position) * hitForce);
-            //other.GetComponent<Player>()
+            if (colliders[i].CompareTag("Player"))
+            {
+                Player player = colliders[i].GetComponent<Player>();
+                player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
+
+                player.playerMove.AddForce(Vector3.Normalize(player.transform.position - this.transform.position) * hitForce);
+            }
         }
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
-        if (col != null)
-            col.enabled = false;
+
         animator.SetBool("OnSkill", false);
+
+        hasAttacked = false;
     }
 }

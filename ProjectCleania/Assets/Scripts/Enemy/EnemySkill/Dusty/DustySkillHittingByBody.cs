@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class DustySkillHittingByBody : EnemySkill
 {
-    float damageScale = 0;
-
     [SerializeField]
     EnemySkillSO skillData;
+    
+    float damageScale = 0;
+    float damageRange = 1;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
-    Collider col;
+    BoxCollider col;
     // Enemy enemy;
 
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
+        col = GetComponent<BoxCollider>();
     }
 
     private new void Start()
     {
         base.Start();
+        
+        UpdateSkillData();
+        col.center = triggerPosition;
+        col.size = new Vector3(triggerRange, triggerRange, triggerRange);
 
-        col = GetComponent<Collider>();
-        // enemy = transform.parent.parent.GetComponent<Enemy>();
         animator.SetFloat("HittingByBody Multiplier", SpeedMultiplier);
     }
 
@@ -38,6 +41,7 @@ public class DustySkillHittingByBody : EnemySkill
         base.UpdateSkillData(skillData);
 
         damageScale = skillData.GetDamageRate();
+        damageRange = triggerRange;
     }
 
     public override bool AnimationActivate()
@@ -50,21 +54,35 @@ public class DustySkillHittingByBody : EnemySkill
 
     override public void Activate()
     {
-        col.enabled = true;
+        //col.enabled = true;
+        Attack();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Attack()
     {
-        if (other.tag == "Player")
+        Collider[] colliders = Physics.OverlapSphere(transform.position + triggerPosition, damageRange + 0.5f);
+        for (int i = 0; i < colliders.Length; i++)
         {
-            other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, damageScale);
+            if (colliders[i].CompareTag("Player"))
+            {
+                Player player = colliders[i].GetComponent<Player>();
+                player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
+            }
         }
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == "Player")
+    //    {
+    //        other.GetComponent<Player>().abilityStatus.AttackedBy(enemy.abilityStatus, damageScale);
+    //    }
+    //}
 
     public override void Deactivate()
     {
         base.Deactivate();
-        col.enabled = false;
+        //col.enabled = false;
         animator.SetBool("OnSkill", false);
     }
 }

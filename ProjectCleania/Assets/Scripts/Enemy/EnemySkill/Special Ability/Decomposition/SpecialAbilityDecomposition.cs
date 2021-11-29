@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpecialAbilityDecomposition : EnemySkill
 {
+    [SerializeField]
+    SpecialAbilityDecompositionSO skillData;
+    
     float damageScale = 10;
     float objectSize;
     float CreationRadius;           
@@ -14,10 +17,7 @@ public class SpecialAbilityDecomposition : EnemySkill
     float stunTime = 2f;
     GameObject target;
 
-    //public GameObject DecompositionPrefab;
-
-    [SerializeField]
-    SpecialAbilityDecompositionSO skillData;
+    SphereCollider triggerCollider;
 
     public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -25,6 +25,7 @@ public class SpecialAbilityDecomposition : EnemySkill
     private new void Awake()
     {
         base.Awake();
+        triggerCollider = GetComponent<SphereCollider>();
         //if (DecompositionPrefab == null)
         //    throw new System.Exception("SpecialAbilityDecomposition doesnt have DecompositionPrefab");
     }
@@ -34,6 +35,8 @@ public class SpecialAbilityDecomposition : EnemySkill
         base.Start();
 
         UpdateSkillData();
+        triggerCollider.center = triggerPosition;
+        triggerCollider.radius = triggerRange;
     }
 
     public void UpdateSkillData()
