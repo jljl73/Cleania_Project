@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     NavMeshAgent navMeshAgent;
     SkinnedMeshRenderer skinnedMeshRenderer;
 
+
     void Awake()
     {
         animator = GetComponent<Animator>();

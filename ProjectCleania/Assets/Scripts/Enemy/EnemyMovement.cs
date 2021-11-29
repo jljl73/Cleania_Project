@@ -215,7 +215,8 @@ public class EnemyMovement : CharacterMovement, IStunned
                 TargetPose = transform.position;
                 break;
             case MoveMode.Chasing:
-                TargetPose = TargetObject.transform.position;
+                if(TargetObject != null)
+                    TargetPose = TargetObject.transform.position;
                 break;
             case MoveMode.RunAway:
                 TargetPose = transform.position + moveAwayDistVector;
