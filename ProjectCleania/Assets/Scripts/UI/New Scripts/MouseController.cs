@@ -60,6 +60,7 @@ public class MouseController : MonoBehaviour
         }
         else
         {
+            
             OnField();   
         }
 
@@ -101,10 +102,10 @@ public class MouseController : MonoBehaviour
         itemNameOnField.transform.parent.gameObject.SetActive(false);
 
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
         int layerMask = 1 << 6 | 1 << 15;
         if (Physics.Raycast(ray, out raycastHit, 300.0f, layerMask))
         {
+            
             if(raycastHit.collider.CompareTag("Enemy"))
                 SetEnemyTag(raycastHit.collider);
 
@@ -206,7 +207,7 @@ public class MouseController : MonoBehaviour
 
     void SetEnemyTag(Collider collider)
     {
-        hpBarText.text = collider.GetComponent<Enemy>().name;
+        hpBarText.text = Enemy.GetName((int)collider.GetComponent<EnemyStateMachine>().GetMonsterType());
         hpBarGauage.fillAmount =
             collider.GetComponent<AbilityStatus>().HP /
             collider.GetComponent<AbilityStatus>()[Ability.Stat.MaxHP];

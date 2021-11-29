@@ -42,9 +42,8 @@ public class AbilityStatus : MonoBehaviour
 
     private void Start()
     {
-        //Invoke("FullHP", 0.01f);
-        //Invoke("FullMP", 0.01f);
-        FullHP(); FullMP();
+        FullHP();
+        FullMP();
     }
 
     private void Update()
