@@ -55,7 +55,19 @@ public class AbilityStatus : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Orders <para></para>
+    /// 1 - Stats <para></para>
+    /// 1.1 - Stats : Vitality relate MaxHP <para></para>
+    /// 2 - Equipment absolute <para></para>
+    /// 2.1 - Equipment options except additional <para></para>
+    /// 2.2 - Stats : Strength relate Atk <para></para>
+    /// 3 - Buff <para></para>
+    /// 4 - Equipment additional <para></para>
+    /// 5 - refresh relative <para></para>
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <returns></returns>
     virtual protected float RefreshStat(Ability.Stat stat)
     {
         if (status == null)
@@ -63,34 +75,29 @@ public class AbilityStatus : MonoBehaviour
         if ((int)stat >= _stats.Length)
             return -1;
 
-        _stats[(int)stat] = status[stat];       // default status
+        // step 1
+        _stats[(int)stat] = status[stat];
 
-        switch (stat)                            // special values
+        // step 1.1
+        switch (stat)
         {
-            case Ability.Stat.Attack:
-                _stats[(int)Ability.Stat.Attack] *= 1 + _stats[(int)Ability.Stat.Strength] * 0.01f;
-                break;
-
             case Ability.Stat.MaxHP:
                 _stats[(int)Ability.Stat.MaxHP] += _stats[(int)Ability.Stat.Vitality] * 100;
                 break;
-
-            //case Ability.Stat.Defense:
-            //    _stats[(int)Ability.Stat.MaxHP] += this[Ability.Stat.Vitality] * 100;
-            //    break;
 
             default:
                 break;
         }
 
-
-        if (equipments != null)                  // equipments stat & enchant adjust
+        // step 2
+        if (equipments != null)
         {
             float equipmentsStat = equipments[stat];
 
             if (!float.IsNaN(equipmentsStat))
                 _stats[(int)stat] += equipmentsStat;  // equipments stat
 
+            // step 2.1
             for (Ability.Enhance opt = (Ability.Enhance)0; opt < Ability.Enhance.EnumTotal; ++opt)
             {
                 float equipmentsEnchant = equipments[stat, opt];
@@ -124,6 +131,18 @@ public class AbilityStatus : MonoBehaviour
             }
         }
 
+        // step 2.2
+        switch (stat)
+        {
+            case Ability.Stat.Attack:
+                _stats[(int)Ability.Stat.Attack] *= 1 + _stats[(int)Ability.Stat.Strength] * 0.01f;
+                break;
+
+            default:
+                break;
+        }
+
+        // step 3
         if (buffs != null)
         {
             switch (stat)
@@ -150,6 +169,7 @@ public class AbilityStatus : MonoBehaviour
             }
         }
 
+        // step 4
         if (equipments != null)
         {
             float equipmentsAddition = equipments[stat, Ability.Enhance.Addition];
@@ -157,6 +177,7 @@ public class AbilityStatus : MonoBehaviour
                 _stats[(int)stat] += equipmentsAddition;
         }
 
+        // step 5
         switch(stat)
         {
             case Ability.Stat.Strength:
@@ -166,8 +187,19 @@ public class AbilityStatus : MonoBehaviour
             case Ability.Stat.Vitality:
                 RefreshStat(Ability.Stat.MaxHP);
                 break;
+
+            case Ability.Stat.MaxHP:
+                if (_HP > _stats[(int)Ability.Stat.MaxHP])
+                    _HP = _stats[(int)Ability.Stat.MaxHP];
+                break;
+
+            case Ability.Stat.MaxMP:
+                if (_MP > _stats[(int)Ability.Stat.MaxMP])
+                    _MP = _stats[(int)Ability.Stat.MaxMP];
+                break;
         }
 
+        // return
         return _stats[(int)stat];
     }
 
@@ -279,7 +311,7 @@ public class AbilityStatus : MonoBehaviour
             case Ability.Stat.MaxMP:
             case Ability.Stat.Strength:
             case Ability.Stat.Vitality:
-                return $"{this[stat]}";
+                return $"{System.Math.Round(this[stat], 2)}";
 
             case Ability.Stat.Accuracy:
             case Ability.Stat.CriticalChance:
@@ -287,12 +319,14 @@ public class AbilityStatus : MonoBehaviour
             case Ability.Stat.Dodge:
             case Ability.Stat.MoveSpeed:
             case Ability.Stat.Tenacity:
-                return $"{this[stat] * 100} %";
+                return $"{System.Math.Round(this[stat] * 100, 2)} %";
+
+            case Ability.Stat.SkillCooldown:
+                return $"{System.Math.Round((1.0f - this[stat]) * 100, 2)} %";
 
             case Ability.Stat.ReduceDamage:
             case Ability.Stat.IncreaseDamage:
-            case Ability.Stat.SkillCooldown:
-                return $"{(1.0f - this[stat]) * 100} %";
+                return $"{System.Math.Round((this[stat] - 1.0f) * 100, 2)} %";
 
             default:
                 return "error";

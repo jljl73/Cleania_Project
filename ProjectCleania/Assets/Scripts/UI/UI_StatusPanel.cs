@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,10 +31,10 @@ public class UI_StatusPanel : MonoBehaviour
         if (abilityStatus)
         {
             coreTexts[0].text = $"{ExpManager.Level}";
-            coreTexts[1].text = $"{abilityStatus[Ability.Stat.Strength]}";
-            coreTexts[2].text = $"{abilityStatus.DPS()}";
-            coreTexts[3].text = $"{abilityStatus[Ability.Stat.Vitality]}";
-            coreTexts[4].text = $"{abilityStatus[Ability.Stat.Defense]}";
+            coreTexts[1].text = $"{Math.Round(abilityStatus[Ability.Stat.Strength], 2)}";
+            coreTexts[2].text = $"{Math.Round(abilityStatus.DPS(), 2)}";
+            coreTexts[3].text = $"{Math.Round(abilityStatus[Ability.Stat.Vitality], 2)}";
+            coreTexts[4].text = $"{Math.Round(abilityStatus[Ability.Stat.Defense], 2)}";
 
             if (detailScroll.activeSelf)
             {
