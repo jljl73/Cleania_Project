@@ -148,11 +148,13 @@ public class QuestManager : MonoBehaviour
 
     public void Reward(Quest quest, bool IsReward)
     {
-        quest.GetReward();
-        clearQuests.Add(quest);
-        DeleteList(quest);
-
-        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
+        if (IsReward)
+        {
+            quest.GetReward();
+            clearQuests.Add(quest);
+            DeleteList(quest);
+            GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
+        }
 
         // 보상받기
         foreach (var q in quest.QuestRewards)
