@@ -89,7 +89,7 @@ public class DialogButton : MonoBehaviour
             Debug.Log("Quest is null");
             return;
         }
-        GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest);
+        GameManager.Instance.uiManager.GetComponent<QuestManager>().Reward(quest, true);
     }
 
     void ShowPanel()

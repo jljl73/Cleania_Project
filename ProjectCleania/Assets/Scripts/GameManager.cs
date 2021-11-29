@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public Player player;
     public ChatManager chatManager;
     public UIManager uiManager;
+    public DialogManager dialogManager;
     public NPCManager npcManager;
     public SoundPlayer soundPlayer;
     public PlayerSoundPlayer playerSoundPlayer;

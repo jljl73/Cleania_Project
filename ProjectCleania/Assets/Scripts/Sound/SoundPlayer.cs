@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundPlayer : MonoBehaviour
+public class SoundPlayer : MonoBehaviour, ISoundPlayer
 {
     AudioSource audioSource;
 
@@ -60,5 +60,10 @@ public class SoundPlayer : MonoBehaviour
                 break;
         }
         audioSource.Play();
+    }
+
+    public void ChangeVolume(float volume)
+    {
+        GetComponent<AudioSource>().volume = volume;
     }
 }

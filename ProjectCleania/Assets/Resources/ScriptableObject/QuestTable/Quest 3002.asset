@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quest 3002
   m_EditorClassIdentifier: 
   id: 3002
-  state: 3
+  state: 0
   category: 2
   Name: "\uAC10\uC0AC\uD568\uC758 \uD45C\uC2DC "
   Content: "\"\uCC3D\uACE0 NPC\uAC00 \uAC74\uB124\uC900 '\uBB34\uC5B8\uAC00 \uB4E0
@@ -21,8 +21,13 @@ MonoBehaviour:
   questRewards:
   - type: 0
     value: 1000
+    isReward: 1
   - type: 1
     value: 500
+    isReward: 1
+  - type: 2
+    value: 3666006
+    isReward: 0
   questNeeds:
   - type: 1
     target: 3666006

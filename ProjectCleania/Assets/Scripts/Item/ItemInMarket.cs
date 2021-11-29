@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ItemInMarket : MonoBehaviour
 {
-    public int ItemID
+    public ItemSO ItemSO
     { private set; get; }
 
     [SerializeField]
@@ -17,12 +17,12 @@ public class ItemInMarket : MonoBehaviour
     [SerializeField]
     Toggle toggle;
 
-    public void Initialize(int ItemID, ToggleGroup toggleGroup)
+    public void Initialize(ItemSO SO, ToggleGroup toggleGroup)
     {
-        this.ItemID = ItemID;
-        price.text = ItemSO.Load(ItemID).Price.ToString();
-        itemName.text = ItemSO.Load(ItemID).ItemName;
-        image.sprite = ItemSO.Load(ItemID).ItemImage;
+        this.ItemSO = SO;
+        price.text = SO.Price.ToString();
+        itemName.text = SO.ItemName;
+        image.sprite = SO.ItemImage;
         toggle.group = toggleGroup;
     }
 }

@@ -24,7 +24,18 @@ public class SavedData : MonoBehaviour
         }
     }
 
-    public string characterName;
+    [SerializeField]
+    private string characterName;
+    public string CharacterName
+    {
+        get => characterName;
+        set
+        {
+            characterName = value;
+            Load();
+        }
+    }
+
     string Path
     {
         get
@@ -79,6 +90,7 @@ public class SavedData : MonoBehaviour
         {
             Directory.CreateDirectory($"{Application.dataPath}/savedata");
             File.Create(Path);
+            AfterLoad();
             return false;
         }
     }
