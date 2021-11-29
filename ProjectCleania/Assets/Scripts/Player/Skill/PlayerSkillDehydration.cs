@@ -8,6 +8,7 @@ public class PlayerSkillDehydration : PlayerSkill
     PlayerSkillDehydrationSO skillData;
 
     public float skillScale = 1.0f;
+    float timePassed = 0;
 
     Collider attackArea;
 
@@ -89,6 +90,13 @@ public class PlayerSkillDehydration : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
+            timePassed += Time.deltaTime;
+
+            if (timePassed < 1f)
+                return;
+            else
+                timePassed = 0f;
+
             other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale * Time.deltaTime);
         }
     }
