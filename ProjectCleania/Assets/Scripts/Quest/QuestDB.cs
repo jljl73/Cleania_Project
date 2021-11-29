@@ -39,6 +39,7 @@ public class QuestDB : MonoBehaviour
             {
                 GameObject newGameObject = new GameObject("QuestDB");
                 _instance = newGameObject.AddComponent<QuestDB>();
+                DontDestroyOnLoad(newGameObject);
             }
             return _instance;
         }

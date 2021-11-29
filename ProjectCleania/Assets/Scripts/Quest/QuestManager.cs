@@ -196,7 +196,7 @@ public class QuestManager : MonoBehaviour
     {
         StringBuilder sb = new StringBuilder();
         int q = 0;
-        for(; q < miniLists.childCount && q < assignQuests.Count; ++q)
+        for (; q < miniLists.childCount && q < assignQuests.Count; ++q)
         {
             sb.Clear();
             sb.Append(assignQuests[q].Name);
@@ -210,7 +210,7 @@ public class QuestManager : MonoBehaviour
             miniLists.GetChild(q).GetChild(0).GetComponent<Text>().text = sb.ToString();
         }
 
-        for(; q < miniLists.childCount; ++q)
+        for (; q < miniLists.childCount; ++q)
         {
             miniLists.GetChild(q).gameObject.SetActive(false);
         }
