@@ -144,7 +144,7 @@ public class TheDustyDustStorm : EnemySkill
 
     void DoBreatheInAttack(bool value)
     {
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, damageRadius);
+        Collider[] colliders = Physics.OverlapSphere(GetWorldTriggerPosition(triggerPosition), damageRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
@@ -157,7 +157,9 @@ public class TheDustyDustStorm : EnemySkill
 
     void DoBreatheOutAttack()
     {
-        Collider[] colliders = Physics.OverlapCapsule(new Vector3(0, 1, 2.75f), new Vector3(0, 1, 2.75f + 4), 0.75f);
+        Collider[] colliders = Physics.OverlapCapsule(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f)),
+                                                      GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4 * animator.GetCurrentAnimatorStateInfo(0).normalizedTime)),
+                                                      0.75f);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
@@ -166,6 +168,19 @@ public class TheDustyDustStorm : EnemySkill
                 Vector3 hitVector = Vector3.Normalize(colliders[i].transform.position - this.transform.position) * stormForce;
                 player.playerMove.AddForce(hitVector);
             }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (attackType == AttackType.BreatheOut)
+        {
+            Gizmos.DrawSphere(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f + 4 * animator.GetCurrentAnimatorStateInfo(0).normalizedTime)), 1);
+            AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
+            AnimatorClipInfo[] myAnimatorClip = animator.GetCurrentAnimatorClipInfo(0);
+            float myTime = myAnimatorClip[0].clip.length * animationState.normalizedTime;
+            print("myTime: " + myTime);
+
         }
     }
 

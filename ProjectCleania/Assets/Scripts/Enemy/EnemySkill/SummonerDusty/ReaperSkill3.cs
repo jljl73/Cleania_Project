@@ -9,7 +9,9 @@ public class ReaperSkill3 : EnemySkill
     float hitForce = 1;
     float pushRadius;
 
-    CapsuleCollider col;
+    bool hasAttacked = false;
+
+    SphereCollider col;
 
     [SerializeField]
     public DustWindSO skillData;
@@ -20,17 +22,15 @@ public class ReaperSkill3 : EnemySkill
     private new void Awake()
     {
         base.Awake();
+        col = GetComponent<SphereCollider>();
+        if (col == null)
+            print("im in reaperskill3. col is null");
     }
 
     private new void Start()
     {
         base.Start();
-        col = GetComponent<CapsuleCollider>();
-        if (col != null)
-            print("im in reaperskill3. col is not null");
-        else
-            print("im in reaperskill3. col is null");
-
+        
         UpdateSkillData();
         col.center = triggerPosition;
         col.radius = triggerRange;
@@ -59,8 +59,10 @@ public class ReaperSkill3 : EnemySkill
 
     override public void Activate()
     {
-        //col.enabled = true;
+        if (hasAttacked)
+            return;
         Push();
+        hasAttacked = true;
     }
 
     void Push()
@@ -72,7 +74,8 @@ public class ReaperSkill3 : EnemySkill
             {
                 Player player = colliders[i].GetComponent<Player>();
                 player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
-                player.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(player.transform.position - this.transform.position) * hitForce);
+
+                player.playerMove.AddForce(Vector3.Normalize(player.transform.position - this.transform.position) * hitForce);
             }
         }
     }
@@ -80,8 +83,9 @@ public class ReaperSkill3 : EnemySkill
     public override void Deactivate()
     {
         base.Deactivate();
-        //if (col != null)
-        //    col.enabled = false;
+
         animator.SetBool("OnSkill", false);
+
+        hasAttacked = false;
     }
 }

@@ -49,4 +49,9 @@ public abstract class EnemySkill : Skill
         if (other.CompareTag("Player"))
             OnEnemyTriggerZone.Invoke(false, ID);
     }
+
+    protected Vector3 GetWorldTriggerPosition(Vector3 localTriggerPosition)
+    {
+        return transform.position + transform.right * localTriggerPosition.x + transform.up * localTriggerPosition.y + transform.forward * localTriggerPosition.z;
+    }
 }

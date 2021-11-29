@@ -63,7 +63,9 @@ public class TheDustyGroundHit : EnemySkill
     public override void PlayEffects()
     {
         base.PlayEffects();
-        ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit, transform.position + triggerPosition, transform.rotation);
+        ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit,
+                                            GetWorldTriggerPosition(triggerPosition),
+                                            transform.rotation);
     }
 
     public override void Activate()
@@ -83,7 +85,7 @@ public class TheDustyGroundHit : EnemySkill
 
     void DirectAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + triggerPosition, damageRadius);
+        Collider[] colliders = Physics.OverlapSphere(GetWorldTriggerPosition(triggerPosition), damageRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
@@ -97,7 +99,7 @@ public class TheDustyGroundHit : EnemySkill
 
     void IndirectAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + triggerPosition, indirectDamageRadius);
+        Collider[] colliders = Physics.OverlapSphere(GetWorldTriggerPosition(triggerPosition), indirectDamageRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].CompareTag("Player"))
