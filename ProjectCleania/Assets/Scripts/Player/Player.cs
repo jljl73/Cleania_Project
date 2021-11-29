@@ -45,15 +45,11 @@ public class Player : MonoBehaviour
 
     public void Revive()
     {
-        //animator.SetTrigger("Revive");
-        // stateMachine.ResetState();
-        abilityStatus.FullHP();
         CloseDiePanel();
     }
 
     public void VillageRevive()
     {
-        abilityStatus.FullHP();
         CloseDiePanel();
     }
 
