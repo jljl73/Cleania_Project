@@ -6,7 +6,7 @@ using Cinemachine;
 public class CinemachineVirtualCameraManager : MonoBehaviour
 {
     Cinemachine.CinemachineVirtualCamera cVCamera;
-    
+
     public float ShakeDuration = 1.0f;
 
     void Awake()

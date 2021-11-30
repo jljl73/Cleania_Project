@@ -39,12 +39,13 @@ public class PlayerSkillVillageReturn : PlayerSkill
 
         //animator.SetBool("OnSkill", true);
         //animator.SetBool("OnSkillEtc", true);
-        // animator.SetTrigger("VillageReturn");
+        animator.SetTrigger("Yawn");
 
-        ReturnToVillage();
+        //ReturnToVillage();
 
         return true;
     }
+
 
     public override void Activate()
     {
@@ -54,7 +55,7 @@ public class PlayerSkillVillageReturn : PlayerSkill
     public override void Deactivate()
     {
         base.Deactivate();
-        //effectController[0].PlaySkillEffect();
+        effectController[0].PlaySkillEffect();
     }
 
     public void ReturnToVillage()

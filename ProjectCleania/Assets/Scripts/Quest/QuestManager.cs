@@ -56,7 +56,6 @@ public class QuestManager : MonoBehaviour
                 clearQuests.Add(quests_All[i]);
         }
 
-        //QuestDB.Instance.Load();
         SetListHeight();
         SavedData.Instance.Item_Inventory.Subscribe(Synchronize, Point.Empty);
     }
