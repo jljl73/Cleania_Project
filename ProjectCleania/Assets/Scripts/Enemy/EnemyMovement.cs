@@ -18,7 +18,6 @@ public class EnemyMovement : CharacterMovement, IStunned
     [SerializeField]
     bool isFixedNavPriority = false;
 
-    [SerializeField]
     MoveMode moveMode = MoveMode.Idle;
     enum MoveMode
     {
@@ -174,7 +173,7 @@ public class EnemyMovement : CharacterMovement, IStunned
         moveMode = MoveMode.Idle;
     }
 
-    public void RunAway()
+    public void RunAway(float duration)
     {
         if (TargetObject == null) return;
 
@@ -183,7 +182,7 @@ public class EnemyMovement : CharacterMovement, IStunned
 
         moveAwayDistVector = (transform.position - TargetObject.transform.position) * 3;
 
-        Invoke("StopRunAway", 5.0f);
+        Invoke("StopRunAway", duration);
     }
 
     void StopRunAway()

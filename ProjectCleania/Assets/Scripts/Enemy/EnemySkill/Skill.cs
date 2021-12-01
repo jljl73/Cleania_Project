@@ -6,11 +6,23 @@ using UnityEngine.Events;
 public abstract class Skill : MonoBehaviour
 {
     // 이벤트
-    public delegate void DelegateVoid();
-    public event DelegateVoid OnPlaySkill;          // 스킬 시작 시(AnimationActivate) 발생
-    public event DelegateVoid OnSkillActivate;      // ActivateSkill에서 발생
-    public event DelegateVoid OnSkillDeactivate;    // DeactivateSkill에서 발생
+    public UnityEvent OnPlaySkill;                      // 스킬 시작 시(AnimationActivate) 발생
+    public UnityEvent[] OnSkillActivateEvents;          // 스킬 내 ActivateSkill에서 발생
+    public UnityEvent[] OnSkillDeactivateEvents;        // 스킬 내 DeactivateSkill에서 발생
     public UnityEvent<bool, int> OnEnemyTriggerZone;    // 적이 스킬 시전 가능 범위 내에 있으면 시전
+    public void InitializeOnSkillActivateEvents(int count)
+    {
+        OnSkillActivateEvents = new UnityEvent[count];
+        for (int i = 0; i < count; i++)
+            OnSkillActivateEvents[i] = new UnityEvent();
+    }
+    public void InitializeOnSkillDeactivateEvents(int count)
+    {
+        OnSkillDeactivateEvents = new UnityEvent[count];
+        for (int i = 0; i < count; i++)
+            OnSkillDeactivateEvents[i] = new UnityEvent();
+    }
+
 
     // 컴포넌트
     public Animator animator;
@@ -54,13 +66,13 @@ public abstract class Skill : MonoBehaviour
 
     public virtual void Activate()
     {
-        if (OnSkillActivate != null)
-            OnSkillActivate();
+        if (OnSkillActivateEvents.Length != 0 && OnSkillActivateEvents[0] != null)
+            OnSkillActivateEvents[0].Invoke();
     }
     public virtual void Activate(int idx = 0)
     {
-        if (OnSkillActivate != null)
-            OnSkillActivate();
+        if (OnSkillActivateEvents.Length != 0 && OnSkillActivateEvents[idx] != null)
+            OnSkillActivateEvents[idx].Invoke();
     }
 
     // 실행 가능한지 확인
@@ -73,18 +85,22 @@ public abstract class Skill : MonoBehaviour
     public virtual bool AnimationActivate()
     {
         if (OnPlaySkill != null)
-            OnPlaySkill();
+            OnPlaySkill.Invoke();
 
         return true;
     }
 
     public virtual void Deactivate()
     {
-        if (OnSkillDeactivate != null)
-            OnSkillDeactivate();
+        if (OnSkillDeactivateEvents.Length != 0 && OnSkillDeactivateEvents[0] != null)
+            OnSkillDeactivateEvents[0].Invoke();
     }
 
-    public virtual void Deactivate(int idx = 0) {}
+    public virtual void Deactivate(int idx = 0)
+    {
+        if (OnSkillDeactivateEvents.Length != 0 && OnSkillDeactivateEvents[idx] != null)
+            OnSkillDeactivateEvents[idx].Invoke();
+    }
 
     public virtual void StopSkill() {}
 

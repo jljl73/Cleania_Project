@@ -4,12 +4,13 @@ using UnityEngine;
 
 public abstract class CharacterMovement : MonoBehaviour, IStunned
 {
+    // 사용 컴포넌트
+    protected StateMachine stateMachine;
+
+    // 움직임 관련 변수
     [Header("회전 계수")]
     public float rotateCoef = 1f;
-    protected StateMachine stateMachine;
-    
     public Vector3 TargetPose { get; protected set; }
-
     protected float speed = 7.5f;
     protected virtual void SetSpeed(float value)
     {

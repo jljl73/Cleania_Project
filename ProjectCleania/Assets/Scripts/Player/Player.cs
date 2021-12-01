@@ -11,11 +11,8 @@ public class Player : MonoBehaviour
     public AbilityStatus abilityStatus;
     public Animator animator;
 
-    public delegate void DelegateVoid();
-    public event DelegateVoid OnLevelUp;
-    public event DelegateVoid OnDead;
-    public event DelegateVoid OnRevive;
-    public event DelegateVoid OnVillageRevive;
+    public UnityEvent OnLevelUp;
+    public UnityEvent OnDead;
     public UnityAction<bool, float> OnStunned;
 
     IEnumerator stopSkillDelay = new WaitForSecondsRealtime(0.5f);
@@ -23,11 +20,8 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        OnDead += Die;
-        OnDead += playerSkillManager.DeactivateAllSkill;
-
-        OnRevive += CloseDiePanel;
-        OnVillageRevive += CloseDiePanel;
+        OnDead.AddListener(Die);
+        OnDead.AddListener(playerSkillManager.DeactivateAllSkill);
 
         OnStunned += playerMove.Stunned;
         OnStunned += playerSkillManager.Stunned;
@@ -37,18 +31,8 @@ public class Player : MonoBehaviour
     {
         if (abilityStatus.HP == 0 && !stateMachine.CompareState(StateMachine.enumState.Dead))
         {
-            OnDead();
+            OnDead.Invoke();
         }
-    }
-
-    public void Revive()
-    {
-        OnRevive();
-    }
-
-    public void VillageRevive()
-    {
-        OnVillageRevive();
     }
 
     void Die()
@@ -63,11 +47,6 @@ public class Player : MonoBehaviour
     void ShowDiePanel()
     {
         GameManager.Instance.uiManager.ShowDiePanel(true);
-    }
-
-    void CloseDiePanel()
-    {
-        GameManager.Instance.uiManager.ShowDiePanel(false);
     }
 
     public void Move(Vector3 position)

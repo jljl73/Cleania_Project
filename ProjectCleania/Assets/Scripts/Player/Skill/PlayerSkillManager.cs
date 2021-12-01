@@ -9,7 +9,6 @@ public class PlayerSkillManager : BaseSkillManager
     public StateMachine playerStateMachine;
     public PlayerMovement playerMoveWithNav;
     public Player player;
-    //public TestPlayerMove PlayerMoveWithoutNav;
     Collider objectCollider;
 
     //Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
@@ -43,10 +42,6 @@ public class PlayerSkillManager : BaseSkillManager
         if (playerMoveWithNav == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerMove");
 
-        //PlayerMoveWithoutNav = GetComponent<TestPlayerMove>();
-        //if (PlayerMoveWithoutNav == null)
-        //    throw new System.Exception("PlayerSkillManager doesnt have TestPlayerMove");
-
         objectCollider = GetComponent<Collider>();
         if (objectCollider == null)
             throw new System.Exception("PlayerSkillManager doesnt have Collider");
@@ -62,22 +57,28 @@ public class PlayerSkillManager : BaseSkillManager
     protected override void SkillEventConnect()
     {
         // 1106 = 상쾌한 도약
-        skillStorage.GetNormalSkill(1106).OnPlaySkill += TransitionToAttack;
-        //skillStorage.GetNormalSkill(1106).OnPlaySkill += PlayerMoveWithoutNav.LeapForwardSkillJumpForward;
+        skillStorage.GetNormalSkill(1106).InitializeOnSkillActivateEvents(1);
+        skillStorage.GetNormalSkill(1106).OnSkillActivateEvents[0].AddListener(TransitionToAttack);
 
         // 1199 = 카타르시스
-        skillStorage.GetNormalSkill(1199).OnSkillDeactivate += playKatarsis;
+        skillStorage.GetNormalSkill(1199).InitializeOnSkillActivateEvents(1);
+        skillStorage.GetNormalSkill(1199).OnSkillActivateEvents[0].AddListener(playKatarsis);
 
         // 1198 = 구르기
-        skillStorage.GetNormalSkill(1198).OnPlaySkill += playRoll;
-        skillStorage.GetNormalSkill(1198).OnSkillDeactivate += EndRoll;
+        skillStorage.GetNormalSkill(1198).OnPlaySkill.AddListener(playRoll);
 
-        // 부활
-        skillStorage.GetNormalSkill(1194).OnPlaySkill += player.Revive;
-        skillStorage.GetNormalSkill(1194).OnSkillDeactivate += abilityStatus.FullHP;
+        skillStorage.GetNormalSkill(1198).InitializeOnSkillDeactivateEvents(1);
+        skillStorage.GetNormalSkill(1198).OnSkillDeactivateEvents[0].AddListener(EndRoll);
 
-        skillStorage.GetNormalSkill(1195).OnPlaySkill += player.VillageRevive;
-        skillStorage.GetNormalSkill(1195).OnPlaySkill += abilityStatus.FullHP;
+        // 제자리 부활
+        skillStorage.GetNormalSkill(1194).OnPlaySkill.AddListener(ShowDiePanel);
+
+        skillStorage.GetNormalSkill(1194).InitializeOnSkillDeactivateEvents(1);
+        skillStorage.GetNormalSkill(1194).OnSkillDeactivateEvents[0].AddListener(abilityStatus.FullHP);
+
+        // 마을 부활
+        skillStorage.GetNormalSkill(1195).OnPlaySkill.AddListener(CloseDiePanel);
+        skillStorage.GetNormalSkill(1195).OnPlaySkill.AddListener(abilityStatus.FullHP);
     }
 
     void TransitionToAttack() => playerStateMachine.Transition(StateMachine.enumState.Attacking);
@@ -96,6 +97,16 @@ public class PlayerSkillManager : BaseSkillManager
     void EndRoll()
     {
         playerMoveWithNav.SpeedUp(6.8f);
+    }
+
+    void ShowDiePanel()
+    {
+        GameManager.Instance.uiManager.ShowDiePanel(true);
+    }
+
+    void CloseDiePanel()
+    {
+        GameManager.Instance.uiManager.ShowDiePanel(false);
     }
 
     protected override bool IsSkillAvailable()

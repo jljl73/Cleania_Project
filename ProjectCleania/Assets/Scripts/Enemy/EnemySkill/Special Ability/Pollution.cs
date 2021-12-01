@@ -77,19 +77,6 @@ public class Pollution : ContactStayDamage
 
     protected override void OnTriggerStay(Collider other)
     {
-        //if (other.CompareTag("Player"))
-        //{
-        //    timePassed += Time.deltaTime;
-
-        //    if (timePassed < 5f)
-        //        return;
-        //    else
-        //        timePassed = 0f;
-
-        //    AbilityStatus abil = other.gameObject.GetComponent<AbilityStatus>();
-        //    if (abil != null)
-        //        abil.AttackedBy(ownerAbility, damageScale);
-        //}
     }
 
     protected void OnTriggerExit(Collider other)
