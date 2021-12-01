@@ -801,6 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bd283ff20311949a38d2248a184f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShakeDuration: 1
 --- !u!114 &1020510920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +847,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020510918}
-  m_LocalRotation: {x: 0.45034933, y: 0.000000015362758, z: -0.000000007748883, w: 0.8928525}
+  m_LocalRotation: {x: 0.45034933, y: -0.000000015362762, z: 0.000000007748884, w: 0.8928525}
   m_LocalPosition: {x: 23.5, y: 12.08, z: -5.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1369,7 +1370,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320781507}
-  m_LocalRotation: {x: 0.45034933, y: 0.000000015362758, z: -0.000000007748883, w: 0.8928525}
+  m_LocalRotation: {x: 0.45034933, y: -0.000000015362762, z: 0.000000007748884, w: 0.8928525}
   m_LocalPosition: {x: 23.5, y: 12.08, z: -5.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1477,8 +1478,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player v3
       objectReference: {fileID: 0}
+    - target: {fileID: 8079284852858496631, guid: 2cf7c570d6d78af4d9d6a6208d92c750, type: 3}
+      propertyPath: playerMoveWithNav
+      value: 
+      objectReference: {fileID: 1485229178}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cf7c570d6d78af4d9d6a6208d92c750, type: 3}
+--- !u!114 &1485229178 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4471477726922377635, guid: 2cf7c570d6d78af4d9d6a6208d92c750, type: 3}
+  m_PrefabInstance: {fileID: 1485229177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ada17e7a726af74ba9b6ca7ce240b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1569311387
 GameObject:
   m_ObjectHideFlags: 0

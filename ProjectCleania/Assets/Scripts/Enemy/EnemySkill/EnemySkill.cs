@@ -8,8 +8,9 @@ public abstract class EnemySkill : Skill
     protected EnemyMovement enemyMove;
     protected EnemyChase enemyChase;
 
-    protected void Awake()
+    protected new void Awake()
     {
+        base.Awake();
         if (enemy == null)
             throw new System.Exception("EnemySkill doesnt have enemy");
         enemyMove = enemy.enemyMove;

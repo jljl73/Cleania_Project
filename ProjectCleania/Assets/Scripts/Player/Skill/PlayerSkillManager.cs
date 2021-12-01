@@ -8,10 +8,11 @@ public class PlayerSkillManager : BaseSkillManager
 {
     public StateMachine playerStateMachine;
     public PlayerMovement playerMoveWithNav;
-    public TestPlayerMove PlayerMoveWithoutNav;
+    public Player player;
+    //public TestPlayerMove PlayerMoveWithoutNav;
     Collider objectCollider;
 
-    Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
+    //Dictionary<KeyCode, int> skillSlotDependencyDict = new Dictionary<KeyCode, int>();
     #region
     //public StateMachine stateMachine;
     //AbilityStatus abilityStatus;
@@ -30,6 +31,10 @@ public class PlayerSkillManager : BaseSkillManager
     {
         base.Awake();
 
+        player = GetComponent<Player>();
+        if (player == null)
+            throw new System.Exception("PlayerSkillManager doesnt have player");
+
         playerStateMachine = GetComponent<StateMachine>();
         if (playerStateMachine == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerStateMachine");
@@ -38,9 +43,9 @@ public class PlayerSkillManager : BaseSkillManager
         if (playerMoveWithNav == null)
             throw new System.Exception("PlayerSkillManager doesnt have playerMove");
 
-        PlayerMoveWithoutNav = GetComponent<TestPlayerMove>();
-        if (PlayerMoveWithoutNav == null)
-            throw new System.Exception("PlayerSkillManager doesnt have TestPlayerMove");
+        //PlayerMoveWithoutNav = GetComponent<TestPlayerMove>();
+        //if (PlayerMoveWithoutNav == null)
+        //    throw new System.Exception("PlayerSkillManager doesnt have TestPlayerMove");
 
         objectCollider = GetComponent<Collider>();
         if (objectCollider == null)
@@ -51,27 +56,31 @@ public class PlayerSkillManager : BaseSkillManager
     {
         base.Start();
 
-        SetskillSlotDependencyDict();
-
         SkillEventConnect();
     }
 
     protected override void SkillEventConnect()
     {
         // 1106 = 상쾌한 도약
-        skillStorage.GetNormalSkill(1106).OnPlaySkill += PlayerMoveWithoutNav.LeapForwardSkillJumpForward;
+        skillStorage.GetNormalSkill(1106).OnPlaySkill += TransitionToAttack;
+        //skillStorage.GetNormalSkill(1106).OnPlaySkill += PlayerMoveWithoutNav.LeapForwardSkillJumpForward;
 
         // 1199 = 카타르시스
-        skillStorage.GetNormalSkill(1199).OnSkillEnd += playKatarsis;
+        skillStorage.GetNormalSkill(1199).OnSkillDeactivate += playKatarsis;
 
         // 1198 = 구르기
         skillStorage.GetNormalSkill(1198).OnPlaySkill += playRoll;
-        skillStorage.GetNormalSkill(1198).OnSkillEnd += EndRoll;
+        skillStorage.GetNormalSkill(1198).OnSkillDeactivate += EndRoll;
 
         // 부활
-        skillStorage.GetNormalSkill(1194).OnSkillEnd += abilityStatus.FullHP;
+        skillStorage.GetNormalSkill(1194).OnPlaySkill += player.Revive;
+        skillStorage.GetNormalSkill(1194).OnSkillDeactivate += abilityStatus.FullHP;
+
+        skillStorage.GetNormalSkill(1195).OnPlaySkill += player.VillageRevive;
         skillStorage.GetNormalSkill(1195).OnPlaySkill += abilityStatus.FullHP;
     }
+
+    void TransitionToAttack() => playerStateMachine.Transition(StateMachine.enumState.Attacking);
 
     void playKatarsis()
     {
@@ -81,29 +90,16 @@ public class PlayerSkillManager : BaseSkillManager
 
     void playRoll()
     {
-        //playerMoveWithNav.enabled = false;
-        //PlayerMoveWithoutNav.enabled = true;
-        //objectCollider.enabled = false;
-        //playerMoveWithNav.
-
         playerMoveWithNav.SpeedUp(10);
-        //playerMoveWithNav.MakeNavRadius(0.001f);
-        
     }
 
     void EndRoll()
     {
-        //playerMoveWithNav.enabled = true;
-        //PlayerMoveWithoutNav.enabled = false;
-        //objectCollider.enabled = true;
-
         playerMoveWithNav.SpeedUp(6.8f);
-        //playerMoveWithNav.MakeNavRadius(0.5f);
     }
 
-    protected new bool IsSkillAvailable()
+    protected override bool IsSkillAvailable()
     {
-        //  || animator.GetCurrentAnimatorStateInfo(0).IsName("SkillR Dehydration")
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || 
              animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) 
                 && !animator.IsInTransition(0))
@@ -112,6 +108,7 @@ public class PlayerSkillManager : BaseSkillManager
             return false;
     }
     
+    // 평타 캔슬, 미구현
     void CheckCancelAttackTime()
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Post delay")))
@@ -119,18 +116,18 @@ public class PlayerSkillManager : BaseSkillManager
             animator.SetTrigger("SkillCancel");
         }
     }
-
-    void SetskillSlotDependencyDict()
-    {
-        skillSlotDependencyDict.Add(KeyCode.Alpha1, 0);
-        skillSlotDependencyDict.Add(KeyCode.Alpha2, 1);
-        skillSlotDependencyDict.Add(KeyCode.Alpha3, 2);
-        skillSlotDependencyDict.Add(KeyCode.Alpha4, 3);
-        skillSlotDependencyDict.Add(KeyCode.C, 4);
-        skillSlotDependencyDict.Add(KeyCode.Mouse1, 5);
-    }
-
     #region
+    //void SetskillSlotDependencyDict()
+    //{
+    //    skillSlotDependencyDict.Add(KeyCode.Alpha1, 0);
+    //    skillSlotDependencyDict.Add(KeyCode.Alpha2, 1);
+    //    skillSlotDependencyDict.Add(KeyCode.Alpha3, 2);
+    //    skillSlotDependencyDict.Add(KeyCode.Alpha4, 3);
+    //    skillSlotDependencyDict.Add(KeyCode.C, 4);
+    //    skillSlotDependencyDict.Add(KeyCode.Mouse1, 5);
+    //}
+
+
     //void Update()
     //{
     //    UpdateCoolTime();
@@ -163,10 +160,15 @@ public class PlayerSkillManager : BaseSkillManager
     //    skillAvailable[index] = false;
     //}
     #endregion
+    // 한줄 설명: id 스킬이 사용 가능한지 판단 후 사용.
+    // 설명: MP 사용, StateMachine 변경, 스킬 시전 움직임 변경
+    // Return: 스킬 사용 성공 여부
     public override bool PlaySkill(int id)
     {
         if (!IsSpecificSkillAvailable(id)) return false;
 
+        //  아래 If문을 IsSpecificSkillAvailable로 옮길 수 있지 않을까?
+        
         // 부활 스킬이 아니면, 스킬 쓸 수 있는 상태인지 확인
         if (id != 1194 && id != 1195)
             if (!IsSkillAvailable()) return false;
@@ -180,22 +182,20 @@ public class PlayerSkillManager : BaseSkillManager
 
         if (playerMoveWithNav.enabled)
             playerMoveWithNav.ImmediateLookAtMouse();
-        else
-            PlayerMoveWithoutNav.ImmediateLookAtMouse();
+        //else
+        //    PlayerMoveWithoutNav.ImmediateLookAtMouse();
 
+        // 스킬 사용
         if (skillDict[id].AnimationActivate())
+        {
+            // 스킬 정보 리셋
             ResetSkill(id);
+        }
         return true;
-    }
-
-    public void StopSkill(int id)
-    {
-        skillDict[id].StopSkill();
     }
 
     public override void AnimationDeactivate()
     {
-        //playerStateMachine.Transition(StateMachine.enumState.Idle);
         playerStateMachine.ResetState();
     }
 
@@ -248,39 +248,27 @@ public class PlayerSkillManager : BaseSkillManager
     //        skills[index].StopEffects(i);
     //    }
     //}
-    #endregion
 
-    public override void ActivateSkill(AnimationEvent myEvent)
-    {
-        SkillEffectIndexSO skillEffectIndex = myEvent.objectReferenceParameter as SkillEffectIndexSO;
-
-        if (skillEffectIndex != null)
-        {
-            // 1106 = 상쾌한 도약(4번 스킬) 
-            if (skillEffectIndex.GetSkillID() == 1106) playerStateMachine.Transition(StateMachine.enumState.Attacking);
-
-            skillDict[skillEffectIndex.GetSkillID()].Activate(skillEffectIndex.GetEffectID());
-        }
-        else
-        {
-            // 1106 = 상쾌한 도약(4번 스킬)
-            if (myEvent.intParameter == 1106) playerStateMachine.Transition(StateMachine.enumState.Attacking);
-
-            skillDict[myEvent.intParameter].Activate();
-        }
-
-        // R스킬 때문인 것으로 추정되지만, 스킬 사용하자마자 하는게 좋으므로 Obsolete
-        // abilityStatus.ConsumeMP(skills[index].ConsumMP);
-    }
-
-    //public override void DeactivateSkill(int id)
+    //public override void ActivateSkill(AnimationEvent myEvent)
     //{
-    //    //playerStateMachine.Transition(StateMachine.enumState.Idle);
-    //    skillDict[id].Deactivate();
+    //    SkillEffectIndexSO skillEffectIndex = myEvent.objectReferenceParameter as SkillEffectIndexSO;
+
+    //    if (skillEffectIndex != null)
+    //    {
+    //        //// 1106 = 상쾌한 도약(4번 스킬) 
+    //        //if (skillEffectIndex.GetSkillID() == 1106) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+
+    //        skillDict[skillEffectIndex.GetSkillID()].Activate(skillEffectIndex.GetEffectID());
+    //    }
+    //    else
+    //    {
+    //        //// 1106 = 상쾌한 도약(4번 스킬)
+    //        //if (myEvent.intParameter == 1106) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+
+    //        skillDict[myEvent.intParameter].Activate();
+    //    }
     //}
 
-
-    #region
     // ---------------------------------------------------------------------------------------------- //
     //                                             New Code
     // ---------------------------------------------------------------------------------------------- //

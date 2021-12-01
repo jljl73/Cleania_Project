@@ -89,6 +89,9 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     override public void Activate()
     {
+        // Attaking으로 상태 전환
+        base.Activate();
+
         if (attackArea != null)
             attackArea.enabled = true;
     }
