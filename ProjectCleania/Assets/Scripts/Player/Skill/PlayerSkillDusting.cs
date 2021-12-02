@@ -26,7 +26,7 @@ public class PlayerSkillDusting : PlayerSkill
     {
         base.Start();
 
-        GameManager.Instance.player.OnLevelUp += UpdateSkillData;
+        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<Collider>();
         animator.SetFloat("Dusting multiplier", SpeedMultiplier);
     }

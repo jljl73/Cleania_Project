@@ -10,7 +10,7 @@ public class DustySkillHittingByBody : EnemySkill
     float damageScale = 0;
     float damageRange = 1;
 
-    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     BoxCollider col;

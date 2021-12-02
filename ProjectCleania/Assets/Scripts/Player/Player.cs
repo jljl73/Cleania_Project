@@ -5,19 +5,14 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    // public
     public StateMachine stateMachine;
     public PlayerMovement playerMove;
-    public TestPlayerMove PlayerMoveWithoutNav;
     public PlayerSkillManager playerSkillManager;
     public AbilityStatus abilityStatus;
     public Animator animator;
 
-    public delegate void DelegateVoid();
-    public event DelegateVoid OnLevelUp;
-    public event DelegateVoid OnDead;
-    public event DelegateVoid OnRevive;
-    public event DelegateVoid OnVillageRevive;
+    public UnityEvent OnLevelUp;
+    public UnityEvent OnDead;
     public UnityAction<bool, float> OnStunned;
 
     IEnumerator stopSkillDelay = new WaitForSecondsRealtime(0.5f);
@@ -25,14 +20,10 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        OnDead += Die;
-        OnDead += playerSkillManager.DeactivateAllSkill;
-
-        OnRevive += Revive;
-        OnVillageRevive += VillageRevive;
+        OnDead.AddListener(Die);
+        OnDead.AddListener(playerSkillManager.DeactivateAllSkill);
 
         OnStunned += playerMove.Stunned;
-        OnStunned += PlayerMoveWithoutNav.Stunned;
         OnStunned += playerSkillManager.Stunned;
     }
 
@@ -40,18 +31,8 @@ public class Player : MonoBehaviour
     {
         if (abilityStatus.HP == 0 && !stateMachine.CompareState(StateMachine.enumState.Dead))
         {
-            OnDead();
+            OnDead.Invoke();
         }
-    }
-
-    public void Revive()
-    {
-        CloseDiePanel();
-    }
-
-    public void VillageRevive()
-    {
-        CloseDiePanel();
     }
 
     void Die()
@@ -68,38 +49,21 @@ public class Player : MonoBehaviour
         GameManager.Instance.uiManager.ShowDiePanel(true);
     }
 
-    void CloseDiePanel()
-    {
-        GameManager.Instance.uiManager.ShowDiePanel(false);
-    }
-
     public void Move(Vector3 position)
     {
         if (playerMove.enabled)
             playerMove.Move(position);
-        else
-            PlayerMoveWithoutNav.Move(position);
     }
-
-    //public void StopMoving()
-    //{
-    //    playerMove.StopMoving();
-    //}
-
 
     public void PlaySkill(int id)
     {
-        // 부활 스킬일 경우
-        if (id == 1194)
-            OnRevive();
-        else if (id == 1195)
-            OnVillageRevive();
-
-        //if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
-        //    && !animator.IsInTransition(0))
-        //{
-        //    playerSkillManager.PlaySkill(id);
-        //}
+        #region
+        //// 부활 스킬일 경우
+        //if (id == 1194)
+        //    OnRevive();
+        //else if (id == 1195)
+        //    OnVillageRevive();
+        #endregion
         playerSkillManager.PlaySkill(id);
     }
 
@@ -113,38 +77,4 @@ public class Player : MonoBehaviour
         yield return stopSkillDelay;
         playerSkillManager.StopSkill(id);
     }
-
-    //public void ActivateSkill(AnimationEvent myEvent)
-    //{
-    //    playerSkillManager.ActivateSkill(myEvent);
-    //}
-
-    //public void DeactivateSkill(int index)
-    //{
-    //    print("deactivateSkill");
-    //    playerSkillManager.DeactivateSkill(index);
-    //}
-
-    //public void activateskilleffect(int index)
-    //{
-    //    print("ActivateSkillEffect!");
-    //    playerSkillManager.ActivateSkillEffect(index);
-    //}
-
-    //public void ActivateSkillEffect(AnimationEvent myEvent)
-    //{
-    //    playerSkillManager.ActivateSkillEffect(myEvent);
-    //}
-
-    //public void DeactivateSkillEffect(AnimationEvent myEvent)
-    //{
-    //    playerSkillManager.DeactivateSkillEffect(myEvent);
-    //}
-
-    //public void DeactivateSkillEffect(int index)
-    //{
-    //    print("DeactivateSkillEffect!");
-    //    playerSkillManager.DeactivateSkillEffect(index);
-    //    StopMoving();
-    //}
 }

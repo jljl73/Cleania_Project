@@ -5,12 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySkill", menuName = "Scriptable Object/Enemy/EnemySkill")]
 public class EnemySkillSO : EnemySkillIDSO
 {
-    public string SkillName;
+    [SerializeField]
+    string SkillName;
     public string GetSkillName() { return SkillName; }
 
     [Header("Tip: 변수명을 입력할 수 있습니다.")]
     [TextArea]
-    public string SkillDetails;
+    [SerializeField]
+    string SkillDetails;
 
     public string GetSkillDetails()
     {
@@ -29,24 +31,28 @@ public class EnemySkillSO : EnemySkillIDSO
     }
 
     [Header("패시브 스킬")]
-    public bool IsPassiveSkill = false;  // 추후 private 처리
+    [SerializeField]
+    bool IsPassiveSkill = false;  // 추후 private 처리
     public bool GetIsPassiveSkill() { return IsPassiveSkill; }
 
-    // public bool isAttacking;
     [Header("쿨타임")]
-    public float CoolTime;  // 추후 private 처리
+    [SerializeField]
+    float CoolTime;  // 추후 private 처리
     public float GetCoolTime() { return CoolTime; }
 
     [Header("생성 고유 자원")]
-    public float CreatedMP = 0f;
+    [SerializeField]
+    float CreatedMP = 0f;
     public float GetCreatedMP() { return CreatedMP; }
 
     [Header("소모 고유 자원")]
-    public float ConsumMP = 0f;
+    [SerializeField]
+    float ConsumMP = 0f;
     public float GetConsumMP() { return ConsumMP; }
 
     [Header("전체 애니메이션 배속")]
-    public float SpeedMultiplier = 1.0f;
+    [SerializeField]
+    float SpeedMultiplier = 1.0f;
     public float GetSpeedMultiplier() { return SpeedMultiplier; }
 
     [Header("발동 가능 위치")]
@@ -60,6 +66,7 @@ public class EnemySkillSO : EnemySkillIDSO
     public float GetTriggerRange() { return triggerRange; }
 
     [Header("피해율")]
-    public float DamageRate;
+    [SerializeField]
+    float DamageRate;
     public float GetDamageRate() { return DamageRate; }
 }

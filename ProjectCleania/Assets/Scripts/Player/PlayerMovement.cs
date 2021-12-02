@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class PlayerMovement : CharacterMovement, IStunned
+public class PlayerMovement : CharacterMovement
 {
     NavMeshAgent navMeshAgent;              // 네비 매시 컴포넌트
     Rigidbody characterRigidBody;           // 리지드바디 컴포넌트
@@ -17,10 +17,22 @@ public class PlayerMovement : CharacterMovement, IStunned
     float beforeFrameVelocity = -1;
     float currentFrameVelocity;
 
-    bool bChasing = false;
+    //bool bChasing = false;
     bool bPulled = false;
     bool bPushed = false;
     bool isStunned = false;
+
+    MoveMode moveMode = MoveMode.Idle;
+    enum MoveMode
+    {
+        Idle,
+        Chasing,
+        RunAway,
+        StopMoving,
+        OnlyChasePosition,
+        Pulled,
+        Pushed
+    }
 
     protected new void Awake()
     {
@@ -49,8 +61,14 @@ public class PlayerMovement : CharacterMovement, IStunned
         if (!CanMove())
             return;
 
+        // 수정 필요!!!!!!!!!!!
+
+        // Ability.Stat 관련 변수를 사용하는 객체들이 Ability.State.Change를 구독하는 형식 필요할듯?
+
         // 속도 설정
         // SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6);
+
+
 
         ActivateNavigation();
 
@@ -69,6 +87,9 @@ public class PlayerMovement : CharacterMovement, IStunned
         // 애니메이션 업데이트
         if (!bPulled && !bPushed)
             animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+
+        if (moveMode != MoveMode.Pulled && moveMode != MoveMode.Pushed)
+            animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
     }
 
     protected override bool CanMove()
@@ -80,6 +101,11 @@ public class PlayerMovement : CharacterMovement, IStunned
             return false;
 
         if (isStunned)
+        {
+            TargetPose = transform.position;
+            return false;
+        }
+        if (moveMode == MoveMode.StopMoving)
         {
             TargetPose = transform.position;
             return false;
@@ -107,7 +133,7 @@ public class PlayerMovement : CharacterMovement, IStunned
 
     bool IscharacterRigidBodyOn()
     {
-        if (!bPushed)
+        if (!bPushed && moveMode != MoveMode.Pushed)
         {
             currentFrameVelocity = 0;
             beforeFrameVelocity = -1;
@@ -122,6 +148,7 @@ public class PlayerMovement : CharacterMovement, IStunned
                 SetRigidBody(false);
                 animator.SetBool("Pulled", false);
                 bPushed = false;
+                moveMode = MoveMode.Idle;
             }
 
             beforeFrameVelocity = currentFrameVelocity;
@@ -170,10 +197,10 @@ public class PlayerMovement : CharacterMovement, IStunned
                 TargetPose = hit.collider.transform.position;
         }
 
-        if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
-        {
-            animator.SetBool("Walk", true);
-        }
+        //if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
+        //{
+        //    animator.SetBool("Walk", true);
+        //}
     }
 
     bool IsMovableLayer(string collideTag, out RaycastHit rayhitInfo)
@@ -305,6 +332,7 @@ public class PlayerMovement : CharacterMovement, IStunned
         animator.SetBool("Pulled", true);
 
         bPushed = true;
+        moveMode = MoveMode.Pushed;
     }
 
     void SetRigidBody(bool value)
@@ -343,23 +371,23 @@ public class PlayerMovement : CharacterMovement, IStunned
     }
 
     #region
-    //public void Stunned(bool isStunned, float stunnedTime)
-    //{
-    //    if (isStunned)
-    //    {
-    //        StartCoroutine(StunnedFor(stunnedTime));
-    //    }
-    //    else
-    //    {
-    //        isStunned = false;
-    //    }
-    //}
+    public override void Stunned(bool isStunned, float stunnedTime)
+    {
+        if (isStunned)
+        {
+            StartCoroutine(StunnedFor(stunnedTime));
+        }
+        else
+        {
+            isStunned = false;
+        }
+    }
 
-    //public IEnumerator StunnedFor(float time)
-    //{
-    //    isStunned = true;
-    //    yield return new WaitForSeconds(time);
-    //    isStunned = false;
-    //}
+    public override IEnumerator StunnedFor(float time)
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(time);
+        isStunned = false;
+    }
     #endregion
 }

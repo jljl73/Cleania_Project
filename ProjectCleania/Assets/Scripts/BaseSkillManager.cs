@@ -12,8 +12,8 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     protected Dictionary<int, Skill> skillDict = new Dictionary<int, Skill>();                      // 모든 스킬
     protected Dictionary<int, Skill> availableSkillDict = new Dictionary<int, Skill>();             // 현재 사용 가능 스킬
     protected Dictionary<int, Skill> needCoolTimePassedSkillDict = new Dictionary<int, Skill>();    // 쿨타임 업데이트 중인 스킬
-    protected Dictionary<int, float> coolTimePassedDict = new Dictionary<int, float>();
-    protected Dictionary<int, float> CoolTimePassedRatioDict = new Dictionary<int, float>();
+    protected Dictionary<int, float> coolTimePassedDict = new Dictionary<int, float>();             // ID의 쿨타임 저장
+    protected Dictionary<int, float> CoolTimePassedRatioDict = new Dictionary<int, float>();        // UI에 쿨타임 표시용
 
     public float GetCoolTimePassedRatio(int id) { return CoolTimePassedRatioDict[id]; }
 
@@ -30,9 +30,11 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
 
     protected void Start()
     {
+        // 일반 스킬 업로드
         UploadNormalSkill();
-        UpdateOtherDictBySkillDict();
 
+        // 업로드된 스킬로 쿨타임 & 사용가능 스킬 자료구조 및 데이터 초괴화
+        UpdateOtherDictBySkillDict();
         InitializeAllSkillSetting();
     }
 
@@ -111,10 +113,12 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     {
         foreach (int id in skillDict.Keys)
         {
-            availableSkillDict.Add(id, skillDict[id]);
-            // skillAvailableDict.Add(id, true);
-            coolTimePassedDict.Add(id, 0);
-            CoolTimePassedRatioDict.Add(id, 1);
+            if (!availableSkillDict.ContainsKey(id))
+                availableSkillDict.Add(id, skillDict[id]);
+            if (!coolTimePassedDict.ContainsKey(id))
+                coolTimePassedDict.Add(id, 0);
+            if (!CoolTimePassedRatioDict.ContainsKey(id))
+                CoolTimePassedRatioDict.Add(id, 1);
         }
 
         SetDefaultSkillSetting();
@@ -151,7 +155,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     public virtual bool PlaySkill(int id)
     {
         if (!IsSkillAvailable()) return false;
-        //if (!skillAvailableDict[id]) return false;
         if (!IsSpecificSkillAvailable(id)) return false;
         skillDict[id].AnimationActivate();
         ResetSkill(id);
@@ -161,7 +164,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
 
     public virtual void AnimationDeactivate()
     {
-        //playerStateMachine.Transition(StateMachine.enumState.Idle);
     }
 
     public virtual void ActivateSkill(AnimationEvent myEvent)
@@ -204,10 +206,12 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             skillDict[skillEffectIndexSet.GetSkillID()].PlayEffects(skillEffectIndexSet.GetEffectID());
         else
         {
+            // 이펙트가 시전자에게 종속되지 않은 경우
             if (skillDict[myEvent.intParameter].effectController.Count == 0)
                 skillDict[myEvent.intParameter].PlayEffects();
             else
             {
+                // 시전자에게 종속된 경우
                 for (int i = 0; i < skillDict[myEvent.intParameter].effectController.Count; i++)
                 {
                     skillDict[myEvent.intParameter].PlayEffects(i);
@@ -266,7 +270,6 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
     protected void initializeSkillSetting(int id)
     {
         coolTimePassedDict[id] = 1f;
-        //skillAvailableDict[id] = true;
     }
 
     void InitializeAllSkillSetting()
@@ -277,7 +280,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
         }
     }
 
-    public bool IsSkillAvailable()
+    protected virtual bool IsSkillAvailable()
     {
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) && !animator.IsInTransition(0))
@@ -293,10 +296,7 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
 
     protected void ResetSkill(int skillID)
     {
-        //coolTimePassed[index] = 0f;
-        //skillAvailable[index] = false;
         coolTimePassedDict[skillID] = 0f;
-        //skillAvailableDict[skillID] = false;
 
         needCoolTimePassedSkillDict.Add(skillID, availableSkillDict[skillID]);
         availableSkillDict.Remove(skillID);
@@ -312,6 +312,11 @@ public abstract class BaseSkillManager : MonoBehaviour, IStunned
             skillDict[id].OwnerAbilityStatus = abilityStatus;
             skillDict[id].animator = animator;
         }
+    }
+
+    public void StopSkill(int id)
+    {
+        skillDict[id].StopSkill();
     }
 
     public void Stunned(bool isStunned, float stunnedTime)

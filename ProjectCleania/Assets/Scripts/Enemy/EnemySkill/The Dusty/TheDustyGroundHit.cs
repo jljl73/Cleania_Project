@@ -17,7 +17,7 @@ public class TheDustyGroundHit : EnemySkill
 
     SphereCollider triggerCollider;
 
-    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()

@@ -15,7 +15,7 @@ public class ReaperSkill1 : EnemySkill
 
     SphereCollider triggerCollider;
 
-    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()
@@ -66,6 +66,7 @@ public class ReaperSkill1 : EnemySkill
     public override void Activate()
     {
         newEnemy = Instantiate(highDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
+        //Enemy enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.) 
         //newEnemy.GetComponent<Enemy>().EnemySpawner = enemy.EnemySpawner;
         newEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
 
