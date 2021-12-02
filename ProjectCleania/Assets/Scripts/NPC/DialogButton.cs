@@ -114,6 +114,7 @@ public class DialogButton : MonoBehaviour
     void CloseDialog()
     {
         if (dialog == null) return;
-        dialog.gameObject.SetActive(false);
+        GameManager.Instance.dialogManager.ShowDialog(dialog.gameObject, false);
+        //dialog.gameObject.SetActive(false);
     }
 }
