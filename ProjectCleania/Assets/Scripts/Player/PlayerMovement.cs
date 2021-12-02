@@ -197,10 +197,10 @@ public class PlayerMovement : CharacterMovement
                 TargetPose = hit.collider.transform.position;
         }
 
-        if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
-        {
-            animator.SetBool("Walk", true);
-        }
+        //if (Vector3.Distance(TargetPose, transform.position) > 0.01f)
+        //{
+        //    animator.SetBool("Walk", true);
+        //}
     }
 
     bool IsMovableLayer(string collideTag, out RaycastHit rayhitInfo)

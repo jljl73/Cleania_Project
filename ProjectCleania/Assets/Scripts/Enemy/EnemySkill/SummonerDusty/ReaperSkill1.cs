@@ -66,6 +66,7 @@ public class ReaperSkill1 : EnemySkill
     public override void Activate()
     {
         newEnemy = Instantiate(highDusty, Random.insideUnitSphere + transform.position, this.transform.rotation);
+        //Enemy enemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.) 
         //newEnemy.GetComponent<Enemy>().EnemySpawner = enemy.EnemySpawner;
         newEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = enemyChase.EnemySpawner;
 
