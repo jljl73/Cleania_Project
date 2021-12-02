@@ -48,7 +48,7 @@ public class Ability
         public float Value;
         public Ability.Stat Stat;
 
-        public StaticOption(float val, Ability.Stat stat)
+        public StaticOption(Ability.Stat stat, float val)
         {
             Value = val;
             Stat = stat;
@@ -64,14 +64,14 @@ public class Ability
         public KeyValuePair<Ability.Stat, Ability.Enhance> Key
         { get => new KeyValuePair<Stat, Enhance>(Stat, How); }
 
-        public DynamicOption(float val, Ability.Stat stat, Ability.Enhance how)
+        public DynamicOption(Ability.Stat stat, Ability.Enhance how, float val)
         {
             Value = val;
             Stat = stat;
             How = how;
         }
 
-        public DynamicOption(float val, KeyValuePair<Ability.Stat, Ability.Enhance> key)
+        public DynamicOption(KeyValuePair<Ability.Stat, Ability.Enhance> key, float val)
         {
             Value = val;
             Stat = key.Key;
@@ -85,6 +85,7 @@ public class Ability
         public bool Dodged;
         public bool Critical;
         public bool Heal;
+        public bool Immortal;
         public float Value;
     }
 
