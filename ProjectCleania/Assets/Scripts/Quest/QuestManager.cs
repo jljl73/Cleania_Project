@@ -86,6 +86,12 @@ public class QuestManager : MonoBehaviour
 
     void Synchronize(iItemStorage sender, ItemStorage_LocalGrid.SyncOperator oper, Point index)
     {
+        if (this == null)
+        {
+            ((ItemStorage_LocalGrid)sender).QuitSubscribe(Synchronize);
+            return;
+        }
+
         Debug.Log("Quest Item Synchronize");
         Acheive(QuestNeed.TYPE.Item, 0);
     }
