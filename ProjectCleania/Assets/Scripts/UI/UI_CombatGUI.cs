@@ -34,7 +34,7 @@ public class UI_CombatGUI : MonoBehaviour
     void Start()
     {
         player = GameManager.Instance.SinglePlayer;
-        SkillManager = player.GetComponent<Player>().playerSkillManager;
+        //SkillManager = player.GetComponent<PlayerController>().playerSkillManager;
 
         Skills_CoolPercent = new float[Skills.Length];
         playerStatus = player.GetComponent<Player>().abilityStatus;

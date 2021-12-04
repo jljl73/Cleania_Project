@@ -31,7 +31,7 @@ public class PlayerSkillDehydration : PlayerSkill
 
     new void Start()
     {
-        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
+        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
 
         base.Start();
         animator.SetFloat("Dehydration multiplier", SpeedMultiplier);

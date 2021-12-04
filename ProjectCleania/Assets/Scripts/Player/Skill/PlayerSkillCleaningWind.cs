@@ -52,7 +52,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
     protected new void Start()
     {
         base.Start();
-        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
+        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
 
         ResizeEffect();

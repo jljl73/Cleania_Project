@@ -10,6 +10,20 @@ public abstract class Skill : MonoBehaviour
     public UnityEvent[] OnSkillActivateEvents;          // 스킬 내 ActivateSkill에서 발생
     public UnityEvent[] OnSkillDeactivateEvents;        // 스킬 내 DeactivateSkill에서 발생
     public UnityEvent<bool, int> OnEnemyTriggerZone;    // 적이 스킬 시전 가능 범위 내에 있으면 시전
+
+    protected float passedCoolTime;
+    protected bool isCoolTimePassed = true;
+
+    protected virtual void Update()
+    {
+        if (isCoolTimePassed)
+            return;
+
+        passedCoolTime += Time.deltaTime;
+        if (passedCoolTime >= CoolTime)
+            isCoolTimePassed = true;
+    }
+
     public void InitializeOnSkillActivateEvents(int count)
     {
         OnSkillActivateEvents = new UnityEvent[count];

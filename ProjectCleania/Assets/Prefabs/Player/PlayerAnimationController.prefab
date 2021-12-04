@@ -1,0 +1,357 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5160918243692593493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7039958741272712456}
+  - component: {fileID: 4272780498761954028}
+  - component: {fileID: 4684203904074965148}
+  - component: {fileID: 1834146088376404150}
+  - component: {fileID: 252693365396429226}
+  - component: {fileID: 5859363157390892443}
+  - component: {fileID: 6358629244955599167}
+  - component: {fileID: 1145089290381418374}
+  - component: {fileID: 3368787144167816753}
+  - component: {fileID: 3614684168142175285}
+  - component: {fileID: 6128252570572154456}
+  - component: {fileID: 542534372980804338}
+  - component: {fileID: 5304604498324976610}
+  - component: {fileID: 1180858115041311382}
+  m_Layer: 0
+  m_Name: PlayerAnimationController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7039958741272712456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4272780498761954028
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4684203904074965148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1788a5975e313be42b8020751d79e648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+  buffManager: {fileID: 0}
+--- !u!114 &1834146088376404150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e006b5164c05b74a8e1ae59f2671594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &252693365396429226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8192408696ff9e34aa63b68dfb36cac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &5859363157390892443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2adb6dfda320e42b1ae24da6991514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &6358629244955599167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e679cd07aada02249a1db1f57f007f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &1145089290381418374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fc321c80260e949a61c8c8e819dd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+  skillScale: 1
+  damageRange: 1
+--- !u!114 &3368787144167816753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37949bff92d445468854353d38af8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &3614684168142175285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a433b2d7fc7201f4fa5ebbb603a0a4b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &6128252570572154456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0408bae69aa467d4bb45c26558d952df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &542534372980804338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e4a577d5958e6469684b1637da113c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &5304604498324976610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd64317ed0e9a547957db17989bd2a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+--- !u!114 &1180858115041311382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160918243692593493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2bb091e9755b242afd659cc06f79a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 0}
+  OwnerAbilityStatus: {fileID: 0}
+  effectController: []
+  skillData: {fileID: 0}
+  referenceSkillData: {fileID: 0}
+  playerSkillVillageReturn: {fileID: 0}

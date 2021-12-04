@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public Status PlayerStatus;
     public Equipable PlayerEquipments;
     public Buffable PlayerBuffs;
-    public Player player;
+    public PlayerController player;
     public ChatManager chatManager;
     public UIManager uiManager;
     public DialogManager dialogManager;

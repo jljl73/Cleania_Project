@@ -11,7 +11,7 @@ public class SinglePlayer : MonoBehaviour
         GameManager.Instance.PlayerStatus = GetComponentInChildren<Status>();
         GameManager.Instance.PlayerEquipments = GetComponentInChildren<Equipable>();
         GameManager.Instance.PlayerBuffs = GetComponentInChildren<Buffable>();
-        GameManager.Instance.player = GetComponent<Player>();
+        GameManager.Instance.player = GetComponent<PlayerController>();
 
         if (GameManager.Instance.player == null)
             print("player doesnt exist im in singlePlayer");

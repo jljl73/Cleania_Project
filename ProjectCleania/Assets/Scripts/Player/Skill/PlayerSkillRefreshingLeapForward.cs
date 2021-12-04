@@ -49,7 +49,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     {
         base.Start();
 
-        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
+        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<CapsuleCollider>();
         animator.SetFloat("RefreshingLeapForward mulitplier", SpeedMultiplier);
 

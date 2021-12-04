@@ -4,80 +4,81 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
-public class TestPlayerMove : MovementController, IStunned
+public class TestPlayerMove : MovementController
 {
-    [Header("움직임 사용 스킬")]
-    public PlayerSkillRefreshingLeapForward LeapForwardSkill;
-    public PlayerSkillRoll RollSkill;
+    #region
+    //[Header("움직임 사용 스킬")]
+    //public PlayerSkillRefreshingLeapForward LeapForwardSkill;
+    //public PlayerSkillRoll RollSkill;
 
-    bool isOrderedToMove = false;
+    //bool isOrderedToMove = false;
 
-    protected new void Awake()
-    {
-        base.Awake();
-        TargetPose = transform.position;
-        abilityStatus = GetComponent<AbilityStatus>();
-    }
+    //protected new void Awake()
+    //{
+    //    base.Awake();
+    //    TargetPose = transform.position;
+    //    abilityStatus = GetComponent<AbilityStatus>();
+    //}
 
-    void FixedUpdate()
-    {
-        if (!CanMove())
-            return;
+    //void FixedUpdate()
+    //{
+    //    if (!CanMove())
+    //        return;
 
-        // 이동 속도 설정
-        SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6 * RollSkill.AvoidSpeedMultiplier);
+    //    // 이동 속도 설정
+    //    SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6 * RollSkill.AvoidSpeedMultiplier);
 
-        // 이동
-        this.transform.localPosition = Vector3.MoveTowards(this.transform.position, TargetPose, speed * Time.deltaTime);
+    //    // 이동
+    //    this.transform.localPosition = Vector3.MoveTowards(this.transform.position, TargetPose, speed * Time.deltaTime);
 
-        // 회전 가속
-        AccelerateRotation();
-    }
+    //    // 회전 가속
+    //    AccelerateRotation();
+    //}
 
-    protected override bool CanMove()
-    {
+    //protected override bool CanMove()
+    //{
 
-        if (!IsMovableState())
-            return false;
+    //    if (!IsMovableState())
+    //        return false;
 
-        if (!isOrderedToMove || isStunned)
-        {
-            TargetPose = transform.position;
-            return false;
-        }
+    //    if (!isOrderedToMove || isStunned)
+    //    {
+    //        TargetPose = transform.position;
+    //        return false;
+    //    }
 
-        if (Vector3.Distance(TargetPose, transform.position) < 0.2f)
-        {
-            animator.SetBool("Walk", false);
-            TargetPose = transform.position;
-            isOrderedToMove = false;
-            return false;
-        }
+    //    if (Vector3.Distance(TargetPose, transform.position) < 0.2f)
+    //    {
+    //        animator.SetBool("Walk", false);
+    //        TargetPose = transform.position;
+    //        isOrderedToMove = false;
+    //        return false;
+    //    }
 
-        return true;
-    }
+    //    return true;
+    //}
 
-    public override void Move(Vector3 MousePosition)
-    {
-        isOrderedToMove = true;
-        MoveToPosition(MousePosition);
-    }
+    //public override void Move(Vector3 MousePosition)
+    //{
+    //    isOrderedToMove = true;
+    //    MoveToPosition(MousePosition);
+    //}
 
-    public void StopMoving()
-    {
-        TargetPose = transform.position;
-    }
+    //public void StopMoving()
+    //{
+    //    TargetPose = transform.position;
+    //}
 
-    public void LeapForwardSkillJumpForward()
-    {
-        print("LeapForwardSkillJumpForward!");
-        if (LeapForwardSkill == null)
-            throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
-        float dist = LeapForwardSkill.GetJumpDistance();
-        isOrderedToMove = true;
-        TargetPose = transform.position + transform.forward * dist;
-    }
-
+    //public void LeapForwardSkillJumpForward()
+    //{
+    //    print("LeapForwardSkillJumpForward!");
+    //    if (LeapForwardSkill == null)
+    //        throw new System.Exception("TestPlayerMove dosent have LeapForwardSkillJumpForward");
+    //    float dist = LeapForwardSkill.GetJumpDistance();
+    //    isOrderedToMove = true;
+    //    TargetPose = transform.position + transform.forward * dist;
+    //}
+    #endregion
     #region
 
     //void Targetting()
@@ -240,4 +241,13 @@ public class TestPlayerMove : MovementController, IStunned
     //    isStunned = false;
     //}
     #endregion
+    protected override bool CanMove()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override bool IsMovableState()
+    {
+        throw new System.NotImplementedException();
+    }
 }

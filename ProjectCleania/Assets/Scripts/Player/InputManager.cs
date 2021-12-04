@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    Player player;
+    PlayerController player;
 
     [SerializeField]
     EnemySpawnerManager enemySpawnerManager;
@@ -32,15 +32,15 @@ public class InputManager : MonoBehaviour
         // UI 클릭시 리턴
         if (EventSystem.current.IsPointerOverGameObject(-1)) return;
 
-        // 죽으면 플레이어 입력 불가
-        if (player.abilityStatus.HP == 0)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                player.PlaySkill(1194);
-            }
-            return;
-        }
+        //// 죽으면 플레이어 입력 불가
+        //if (player.abilityStatus.HP == 0)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.R))
+        //    {
+        //        player.PlaySkill(1194);
+        //    }
+        //    return;
+        //}
 
         // 마우스 >>>>>
         if (Input.GetMouseButtonDown(0))
@@ -59,17 +59,17 @@ public class InputManager : MonoBehaviour
         {
             
             if (PlayerMovable)
-                player.Move(Input.mousePosition);
+                player.OrderMovementTo(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(1))
         {
-            player.PlaySkill(1102);
+            player.OrderSkillID(1102);
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            player.StopSkill(1102);
+            player.OrderSkillID(1102);
         }
 
         // 마우스 <<<<<
@@ -78,41 +78,50 @@ public class InputManager : MonoBehaviour
         // 키보드 >>>>>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            player.PlaySkill(1103);
+            //player.PlaySkill(1103);
+            player.OrderSkillID(1103);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            player.PlaySkill(1104);
+            // player.PlaySkill(1104);
+            player.OrderSkillID(1104);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            player.PlaySkill(1105);
+            // player.PlaySkill(1105);
+            player.OrderSkillID(1105);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            player.PlaySkill(1106);
+            // player.PlaySkill(1106);
+            player.OrderSkillID(1106);
         }
         if (Input.GetKey(KeyCode.C))
         {
-            player.PlaySkill(1101);
+            // player.PlaySkill(1101);
+            player.OrderSkillID(1101);
         }
         
         if (Input.GetKeyDown(KeyCode.F))
         {
-            player.PlaySkill(1199);
+            // player.PlaySkill(1199);
+            player.OrderSkillID(1199);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.PlaySkill(1198);
+            // player.PlaySkill(1198);
+            player.OrderSkillID(1198);
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            player.PlaySkill(1196);
+            // player.PlaySkill(1196);
+            player.OrderSkillID(1196);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            player.PlaySkill(1197);
+            // player.PlaySkill(1197);
+            player.OrderSkillID(1197);
         }
 
         
@@ -128,15 +137,15 @@ public class InputManager : MonoBehaviour
         //    player.playerMove.AddForce(force);
         //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            player.playerMove.Pulled(false, Vector3.zero);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    player.playerMove.Pulled(false, Vector3.zero);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    player.playerMove.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
+        //}
     }
 
 }
