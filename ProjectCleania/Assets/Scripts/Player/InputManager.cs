@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            player.OrderSkillID(1102);
+            player.OrderSkillStop(1102);
         }
 
         // 마우스 <<<<<

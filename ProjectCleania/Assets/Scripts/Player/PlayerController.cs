@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (!CheckMovable())
+            return;
+
         // 움직임 애니메이션 업데이트
         animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
     }
@@ -49,10 +52,19 @@ public class PlayerController : MonoBehaviour
             return false;
     }
 
-    bool CheckState()
+    bool CheckMovable()
     {
+        int currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        if (currentStateHash == Animator.StringToHash("Idle") ||
+            currentStateHash == Animator.StringToHash("Run") ||
+            currentStateHash == Animator.StringToHash("Skill 1102"))
+        {
+            navMeshAgent.isStopped = false;
+            return true;
+        }
 
-        return true;
+        navMeshAgent.isStopped = true;
+        return false;
     }
 
     void BecomeDead()
@@ -83,8 +95,14 @@ public class PlayerController : MonoBehaviour
             movementController.ImmediateLookAtMouse();
     }
 
+    public void OrderSkillStop(int id)
+    {
+        animator.SetBool("Trigger" + id.ToString(), false);
+    }
+
     public void OrderMovementTo(Vector3 mousePosition)
     {
-        movementController.Move(mousePosition);
+        if (CheckMovable())
+            movementController.Move(mousePosition);
     }
 }

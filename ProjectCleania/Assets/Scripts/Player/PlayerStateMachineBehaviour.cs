@@ -48,15 +48,16 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // 스킬 나올때 모든 스킬 트리거 끄기
-        foreach (int id in idToStateHash.Values)
+        // 스킬 나올때 모든 스킬 트리거 & 이펙트 끄기
+        foreach (int id in idToStateHash.Keys)
         {
             // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
             if (stateInfo.shortNameHash == idToStateHash[id])
             {
-                Debug.Log("현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태");
                 // 모든 스킬 실행 끈다
                 TurnOffAllSkillTrigger(animator);
+                TurnOffAllSkillEffect();
+                //animator.GetCurrentAnimatorClipInfo(0)[0].clip.events[0].
                 break;
             }
         }
@@ -64,10 +65,15 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
 
     void TurnOffAllSkillTrigger(Animator animator)
     {
-        foreach (int paramId in idToParameterHash.Values)
+        foreach (int paramId in idToParameterHash.Keys)
         {
             animator.SetBool(idToParameterHash[paramId], false);
         }
+    }
+
+    void TurnOffAllSkillEffect()
+    {
+
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
