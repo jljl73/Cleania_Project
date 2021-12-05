@@ -69,18 +69,9 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            StopDehydration();
-            //StartCoroutine("StopDehydration");
-            Invoke("StopDehydration", 1);
+            player.StopSkill(1102);
         }
 
-        void StopDehydration() => player.StopSkill(1102);
-
-        //IEnumerator StopDehydration()
-        //{
-        //    yield return new WaitForSecondsRealtime(1);
-        //    player.StopSkill(1102);
-        //}
         // 마우스 <<<<<
 
 

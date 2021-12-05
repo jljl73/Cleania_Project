@@ -7,8 +7,6 @@ public class PlayerSkillCleaningWind : PlayerSkill
     [SerializeField]
     PlayerSkillCleaningWindSO skillData;
 
-    //public GameObject hurricanePrefabs;
-
     GameObject newProjectile;
 
     float gatherEnergySize = 1f;
@@ -54,7 +52,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
     protected new void Start()
     {
         base.Start();
-        GameManager.Instance.player.OnLevelUp += UpdateSkillData;
+        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
 
         ResizeEffect();
@@ -88,7 +86,6 @@ public class PlayerSkillCleaningWind : PlayerSkill
     {
         base.AnimationActivate();
 
-        //animator.SetInteger("Skill", 3);
         animator.SetBool("OnSkill", true);
         animator.SetBool("OnSkill3", true);
         animator.SetTrigger("CleaningWind");
@@ -126,11 +123,7 @@ public class PlayerSkillCleaningWind : PlayerSkill
             Quaternion tempYAngle = yAngle;
             tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (count + 1)) * i, 0f);
 
-
-            //newProjectile = Instantiate(hurricanePrefabs, transform.position + Vector3.up * projectilePositionY, tempYAngle);
-            //CleaningWind cleaningWind = newProjectile.GetComponent<CleaningWind>();
             CleaningWind cleaningWind = ObjectPool.SpawnFromPool<CleaningWind>(ObjectPool.enumPoolObject.CleaningWind, transform.position + Vector3.up * projectilePositionY, tempYAngle);
-            //Projectile proj = ObjectPool.SpawnFromPool<Projectile>(ObjectPool.enumPoolObject.)
             cleaningWind.SetUp(maxHitPerSameObject, projectileSpeed, duration, OwnerAbilityStatus, projectileDamageScale);
             cleaningWind.Resize(projectileSize);
         }

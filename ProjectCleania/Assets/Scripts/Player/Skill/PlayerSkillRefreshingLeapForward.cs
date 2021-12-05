@@ -49,7 +49,7 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     {
         base.Start();
 
-        GameManager.Instance.player.OnLevelUp += UpdateSkillData;
+        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<CapsuleCollider>();
         animator.SetFloat("RefreshingLeapForward mulitplier", SpeedMultiplier);
 
@@ -89,6 +89,9 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
     override public void Activate()
     {
+        // Attaking으로 상태 전환
+        base.Activate();
+
         if (attackArea != null)
             attackArea.enabled = true;
     }

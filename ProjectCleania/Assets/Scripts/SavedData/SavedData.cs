@@ -3,29 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SavedData : MonoBehaviour
+public class SavedData
 {
     static private SavedData _singleton;
     static public SavedData Instance
     {
         get
         {
-            if(_singleton == null)
-            {
-                GameObject go = new GameObject("_SavedData");
-                _singleton = go.AddComponent<SavedData>();
+            return GameManager.Instance.SavedData;
 
-                _singleton.characterName = "debug";
+            //if(_singleton == null)
+            //{
+            //    //GameObject go = new GameObject("_SavedData");
+            //    //_singleton = go.AddComponent<SavedData>();
 
-                _singleton.Start();
-            }
+            //    GameManager.Instance.SavedData.characterName = "debug";
 
-            return _singleton;
+            //    _singleton.Start();
+            //}
+
+            //return _singleton;
         }
     }
 
     [SerializeField]
-    private string characterName;
+    private string characterName = "debug";
     public string CharacterName
     {
         get => characterName;
@@ -137,38 +139,38 @@ public class SavedData : MonoBehaviour
         PlayerExp = ExpManager.Exp;
     }
 
-    private void Awake()
-    {
-        if(_singleton != null)
-        {
-            _singleton.item_Equipments.ShareSubscribers(this.item_Equipments);
-            _singleton.item_Inventory.ShareSubscribers(this.item_Inventory);
-            _singleton.item_Storage.ShareSubscribers(this.item_Storage);
-            _singleton.item_World.ShareSubscribers(this.item_World);
-            Destroy(_singleton.gameObject);
-        }
+    //public void Awake()
+    //{
+    //    if(_singleton != null)
+    //    {
+    //        _singleton.item_Equipments.ShareSubscribers(this.item_Equipments);
+    //        _singleton.item_Inventory.ShareSubscribers(this.item_Inventory);
+    //        _singleton.item_Storage.ShareSubscribers(this.item_Storage);
+    //        _singleton.item_World.ShareSubscribers(this.item_World);
+    //        //Destroy(_singleton.gameObject);
+    //    }
 
-        _singleton = this;
-    }
+    //    //_singleton = this;
+    //}
 
-    private void Start()
+    public void Start()
     {
         item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
         Load();
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
 
-    private void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         Save();
     }
 
-    private void OnDestroy()
-    {
-        if (_singleton == this)
-            _singleton = null;
-    }
+    //private void OnDestroy()
+    //{
+    //    if (_singleton == this)
+    //        _singleton = null;
+    //}
 
 
 
@@ -178,17 +180,17 @@ public class SavedData : MonoBehaviour
     public void Test_Add1101001()
     {
         if (!item_Inventory.Add(ItemInstance.Instantiate(1101001)))
-            print("failed to add in inventory");
+            ;//print("failed to add in inventory");
     }
     public void Test_AddRandom()
     {
         if (!item_Inventory.Add(ItemInstance.Instantiate_RandomByRank((ItemSO.enumRank)Random.Range(0, 3))))
-            print("failed to add in inventory");
+            ;//print("failed to add in inventory");
     }
     public void Test_Drop1101001()
     {
         if (!item_World.Add(ItemInstance.Instantiate(1101001)))
-            print("failed to drop in world");
+            ;//print("failed to drop in world");
     }
     public void Test_RemoveAll()
     {

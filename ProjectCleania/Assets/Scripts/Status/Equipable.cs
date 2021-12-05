@@ -261,6 +261,12 @@ public partial class Equipable
     // Sync
     void Synchronize(iItemStorage sender, ItemStorage_Equipments.SyncOperator oper, ItemInstance_Equipment.Type index)
     {
+        if (this == null)
+        {
+            ((ItemStorage_Equipments)sender).QuitSubscribe(Synchronize);
+            return;
+        }
+
         switch (oper)
         {
             case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Add:

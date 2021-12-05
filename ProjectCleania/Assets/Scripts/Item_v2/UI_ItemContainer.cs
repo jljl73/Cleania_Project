@@ -88,26 +88,9 @@ public partial class UI_ItemContainer : MonoBehaviour
 
         }
 
-        Invoke("_SelfLoad", 0.01f);
+        Invoke("_SelfLoad", 0.1f);
     }
 
-    private void OnDestroy()
-    {
-        switch (syncWith)
-        {
-            case SyncType.Inventory:
-                SavedData.Instance.Item_Inventory.QuitSubscribe(Synchronize);
-                break;
-            case SyncType.Storage:
-                SavedData.Instance.Item_Storage.QuitSubscribe(Synchronize);
-                break;
-            case SyncType.Equipment:
-                SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
-                break;
-
-        }
-        
-    }
 
     public bool Add(ItemInstance item, int index = -1, bool sync = true)
     {

@@ -19,7 +19,7 @@ public class HighDustySkill1 : EnemySkill
     SphereCollider triggerCollider;
     
 
-    public override bool IsPassiveSkill { get { return skillData.IsPassiveSkill; } }
+    public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     protected new void Awake()
@@ -63,8 +63,7 @@ public class HighDustySkill1 : EnemySkill
         if (++skillCount == 3)
         {
             skillCount = 0;
-            enemyMove.RunAway();
-            //base.AnimationActivate();
+            Invoke("ActivateRunAway", 1);
         }
     }
 
@@ -72,5 +71,10 @@ public class HighDustySkill1 : EnemySkill
     {
         base.Deactivate();
         animator.SetBool("OnSkill", false);
+    }
+
+    void ActivateRunAway()
+    {
+        enemyMove.RunAway(3);
     }
 }

@@ -5,21 +5,34 @@ using UnityEngine.Events;
 
 public abstract class Skill : MonoBehaviour
 {
-    // public UnityEvent PlaySkillEvent;
-    // public UnityAction OnAnimationActivate;
+    // 이벤트
+    public UnityEvent OnPlaySkill;                      // 스킬 시작 시(AnimationActivate) 발생
+    public UnityEvent[] OnSkillActivateEvents;          // 스킬 내 ActivateSkill에서 발생
+    public UnityEvent[] OnSkillDeactivateEvents;        // 스킬 내 DeactivateSkill에서 발생
+    public UnityEvent<bool, int> OnEnemyTriggerZone;    // 적이 스킬 시전 가능 범위 내에 있으면 시전
+    public void InitializeOnSkillActivateEvents(int count)
+    {
+        OnSkillActivateEvents = new UnityEvent[count];
+        for (int i = 0; i < count; i++)
+            OnSkillActivateEvents[i] = new UnityEvent();
+    }
+    public void InitializeOnSkillDeactivateEvents(int count)
+    {
+        OnSkillDeactivateEvents = new UnityEvent[count];
+        for (int i = 0; i < count; i++)
+            OnSkillDeactivateEvents[i] = new UnityEvent();
+    }
 
-    public delegate void DelegateVoid();
-    public event DelegateVoid OnPlaySkill;
-    public event DelegateVoid OnSkillEnd;
 
-    public UnityEvent<bool, int> OnEnemyTriggerZone;
-
+    // 컴포넌트
     public Animator animator;
     public AbilityStatus OwnerAbilityStatus;
 
+    // 패시브 스킬이면 장착 되는 순간 스킬 발생
     protected bool isPassiveSkill = false;
     public virtual bool IsPassiveSkill { get { return isPassiveSkill; } }
 
+    // 스킬 정보
     protected int id;
     public virtual int ID { get { return id; } protected set { id = value; } }
 
@@ -29,7 +42,6 @@ public abstract class Skill : MonoBehaviour
     protected string SkillDetails;
     public virtual string GetSkillDetails() { return SkillDetails; }
 
-    // public bool isAttacking;
     protected float CoolTime;  // 추후 private 처리
     public virtual float GetCoolTime() { return CoolTime; }
     protected float CreatedHP = 0f;
@@ -49,50 +61,58 @@ public abstract class Skill : MonoBehaviour
     protected float triggerRange = 1.0f;
     public virtual float GetTriggerRange() { return triggerRange; }
 
-    public virtual void Activate() { }
-    public virtual void Activate(int idx = 0) { }
+    protected void Awake() {}
+    protected void Start() {}
 
+    public virtual void Activate()
+    {
+        if (OnSkillActivateEvents.Length != 0 && OnSkillActivateEvents[0] != null)
+            OnSkillActivateEvents[0].Invoke();
+    }
+    public virtual void Activate(int idx = 0)
+    {
+        if (OnSkillActivateEvents.Length != 0 && OnSkillActivateEvents[idx] != null)
+            OnSkillActivateEvents[idx].Invoke();
+    }
+
+    // 실행 가능한지 확인
     public virtual bool IsAvailable()
     {
         return true;
     }
 
-    // Return true if i have to update cooltime
+    // 실행 가능한지 확인하지만, IsAvailable과 다르게 쿨타임 업데이트 여부 설정 가능
     public virtual bool AnimationActivate()
     {
         if (OnPlaySkill != null)
-            OnPlaySkill();
+            OnPlaySkill.Invoke();
 
         return true;
     }
 
     public virtual void Deactivate()
     {
-        if (OnSkillEnd != null)
-            OnSkillEnd();
+        if (OnSkillDeactivateEvents.Length != 0 && OnSkillDeactivateEvents[0] != null)
+            OnSkillDeactivateEvents[0].Invoke();
     }
 
-    public virtual void Deactivate(int idx = 0) { }
+    public virtual void Deactivate(int idx = 0)
+    {
+        if (OnSkillDeactivateEvents.Length != 0 && OnSkillDeactivateEvents[idx] != null)
+            OnSkillDeactivateEvents[idx].Invoke();
+    }
 
-    public virtual void StopSkill() { }
+    public virtual void StopSkill() {}
 
     public List<SkillEffectController> effectController;
 
-    public virtual void ActivateSound(int index)
-    {
-    }
+    public virtual void ActivateSound(int index) {}
 
-    public virtual void DeactivateSound(int index)
-    {
-    }
+    public virtual void DeactivateSound(int index) {}
 
-    protected void Start()
-    {
-    }
+    public virtual void PlayEffects() {}
 
-    public virtual void PlayEffects() { }
-
-    public virtual void StopEffects() { }
+    public virtual void StopEffects() {}
 
     public void PlayEffects(int effectIdx)
     {

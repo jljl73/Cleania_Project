@@ -53,7 +53,7 @@ public class EquipmentDealer
         EquipmentOptionSO.DynamicOptionTable[] dynamicTable = optionSO.DynamicTable;
         EquipmentOptionSO.DynamicOptionTable table = dynamicTable[Random.Range(0, dynamicTable.Length)];
 
-        return new Ability.DynamicOption(Random.Range(table.Min, table.Max), table.KeyStat, table.KeyHow);
+        return new Ability.DynamicOption(table.KeyStat, table.KeyHow, Random.Range(table.Min, table.Max));
     }
 
     static public Ability.DynamicOption CandidateDynamicOption(ItemInstance_Equipment equipment)
