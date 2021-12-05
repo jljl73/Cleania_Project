@@ -124,7 +124,12 @@ public class InputManager : MonoBehaviour
             player.OrderSkillID(1197);
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            player.OrderSkillID(1194);
+        }
+
+
         // 키보드 <<<<<
 
         if (Input.GetKeyDown(KeyCode.Alpha0))

@@ -1,17 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Text;
 
 public class PlayerStateMachineBehaviour : StateMachineBehaviour
 {
+    PlayerSkillController playerSkillController;
+
+    // 모든 스킬 트리거 & 상태 To Hash
     Dictionary<int, int> idToParameterHash = new Dictionary<int, int>();
     Dictionary<int, int> idToStateHash = new Dictionary<int, int>();
- 
+
+    // 특정 상태 해시 코드
+    readonly int deadStateHash = Animator.StringToHash("Dead");
+
     private void Awake()
     {
         PlayerSkillSO[] playerSkillSOs = Resources.LoadAll<PlayerSkillSO>("ScriptableObject/SkillTable/PlayerSkill");
         UploadIDToHash(playerSkillSOs);
+
+        playerSkillController = FindObjectOfType<PlayerSkillController>();
     }
 
     void UploadIDToHash(PlayerSkillSO[] so)
@@ -34,10 +43,11 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     }
 
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (stateInfo.shortNameHash == deadStateHash)
+            TurnOffAllSkillEffect();
+    }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -54,10 +64,11 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
             // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
             if (stateInfo.shortNameHash == idToStateHash[id])
             {
-                // 모든 스킬 실행 끈다
+                // 모든 스킬 트리거 끈다
                 TurnOffAllSkillTrigger(animator);
-                TurnOffAllSkillEffect();
-                //animator.GetCurrentAnimatorClipInfo(0)[0].clip.events[0].
+
+                if (stateInfo.shortNameHash == idToStateHash[1102])
+                    playerSkillController.StopSkill(1102);
                 break;
             }
         }
@@ -73,7 +84,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
 
     void TurnOffAllSkillEffect()
     {
-
+        playerSkillController.StopAllSkill();
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine

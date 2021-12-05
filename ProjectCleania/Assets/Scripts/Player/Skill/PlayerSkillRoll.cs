@@ -50,9 +50,9 @@ public class PlayerSkillRoll : PlayerSkill
         //    return true;
         //}
 
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkillUltimate", true);
-        animator.SetTrigger("Roll");
+        //animator.SetBool("OnSkill", true);
+        //animator.SetBool("OnSkillUltimate", true);
+        //animator.SetTrigger("Roll");
 
         return true;
     }
@@ -61,8 +61,8 @@ public class PlayerSkillRoll : PlayerSkill
     {
         base.Deactivate();
         effectController[0].PlaySkillEffect();
-        animator.SetBool("OnSkillUltimate", false);
-        animator.SetBool("OnSkill", false);
+        //animator.SetBool("OnSkillUltimate", false);
+        //animator.SetBool("OnSkill", false);
     }
 
     //IEnumerator OnSkill()

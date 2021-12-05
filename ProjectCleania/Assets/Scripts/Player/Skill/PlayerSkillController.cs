@@ -19,6 +19,33 @@ public class PlayerSkillController : SkillController
         UploadSkillIDToAnimatorParmameter();
     }
 
+    //protected override void SkillEventConnect()
+    //{
+    //    // 1106 = 상쾌한 도약
+    //    skillDict[1106].InitializeOnSkillActivateEvents(1);
+    //    skillDict[1106].OnSkillActivateEvents[0].AddListener(TransitionToAttack);
+
+    //    // 1199 = 카타르시스
+    //    skillDict[1199].InitializeOnSkillActivateEvents(1);
+    //    skillDict[1199].OnSkillActivateEvents[0].AddListener(playKatarsis);
+
+    //    // 1198 = 구르기
+    //    skillDict[1198].OnPlaySkill.AddListener(playRoll);
+
+    //    skillDict[1198].InitializeOnSkillDeactivateEvents(1);
+    //    skillDict[1198].OnSkillDeactivateEvents[0].AddListener(EndRoll);
+
+    //    // 제자리 부활
+    //    // skillDict[1194].OnPlaySkill.AddListener(ShowDiePanel);
+
+    //    skillDict[1194].InitializeOnSkillDeactivateEvents(1);
+    //    skillDict[1194].OnSkillDeactivateEvents[0].AddListener(abilityStatus.FullHP);
+
+    //    // 마을 부활
+    //    skillDict[1195].OnPlaySkill.AddListener(CloseDiePanel);
+    //    skillDict[1195].OnPlaySkill.AddListener(abilityStatus.FullHP);
+    //}
+
 
     //public StateMachine playerStateMachine;
     //public PlayerMovement playerMoveWithNav;
@@ -105,9 +132,7 @@ public class PlayerSkillController : SkillController
     //}
 
     //void CloseDiePanel()
-    //{
-    //    GameManager.Instance.uiManager.ShowDiePanel(false);
-    //}
+    //{ 
 
     //#region
     ////void SetskillSlotDependencyDict()

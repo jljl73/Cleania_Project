@@ -44,9 +44,9 @@ public class PlayerSkillDusting : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkillC", true);
-        animator.SetTrigger("Dusting");
+        //animator.SetBool("OnSkill", true);
+        //animator.SetBool("OnSkillC", true);
+        //animator.SetTrigger("Dusting");
         // animator.SetInteger("Skill", 5);
 
         return true;
@@ -60,8 +60,8 @@ public class PlayerSkillDusting : PlayerSkill
 
     public override void Deactivate()
     {
-        animator.SetBool("OnSkillC", false);
-        animator.SetBool("OnSkill", false);
+        //animator.SetBool("OnSkillC", false);
+        //animator.SetBool("OnSkill", false);
         if (attackArea != null)
             attackArea.enabled = false;
     }

@@ -33,8 +33,8 @@ public class PlayerSkillRevive : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetTrigger("Revive");
-        print("Revive skill AnimationActivate");
+        //animator.SetTrigger("Revive");
+        //print("Revive skill AnimationActivate");
         return true;
     }
 

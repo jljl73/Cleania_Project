@@ -57,7 +57,7 @@ public class PlayerSkillHereRevive : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetTrigger("HereRevive");
+        //animator.SetTrigger("HereRevive");
         return true;
     }
 

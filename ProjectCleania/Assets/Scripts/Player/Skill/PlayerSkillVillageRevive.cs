@@ -52,7 +52,7 @@ public class PlayerSkillVillageRevive : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetTrigger("VillageRevive");
+        //animator.SetTrigger("VillageRevive");
 
         playerSkillVillageReturn.ReturnToVillage();
         return true;

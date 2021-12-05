@@ -86,17 +86,17 @@ public class PlayerSkillCleaningWind : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkill3", true);
-        animator.SetTrigger("CleaningWind");
+        //animator.SetBool("OnSkill", true);
+        //animator.SetBool("OnSkill3", true);
+        //animator.SetTrigger("CleaningWind");
 
         return true;
     }
 
     public override void Deactivate()
     {
-        animator.SetBool("OnSkill3", false);
-        animator.SetBool("OnSkill", false);
+        //animator.SetBool("OnSkill3", false);
+        //animator.SetBool("OnSkill", false);
     }
 
     override public void Activate()

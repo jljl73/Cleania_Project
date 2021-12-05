@@ -49,9 +49,9 @@ public class PlayerSkillSweeping : PlayerSkill
         base.AnimationActivate();
 
         //animator.SetInteger("Skill", 2);
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkill2", true);
-        animator.SetTrigger("Sweeping");
+        //animator.SetBool("OnSkill", true);
+        //animator.SetBool("OnSkill2", true);
+        //animator.SetTrigger("Sweeping");
 
         return true;
     }
@@ -83,8 +83,8 @@ public class PlayerSkillSweeping : PlayerSkill
 
     public override void Deactivate()
     {
-        animator.SetBool("OnSkill2", false);
-        animator.SetBool("OnSkill", false);
+        //animator.SetBool("OnSkill2", false);
+        //animator.SetBool("OnSkill", false);
         OffSkill();
     }
 

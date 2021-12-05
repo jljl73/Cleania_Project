@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class SkillStopper : StateMachineBehaviour
 {
-    PlayerSkillManager playerSkillManager;
+    PlayerSkillController playerSkillController;
 
     [SerializeField]
     int skillID;
 
     private void Awake()
     {
-        playerSkillManager = FindObjectOfType<PlayerSkillManager>();
+        playerSkillController = FindObjectOfType<PlayerSkillController>();
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (stateInfo.IsName("SkillR Set"))
-            playerSkillManager.StopSkill(skillID);
+        //if (stateInfo.IsName("SkillR Set"))
+        //    playerSkillController.DeactivateAllSkill();
     }
 }

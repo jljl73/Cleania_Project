@@ -54,15 +54,16 @@ public abstract class SkillController : MonoBehaviour
             skillDict[myEvent.intParameter].Deactivate();
     }
 
-    public void DeactivateAllSkill()
+    public void StopSkill(int id)
+    {
+        skillDict[id].StopSkill();
+    }
+
+    public void StopAllSkill()
     {
         foreach (int id in skillDict.Keys)
         {
-            skillDict[id].Deactivate();
-            for (int j = 0; j < skillDict[id].effectController.Count; j++)
-            {
-                skillDict[id].StopEffects(j);
-            }
+            skillDict[id].StopSkill();
         }
     }
 

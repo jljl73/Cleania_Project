@@ -55,10 +55,10 @@ public class PlayerSkillFairysWings : PlayerSkill
     {
         base.AnimationActivate();
 
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkill1", true);
-        //animator.SetInteger("Skill", 1);
-        animator.SetTrigger("FairysWings");
+        //animator.SetBool("OnSkill", true);
+        //animator.SetBool("OnSkill1", true);
+        ////animator.SetInteger("Skill", 1);
+        //animator.SetTrigger("FairysWings");
 
         return true;
     }
@@ -96,12 +96,6 @@ public class PlayerSkillFairysWings : PlayerSkill
     {
         if (bSkill)
             ++nDeadEnemy;
-    }
-
-    public override void Deactivate()
-    {
-        animator.SetBool("OnSkill1", false);
-        animator.SetBool("OnSkill", false);
     }
 
     public override void ActivateSound(int index)

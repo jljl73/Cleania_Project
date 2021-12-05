@@ -67,11 +67,32 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    bool CheckSkillTriggerAvailable(int id)
+    {
+        int currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        if (currentStateHash == Animator.StringToHash("Dead"))
+        {
+            if (id == 1194 || id == 1195)
+                return true;
+        }
+
+        if (currentStateHash == Animator.StringToHash("Idle") ||
+            currentStateHash == Animator.StringToHash("Run"))
+            return true;
+
+        return false;
+    }
+
     void BecomeDead()
     {
         // 죽음 애니메이션 실행
         animator.SetTrigger("Die");
+        GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Die, 0);
+
+        Invoke("ShowDiePanel", 2f);
     }
+
+    void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
 
     public void BecomeStunned()
     {
@@ -81,17 +102,14 @@ public class PlayerController : MonoBehaviour
 
     public void OrderSkillID(int id)
     {
-        // 스킬이 사용 가능한지 확인
-        //if (!skillController.IsSpecificSkillAvailable(id))
-        //    return;
-
-        //int skillId = animator.stri
+        if (!CheckSkillTriggerAvailable(id))
+            return;
 
         //// 스킬 실행
         animator.SetBool("Trigger" + id.ToString(), true);
 
         // 마우스 방향 쳐다봄
-        if (movementController.enabled)
+        if (movementController.enabled && CheckMovable())
             movementController.ImmediateLookAtMouse();
     }
 
