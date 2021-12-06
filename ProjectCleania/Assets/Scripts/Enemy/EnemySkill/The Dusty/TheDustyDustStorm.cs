@@ -53,11 +53,10 @@ public class TheDustyDustStorm : EnemySkill
         skillTriggerCollider.radius = triggerRange;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         AttackByState();
     }
-
     public void UpdateSkillData()
     {
         if (skillData == null)
