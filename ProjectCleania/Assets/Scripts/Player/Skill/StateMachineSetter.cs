@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class StateMachineSetter : StateMachineBehaviour
 {
-    public StateMachine playerStateMachine;
+    StateMachine playerStateMachine;
 
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<Player>().stateMachine;
     }
 
-    public override void OnStateMachineExit(Animator animator, int stateMachinePathHash)
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         playerStateMachine.Transition(StateMachine.enumState.Idle);
-        Debug.Log("OnStateExit to idle!");
     }
 }
