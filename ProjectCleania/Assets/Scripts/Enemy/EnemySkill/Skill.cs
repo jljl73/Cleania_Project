@@ -108,7 +108,10 @@ public abstract class Skill : MonoBehaviour
 
     public virtual void ActivateSound(int index) {}
 
-    public virtual void DeactivateSound(int index) {}
+    public virtual void DeactivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.StopSound();
+    }
 
     public virtual void PlayEffects() {}
 
