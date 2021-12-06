@@ -66,7 +66,11 @@ public class EnemySkillManager : BaseSkillManager
     {
         // 실행 됬으면 Pop Front
         if (PlaySkill(skillRunWaitingList[0]))
+        {
+            int tempId = skillRunWaitingList[0];
             skillRunWaitingList.RemoveAt(0);
+            skillRunWaitingList.Add(tempId);
+        }
     }
 
     void EnrollAvailableSkill(bool value ,int id)
@@ -76,9 +80,9 @@ public class EnemySkillManager : BaseSkillManager
             if (enemyMove.TargetObject == null)
                 return;
 
-            // 쿨타임 됬는지 확인
-            if (!IsSpecificSkillAvailable(id))
-                return;
+            //// 쿨타임 됬는지 확인
+            //if (!IsSpecificSkillAvailable(id))
+            //    return;
 
             // 이미 갖고있는지 확인
             if (skillRunWaitingList.Contains(id))
