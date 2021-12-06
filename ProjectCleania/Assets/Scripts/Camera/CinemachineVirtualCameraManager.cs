@@ -5,15 +5,11 @@ using Cinemachine;
 
 public class CinemachineVirtualCameraManager : MonoBehaviour
 {
+    [SerializeField]
     Cinemachine.CinemachineVirtualCamera cVCamera;
 
     public float ShakeDuration = 1.0f;
-
-    void Awake()
-    {
-        cVCamera = GetComponent<Cinemachine.CinemachineVirtualCamera>();
-    }
-
+    
     void Start()
     {
         cVCamera.Follow = GameManager.Instance.SinglePlayer.transform;
@@ -36,5 +32,4 @@ public class CinemachineVirtualCameraManager : MonoBehaviour
     {
         cVCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
     }
-
 }
