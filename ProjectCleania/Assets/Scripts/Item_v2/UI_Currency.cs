@@ -34,5 +34,7 @@ public class UI_Currency : MonoBehaviour
         if (crystal < 0)
             crystal = 0;
         TextCrystal.text = crystal.ToString();
+
+        GameManager.Instance.chatManager.ShowAcquireClean(amount);
     }
 }

@@ -12,6 +12,13 @@ public class DialogManager : MonoBehaviour
     public QuestProgressChecker QuestDialog;
     public QuestProgressChecker DungeonDialog;
 
+    [SerializeField]
+    Transform PageTranform;
+    public Transform Page { get => PageTranform; }
+    [SerializeField]
+    GameObject DialogBox;
+
+
     void Awake()
     {
         GameManager.Instance.dialogManager = this;
@@ -20,55 +27,48 @@ public class DialogManager : MonoBehaviour
 
     public void ShowMarketDialog(bool bActive)
     {
+        ShowDialog(true);
         MarketDialog.ShowDialog();
-        ShowDialog(MarketDialog.gameObject, true);
     }
 
     public void ShowRepairDialog(bool bActive)
     {
+        ShowDialog(true);
         RepairDialog.ShowDialog();
-        ShowDialog(RepairDialog.gameObject, true);
     }
 
     public void ShowEnchantDialog(bool bActive)
     {
+        ShowDialog(true);
         EnchantDialog.ShowDialog();
-        ShowDialog(EnchantDialog.gameObject, true);
     }
 
     public void ShowStorageDialog(bool bActive)
     {
+        ShowDialog(true);
         StorageDialog.ShowDialog();
-        ShowDialog(StorageDialog.gameObject, true);
     }
 
     public void ShowQuestDialog(bool bActive)
     {
+        ShowDialog(true);
         QuestDialog.ShowDialog();
-        ShowDialog(QuestDialog.gameObject, true);
     }
 
     public void ShowDungeonDialog(bool bActive)
     {
+        ShowDialog(true);
         DungeonDialog.ShowDialog();
-        ShowDialog(DungeonDialog.gameObject, true);
     }
 
-    public void ShowDialog(GameObject dialog, bool bActive)
+    void ShowDialog(bool bActive)
     {
-        if (dialog == null) return;
-
-        dialog.SetActive(bActive);
-        if (bActive)
-            currentDialog = dialog;
-        else
-            currentDialog = null;
-
+        DialogBox.SetActive(bActive);
         GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
     }
 
     public void OffDialog()
     {
-        ShowDialog(currentDialog, false);
+        ShowDialog(false);
     }
 }

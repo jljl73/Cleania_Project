@@ -16,16 +16,13 @@ public class DialogButton : MonoBehaviour
     [SerializeField]
     string value;
 
-    void Awake()
-    {
-        dialog = GetComponentInParent<Dialog>();
-    }
-
-    public void Initialize(TYPE type, Quest quest, string value)
+    
+    public void Initialize(TYPE type, Quest quest, string value, Dialog dialog)
     {
         this.type = type;
         this.value = value;
         this.quest = quest;
+        this.dialog = dialog;
         AddListener();
     }
 
@@ -114,7 +111,8 @@ public class DialogButton : MonoBehaviour
     void CloseDialog()
     {
         if (dialog == null) return;
-        GameManager.Instance.dialogManager.ShowDialog(dialog.gameObject, false);
+        //GameManager.Instance.dialogManager.ShowDialog(dialog.gameObject, false);
+        GameManager.Instance.dialogManager.OffDialog();
         //dialog.gameObject.SetActive(false);
     }
 }

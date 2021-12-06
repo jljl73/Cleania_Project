@@ -87,6 +87,7 @@ public class Ability
         public bool Heal;
         public bool Immortal;
         public float Value;
+        public bool Enemy;
     }
 
 
