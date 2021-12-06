@@ -49,7 +49,7 @@ public class DustySkillSuicide : EnemySkill
         angryDuration = skillData.GetAngryDuration();
     }
 
-    private void FixedUpdate()
+    void Update()
     {
         if (enemy.enemyStateMachine.CompareState(StateMachine.enumState.Dead))
             return;
@@ -167,16 +167,6 @@ public class DustySkillSuicide : EnemySkill
                 }
             }
         }
-    }
-
-    protected new void OnTriggerStay(Collider other)
-    {
-        
-    }
-
-    protected new void OnTriggerExit(Collider other)
-    {
-
     }
 
     //private void OnTriggerEnter(Collider other)

@@ -34,14 +34,6 @@ public class SpecialAbilityPollution : EnemySkill
         UpdateSkillData();
     }
 
-    private void FixedUpdate()
-    {
-        //if (!abilityActivate) return;
-        //Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
-        //pollution.SetUp(pollutionDuration, OwnerAbilityStatus, damageRate);
-        //pollution.Resize(damageRange);
-    }
-
     public void UpdateSkillData()
     {
         if (skillData == null)
