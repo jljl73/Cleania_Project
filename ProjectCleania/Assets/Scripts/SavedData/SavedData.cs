@@ -5,7 +5,7 @@ using System.IO;
 
 public class SavedData
 {
-    static private SavedData _singleton;
+    //static private SavedData _singleton;
     static public SavedData Instance
     {
         get
