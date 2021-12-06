@@ -122,7 +122,7 @@ public class PlayerMovementController : MovementController
     protected override bool IsMovableState()
     {
         if (stateMachine.CompareState(StateMachine.enumState.Dead) ||
-            stateMachine.CompareState(StateMachine.enumState.Attacking))
+            stateMachine.CompareState(StateMachine.enumState.UnmovableAttacking))
         {
             ResetNavigation(this.transform.position);
             return false;

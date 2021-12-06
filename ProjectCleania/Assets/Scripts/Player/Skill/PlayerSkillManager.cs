@@ -81,7 +81,7 @@ public class PlayerSkillManager : BaseSkillManager
         skillStorage.GetNormalSkill(1195).OnPlaySkill.AddListener(abilityStatus.FullHP);
     }
 
-    void TransitionToAttack() => playerStateMachine.Transition(StateMachine.enumState.Attacking);
+    void TransitionToAttack() => playerStateMachine.Transition(StateMachine.enumState.UnmovableAttacking);
 
     void playKatarsis()
     {
@@ -189,7 +189,7 @@ public class PlayerSkillManager : BaseSkillManager
             return false;
 
         // 1102 = 탈수(mouse R), 1106 = 상쾌한 도약(4번), 1198 = 구르기(Space), 1197 = 마을귀환(T), 1196 = 정제수(Q), 1194, 1195 = 부활
-        if (id != 1106 && id != 1102 && id != 1198 && id != 1196 && id != 1197 && id != 1194 && id != 1195) playerStateMachine.Transition(StateMachine.enumState.Attacking);
+        if (id != 1106 && id != 1102 && id != 1198 && id != 1196 && id != 1197 && id != 1194 && id != 1195) playerStateMachine.Transition(StateMachine.enumState.UnmovableAttacking);
 
         if (playerMoveWithNav.enabled)
             playerMoveWithNav.ImmediateLookAtMouse();

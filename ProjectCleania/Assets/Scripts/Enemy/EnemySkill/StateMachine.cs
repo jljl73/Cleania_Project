@@ -7,7 +7,7 @@ public class StateMachine : MonoBehaviour
 {
     public enum enumState
     {
-        Idle, MoveAttack, Walk, Attacking, Chasing, Attacked, ReadyAttack, Dead
+        Idle, Chasing, UnmovableAttacking, Dead
     };
 
     [SerializeField]

@@ -100,7 +100,7 @@ public class EnemySkillManager : BaseSkillManager
 
         // 더스티 자폭 스킬은 상태전환x
         if (skillDict[skillID].AnimationActivate() && skillID != 2102)
-            enemyStateMachine.Transition(StateMachine.enumState.Attacking);
+            enemyStateMachine.Transition(StateMachine.enumState.UnmovableAttacking);
 
         ResetSkill(skillID);
 

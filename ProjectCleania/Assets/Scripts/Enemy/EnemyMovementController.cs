@@ -112,7 +112,7 @@ public class EnemyMovementController : MovementController
 
         switch (stateMachine.State)
         {
-            case StateMachine.enumState.Attacking:
+            case StateMachine.enumState.UnmovableAttacking:
                 SetDestination(this.transform.position);
                 //moveMode = MoveMode.StopMoving;
                 // nav.isStopped = true;

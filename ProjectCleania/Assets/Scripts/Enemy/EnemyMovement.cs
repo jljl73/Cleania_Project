@@ -112,7 +112,7 @@ public class EnemyMovement : CharacterMovement, IStunned
 
         switch (stateMachine.State)
         {
-            case StateMachine.enumState.Attacking:
+            case StateMachine.enumState.UnmovableAttacking:
                 SetDestination(this.transform.position);
                 //moveMode = MoveMode.StopMoving;
                 // nav.isStopped = true;
