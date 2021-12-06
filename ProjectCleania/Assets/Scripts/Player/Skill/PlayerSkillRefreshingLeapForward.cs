@@ -79,9 +79,6 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     {
         base.AnimationActivate();
 
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkill4", true);
-        //animator.SetTrigger("RefreshingLeapForward");
         Physics.IgnoreLayerCollision(3, 6);
 
         return true;
@@ -99,8 +96,6 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
     public override void Deactivate()
     {
         Physics.IgnoreLayerCollision(3, 6, false);
-        //animator.SetBool("OnSkill4", false);
-        //animator.SetBool("OnSkill", false);
         if (attackArea != null)
             attackArea.enabled = false;
     }

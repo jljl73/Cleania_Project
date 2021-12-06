@@ -51,18 +51,6 @@ public class PlayerSkillFairysWings : PlayerSkill
         speedUpRate = skillData.GetSpeedUpRate();
     }
 
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkill1", true);
-        ////animator.SetInteger("Skill", 1);
-        //animator.SetTrigger("FairysWings");
-
-        return true;
-    }
-
     override public void Activate(int idx)
     {
         if (!bSkill)

@@ -6,7 +6,7 @@ public class PlayerSkillSweeping : PlayerSkill
 {
     [SerializeField]
     PlayerSkillSweepingSO skillData;
-    float skillScale = 0.0f;
+    float damageScale = 0.0f;
 
     CapsuleCollider col;
 
@@ -42,18 +42,7 @@ public class PlayerSkillSweeping : PlayerSkill
 
         stunTime = skillData.GetStunTime();
         sweepRange = skillData.GetSweepRange();
-    }
-
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        //animator.SetInteger("Skill", 2);
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkill2", true);
-        //animator.SetTrigger("Sweeping");
-
-        return true;
+        damageScale = skillData.GetDamageScale();
     }
 
     override public void Activate()
@@ -66,12 +55,8 @@ public class PlayerSkillSweeping : PlayerSkill
         if (other.tag == "Enemy")
         {
             // ±âÀý
-            other.GetComponent<Enemy>().OnStunned(true, stunTime);
-
-            //if (other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale) == 0)
-            //    other.GetComponent<Enemy>().Die();
-            //else
-            //    other.GetComponent<Enemy>().enemyMove.WarpToPosition(transform.position + transform.forward);
+            other.GetComponent<Enemy>()?.OnStunned(true, stunTime);
+            other.GetComponent<AbilityStatus>()?.AttackedBy(OwnerAbilityStatus, damageScale);
         }
     }
 
@@ -83,8 +68,6 @@ public class PlayerSkillSweeping : PlayerSkill
 
     public override void Deactivate()
     {
-        //animator.SetBool("OnSkill2", false);
-        //animator.SetBool("OnSkill", false);
         OffSkill();
     }
 

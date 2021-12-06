@@ -56,26 +56,29 @@ public class PlayerSkillKatharsis : PlayerSkill
 
         if (bSkill)
         {
+            // 애니메이션 실행x
             OffSkill();
-            return true;
+            return false;
         }
+        // 애니메이션 실행
 
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkillUltimate", true);
-        //animator.SetTrigger("Katharsis");
-
-        return false;
+        return true;
     }
 
-    public override void Deactivate()
+    public override void Activate(int idx)
     {
-        //animator.SetBool("OnSkillUltimate", false);
-        //animator.SetBool("OnSkill", false);
+        base.Activate(idx);
+        StartCoroutine(OnSkill(idx));
     }
 
-    public override void Activate(int Idx)
+    public override void Deactivate(int idx)
     {
-        StartCoroutine(OnSkill(Idx));
+        base.Deactivate(idx);
+        if (bSkill)
+        {
+            // 애니메이션 실행x
+            OffSkill();
+        }
     }
 
     IEnumerator OnSkill(int effectIdx)

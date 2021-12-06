@@ -19,6 +19,10 @@ public class PlayerSkillController : SkillController
         UploadSkillIDToAnimatorParmameter();
     }
 
+    void OnPlayKatarsis()
+    {
+        skillDict[1199].AnimationActivate();
+    }
     //protected override void SkillEventConnect()
     //{
     //    // 1106 = 상쾌한 도약

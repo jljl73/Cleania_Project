@@ -14,6 +14,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
 
     // 특정 상태 해시 코드
     readonly int deadStateHash = Animator.StringToHash("Dead");
+    readonly int movableHash = Animator.StringToHash("Movable");
 
     private void Awake()
     {
@@ -47,6 +48,39 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     {
         if (stateInfo.shortNameHash == deadStateHash)
             TurnOffAllSkillEffect();
+
+        // 스킬 상태로 들어올 때
+        foreach (int id in idToStateHash.Keys)
+        {
+            // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
+            if (stateInfo.shortNameHash == idToStateHash[id])
+            {
+                if (id == 1106 || id == 1102)
+                    return;
+                
+                // 움직일 수 없는 상태 설정
+                animator.SetBool(movableHash, false);
+
+
+                //if (id == 1199)
+                //{
+                //    if (!playerSkillController.AnimationActivate(id))
+                //    {
+                //        playerSkillController.ResetSkill(id);
+                //        playerSkillController.StopSkill(id);
+                //        animator.SetBool(idToParameterHash[id], false);
+                //    }
+                //}
+                //else
+                //{
+                //    // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
+                //    if (playerSkillController.AnimationActivate(id))
+                //        playerSkillController.ResetSkill(id);
+                //    else
+                //        animator.SetBool(idToParameterHash[id], false);
+                //}
+            }
+        }
     }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
@@ -64,6 +98,9 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
             // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
             if (stateInfo.shortNameHash == idToStateHash[id])
             {
+                // 움직일 수 있는 상태 설정
+                animator.SetBool(movableHash, true);
+
                 // 모든 스킬 트리거 끈다
                 TurnOffAllSkillTrigger(animator);
 

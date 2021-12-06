@@ -15,12 +15,12 @@ public class PlayerSkillPurifiedWater : PlayerSkill
     private new void Awake()
     {
         base.Awake();
-        UpdateskillData();
     }
 
     protected new void Start()
     {
         base.Start();
+        UpdateskillData();
     }
 
     public void UpdateskillData()

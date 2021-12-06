@@ -46,12 +46,13 @@ public class PlayerSkillCleaningWind : PlayerSkill
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
     }
 
     protected new void Start()
     {
         base.Start();
+        UpdateSkillData();
+
         //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
 
@@ -80,23 +81,6 @@ public class PlayerSkillCleaningWind : PlayerSkill
         projectileSize = skillData.GetProjectileSize();
         maxHitPerSameObject = skillData.GetMaxHitPerSameObject();
 
-    }
-
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkill3", true);
-        //animator.SetTrigger("CleaningWind");
-
-        return true;
-    }
-
-    public override void Deactivate()
-    {
-        //animator.SetBool("OnSkill3", false);
-        //animator.SetBool("OnSkill", false);
     }
 
     override public void Activate()

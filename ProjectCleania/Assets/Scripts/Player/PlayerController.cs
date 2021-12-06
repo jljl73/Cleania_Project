@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     PlayerMovementController movementController;
 
+    int currentStateHash;
+
     void Awake()
     {
         abilityStatus = GetComponent<AbilityStatus>();
@@ -28,9 +30,10 @@ public class PlayerController : MonoBehaviour
         if (animator == null)
             throw new System.Exception("PlayerController doesnt have Animator");
     }
-
-    private void Update()
+    void Update()
     {
+        currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+
         if (CheckDeadable())
         {
             BecomeDead();
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     bool CheckDeadable()
     {
-        if (abilityStatus.HP == 0 && !animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"))
+        if (abilityStatus.HP == 0 && !(Animator.StringToHash("Dead") == currentStateHash) && !(Animator.StringToHash("Skill 1194") == currentStateHash))
             return true;
         else
             return false;
@@ -54,33 +57,40 @@ public class PlayerController : MonoBehaviour
 
     bool CheckMovable()
     {
-        int currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (currentStateHash == Animator.StringToHash("Idle") ||
-            currentStateHash == Animator.StringToHash("Run") ||
-            currentStateHash == Animator.StringToHash("Skill 1102"))
+        if (Animator.StringToHash("Dead") == currentStateHash || !animator.GetBool("Movable"))
         {
-            navMeshAgent.isStopped = false;
-            return true;
+            navMeshAgent.isStopped = true;
+            return false;
         }
 
-        navMeshAgent.isStopped = true;
-        return false;
+        navMeshAgent.isStopped = false;
+        return true;
     }
 
     bool CheckSkillTriggerAvailable(int id)
     {
-        int currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (currentStateHash == Animator.StringToHash("Dead"))
+        if (Animator.StringToHash("Dead") == currentStateHash)
         {
             if (id == 1194 || id == 1195)
                 return true;
         }
 
-        if (currentStateHash == Animator.StringToHash("Idle") ||
-            currentStateHash == Animator.StringToHash("Run"))
+        if (Animator.StringToHash("Idle") == currentStateHash ||
+            Animator.StringToHash("Run") == currentStateHash)
             return true;
 
         return false;
+    }
+
+    bool CheckIfSkillAvailable(int id)
+    {
+        if (!skillController.IsSpecificSkillAvailable(id))
+            return false;
+
+        if (abilityStatus.ConsumeMP(skillController.GetMpValue(id)))
+            return true;
+        else
+            return false;
     }
 
     void BecomeDead()
@@ -92,25 +102,31 @@ public class PlayerController : MonoBehaviour
         Invoke("ShowDiePanel", 2f);
     }
 
-    void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
-
     public void BecomeStunned()
     {
         // 스턴 애니메이션 실행
         animator.SetBool("Stunned", true);
     }
 
-    public void OrderSkillID(int id)
+    public bool OrderSkillID(int id)
     {
+        if (!CheckIfSkillAvailable(id))
+            return true;
+
         if (!CheckSkillTriggerAvailable(id))
-            return;
+            return false;
 
         //// 스킬 실행
+        //skillController.AnimationActivate(id);
+        
+        // 
         animator.SetBool("Trigger" + id.ToString(), true);
 
         // 마우스 방향 쳐다봄
         if (movementController.enabled && CheckMovable())
             movementController.ImmediateLookAtMouse();
+
+        return true;
     }
 
     public void OrderSkillStop(int id)
@@ -123,4 +139,16 @@ public class PlayerController : MonoBehaviour
         if (CheckMovable())
             movementController.Move(mousePosition);
     }
+
+    public void OnSetUnmovable() => animator.SetBool("Movable", false);
+
+    public void OnSetMovable() => animator.SetBool("Movabl e", true);
+
+    public void OnFullHP() => abilityStatus.FullHP();
+    public void OnFullMP() => abilityStatus.FullHP();
+    void OnPlayRoll() => movementController.SpeedUp(10);
+    void OnEndRoll() => movementController.SpeedUp(6.8f);
+    void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
+    void CloseDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(false);
+
 }

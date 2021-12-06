@@ -7,7 +7,6 @@ public class PlayerSkillRoll : PlayerSkill
     [SerializeField]
     PlayerSkillRollSO skillData;
 
-    // public Status status;
     bool bSkill = false;
 
     float avoidDistance;
@@ -35,58 +34,9 @@ public class PlayerSkillRoll : PlayerSkill
         avoidSpeedMultiplier = skillData.GetAvoidSpeedMultiplier();
     }
 
-    //public override bool IsAvailable()
-    //{
-    //    return (OwnerAbilityStatus.MP > OwnerAbilityStatus.GetStat(Ability.Stat.MaxMP) * 0.5f) || bSkill;
-    //}
-
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        //if (bSkill)
-        //{
-        //    OffSkill();
-        //    return true;
-        //}
-
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkillUltimate", true);
-        //animator.SetTrigger("Roll");
-
-        return true;
-    }
-
     public override void Deactivate()
     {
         base.Deactivate();
         effectController[0].PlaySkillEffect();
-        //animator.SetBool("OnSkillUltimate", false);
-        //animator.SetBool("OnSkill", false);
     }
-
-    //IEnumerator OnSkill()
-    //{
-    //    bSkill = true;
-    //    // 스킬 On으로 인한 버프 발생
-    //    print("스킬 On으로 인한 버프 발생");
-
-    //    while (bSkill)
-    //    {
-    //        if (OwnerAbilityStatus.MP == 0)
-    //        {
-    //            base.Deactivate();
-    //        }
-
-    //        //OwnerAbilityStatus.ConsumeMP(/*consumMPPerSec*/);
-    //        yield return new WaitForSeconds(1.0f);
-    //    }
-    //}
-
-    //void OffSkill()
-    //{
-    //    bSkill = false;
-    //    // 스킬 Off으로 인한 디버프 발생
-    //    print("스킬 Off으로 인한 디버프 발생");
-    //}
 }

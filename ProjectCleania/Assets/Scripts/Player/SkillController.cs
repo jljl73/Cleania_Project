@@ -6,14 +6,48 @@ public abstract class SkillController : MonoBehaviour
 {
     [SerializeField]
     protected List<Skill> skillList = new List<Skill>();
+
     protected Dictionary<int, Skill> skillDict = new Dictionary<int, Skill>();
+    protected Dictionary<int, bool> skillIfAvailableDict = new Dictionary<int, bool>();              // 현재 사용 가능 스킬
+    protected Dictionary<int, float> coolTimePassingDict = new Dictionary<int, float>();             // 쿨타임 저장
     protected Dictionary<int, string> ID2AnimatorParameterDict = new Dictionary<int, string>();
+
+    private void Update()
+    {
+        UpdateCoolTime();
+    }
+    void UpdateCoolTime()
+    {
+        foreach (int id in skillDict.Keys)
+        {
+            if (skillIfAvailableDict[id])
+                continue;
+            if (skillDict[id].GetCoolTime() < coolTimePassingDict[id])
+            {
+                coolTimePassingDict.Remove(id);
+                skillIfAvailableDict[id] = true;
+            }
+            else
+                coolTimePassingDict[id] += Time.deltaTime;
+        }
+    }
+
+    public float GetCoolTimePassedRatio(int id)
+    {
+        if (skillIfAvailableDict[id])
+            return 1;
+        else
+            return coolTimePassingDict[id] / skillDict[id].GetCoolTime();
+    }
+
+    public float GetMpValue(int id) => skillDict[id].GetConsumMP();
 
     protected void UploadSkills()
     {
         for (int i = 0; i < skillList.Count; i++)
         {
             skillDict.Add(skillList[i].ID, skillList[i]);
+            skillIfAvailableDict.Add(skillList[i].ID, true);
         }
     }
 
@@ -24,14 +58,9 @@ public abstract class SkillController : MonoBehaviour
         return ID2AnimatorParameterDict[id];
     }
 
-    public bool IsSpecificSkillAvailable(int id)
+    public virtual bool AnimationActivate(int id)
     {
-        if (!skillDict.ContainsKey(id))
-            return false;
-
-        if (skillDict[id].IsAvailable())
-            return true;
-        return false;
+        return skillDict[id].AnimationActivate();
     }
 
     public virtual void ActivateSkill(AnimationEvent myEvent)
@@ -127,6 +156,20 @@ public abstract class SkillController : MonoBehaviour
             skillDict[skillSoundIndexSet.GetSkillID()].DeactivateSound(skillSoundIndexSet.GetSoundIndex());
         else
             skillDict[myEvent.intParameter].DeactivateSound(0);
+    }
+
+    public void ResetSkill(int skillID)
+    {
+        if (coolTimePassingDict.ContainsKey(skillID))
+            coolTimePassingDict[skillID] = 0;
+        else
+            coolTimePassingDict.Add(skillID, 0);
+        skillIfAvailableDict[skillID] = false;
+    }
+
+    public virtual bool IsSpecificSkillAvailable(int id)
+    {
+        return skillIfAvailableDict[id] && skillDict[id].IsAvailable();
     }
 
     //public AbilityStatus abilityStatus;

@@ -19,12 +19,12 @@ public class PlayerSkillDusting : PlayerSkill
     {
         base.Awake();
 
-        UpdateSkillData();
     }
 
     new void Start()
     {
         base.Start();
+        UpdateSkillData();
 
         //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<Collider>();
@@ -40,17 +40,6 @@ public class PlayerSkillDusting : PlayerSkill
 
     // Update is called once per frame
 
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkillC", true);
-        //animator.SetTrigger("Dusting");
-        // animator.SetInteger("Skill", 5);
-
-        return true;
-    }
 
     public override void Activate()
     {

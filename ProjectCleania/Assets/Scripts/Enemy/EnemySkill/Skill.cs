@@ -95,7 +95,7 @@ public abstract class Skill : MonoBehaviour
         return true;
     }
 
-    // 실행 가능한지 확인하지만, IsAvailable과 다르게 쿨타임 업데이트 여부 설정 가능
+    // 실행 가능한지 확인하지만, IsAvailable과 다르게 쿨타임 업데이트 여부 설정 가능, 스킬 실행전 체크됨 ex)PlayerController에서 실행
     public virtual bool AnimationActivate()
     {
         if (OnPlaySkill != null)

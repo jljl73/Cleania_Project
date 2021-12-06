@@ -37,11 +37,13 @@ public class DiePanel : MonoBehaviour
 
     public void HereRevive()
     {
-        GameManager.Instance.SinglePlayer.GetComponent<PlayerController>().OrderSkillID(1194);
+        if (GameManager.Instance.SinglePlayer.GetComponent<PlayerController>().OrderSkillID(1194))
+            gameObject.SetActive(false);
     }
 
     public void VillageRevive()
     {
-        GameManager.Instance.SinglePlayer.GetComponent<PlayerController>().OrderSkillID(1195);
+        if (GameManager.Instance.SinglePlayer.GetComponent<PlayerController>().OrderSkillID(1195))
+            gameObject.SetActive(false);
     }
 }

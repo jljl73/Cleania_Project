@@ -47,18 +47,6 @@ public class PlayerSkillDehydration : PlayerSkill
         damageRange = skillData.GetDamageRange();
     }
 
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        // animator.SetInteger("Skill", 6);
-        //animator.SetBool("OnSkill", true);
-        //animator.SetBool("OnSkillR", true);
-        //animator.SetTrigger("Dehydration");
-
-        return true;
-    }
-
     public override void Activate()
     {
         if (attackArea != null)
@@ -67,9 +55,6 @@ public class PlayerSkillDehydration : PlayerSkill
 
     public override void Deactivate()
     {
-        //animator.SetTrigger("DehydrationEnd");
-        //animator.SetBool("OnSkillR", false);
-        //animator.SetBool("OnSkill", false);
         if (attackArea != null)
             attackArea.enabled = false;
     }
