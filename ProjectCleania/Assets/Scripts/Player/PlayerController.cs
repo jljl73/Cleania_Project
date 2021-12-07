@@ -140,6 +140,19 @@ public class PlayerController : MonoBehaviour
             movementController.Move(mousePosition);
     }
 
+    public void Pushed(Vector3 force)
+    {
+        movementController.AddForce(force);
+    }
+
+    public void Pulled(bool value, Vector3 origin)
+    {
+        movementController.Pulled(value, origin);
+    }
+    public void Stunned(bool value, float duration)
+    {
+        movementController.Stunned(value, duration);
+    }
     public void OnSetUnmovable() => animator.SetBool("Movable", false);
 
     public void OnSetMovable() => animator.SetBool("Movabl e", true);

@@ -7,7 +7,7 @@ public class PlayerMovementController : MovementController
 {
     NavMeshAgent navMeshAgent;              // 네비 매시 컴포넌트
     Rigidbody characterRigidBody;           // 리지드바디 컴포넌트
-    PlayerSkillManager playerSkillManager;  // 스킬 매니저 컴포넌트
+    PlayerSkillController skillController;  // 스킬 매니저 컴포넌트
     Animator animator;                      // 애니메이터 컴포넌트
     AbilityStatus abilityStatus;            // 어빌리티스테이터스 컴포넌트
 
@@ -39,7 +39,7 @@ public class PlayerMovementController : MovementController
         base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
         characterRigidBody = GetComponent<Rigidbody>();
-        playerSkillManager = GetComponent<PlayerSkillManager>();
+        skillController = GetComponent<PlayerSkillController>();
         animator = GetComponent<Animator>();
         abilityStatus = GetComponent<AbilityStatus>();
     }
@@ -347,7 +347,7 @@ public class PlayerMovementController : MovementController
         {
             SetRigidBody(!value);
             TargetPose = position;
-            playerSkillManager.DeactivateAllSkill();
+            skillController.StopAllSkill();
         }
         else
             TargetPose = this.transform.position;

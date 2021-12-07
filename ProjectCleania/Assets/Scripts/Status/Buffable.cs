@@ -25,12 +25,12 @@ public class Buffable : MonoBehaviour
         Debug.Log("off buff : " + option.ToString() + " : " + _options[(int)option]);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            AddBuff(0.5f, Ability.Buff.Attack_Buff, 1.0f);
-        }
-    }
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.Z))
+    //    {
+    //        AddBuff(0.5f, Ability.Buff.Attack_Buff, 1.0f);
+    //    }
+    //}
 
 }
