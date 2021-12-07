@@ -81,6 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdefaf103e48f74f94184f9ae1bf687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -197,6 +202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c6d64f27fe8264aa0fd0397a7baa82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -232,7 +242,7 @@ GameObject:
   - component: {fileID: 7717416709024651365}
   - component: {fileID: 7717416709024651364}
   - component: {fileID: 7717416709024651375}
-  - component: {fileID: 581187851897832667}
+  - component: {fileID: 5196824034704983492}
   - component: {fileID: 716707945987861651}
   - component: {fileID: 6326862986949197801}
   - component: {fileID: 3404450377915123936}
@@ -301,8 +311,8 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!136 &581187851897832667
-CapsuleCollider:
+--- !u!135 &5196824034704983492
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -310,10 +320,9 @@ CapsuleCollider:
   m_GameObject: {fileID: 7717416709024651367}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 3
-  m_Height: 1
-  m_Direction: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!195 &716707945987861651
 NavMeshAgent:
@@ -380,7 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b4be0415937d7409f7038fb8d13698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CognitiveRange: 4
 --- !u!114 &1227204802912907935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,7 +404,6 @@ MonoBehaviour:
   rotateCoef: 1
   supposedSmallestEnemySize: 0.1
   isFixedNavPriority: 0
-  moveMode: 0
 --- !u!114 &7670077597629424506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,6 +683,10 @@ PrefabInstance:
     - target: {fileID: 4450265005075775347, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4672175461513967115, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: summonPeriod
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4725779370418996069, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: m_Name

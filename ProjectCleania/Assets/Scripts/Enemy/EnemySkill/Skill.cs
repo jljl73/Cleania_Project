@@ -10,20 +10,6 @@ public abstract class Skill : MonoBehaviour
     public UnityEvent[] OnSkillActivateEvents;          // 스킬 내 ActivateSkill에서 발생
     public UnityEvent[] OnSkillDeactivateEvents;        // 스킬 내 DeactivateSkill에서 발생
     public UnityEvent<bool, int> OnEnemyTriggerZone;    // 적이 스킬 시전 가능 범위 내에 있으면 시전
-
-    protected float passedCoolTime;
-    protected bool isCoolTimePassed = true;
-
-    protected virtual void Update()
-    {
-        if (isCoolTimePassed)
-            return;
-
-        passedCoolTime += Time.deltaTime;
-        if (passedCoolTime >= CoolTime)
-            isCoolTimePassed = true;
-    }
-
     public void InitializeOnSkillActivateEvents(int count)
     {
         OnSkillActivateEvents = new UnityEvent[count];
@@ -95,7 +81,7 @@ public abstract class Skill : MonoBehaviour
         return true;
     }
 
-    // 실행 가능한지 확인하지만, IsAvailable과 다르게 쿨타임 업데이트 여부 설정 가능, 스킬 실행전 체크됨 ex)PlayerController에서 실행
+    // 실행 가능한지 확인하지만, IsAvailable과 다르게 쿨타임 업데이트 여부 설정 가능
     public virtual bool AnimationActivate()
     {
         if (OnPlaySkill != null)
@@ -116,22 +102,16 @@ public abstract class Skill : MonoBehaviour
             OnSkillDeactivateEvents[idx].Invoke();
     }
 
-    public virtual void StopSkill()
-    {
-        Deactivate();
-        for (int j = 0; j < effectController.Count; j++)
-        {
-            StopEffects(j);
-        }
-        DeactivateSound(-1);
-    }
+    public virtual void StopSkill() {}
 
     public List<SkillEffectController> effectController;
 
     public virtual void ActivateSound(int index) {}
 
-    // index = -1 == 모두 종료
-    public virtual void DeactivateSound(int index) {}
+    public virtual void DeactivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.StopSound();
+    }
 
     public virtual void PlayEffects() {}
 

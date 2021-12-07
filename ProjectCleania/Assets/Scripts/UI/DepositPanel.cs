@@ -55,8 +55,8 @@ public class DepositPanel : MonoBehaviour
 
         if (storage.Crystal < amount) return;
 
-        storage.AddCrystal(-amount);
-        otherStorage.AddCrystal(amount);
+        storage.AddCrystal(-amount, UI_Currency.SourceType.Deposit);
+        otherStorage.AddCrystal(amount, UI_Currency.SourceType.Deposit);
         Amount.text = "";
         gameObject.SetActive(false);
     }

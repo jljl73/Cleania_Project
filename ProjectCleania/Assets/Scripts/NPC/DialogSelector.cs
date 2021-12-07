@@ -13,7 +13,7 @@ public class DialogSelector : MonoBehaviour
         if (quest != null)
             index = (int)quest.State;
 
-        transform.GetChild(index).gameObject.SetActive(true);
+        transform.GetChild(index).GetComponent<Dialog>().ChangePage(0);
     }
 
 }

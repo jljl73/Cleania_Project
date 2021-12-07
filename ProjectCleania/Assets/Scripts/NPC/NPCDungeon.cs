@@ -18,8 +18,8 @@ public class NPCDungeon : MonoBehaviour
 
     public void Enter()
     {
-
-
+        Debug.Log("씬이름 입력하세요");
+        //GameManager.Instance.ChangeScene("")
     }
 
     public void LevelUp(bool isUp)
@@ -33,3 +33,4 @@ public class NPCDungeon : MonoBehaviour
     }
     
 }
+

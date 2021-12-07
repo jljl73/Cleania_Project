@@ -46,6 +46,7 @@ public class PlayerSkillSweeping : PlayerSkill
     override public void Activate()
     {
         col.enabled = true;
+        Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin();
     }
 
     void OnTriggerEnter(Collider other)

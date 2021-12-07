@@ -19,55 +19,40 @@ public class EnemyChase : MonoBehaviour
     EnemyGroupManager myGroupManager;
     AbilityStatus targetObjAbility;
 
-    public float CognitiveRange = 7;
+    public float CognitiveRange { get; set; }
 
-    Collider[] overlappedColiders;
+    SphereCollider cognitiveCollider;
 
-    private void Awake()
+    void Awake()
     {
         enemy = GetComponent<Enemy>();
+        cognitiveCollider = GetComponent<SphereCollider>();
     }
 
-    private void Update()
+    void Start()
     {
-        overlappedColiders = Physics.OverlapSphere(transform.position, CognitiveRange);
-        foreach (Collider collider in overlappedColiders)
+        CognitiveRange = 7;
+        cognitiveCollider.radius = CognitiveRange;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            if (collider.CompareTag("Player"))
+            if (enemySpawner != null)
             {
                 if (targetObjAbility != null)
-                    break;
+                    return;
 
                 if (enemySpawner == null)
-                    enemy.SetTarget(collider.gameObject);
+                    enemy.SetTarget(other.gameObject);
                 else
-                    myGroupManager.Target = collider.gameObject;
+                    myGroupManager.Target = other.gameObject;
 
-                targetObjAbility = collider.gameObject.GetComponent<AbilityStatus>();
-                break;
+                targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
             }
         }
-
-        //if (targetObjAbility == null) return;
-        //if (targetObjAbility.HP == 0)
-        //{
-        //    if (enemySpawner != null)
-        //        enemySpawner.GetComponent<EnemyGroupManager>().ReleaseTarget();
-        //}
     }
-
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        if (enemySpawner != null)
-    //        {
-    //            //enemySpawner.GetComponent<EnemyGroupManager>().SetTarget(other.gameObject);
-    //            myGroupManager.Target = other.gameObject;
-    //            targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
-    //        }
-    //    }
-    //}
 
     void OnDestroy()
     {

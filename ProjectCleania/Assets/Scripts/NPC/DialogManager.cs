@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DialogManager : MonoBehaviour
 {
@@ -12,62 +13,77 @@ public class DialogManager : MonoBehaviour
     public QuestProgressChecker QuestDialog;
     public QuestProgressChecker DungeonDialog;
 
+    [SerializeField]
+    Transform PageTranform;
+    public Transform Page { get => PageTranform; }
+    [SerializeField]
+    GameObject DialogBox;
+    [SerializeField]
+    TextMeshProUGUI NPCName;
+
     void Awake()
     {
         GameManager.Instance.dialogManager = this;
     }
     
 
-    public void ShowMarketDialog(bool bActive)
+    public void ShowMarketDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
+        ShowDialog(true);
         MarketDialog.ShowDialog();
-        ShowDialog(MarketDialog.gameObject, true);
     }
 
-    public void ShowRepairDialog(bool bActive)
+    public void ShowRepairDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
+        ShowDialog(true);
         RepairDialog.ShowDialog();
-        ShowDialog(RepairDialog.gameObject, true);
     }
 
-    public void ShowEnchantDialog(bool bActive)
+    public void ShowEnchantDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
+        ShowDialog(true);
         EnchantDialog.ShowDialog();
-        ShowDialog(EnchantDialog.gameObject, true);
     }
 
-    public void ShowStorageDialog(bool bActive)
+    public void ShowStorageDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
+        ShowDialog(true);
         StorageDialog.ShowDialog();
-        ShowDialog(StorageDialog.gameObject, true);
     }
 
-    public void ShowQuestDialog(bool bActive)
+    public void ShowQuestDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
+        ShowDialog(true);
         QuestDialog.ShowDialog();
-        ShowDialog(QuestDialog.gameObject, true);
     }
 
-    public void ShowDungeonDialog(bool bActive)
+    public void ShowDungeonDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
+        ShowDialog(true);
         DungeonDialog.ShowDialog();
-        ShowDialog(DungeonDialog.gameObject, true);
     }
 
-    public void ShowDialog(GameObject dialog, bool bActive)
+    void ShowDialog(bool bActive)
     {
-        if (dialog == null) return;
-        dialog.SetActive(bActive);
-        if (bActive)
-            currentDialog = dialog;
-        else
-            currentDialog = null;
-
-        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
+        DialogBox.SetActive(bActive);
+        if(bActive)
+            GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
     }
 
     public void OffDialog()
     {
-        ShowDialog(currentDialog, false);
+        ShowDialog(false);
     }
 }

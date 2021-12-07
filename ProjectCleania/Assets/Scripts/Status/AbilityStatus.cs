@@ -276,9 +276,18 @@ public class AbilityStatus : MonoBehaviour
         else
             _HP = 0;
 
-        GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
-        damage.GetComponent<TextDamage>().SetDamageText(ret);
-        Instantiate(damage, transform.position, transform.rotation);
+        if (transform.CompareTag("Player"))
+        {
+            ret.Enemy = true;
+            Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin(0.6f);
+        }
+
+        if (UserSetting.OnDamage)
+        {
+            GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
+            damage.GetComponent<TextDamage>().SetDamageText(ret);
+            Instantiate(damage, transform.position, transform.rotation);
+        }
 
         return ret;
     }

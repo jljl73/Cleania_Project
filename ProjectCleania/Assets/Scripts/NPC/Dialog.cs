@@ -25,17 +25,19 @@ public class Dialog : MonoBehaviour
     [SerializeField]
     Quest quest;
     public Page[] pages;
-    public Transform PageTransform;
+    Transform PageTransform;
 
-    private void OnEnable()
+    void Start()
     {
+        PageTransform = GameManager.Instance.dialogManager.Page;
         quest = transform.parent.GetComponent<DialogSelector>().quest;
-        ChangePage(0);
     }
+
 
     public void ChangePage(int index)
     {
-        //Debug.Log(index.ToString() + "Page");
+        Debug.Log(PageTransform);
+        Debug.Log(pages[index]);
         PageTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = pages[index].content;
 
         int b = 0;
@@ -43,7 +45,7 @@ public class Dialog : MonoBehaviour
         for (; b < length; ++b)
         {
             DialogButton button = PageTransform.GetChild(1).GetChild(length - b - 1).GetComponent<DialogButton>();
-            button.Initialize(pages[index].buttons[b].type, quest, pages[index].buttons[b].value);
+            button.Initialize(pages[index].buttons[b].type, quest, pages[index].buttons[b].value, this);
             button.GetComponentInChildren<TextMeshProUGUI>().text = pages[index].buttons[b].content;
             button.gameObject.SetActive(true);
         }
