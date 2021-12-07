@@ -30,6 +30,7 @@ public class DialogButton : MonoBehaviour
     {
         if (button == null) button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
+
         switch (type)
         {
             case TYPE.NextPage:
@@ -105,12 +106,14 @@ public class DialogButton : MonoBehaviour
             case "Storage":
                 GameManager.Instance.uiManager.GetComponent<UIManager>().ShowStoragePanel(true);
                 break;
+            case "Dungeon":
+                GameManager.Instance.uiManager.GetComponent<UIManager>().ShowDungeonPanel(true);
+                break;
         }
     }
 
     void CloseDialog()
     {
-        if (dialog == null) return;
         //GameManager.Instance.dialogManager.ShowDialog(dialog.gameObject, false);
         GameManager.Instance.dialogManager.OffDialog();
         //dialog.gameObject.SetActive(false);

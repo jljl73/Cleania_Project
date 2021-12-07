@@ -25,25 +25,25 @@ public class NPCTrigger : MonoBehaviour
             switch (npc.GetComponent<NPC>().NPCType)
             {
                 case NPC.TYPE.Repair:
-                    dialogManager.ShowRepairDialog(true);
+                    dialogManager.ShowRepairDialog(true, npc.GetComponent<NPC>().npcname);
                     break;
                 case NPC.TYPE.Market:
-                    dialogManager.ShowMarketDialog(true);
+                    dialogManager.ShowMarketDialog(true, npc.GetComponent<NPC>().npcname);
                     break;
                 case NPC.TYPE.Enchant:
-                    dialogManager.ShowEnchantDialog(true);
+                    dialogManager.ShowEnchantDialog(true, npc.GetComponent<NPC>().npcname);
                     break;
                 case NPC.TYPE.Storage:
-                    dialogManager.ShowStorageDialog(true);
+                    dialogManager.ShowStorageDialog(true, npc.GetComponent<NPC>().npcname);
                     break;
                 case NPC.TYPE.Portal:
                     GameManager.Instance.ChangeScene(npc.GetComponent<NPC>().Value);
                     break;
                 case NPC.TYPE.Quest:
-                    dialogManager.ShowQuestDialog(true);
+                    dialogManager.ShowQuestDialog(true, npc.GetComponent<NPC>().npcname);
                     break;
                 case NPC.TYPE.Dungeon:
-                    dialogManager.ShowDungeonDialog(true);
+                    dialogManager.ShowDungeonDialog(true, npc.GetComponent<NPC>().npcname);
                     break;
             }
         }

@@ -102,7 +102,7 @@ public class QuestManager : MonoBehaviour
             switch (q.type)
             {
                 case QuestReward.TYPE.clean:
-                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(q.value);
+                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(q.value, UI_Currency.SourceType.Reward);
                     break;
                 case QuestReward.TYPE.exp:
                     ExpManager.Acquire(q.value);

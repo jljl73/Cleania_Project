@@ -102,7 +102,7 @@ public class EquipmentDealer
     {
         if (currency.Crystal >= GetRepairCost(equipment))
         {
-            currency.AddCrystal(-GetRepairCost(equipment));
+            currency.AddCrystal(-GetRepairCost(equipment), UI_Currency.SourceType.Trade);
             equipment.Durability = equipment.SO.Durability;
             return true;
         }
