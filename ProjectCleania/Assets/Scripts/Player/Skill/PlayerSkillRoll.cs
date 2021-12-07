@@ -7,6 +7,9 @@ public class PlayerSkillRoll : PlayerSkill
     [SerializeField]
     PlayerSkillRollSO skillData;
 
+    [SerializeField]
+    Buffable buffable;
+
     bool bSkill = false;
 
     float avoidDistance;
@@ -34,9 +37,17 @@ public class PlayerSkillRoll : PlayerSkill
         avoidSpeedMultiplier = skillData.GetAvoidSpeedMultiplier();
     }
 
+    public override void Activate()
+    {
+        base.Activate();
+        buffable.ForceAddBuff(avoidSpeedMultiplier, Ability.Buff.MoveSpeed_Buff);
+    }
+
     public override void Deactivate()
     {
         base.Deactivate();
         effectController[0].PlaySkillEffect();
+
+        buffable.ForceOffBuff(avoidSpeedMultiplier, Ability.Buff.MoveSpeed_Buff);
     }
 }

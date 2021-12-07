@@ -53,9 +53,6 @@ public class PlayerSkillCleaningWind : PlayerSkill
         base.Start();
         UpdateSkillData();
 
-        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
-        animator.SetFloat("CleaningWind multiplier", SpeedMultiplier);
-
         ResizeEffect();
     }
 

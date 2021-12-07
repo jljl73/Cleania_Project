@@ -42,6 +42,8 @@ public abstract class SkillController : MonoBehaviour
 
     public float GetMpValue(int id) => skillDict[id].GetConsumMP();
 
+    public float GetSkillMultiplier(int id) => skillDict[id].GetSpeedMultiplier();
+
     protected void UploadSkills()
     {
         for (int i = 0; i < skillList.Count; i++)

@@ -12,13 +12,11 @@ public class PlayerSkillController : SkillController
             ID2AnimatorParameterDict.Add(skillSO[i].ID, skillSO[i].GetTriggerParameter());
         }
     }
-
     void Awake()
     {
         UploadSkills();
         UploadSkillIDToAnimatorParmameter();
     }
-
     void OnPlayKatarsis()
     {
         skillDict[1199].AnimationActivate();

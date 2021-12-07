@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseCharacterController
 {
     AbilityStatus abilityStatus;
     NavMeshAgent navMeshAgent;
     Animator animator;
+    Buffable buffable;
 
     [SerializeField]
     PlayerSkillController skillController;
@@ -29,6 +30,10 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             throw new System.Exception("PlayerController doesnt have Animator");
+
+        buffable = GetComponent<Buffable>();
+        if (buffable == null)
+            throw new System.Exception("PlayerController doesnt have Buffable");
     }
     void Update()
     {
@@ -54,7 +59,6 @@ public class PlayerController : MonoBehaviour
         else
             return false;
     }
-
     bool CheckMovable()
     {
         if (Animator.StringToHash("Dead") == currentStateHash || !animator.GetBool("Movable"))
@@ -108,18 +112,44 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Stunned", true);
     }
 
+    public override void SetStatusAilment(StatusAilment.BehaviorRestrictionType option, bool value)
+    {
+        switch (option)
+        {
+            case StatusAilment.BehaviorRestrictionType.Restraint:
+                animator.SetBool("Restraint", value);
+                break;
+            case StatusAilment.BehaviorRestrictionType.Stun:
+                animator.SetBool("Stunned", value);
+                break;
+            case StatusAilment.BehaviorRestrictionType.Silence:
+                animator.SetBool("Silenced", value);
+                break;
+            case StatusAilment.BehaviorRestrictionType.Dark:
+                animator.SetBool("Dark", value);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public override void SetStatusAilment(StatusAilment.ContinuousDamageType option)
+    {
+
+    }
+
     public bool OrderSkillID(int id)
     {
-        if (!CheckIfSkillAvailable(id))
-            return true;
-
         if (!CheckSkillTriggerAvailable(id))
             return false;
 
-        //// 스킬 실행
-        //skillController.AnimationActivate(id);
-        
-        // 
+        if (!CheckIfSkillAvailable(id))
+            return true;
+            
+        // 스킬 속도 설정
+        animator.SetFloat("Skill " + id.ToString() + " multiplier", skillController.GetSkillMultiplier(id));
+
+        // 스킬 애니메이션 실행
         animator.SetBool("Trigger" + id.ToString(), true);
 
         // 마우스 방향 쳐다봄

@@ -35,12 +35,6 @@ public class PlayerSkillFairysWings : PlayerSkill
     {
         base.Start();
         UpdateSkillData();
-        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
-        animator.SetFloat("FairysWings multiplier", SpeedMultiplier);
-
-        //animator.SetFloat("FairysWings_HandsUpReady multiplier", HandsUpReadyMultiplier);
-        //animator.SetFloat("FairysWings_HandsUpDown multiplier", HandsUpAndDownMultiplier);
-        //animator.SetFloat("FairysWings_PostDelay multiplier", PostDelayMultiplier);
     }
 
     public void UpdateSkillData()

@@ -72,10 +72,10 @@ public class ReaperSkill3 : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Player player = colliders[i].GetComponent<Player>();
-                player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
+                PlayerController player = colliders[i].GetComponent<PlayerController>();
+                player.GetComponent<AbilityStatus>()?.AttackedBy(OwnerAbilityStatus, damageScale);
 
-                player.playerMove.AddForce(Vector3.Normalize(player.transform.position - this.transform.position) * hitForce);
+                player.Pushed(Vector3.Normalize(player.transform.position - this.transform.position) * hitForce);
             }
         }
     }

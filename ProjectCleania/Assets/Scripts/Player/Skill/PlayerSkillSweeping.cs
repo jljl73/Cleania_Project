@@ -30,8 +30,6 @@ public class PlayerSkillSweeping : PlayerSkill
     protected new void Start()
     {
         base.Start();
-        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
-        animator.SetFloat("Sweeping multiplier", SpeedMultiplier);
 
         effectController[0].Scale = sweepRange * 0.3333f;
     }

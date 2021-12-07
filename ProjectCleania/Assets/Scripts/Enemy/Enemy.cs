@@ -122,6 +122,7 @@ public class Enemy : MonoBehaviour
         ExpManager.Acquire(100);
         // 네비게이션 Off
         navMeshAgent.enabled = false;
+        print("navMeshAgent.enabled: " + navMeshAgent.enabled);
 
         // 충돌체 끄기
         ActivateColliders(false);

@@ -51,7 +51,6 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
         //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<CapsuleCollider>();
-        animator.SetFloat("RefreshingLeapForward mulitplier", SpeedMultiplier);
 
         attackArea.radius = 1.2f * smashRange;
 

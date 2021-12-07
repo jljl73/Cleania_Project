@@ -28,7 +28,6 @@ public class PlayerSkillDusting : PlayerSkill
 
         //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<Collider>();
-        animator.SetFloat("Dusting multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()
@@ -64,7 +63,7 @@ public class PlayerSkillDusting : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
-            AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
+            AbilityStatus enemyAbil = other.GetComponent<AbilityStatus>();
 
             if (enemyAbil.HP != 0)
             {

@@ -55,30 +55,8 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
             // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
             if (stateInfo.shortNameHash == idToStateHash[id])
             {
-                if (id == 1106 || id == 1102)
-                    return;
-                
-                // 움직일 수 없는 상태 설정
-                animator.SetBool(movableHash, false);
-
-
-                //if (id == 1199)
-                //{
-                //    if (!playerSkillController.AnimationActivate(id))
-                //    {
-                //        playerSkillController.ResetSkill(id);
-                //        playerSkillController.StopSkill(id);
-                //        animator.SetBool(idToParameterHash[id], false);
-                //    }
-                //}
-                //else
-                //{
-                //    // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
-                //    if (playerSkillController.AnimationActivate(id))
-                //        playerSkillController.ResetSkill(id);
-                //    else
-                //        animator.SetBool(idToParameterHash[id], false);
-                //}
+                SetMovableParameter(animator, id);
+                SetCoolTimeInitialize(animator, id);
             }
         }
     }
@@ -104,6 +82,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 // 모든 스킬 트리거 끈다
                 TurnOffAllSkillTrigger(animator);
 
+                // 1102 스킬은 나올 때 스킬 Stop
                 if (stateInfo.shortNameHash == idToStateHash[1102])
                     playerSkillController.StopSkill(1102);
                 break;
@@ -122,6 +101,43 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     void TurnOffAllSkillEffect()
     {
         playerSkillController.StopAllSkill();
+    }
+
+    void SetMovableParameter(Animator animator, int id)
+    {
+        switch (id)
+        {
+            case 1102:
+            case 1106:
+            case 1198:
+                break;
+            default:
+                // 움직일 수 없는 상태 설정
+                animator.SetBool(movableHash, false);
+                break;
+        }
+    }
+
+    void SetCoolTimeInitialize(Animator animator, int id)
+    {
+        switch (id)
+        {
+            case 1199:
+                if (!playerSkillController.AnimationActivate(id))
+                {
+                    playerSkillController.ResetSkill(id);
+                    playerSkillController.StopSkill(id);
+                    animator.SetBool(idToParameterHash[id], false);
+                }
+                break;
+            default:
+                // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
+                if (playerSkillController.AnimationActivate(id))
+                    playerSkillController.ResetSkill(id);
+                else
+                    animator.SetBool(idToParameterHash[id], false);
+                break;
+        }
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
