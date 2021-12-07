@@ -28,6 +28,11 @@ public class PlayerSkillSO : PlayerSkillIDSO
         return tempString;
     }
 
+    [Header("작동 애니메이터 파라미터")]
+    [SerializeField]
+    protected string triggerParameter;
+    public string GetTriggerParameter() { return triggerParameter; }
+
     [System.Serializable]
     public struct Rune
     {
@@ -44,12 +49,7 @@ public class PlayerSkillSO : PlayerSkillIDSO
     //protected List<AudioClip> skillSound = new List<AudioClip>();
     //public AudioClip GetSkillSound(int index) { return skillSound[index]; }
     //public int GetSkillSoundCount() { return skillSound.Count; }
-
-    [Header("작동 키")]
-    [SerializeField]
-    protected KeyCode TriggerKey;
-    public KeyCode GetTriggerKey() { return TriggerKey; }
-
+    
     // public bool isAttacking;
     [Header("쿨타임")]
     [SerializeField]

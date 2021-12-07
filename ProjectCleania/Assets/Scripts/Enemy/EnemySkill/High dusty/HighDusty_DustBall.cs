@@ -49,7 +49,7 @@ public class HighDusty_DustBall : DamagingProperty
         if (isGoingToBeDestroyed) return;
 
         if (other.CompareTag("Player"))
-            playerAbility = other.GetComponent<Player>().abilityStatus;
+            playerAbility = other.GetComponent<AbilityStatus>();
 
         if (isBall)
         {

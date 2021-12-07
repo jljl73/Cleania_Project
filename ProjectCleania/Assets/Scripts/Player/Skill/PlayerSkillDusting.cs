@@ -19,16 +19,15 @@ public class PlayerSkillDusting : PlayerSkill
     {
         base.Awake();
 
-        UpdateSkillData();
     }
 
     new void Start()
     {
         base.Start();
+        UpdateSkillData();
 
-        GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
+        //GameManager.Instance.player.OnLevelUp.AddListener(UpdateSkillData);
         attackArea = GetComponent<Collider>();
-        animator.SetFloat("Dusting multiplier", SpeedMultiplier);
     }
 
     public void UpdateSkillData()
@@ -40,17 +39,6 @@ public class PlayerSkillDusting : PlayerSkill
 
     // Update is called once per frame
 
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        animator.SetBool("OnSkill", true);
-        animator.SetBool("OnSkillC", true);
-        animator.SetTrigger("Dusting");
-        // animator.SetInteger("Skill", 5);
-
-        return true;
-    }
 
     public override void Activate()
     {
@@ -60,8 +48,8 @@ public class PlayerSkillDusting : PlayerSkill
 
     public override void Deactivate()
     {
-        animator.SetBool("OnSkillC", false);
-        animator.SetBool("OnSkill", false);
+        //animator.SetBool("OnSkillC", false);
+        //animator.SetBool("OnSkill", false);
         if (attackArea != null)
             attackArea.enabled = false;
     }
@@ -75,7 +63,7 @@ public class PlayerSkillDusting : PlayerSkill
     {
         if (other.tag == "Enemy")
         {
-            AbilityStatus enemyAbil = other.GetComponent<Enemy>().abilityStatus;
+            AbilityStatus enemyAbil = other.GetComponent<AbilityStatus>();
 
             if (enemyAbil.HP != 0)
             {

@@ -148,8 +148,8 @@ public class TheDustyDustStorm : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Player player = colliders[i].GetComponent<Player>();
-                player.playerMove.Pulled(value, this.transform.position);
+                PlayerController player = colliders[i].GetComponent<PlayerController>();
+                player.Pulled(value, this.transform.position);
             }
         }
     }
@@ -163,9 +163,9 @@ public class TheDustyDustStorm : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Player player = colliders[i].GetComponent<Player>();
+                PlayerController player = colliders[i].GetComponent<PlayerController>();
                 Vector3 hitVector = Vector3.Normalize(colliders[i].transform.position - this.transform.position) * stormForce;
-                player.playerMove.AddForce(hitVector);
+                player.Pushed(hitVector);
             }
         }
     }

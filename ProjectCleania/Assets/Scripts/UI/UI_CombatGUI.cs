@@ -27,17 +27,17 @@ public class UI_CombatGUI : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float XP_BarPercent = 1.0f;
 
-    PlayerSkillManager SkillManager;
+    PlayerSkillController playerSkillController;
     [Range(0.0f, 1.0f)]
     public float[] Skills_CoolPercent;
 
     void Start()
     {
         player = GameManager.Instance.SinglePlayer;
-        SkillManager = player.GetComponent<Player>().playerSkillManager;
+        playerSkillController = player.GetComponent<PlayerSkillController>();
 
         Skills_CoolPercent = new float[Skills.Length];
-        playerStatus = player.GetComponent<Player>().abilityStatus;
+        playerStatus = player.GetComponent<AbilityStatus>();
 
         LocationName.text = SceneManager.GetActiveScene().name;
     }
@@ -71,9 +71,28 @@ public class UI_CombatGUI : MonoBehaviour
             
             // 초상화
             P1Portrait.fillAmount = HPBall.fillAmount;
+
+            // 쿨타임 업데이트
+            UpdateSkillCoolTime();
         }
         XP_Bar.fillAmount = ExpManager.Percent;
         Level.text = ExpManager.Level.ToString();
     }
 
+    void UpdateSkillCoolTime()
+    {
+        Skills_CoolPercent[0] = playerSkillController.GetCoolTimePassedRatio(1103);
+        Skills_CoolPercent[1] = playerSkillController.GetCoolTimePassedRatio(1104);
+        Skills_CoolPercent[2] = playerSkillController.GetCoolTimePassedRatio(1105);
+        Skills_CoolPercent[3] = playerSkillController.GetCoolTimePassedRatio(1106);
+        Skills_CoolPercent[4] = playerSkillController.GetCoolTimePassedRatio(1101);
+        Skills_CoolPercent[5] = playerSkillController.GetCoolTimePassedRatio(1102);
+
+        Skills[0].fillAmount = Skills_CoolPercent[0];
+        Skills[1].fillAmount = Skills_CoolPercent[1];
+        Skills[2].fillAmount = Skills_CoolPercent[2];
+        Skills[3].fillAmount = Skills_CoolPercent[3];
+        Skills[4].fillAmount = Skills_CoolPercent[4];
+        Skills[5].fillAmount = Skills_CoolPercent[5];
+    }
 }

@@ -16,12 +16,12 @@ public class PlayerSkillRevive : PlayerSkill
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
     }
 
     protected new void Start()
     {
         base.Start();
+        UpdateSkillData();
     }
 
     public void UpdateSkillData()
@@ -29,23 +29,4 @@ public class PlayerSkillRevive : PlayerSkill
         base.UpdateSkillData(skillData);
     }
 
-    public override bool AnimationActivate()
-    {
-        base.AnimationActivate();
-
-        animator.SetTrigger("Revive");
-        print("Revive skill AnimationActivate");
-        return true;
-    }
-
-    public override void Activate()
-    {
-    }
-
-    public override void Deactivate()
-    {
-        base.Deactivate();
-    }
-
-    //public override void 
 }

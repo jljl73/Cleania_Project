@@ -163,6 +163,14 @@ public class AbilityStatus : MonoBehaviour
                     //if (buffs[Ability.Buff.Defense_Buff] != 0)
                     _stats[(int)stat] *= buffs[Ability.Buff.Defense_Buff];
                     break;
+                case Ability.Stat.Accuracy:
+                    //if (buffs[Ability.Buff.Defense_Buff] != 0)
+                    _stats[(int)stat] *= buffs[Ability.Buff.Accuracy_Buff];
+                    break;
+                case Ability.Stat.CriticalChance:
+                    //if (buffs[Ability.Buff.Defense_Buff] != 0)
+                    _stats[(int)stat] *= buffs[Ability.Buff.CriticalChance_Buff];
+                    break;
 
                 default:
                     break;

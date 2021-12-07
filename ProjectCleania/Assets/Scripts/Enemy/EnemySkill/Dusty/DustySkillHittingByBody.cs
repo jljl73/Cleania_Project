@@ -65,8 +65,8 @@ public class DustySkillHittingByBody : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Player player = colliders[i].GetComponent<Player>();
-                player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
+                AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
+                abil.AttackedBy(OwnerAbilityStatus, damageScale);
             }
         }
     }

@@ -5,6 +5,11 @@ using UnityEngine.Events;
 
 public abstract class PlayerSkill : Skill
 {
+    public override void DeactivateSound(int index)
+    {
+        GameManager.Instance.playerSoundPlayer.StopSound();
+    }
+
     public virtual void UpdateSkillData(PlayerSkillSO skillData)
     {
         ID = skillData.ID;

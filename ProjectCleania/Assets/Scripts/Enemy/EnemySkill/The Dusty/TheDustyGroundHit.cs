@@ -90,9 +90,11 @@ public class TheDustyGroundHit : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Player player = colliders[i].GetComponent<Player>();
-                player.abilityStatus.AttackedBy(OwnerAbilityStatus, damageScale);
-                player.OnStunned(true, stunnedTime);
+                AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
+                abil.AttackedBy(OwnerAbilityStatus, damageScale);
+
+                PlayerController player = colliders[i].GetComponent<PlayerController>();
+                player.Stunned(true, stunnedTime);
             }
         }
     }
@@ -104,11 +106,12 @@ public class TheDustyGroundHit : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
-                Player player = colliders[i].GetComponent<Player>();
-                player.abilityStatus.AttackedBy(OwnerAbilityStatus, indirectDamageRate);
+                AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
+                abil.AttackedBy(OwnerAbilityStatus, indirectDamageRate);
 
                 print("슬로우 상태!");
-                //player.OnStunned(true, stunnedTime);
+                Buffable playerBuffable = colliders[i].GetComponent<Buffable>();
+                playerBuffable.AddBuff(1.15f, Ability.Buff.MoveSpeed_Buff, 5);
             }
         }
     }

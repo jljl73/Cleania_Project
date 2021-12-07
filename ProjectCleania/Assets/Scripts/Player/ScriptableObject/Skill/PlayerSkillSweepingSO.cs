@@ -27,6 +27,10 @@ public class PlayerSkillSweepingSO : PlayerSkillSO
         return tempString;
     }
 
+    [Header("데미지율")]
+    public float damageScale = 3;
+    public float GetDamageScale() { return damageScale; }
+
     [Header("경직 시간")]
     public float StunTime = 2;
     public float GetStunTime() { return StunTime; }

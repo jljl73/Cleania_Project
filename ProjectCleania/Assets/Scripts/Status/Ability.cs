@@ -232,6 +232,8 @@ public class Ability
         AttackSpeed_Buff,               // 버프 - 공격속도
         Attack_Buff,                    // 버프 - 공격력
         Defense_Buff,                   // 버프 - 방어력
+        Accuracy_Buff,                  // 버프 - 적중률
+        CriticalChance_Buff,            // 버프 - 크리티컬 확률
 
         EnumTotal
     }
