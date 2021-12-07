@@ -79,15 +79,15 @@ public partial class Equipable : MonoBehaviour
         GameManager.Instance.PlayerAbility?.FullMP();
     }
 
-    private void OnDestroy()
-    {
-        switch (syncWith)
-        {
-            case SyncType.PlayerEquipment:
-                SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
-                break;
-        }
-    }
+    //private void OnDestroy()
+    //{
+    //    switch (syncWith)
+    //    {
+    //        case SyncType.PlayerEquipment:
+    //            SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
+    //            break;
+    //    }
+    //}
 
     public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment, bool sync = true)
     {

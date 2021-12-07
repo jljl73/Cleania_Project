@@ -24,7 +24,7 @@ public class TextDamage : MonoBehaviour
 
         if(result.Enemy)
         {
-            GetComponent<TextMeshPro>().fontSize = 10f;
+            GetComponent<TextMeshPro>().fontSize = 8f;
             sb.Append("<color=#FF0000>");
             sb.Append(string.Format("{0:N0}", result.Value));
             sb.Append("</color>");

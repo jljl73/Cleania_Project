@@ -271,7 +271,7 @@ public class AbilityStatus : MonoBehaviour
         if (transform.CompareTag("Player"))
         {
             ret.Enemy = true;
-            Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin();
+            Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin(0.6f);
         }
 
         if (UserSetting.OnDamage)

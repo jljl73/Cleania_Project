@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     public GameObject RepairPanel;
     public GameObject ExpandMapPanel;
     public GameObject EnchantPanel;
+    public GameObject DungeonPanel;
     public GameObject DiePanel;
 
     [Header ("오른쪽 창")]
@@ -131,6 +132,12 @@ public class UIManager : MonoBehaviour
         ShowPanel(MenuPanel, bActive);
     }
 
+    public void ShowDungeonPanel(bool bActive)
+    {
+        OffMiddlePanel();
+        ShowPanel(DungeonPanel, bActive);
+    }
+
     public void ShowDiePanel(bool bActive)
     {
         DiePanel.SetActive(bActive);
@@ -177,6 +184,7 @@ public class UIManager : MonoBehaviour
         this.MarketPanel.SetActive(false);
         this.EnchantPanel.SetActive(false);
         this.MenuPanel.SetActive(false);
+        this.DungeonPanel.SetActive(false);
     }
 
     public void OffNPCPanels()

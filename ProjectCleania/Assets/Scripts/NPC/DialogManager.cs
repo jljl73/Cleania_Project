@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DialogManager : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class DialogManager : MonoBehaviour
     public Transform Page { get => PageTranform; }
     [SerializeField]
     GameObject DialogBox;
-
+    [SerializeField]
+    TextMeshProUGUI NPCName;
 
     void Awake()
     {
@@ -25,38 +27,50 @@ public class DialogManager : MonoBehaviour
     }
     
 
-    public void ShowMarketDialog(bool bActive)
+    public void ShowMarketDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
         ShowDialog(true);
         MarketDialog.ShowDialog();
     }
 
-    public void ShowRepairDialog(bool bActive)
+    public void ShowRepairDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
         ShowDialog(true);
         RepairDialog.ShowDialog();
     }
 
-    public void ShowEnchantDialog(bool bActive)
+    public void ShowEnchantDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
         ShowDialog(true);
         EnchantDialog.ShowDialog();
     }
 
-    public void ShowStorageDialog(bool bActive)
+    public void ShowStorageDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
         ShowDialog(true);
         StorageDialog.ShowDialog();
     }
 
-    public void ShowQuestDialog(bool bActive)
+    public void ShowQuestDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
         ShowDialog(true);
         QuestDialog.ShowDialog();
     }
 
-    public void ShowDungeonDialog(bool bActive)
+    public void ShowDungeonDialog(bool bActive, string npcName)
     {
+        if (DialogBox.activeSelf) return;
+        NPCName.text = npcName;
         ShowDialog(true);
         DungeonDialog.ShowDialog();
     }
@@ -64,7 +78,8 @@ public class DialogManager : MonoBehaviour
     void ShowDialog(bool bActive)
     {
         DialogBox.SetActive(bActive);
-        GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
+        if(bActive)
+            GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.NPCInteraction);
     }
 
     public void OffDialog()
