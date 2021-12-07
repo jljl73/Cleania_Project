@@ -11,6 +11,15 @@ public class UI_Currency : MonoBehaviour
         Inventory,
         Storage
     }
+
+    public enum SourceType
+    {
+        Trade,
+        Hunt,
+        Deposit,
+        Reward
+    }
+
     [SerializeField]
     SyncType syncWith;
 
@@ -28,11 +37,14 @@ public class UI_Currency : MonoBehaviour
     }
 
 
-    public void AddCrystal(int amount)
+    public void AddCrystal(int amount, SourceType sourceType)
     {
         crystal += amount;
         if (crystal < 0)
             crystal = 0;
         TextCrystal.text = crystal.ToString();
+
+        if(syncWith == SyncType.Inventory && sourceType != SourceType.Deposit && amount > 0)
+            GameManager.Instance.chatManager.ShowAcquireClean(amount);
     }
 }

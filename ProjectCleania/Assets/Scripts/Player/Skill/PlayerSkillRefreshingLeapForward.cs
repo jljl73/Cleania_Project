@@ -90,6 +90,8 @@ public class PlayerSkillRefreshingLeapForward : PlayerSkill
 
         if (attackArea != null)
             attackArea.enabled = true;
+
+        Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin();
     }
 
     public override void Deactivate()

@@ -79,15 +79,15 @@ public partial class Equipable : MonoBehaviour
         GameManager.Instance.PlayerAbility?.FullMP();
     }
 
-    private void OnDestroy()
-    {
-        switch (syncWith)
-        {
-            case SyncType.PlayerEquipment:
-                SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
-                break;
-        }
-    }
+    //private void OnDestroy()
+    //{
+    //    switch (syncWith)
+    //    {
+    //        case SyncType.PlayerEquipment:
+    //            SavedData.Instance.Item_Equipments.QuitSubscribe(Synchronize);
+    //            break;
+    //    }
+    //}
 
     public ItemInstance_Equipment Equip(ItemInstance_Equipment newEquipment, bool sync = true)
     {
@@ -199,10 +199,7 @@ public partial class Equipable
                     if (!_stats.ContainsKey(key_value.Key))
                         _stats[key_value.Key] = 0;
 
-                    if (key_value.Key == Ability.Stat.CriticalChance || key_value.Key == Ability.Stat.AttackSpeed || key_value.Key == Ability.Stat.MoveSpeed)
-                        _stats[key_value.Key] += key_value.Value;
-                    else
-                        _stats[key_value.Key] += key_value.Value * _equipments[i].Level / 50;
+                    _stats[key_value.Key] += _equipments[i][key_value.Key];
                 }
 
                 // dynamic properties
@@ -216,7 +213,7 @@ public partial class Equipable
                                 if (!_enchants.ContainsKey(key_value.Key))
                                     _enchants[key_value.Key] = 0;
 
-                                _enchants[key_value.Key] += key_value.Value;
+                                _enchants[key_value.Key] += _equipments[i][key_value.Key];
                             }
                             break;
 
@@ -233,13 +230,13 @@ public partial class Equipable
                                 {
                                     case Ability.Enhance.Chance_Percent:
                                     case Ability.Enhance.NegMul_Percent:
-                                        _enchants[key_value.Key] *= 1 - key_value.Value;
+                                        _enchants[key_value.Key] *= 1 - _equipments[i][key_value.Key];
                                         break;
                                     case Ability.Enhance.PosMul_Percent:
-                                        _enchants[key_value.Key] *= 1 + key_value.Value;
+                                        _enchants[key_value.Key] *= 1 + _equipments[i][key_value.Key];
                                         break;
                                     case Ability.Enhance.Addition_Percent:
-                                        _enchants[key_value.Key] += key_value.Value;
+                                        _enchants[key_value.Key] += _equipments[i][key_value.Key];
                                         break;
                                 }
                             }
@@ -261,6 +258,12 @@ public partial class Equipable
     // Sync
     void Synchronize(iItemStorage sender, ItemStorage_Equipments.SyncOperator oper, ItemInstance_Equipment.Type index)
     {
+        if (this == null)
+        {
+            ((ItemStorage_Equipments)sender).QuitSubscribe(Synchronize);
+            return;
+        }
+
         switch (oper)
         {
             case ItemStorage<ItemInstance_Equipment.Type>.SyncOperator.Add:

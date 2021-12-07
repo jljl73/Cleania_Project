@@ -82,6 +82,9 @@ public class PlayerSkillCleaningWind : PlayerSkill
 
     override public void Activate()
     {
+        // 카메라 흔들기
+        Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin();
+
         // 내려치기
         Collider[] overlappedColliders = Physics.OverlapSphere(transform.position, smashRange);
         foreach (Collider collider in overlappedColliders)

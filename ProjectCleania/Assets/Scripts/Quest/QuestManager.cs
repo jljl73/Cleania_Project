@@ -9,13 +9,9 @@ using System.Drawing;
 
 public class QuestManager : MonoBehaviour
 {
-    // 완료한 퀘스트
-    List<Quest> clearQuests = new List<Quest>();
-    // 수주받은 퀘스트
-    [SerializeField]
-    List<Quest> assignQuests = new List<Quest>();
     [SerializeField]
     List<Quest> quests_All;
+    public List<Quest> Quests { get => quests_All; }
         
 
     // UI
@@ -36,28 +32,19 @@ public class QuestManager : MonoBehaviour
     public static Quest ClickedQuest = null;
     int prevIndex = -1;
 
+    UnityEvent UpdateQuest = new UnityEvent();
+
+    public void AddListener_Update(UnityAction action)
+    {
+        UpdateQuest.AddListener(action);
+    }
+
 
     void Start()
     {
-        for (int i = buttons.Length - 1; i >= 0; --i)
-        {
-            int temp = i;
-            buttons[i].onClick.AddListener(() => ShowDetailQuest(temp));
-        }
-
         QuestDB.Instance.SetNickName(SavedData.Instance.CharacterName);
         QuestDB.Instance.Load(quests_All);
-
-        for(int i = 0; i < quests_All.Count; ++i)
-        {
-            if (quests_All[i].State == Quest.STATE.Assign || quests_All[i].State == Quest.STATE.Clear)
-                AddList(quests_All[i]);
-            else if (quests_All[i].State == Quest.STATE.Reward)
-                clearQuests.Add(quests_All[i]);
-        }
-
-        //QuestDB.Instance.Load();
-        SetListHeight();
+        UpdateQuest.Invoke();
         SavedData.Instance.Item_Inventory.Subscribe(Synchronize, Point.Empty);
     }
     
@@ -65,94 +52,45 @@ public class QuestManager : MonoBehaviour
     public void Assign(Quest quest)
     {
         quest.Assign();
-        AddList(quest);
+        UpdateQuest.Invoke();
         Reward(quest, false);
 
         GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestAssign);
-
         QuestDB.Instance.Save(quests_All);
     }
     
     public void Acheive(QuestNeed.TYPE type, int target)
     {
-        for (int i = 0; i < assignQuests.Count; ++i)
+        for (int i = 0; i < Quests.Count; ++i)
         {
-            assignQuests[i].Achieve(type, target);
+            if(Quests[i].State == Quest.STATE.Assign || Quests[i].State == Quest.STATE.Clear)
+                Quests[i].Achieve(type, target);
         }
+
+        UpdateQuest.Invoke();
         QuestDB.Instance.Save(quests_All);
-        SetMiniList();
     }
 
 
     void Synchronize(iItemStorage sender, ItemStorage_LocalGrid.SyncOperator oper, Point index)
     {
+        if (this == null)
+        {
+            ((ItemStorage_LocalGrid)sender).QuitSubscribe(Synchronize);
+            return;
+        }
+
         Debug.Log("Quest Item Synchronize");
         Acheive(QuestNeed.TYPE.Item, 0);
     }
 
-
-    #region UI
-    void ShowDetailQuest(int index)
-    {
-        for (int i = buttons.Length - 1; i >= 0; --i)
-        {
-            buttons[i].GetComponent<Image>().sprite = spritePlus;
-            details[i].SetActive(false);
-        }
-        if (prevIndex == index)
-        {
-            prevIndex = -1;
-            return;
-        }
-
-        details[index].SetActive(true);
-        buttons[index].GetComponent<Image>().sprite = spriteMinus;
-        prevIndex = index;
-        SetListHeight();
-    }
-
-    void AddList(Quest quest)
-    {
-        int index = (int)quest.Catergory;
-        GameObject newText = Instantiate(TextPrefab, details[index].transform);
-        newText.GetComponent<Text>().text = quest.Name;
-        newText.GetComponent<QuestSlot>().Initialize(quest);
-        assignQuests.Add(quest);
-        SetListHeight();
-    }
-
-    void DeleteList(Quest quest)
-    {
-        assignQuests.Remove(quest);
-        int index = (int)quest.Catergory;
-        for (int i = 0; i < details[index].transform.childCount; ++i)
-        {
-            if (details[index].transform.GetChild(i).GetComponent<QuestSlot>().quest == quest)
-            {
-                Destroy(details[index].transform.GetChild(i).gameObject);
-                break;
-            }
-        }
-        QuestDB.Instance.Save(quests_All);
-        SetListHeight();
-    }
-
-    void SetListHeight()
-    {
-        for (int i = 0; i < details.Length; ++i)
-        {
-            details[i].GetComponent<RectTransform>().sizeDelta = new Vector2(250, 41 * details[i].transform.childCount);
-        }
-        SetMiniList();
-    }
 
     public void Reward(Quest quest, bool IsReward)
     {
         if (IsReward)
         {
             quest.GetReward();
-            clearQuests.Add(quest);
-            DeleteList(quest);
+            UpdateQuest.Invoke();
             GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
         }
 
@@ -164,8 +102,7 @@ public class QuestManager : MonoBehaviour
             switch (q.type)
             {
                 case QuestReward.TYPE.clean:
-                    Debug.Log("크리스탈 위치 설정해야댐");
-                    //GameManager.Instance.uiManager.InventoryPanel.GetComponent<Storage>().AddCrystal(q.value);
+                    GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(q.value, UI_Currency.SourceType.Reward);
                     break;
                 case QuestReward.TYPE.exp:
                     ExpManager.Acquire(q.value);
@@ -180,42 +117,41 @@ public class QuestManager : MonoBehaviour
     public void Abandon()
     {
         if (ClickedQuest == null) return;
-
         if (ClickedQuest.State == Quest.STATE.Reward) return;
-        DeleteList(ClickedQuest);
+
         ClickedQuest.Reset();
+        UpdateQuest.Invoke();
     }
 
-    #endregion
 
     #region MINI UI
-    [SerializeField]
-    Transform miniLists;
+    //[SerializeField]
+    //Transform miniLists;
 
-    void SetMiniList()
-    {
-        StringBuilder sb = new StringBuilder();
-        int q = 0;
-        if (miniLists == null) return;
-        for (; q < miniLists.childCount && q < assignQuests.Count; ++q)
-        {
-            sb.Clear();
-            sb.Append(assignQuests[q].Name);
-            sb.Append("\n");
-            miniLists.GetChild(q).gameObject.SetActive(true);
-            for (int i = 0; i < assignQuests[q].QuestNeeds.Length; ++i)
-            {
-                sb.Append(assignQuests[q].QuestNeeds[i].Contents);
-                sb.Append("\n");
-            }
-            miniLists.GetChild(q).GetChild(0).GetComponent<Text>().text = sb.ToString();
-        }
+    //void SetMiniList()
+    //{
+    //    StringBuilder sb = new StringBuilder();
+    //    int q = 0;
+    //    if (miniLists == null) return;
+    //    for (; q < miniLists.childCount && q < assignQuests.Count; ++q)
+    //    {
+    //        sb.Clear();
+    //        sb.Append(assignQuests[q].Name);
+    //        sb.Append("\n");
+    //        miniLists.GetChild(q).gameObject.SetActive(true);
+    //        for (int i = 0; i < assignQuests[q].QuestNeeds.Length; ++i)
+    //        {
+    //            sb.Append(assignQuests[q].QuestNeeds[i].Contents);
+    //            sb.Append("\n");
+    //        }
+    //        miniLists.GetChild(q).GetChild(0).GetComponent<Text>().text = sb.ToString();
+    //    }
 
-        for (; q < miniLists.childCount; ++q)
-        {
-            miniLists.GetChild(q).gameObject.SetActive(false);
-        }
-    }
+    //    for (; q < miniLists.childCount; ++q)
+    //    {
+    //        miniLists.GetChild(q).gameObject.SetActive(false);
+    //    }
+    //}
 
     #endregion
 }

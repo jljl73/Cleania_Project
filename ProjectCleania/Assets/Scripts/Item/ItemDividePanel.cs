@@ -54,7 +54,8 @@ public class ItemDividePanel : MonoBehaviour
             slider.value = slider.minValue;
         else
         {
-            float temp = float.Parse(inputField.text);
+            float temp = slider.minValue;
+            float.TryParse(inputField.text, out temp);
 
             if (temp > slider.maxValue || temp < slider.minValue)
                 OnSliderValueChanged();

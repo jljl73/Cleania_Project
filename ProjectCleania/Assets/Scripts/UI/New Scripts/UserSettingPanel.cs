@@ -16,7 +16,18 @@ public class UserSettingPanel : MonoBehaviour
     [SerializeField]
     Slider SliderSFX;
 
-    void Start()
+    [SerializeField]
+    Toggle togglePlayerHP;
+    [SerializeField]
+    Toggle toggleMonsterHP;
+    [SerializeField]
+    Toggle togglePlayerName;
+    [SerializeField]
+    Toggle toggleDamage;
+    [SerializeField]
+    Toggle toggleCriticalDamage;
+
+    void Awake()
     {
         for (int i = 0; i < LeftContent.childCount; ++i)
         {
@@ -27,8 +38,10 @@ public class UserSettingPanel : MonoBehaviour
         SliderBGM.onValueChanged.AddListener(ChangeBGMVolume);
         SliderSFX.onValueChanged.AddListener(ChangeSFXVolume);
 
-        SliderBGM.value = Camera.main.GetComponent<AudioSource>().volume;
-        SliderSFX.value = GameManager.Instance.playerSoundPlayer.GetComponent<AudioSource>().volume;
+        SliderBGM.value = UserSetting.BGMVolume;
+        SliderSFX.value = UserSetting.SFXVolume;
+
+        LoadSetting();
     }
 
     void ShowContent(int index)
@@ -40,19 +53,57 @@ public class UserSettingPanel : MonoBehaviour
 
     public void ChangeBGMVolume(float volume)
     {
-        volume *= 0.01f;
-        Camera.main.GetComponent<AudioSource>().volume = volume;
+        UserSetting.BGMVolume = volume;
+        BGMPlayer.Instance.ChangeVolume(volume);
+        UserSetting.SaveVolume();
     }
 
     public void ChangeSFXVolume(float volume)
     {
-        volume *= 0.01f;
-        GameManager.Instance.playerSoundPlayer.ChangeVolume(volume);
+        UserSetting.SFXVolume = volume;
+        GameManager.Instance.playerSoundPlayer?.ChangeVolume(volume);
+        UserSetting.SaveVolume();
     }
 
     public void ChangeScreenMode(int value)
     {
         Screen.fullScreen = true;
         Screen.fullScreen = false;
+    }
+
+    public void OnChangedPlayerHP(bool value)
+    {
+        UserSetting.OnPlayerHP = value;
+        UserSetting.Save();
+    }
+    public void OnChangedMonsterHP(bool value)
+    {
+        UserSetting.OnMonsterHP = value;
+        UserSetting.Save();
+    }
+    public void OnChangedPlayerName(bool value)
+    {
+        UserSetting.OnPlayerName = value;
+        UserSetting.Save();
+    }
+    public void OnChangedDamage(bool value)
+    {
+        UserSetting.OnDamage = value;
+        UserSetting.Save();
+    }
+    public void OnChangedCriticalDamage(bool value)
+    {
+        UserSetting.OnCriticalDamage = value;
+        UserSetting.Save();
+    }
+
+    void LoadSetting()
+    {
+        Debug.Log("load Setting");
+        togglePlayerHP.isOn = UserSetting.OnPlayerHP;
+        toggleMonsterHP.isOn = UserSetting.OnMonsterHP;
+        togglePlayerName.isOn = UserSetting.OnPlayerName;
+        toggleDamage.isOn = UserSetting.OnDamage;
+        toggleCriticalDamage.isOn = UserSetting.OnCriticalDamage;
     }
 }

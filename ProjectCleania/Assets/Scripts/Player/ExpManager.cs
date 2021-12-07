@@ -26,6 +26,7 @@ public class ExpManager
     static public void Acquire(int nExp)
     {
         ExpManager.Exp += nExp;
+        GameManager.Instance.chatManager.ShowAcquireExp(nExp);
     }
 
     static public int Level
