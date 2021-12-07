@@ -49,26 +49,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    SavedData savedData = new SavedData();
-    public SavedData SavedData
-    { get => savedData; }
-
-
-
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         menuManager = FindObjectOfType<MenuManager>();
-    }
-
-    private void Start()
-    {
-        SavedData.Start();
-    }
-
-    private void OnApplicationQuit()
-    {
-        SavedData.OnApplicationQuit();        
     }
 
     public void ChangeScene(string sceneName)
@@ -91,6 +75,5 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = value;
     }
-
 
 }

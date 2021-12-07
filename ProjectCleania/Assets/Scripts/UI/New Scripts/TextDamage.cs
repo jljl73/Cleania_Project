@@ -22,21 +22,14 @@ public class TextDamage : MonoBehaviour
     {
         sb.Clear();
 
-        if(result.Enemy)
-        {
-            GetComponent<TextMeshPro>().fontSize = 8f;
-            sb.Append("<color=#FF0000>");
-            sb.Append(string.Format("{0:N0}", result.Value));
-            sb.Append("</color>");
-        }
-        else if (result.Dodged)
+        if (result.Dodged)
         {
             GetComponent<TextMeshPro>().fontSize = 8f;
             sb.Append("<color=#D0CECE>");
             sb.Append("ºø³ª°¨!");
             sb.Append("</color>");
         }
-        else if (result.Critical && UserSetting.OnCriticalDamage)
+        else if (result.Critical)
         {
             GetComponent<TextMeshPro>().fontSize = 10f;
             sb.Append("<color=#FAEE4C>");

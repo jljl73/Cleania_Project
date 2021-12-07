@@ -45,11 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0106c7480e16be44a222ad33bb1a597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlaySkill:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSkillActivateEvents: []
-  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -135,11 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32876ee0c6d201044a0bb937e79e30f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlaySkill:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSkillActivateEvents: []
-  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -174,12 +164,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4185383675751946795}
   - component: {fileID: 4185383675751946794}
+  - component: {fileID: 6421137569179322005}
   - component: {fileID: 6388554048509417175}
   - component: {fileID: 4185383675751946785}
   - component: {fileID: 6443105551693911329}
   - component: {fileID: 338930018133428618}
   - component: {fileID: 2202353817470447178}
-  - component: {fileID: 8667853082300064068}
   - component: {fileID: 4382777070779692115}
   - component: {fileID: 5675800119126199197}
   - component: {fileID: 6954736579375192304}
@@ -229,6 +219,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &6421137569179322005
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185383675751946793}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!195 &6388554048509417175
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -309,19 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b4be0415937d7409f7038fb8d13698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &8667853082300064068
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185383675751946793}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.2, z: 0}
+  CognitiveRange: 3
 --- !u!114 &4382777070779692115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +329,7 @@ MonoBehaviour:
   rotateCoef: 1
   supposedSmallestEnemySize: 0.1
   isFixedNavPriority: 0
+  moveMode: 0
 --- !u!114 &5675800119126199197
 MonoBehaviour:
   m_ObjectHideFlags: 0

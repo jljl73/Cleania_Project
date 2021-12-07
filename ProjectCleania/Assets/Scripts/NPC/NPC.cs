@@ -15,8 +15,8 @@ public class NPC : MonoBehaviour
     public TYPE npctype;
     public TYPE NPCType { get { return npctype; } }
 
-    public string npcname;
-    public string Name { get { return npcname; } }
+    public string m_Name;
+    public string Name { get { return m_Name; } }
 
     public string Value;
     [SerializeField]
@@ -29,7 +29,7 @@ public class NPC : MonoBehaviour
     void Start()
     {
         transform.Find("Marker").rotation = Camera.main.transform.rotation;
-        fieldName.GetComponent<TextMeshPro>().text = npcname;
+        fieldName.GetComponent<TextMeshPro>().text = m_Name;
         fieldName.transform.rotation = Camera.main.transform.rotation;
         fieldName.gameObject.SetActive(false);
 

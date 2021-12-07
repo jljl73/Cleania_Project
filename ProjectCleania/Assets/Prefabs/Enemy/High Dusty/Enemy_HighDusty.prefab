@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 4972137587626881285}
   - component: {fileID: 4972137587626881284}
   - component: {fileID: 6877608270242394641}
+  - component: {fileID: 2740891262376652219}
   - component: {fileID: 5230367245399787318}
   - component: {fileID: 4388122920729891846}
   - component: {fileID: 1372266458}
   - component: {fileID: 8069016946488588372}
-  - component: {fileID: 1003775896854185798}
   - component: {fileID: 906908091207954286}
   - component: {fileID: 4728413963125753563}
   - component: {fileID: 6970234015541870300}
@@ -81,6 +81,20 @@ MonoBehaviour:
   state: 0
   monsterType: 5003
   rank: 0
+--- !u!136 &2740891262376652219
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972137587626881287}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!195 &5230367245399787318
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -147,19 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b4be0415937d7409f7038fb8d13698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &1003775896854185798
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4972137587626881287}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.5, z: 0}
+  CognitiveRange: 7
 --- !u!114 &906908091207954286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +177,7 @@ MonoBehaviour:
   rotateCoef: 1
   supposedSmallestEnemySize: 0.1
   isFixedNavPriority: 0
+  moveMode: 0
 --- !u!114 &4728413963125753563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,11 +309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42218615faa3e09479fb1098297840f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlaySkill:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSkillActivateEvents: []
-  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []

@@ -7,47 +7,53 @@ using UnityEngine.Events;
 
 public class QuestMiniPanel : MonoBehaviour
 {
-    QuestManager QM { get => GameManager.Instance.uiManager.GetComponent<QuestManager>(); }
+    //bool isOpend = false;
+    //[SerializeField]
+    //GameObject buttonOpen;
+    //[SerializeField]
+    //GameObject buttonClose;
 
-    [SerializeField]
-    Transform miniLists;
+    //public QuestManager questManager;
+    //public GameObject Toggle;
+
+    //void Start()
+    //{
+        
+    //}
+
+    //public void OnClickedButton()
+    //{
+    //    OpenQuestList(isOpend);
+    //    isOpend = !isOpend;
+
+    //    buttonClose.SetActive(!isOpend);
+    //    buttonOpen.SetActive(isOpend);
+    //}
     
-    void Start()
-    {
-        QM.AddListener_Update(UpdateList);
-    }
-
-
-    public void UpdateList()
-    {
-        if (miniLists == null) return;
-
-        StringBuilder sb = new StringBuilder();
-        int index = 0;
-
-        for (int q = 0; q < QM.Quests.Count; ++q)
-        {
-            if (QM.Quests[q].State != Quest.STATE.Assign && QM.Quests[q].State != Quest.STATE.Clear)
-                continue;
-
-            sb.Clear();
-            sb.Append(QM.Quests[q].Name);
-            sb.Append("\n");
-            miniLists.GetChild(index).gameObject.SetActive(true);
-            for (int i = 0; i < QM.Quests[q].QuestNeeds.Length; ++i)
-            {
-                sb.Append(QM.Quests[q].QuestNeeds[i].Contents);
-                sb.Append("\n");
-            }
-            miniLists.GetChild(index).GetChild(0).GetComponent<Text>().text = sb.ToString();
-
-            if (++index >= miniLists.childCount)
-                break;
-        }
-
-        for (; index < miniLists.childCount; ++index)
-        {
-            miniLists.GetChild(index).gameObject.SetActive(false);
-        }
-    }
+    //void OpenQuestList(bool value)
+    //{
+    //    int i = 2;
+    //    int count = transform.childCount;
+    //    for(; i < count; ++i)
+    //    {
+    //        transform.GetChild(i).gameObject.SetActive(value);
+    //    }
+    //}
+    
+    //void UpdateList()
+    //{
+    //    StringBuilder sb = new StringBuilder();
+    //    for (int q = 0; q < questManager.quests.Count; ++q)
+    //    {
+    //        sb.Clear();
+    //        sb.Append(questManager.quests[q].name);
+    //        sb.Append("\n");
+    //        for (int i = 0; i < questManager.quests[q].QuestNeeds.Length; ++i)
+    //        {
+    //            sb.Append(questManager.quests[q].QuestNeeds[i].Contents);
+    //            sb.Append("\n");
+    //        }
+    //        Toggle.transform.GetChild(q).GetChild(0).GetComponent<Text>().text = sb.ToString();
+    //    }
+    //}
 }

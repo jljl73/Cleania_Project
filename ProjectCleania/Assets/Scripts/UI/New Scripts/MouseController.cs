@@ -105,6 +105,7 @@ public class MouseController : MonoBehaviour
         int layerMask = 1 << 6 | 1 << 15;
         if (Physics.Raycast(ray, out raycastHit, 300.0f, layerMask))
         {
+            
             if(raycastHit.collider.CompareTag("Enemy"))
                 SetEnemyTag(raycastHit.collider);
 

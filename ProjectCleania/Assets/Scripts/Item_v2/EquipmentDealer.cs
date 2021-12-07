@@ -53,7 +53,7 @@ public class EquipmentDealer
         EquipmentOptionSO.DynamicOptionTable[] dynamicTable = optionSO.DynamicTable;
         EquipmentOptionSO.DynamicOptionTable table = dynamicTable[Random.Range(0, dynamicTable.Length)];
 
-        return new Ability.DynamicOption(table.KeyStat, table.KeyHow, Random.Range(table.Min, table.Max));
+        return new Ability.DynamicOption(Random.Range(table.Min, table.Max), table.KeyStat, table.KeyHow);
     }
 
     static public Ability.DynamicOption CandidateDynamicOption(ItemInstance_Equipment equipment)
@@ -102,7 +102,7 @@ public class EquipmentDealer
     {
         if (currency.Crystal >= GetRepairCost(equipment))
         {
-            currency.AddCrystal(-GetRepairCost(equipment), UI_Currency.SourceType.Trade);
+            currency.AddCrystal(-GetRepairCost(equipment));
             equipment.Durability = equipment.SO.Durability;
             return true;
         }

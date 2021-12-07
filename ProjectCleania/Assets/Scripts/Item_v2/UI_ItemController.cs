@@ -242,13 +242,6 @@ public class UI_ItemController : MonoBehaviour,
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
 
-
-        if (currentContainer.SyncWith == UI_ItemContainer.SyncType.Equipment)
-            GameManager.Instance.uiManager.InventoryPanel.transform.SetAsLastSibling();
-        else
-            currentContainer.transform.SetAsLastSibling();
-
-
         switch (currentContainer.SyncWith)
         {
             case UI_ItemContainer.SyncType.Inventory:

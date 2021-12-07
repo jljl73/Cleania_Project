@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class TitleManager : MonoBehaviour
 {
-
-    void Awake()
-    {
-        UserSetting.Load();
-        UserSetting.LoadVolume();
-    }
-
     public void OnClickedStart()
     {
         GameManager.Instance.ChangeScene("CharacterSelect");
     }
-    
+
+    public void OnClickedOption()
+    {
+        GameManager.Instance.menuManager.PopUpUserSettingUI();
+    }
+
     public void OnClickedExit()
     {
         GameManager.Instance.QuitGame();

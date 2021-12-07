@@ -113,7 +113,7 @@ public class NPCEnchant : MonoBehaviour
         {
             if (EquipmentDealer.TryChangeDynamic(equipment, EquipmentDealer.CandidateDynamicOption(equipment)))
             {
-                GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(-enchantCost, UI_Currency.SourceType.Trade);
+                GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(-enchantCost);
                 SelectItem(selectedItem);   // refresh
             }
             else

@@ -29,7 +29,7 @@ public class FogsGenerator : MonoBehaviour
         transform.GetComponent<MeshFilter>().mesh = new Mesh();
         transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
         transform.gameObject.SetActive(true);
-        transform.position = new Vector3(0, 20, 0);
+        transform.position = new Vector3(0, 50, 0);
 
         GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
     }

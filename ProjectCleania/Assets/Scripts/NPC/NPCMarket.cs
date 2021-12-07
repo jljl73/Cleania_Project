@@ -93,7 +93,7 @@ public class NPCMarket : MonoBehaviour
 
                 if (inventory.Add(ItemInstance.Instantiate(itemToBuyInMarket.ItemSO)))
                 {
-                    inventoryCurrency.AddCrystal(-itemToBuyInMarket.ItemSO.Price/* * originCount*/, UI_Currency.SourceType.Trade);
+                    inventoryCurrency.AddCrystal(-itemToBuyInMarket.ItemSO.Price/* * originCount*/);
                     //if (soldItems.Contains(itemToBuyInMarket))
                     //    soldItems.Remove(itemToBuyInMarket);
                     //Destroy(itemToBuyInMarket.gameObject);
@@ -128,7 +128,7 @@ public class NPCMarket : MonoBehaviour
         //newItem.Initialize(controller.itemInstance, pages[2]);
         //soldItems.Add(newItem);
 
-        GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(controller.itemInstance.SO.Price * controller.itemInstance.Count, UI_Currency.SourceType.Trade);
+        GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_Currency>().AddCrystal(controller.itemInstance.SO.Price * controller.itemInstance.Count);
         GameManager.Instance.uiManager.InventoryPanel.GetComponent<UI_ItemContainer>().Remove(controller);
 
     }

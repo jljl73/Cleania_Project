@@ -39,12 +39,12 @@ public abstract class EnemySkill : Skill
         enemy.enemyStateMachine.Transition(EnemyStateMachine.enumState.Idle);
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
             OnEnemyTriggerZone.Invoke(true, ID);
     }
-    
+
     protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))

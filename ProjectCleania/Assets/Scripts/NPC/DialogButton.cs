@@ -16,13 +16,16 @@ public class DialogButton : MonoBehaviour
     [SerializeField]
     string value;
 
-    
-    public void Initialize(TYPE type, Quest quest, string value, Dialog dialog)
+    void Awake()
+    {
+        dialog = GetComponentInParent<Dialog>();
+    }
+
+    public void Initialize(TYPE type, Quest quest, string value)
     {
         this.type = type;
         this.value = value;
         this.quest = quest;
-        this.dialog = dialog;
         AddListener();
     }
 
@@ -30,7 +33,6 @@ public class DialogButton : MonoBehaviour
     {
         if (button == null) button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
-
         switch (type)
         {
             case TYPE.NextPage:
@@ -106,16 +108,13 @@ public class DialogButton : MonoBehaviour
             case "Storage":
                 GameManager.Instance.uiManager.GetComponent<UIManager>().ShowStoragePanel(true);
                 break;
-            case "Dungeon":
-                GameManager.Instance.uiManager.GetComponent<UIManager>().ShowDungeonPanel(true);
-                break;
         }
     }
 
     void CloseDialog()
     {
-        //GameManager.Instance.dialogManager.ShowDialog(dialog.gameObject, false);
-        GameManager.Instance.dialogManager.OffDialog();
+        if (dialog == null) return;
+        GameManager.Instance.dialogManager.ShowDialog(dialog.gameObject, false);
         //dialog.gameObject.SetActive(false);
     }
 }

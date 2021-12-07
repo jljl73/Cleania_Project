@@ -10,9 +10,6 @@ public class PollutionGroup : DamagingProperty
     int abilityCount = 0;
     [SerializeField]
     int prevAbilityCount = 0;
-    [SerializeField]
-    float summonPeriod = 0.1f;
-    float summonTimePassed = 0f;
 
     AbilityStatus abilityStatus;
 
@@ -103,17 +100,9 @@ public class PollutionGroup : DamagingProperty
         base.SetUp(ownerabil, damageRate);
     }
 
-
-    private void Update()
+    private void FixedUpdate()
     {
         if (!abilityActivate) return;
-
-        summonTimePassed += Time.deltaTime;
-        if (summonTimePassed < summonPeriod)
-            return;
-        else
-            summonTimePassed = 0;
-
         Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
         pollution.SetUp(this, pollutionDuration, ownerAbility, damageRate);
         pollution.Resize(damageRange);
