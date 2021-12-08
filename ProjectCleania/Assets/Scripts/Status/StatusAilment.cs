@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class StatusAilment : MonoBehaviour
 {
-    [SerializeField]
-    BaseCharacterController baseCharacterController;
     AbilityStatus ownerAbilityStatus;
 
     void Awake()
     {
-        baseCharacterController = GetComponent<BaseCharacterController>();
         ownerAbilityStatus = GetComponent<AbilityStatus>();
     }
 
@@ -47,10 +44,8 @@ public class StatusAilment : MonoBehaviour
 
     public void RestrictBehavior(BehaviorRestrictionType option, float duration)
     {
-        if (CheckRestrictBehaviorOvelapped(option))
+        if (!CheckRestrictBehaviorOvelapped(option))
             return;
-
-        baseCharacterController.SetStatusAilment(option, true);
         _behaviorRestrictionOptions[(int)option] += duration;
         _behaviorRestrictionOptionsOvelapped[(int)option] += 1;
         StartCoroutine(OffRestrictBehavior(option, duration));
@@ -59,7 +54,6 @@ public class StatusAilment : MonoBehaviour
     IEnumerator OffRestrictBehavior(BehaviorRestrictionType option, float duration)
     {
         yield return new WaitForSeconds(duration);
-        baseCharacterController.SetStatusAilment(option, false);
         _behaviorRestrictionOptions[(int)option] -= duration;
         _behaviorRestrictionOptionsOvelapped[(int)option] -= 1;
         Debug.Log("behaviorRestriction Off : " + option.ToString() + " : " + _behaviorRestrictionOptions[(int)option]);

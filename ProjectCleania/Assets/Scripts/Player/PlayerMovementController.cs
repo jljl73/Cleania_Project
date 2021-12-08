@@ -65,7 +65,7 @@ public class PlayerMovementController : MovementController
         // Ability.Stat 관련 변수를 사용하는 객체들이 Ability.State.Change를 구독하는 형식 필요할듯?
 
         // 속도 설정
-        // SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6);
+        SetSpeed(abilityStatus.GetStat(Ability.Stat.MoveSpeed) * 6);
 
 
 

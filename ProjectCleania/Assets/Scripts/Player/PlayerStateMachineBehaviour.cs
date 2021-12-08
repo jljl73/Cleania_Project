@@ -7,6 +7,7 @@ using System.Text;
 public class PlayerStateMachineBehaviour : StateMachineBehaviour
 {
     PlayerSkillController playerSkillController;
+    AbilityStatus abilityStatus;
 
     // 모든 스킬 트리거 & 상태 To Hash
     Dictionary<int, int> idToParameterHash = new Dictionary<int, int>();
@@ -22,6 +23,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         UploadIDToHash(playerSkillSOs);
 
         playerSkillController = FindObjectOfType<PlayerSkillController>();
+        abilityStatus = playerSkillController.gameObject.GetComponent<AbilityStatus>();
     }
 
     void UploadIDToHash(PlayerSkillSO[] so)
@@ -56,16 +58,31 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
             if (stateInfo.shortNameHash == idToStateHash[id])
             {
                 SetMovableParameter(animator, id);
-                SetCoolTimeInitialize(animator, id);
+                // SetCoolTimeInitialize(animator, id);
             }
+        }
+
+        if (stateInfo.shortNameHash == idToStateHash[1102])
+        {
+            skill1102TimePassed = 0;
         }
     }
 
+    float skill1102TimePassed = 0;
+
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (stateInfo.shortNameHash == idToStateHash[1102])
+        {
+            skill1102TimePassed += Time.deltaTime;
+            if (skill1102TimePassed > 1)
+            {
+                skill1102TimePassed = 0;
+                abilityStatus.ConsumeMP(playerSkillController.GetMpValue(1102));
+            }
+        }
+    }
 
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -118,27 +135,27 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         }
     }
 
-    void SetCoolTimeInitialize(Animator animator, int id)
-    {
-        switch (id)
-        {
-            case 1199:
-                if (!playerSkillController.AnimationActivate(id))
-                {
-                    playerSkillController.ResetSkill(id);
-                    playerSkillController.StopSkill(id);
-                    animator.SetBool(idToParameterHash[id], false);
-                }
-                break;
-            default:
-                // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
-                if (playerSkillController.AnimationActivate(id))
-                    playerSkillController.ResetSkill(id);
-                else
-                    animator.SetBool(idToParameterHash[id], false);
-                break;
-        }
-    }
+    //void SetCoolTimeInitialize(Animator animator, int id)
+    //{
+    //    switch (id)
+    //    {
+    //        case 1199:
+    //            if (!playerSkillController.AnimationActivate(id))
+    //            {
+    //                playerSkillController.ResetSkill(id);
+    //                playerSkillController.StopSkill(id);
+    //                animator.SetBool(idToParameterHash[id], false);
+    //            }
+    //            break;
+    //        default:
+    //            // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
+    //            if (playerSkillController.AnimationActivate(id))
+    //                playerSkillController.ResetSkill(id);
+    //            else
+    //                animator.SetBool(idToParameterHash[id], false);
+    //            break;
+    //    }
+    //}
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
