@@ -23,10 +23,10 @@ public class UI_StatusPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (status)
-        {
-            coreTexts[0].text = $"Level : {ExpManager.Level.ToString().PadLeft(8)}";
-        }
+        //if (status)
+        //{
+        //    coreTexts[0].text = $"Level : {ExpManager.Level.ToString().PadLeft(8)}";
+        //}
 
         if (abilityStatus)
         {
