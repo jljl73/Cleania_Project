@@ -75,10 +75,6 @@ public class PlayerSoundPlayer : MonoBehaviour, ISoundPlayer
         audioSource.Stop();
     }
 
-    public void StopSound()
-    {
-        audioSource.Stop();
-    }
 
     public void ChangeVolume(float volume)
     {
