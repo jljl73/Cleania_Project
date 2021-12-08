@@ -27,7 +27,9 @@ public class StatusAilment : MonoBehaviour
     }
 
     // 행동 제한형
+    [SerializeField]
     float[] _behaviorRestrictionOptions = { 0, 0, 0, 0 };
+    [SerializeField]
     int[] _behaviorRestrictionOptionsOvelapped = { 0, 0, 0, 0 };
     public enum BehaviorRestrictionType
     {

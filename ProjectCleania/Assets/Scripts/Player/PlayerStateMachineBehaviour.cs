@@ -9,7 +9,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     PlayerSkillController playerSkillController;
     AbilityStatus abilityStatus;
 
-    // 모든 스킬 트리거 & 상태 To Hash
+    // 모든 스킬 파라미터 & 상태 To Hash
     Dictionary<int, int> idToParameterHash = new Dictionary<int, int>();
     Dictionary<int, int> idToStateHash = new Dictionary<int, int>();
 
@@ -87,7 +87,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // 스킬 나올때 모든 스킬 트리거 & 이펙트 끄기
+        // 스킬 나올때 파라미터 끄기 & 이펙트 끄기
         foreach (int id in idToStateHash.Keys)
         {
             // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
@@ -96,8 +96,8 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 // 움직일 수 있는 상태 설정
                 animator.SetBool(movableHash, true);
 
-                // 모든 스킬 트리거 끈다
-                TurnOffAllSkillTrigger(animator);
+                // 모든 스킬 파라미터 끈다
+                TurnOffAllSkillParameter(animator);
 
                 // 1102 스킬은 나올 때 스킬 Stop
                 if (stateInfo.shortNameHash == idToStateHash[1102])
@@ -107,7 +107,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         }
     }
 
-    void TurnOffAllSkillTrigger(Animator animator)
+    void TurnOffAllSkillParameter(Animator animator)
     {
         foreach (int paramId in idToParameterHash.Keys)
         {
