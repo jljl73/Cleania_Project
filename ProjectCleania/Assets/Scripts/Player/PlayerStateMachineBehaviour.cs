@@ -126,6 +126,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         {
             case 1102:
             case 1106:
+            case 1197:
             case 1198:
                 break;
             default:

@@ -231,7 +231,9 @@ public class PlayerController : MonoBehaviour
     public void OrderMovementTo(Vector3 mousePosition)
     {
         if (CheckMovable())
+        {
             movementController.Move(mousePosition);
+        }
     }
 
     public void Pushed(Vector3 force)
@@ -260,5 +262,13 @@ public class PlayerController : MonoBehaviour
     void OnEndRoll() => movementController.SpeedUp(6.8f);
     void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
     void CloseDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(false);
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+
+        }
+    }
 
 }
