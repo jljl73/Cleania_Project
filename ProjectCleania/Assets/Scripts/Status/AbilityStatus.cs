@@ -228,6 +228,8 @@ public class AbilityStatus : MonoBehaviour
         tot *= this[Ability.Stat.IncreaseDamage];
         tot *= this[Ability.Stat.AttackSpeed];
 
+        tot *= (this[Ability.Stat.CriticalChance] <= 1 ? this[Ability.Stat.CriticalChance]+1 : 2) * this[Ability.Stat.CriticalScale];
+
         return tot;
     }
 

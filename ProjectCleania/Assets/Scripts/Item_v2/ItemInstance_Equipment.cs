@@ -342,8 +342,33 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
         {
             case Ability.Enhance.Absolute:
             case Ability.Enhance.Addition:
-                return Mathf.Ceil(value * Level / 50);
+                switch (option.Key)
+                {
+                    case Ability.Stat.CriticalChance:
+                    case Ability.Stat.AttackSpeed:
+                    case Ability.Stat.MoveSpeed:
+                        //return value;
 
+                    case Ability.Stat.Accuracy:
+                    case Ability.Stat.CriticalScale:
+                    case Ability.Stat.Dodge:
+                    case Ability.Stat.IncreaseDamage:
+                    case Ability.Stat.ReduceDamage:
+                    case Ability.Stat.SkillCooldown:
+                    case Ability.Stat.Tenacity:
+                        return Mathf.Ceil(value * Level / 50 * 100) / 100;
+
+                    case Ability.Stat.Attack:
+                    case Ability.Stat.Defense:
+                    case Ability.Stat.MaxHP:
+                    case Ability.Stat.MaxMP:
+                    case Ability.Stat.Strength:
+                    case Ability.Stat.Vitality:
+                        return Mathf.Ceil(value * Level / 50);
+
+                    default:
+                        return float.NaN;
+                }
             case Ability.Enhance.Addition_Percent:
             case Ability.Enhance.Chance_Percent:
             case Ability.Enhance.NegMul_Percent:
