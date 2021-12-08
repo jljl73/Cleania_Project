@@ -18,7 +18,8 @@ public class EnemyGroupManager : MonoBehaviour
             this.target = value;
         }
     }
-    const float chasingDistance = 10.0f;
+    //const float chasingDistance = 10.0f;
+    const float chasingDistance = 5.0f;
 
     private void OnDisable()
     {
@@ -69,8 +70,10 @@ public class EnemyGroupManager : MonoBehaviour
 
     public void ReleaseTarget()
     {
+        print("a");
         if (CheckCollidedObject() > 0) return;
 
+        print("b");
         foreach (var e in enemies)
             e.GetComponent<Enemy>().ReleaseTarget();
     }
@@ -82,9 +85,13 @@ public class EnemyGroupManager : MonoBehaviour
 
         foreach (var e in enemies)
         {
+            print("Target: " + target.name);
+            print("Vector3.Distance: " + Vector3.Distance(target.transform.position, e.transform.position));
             if (Vector3.Distance(target.transform.position, e.transform.position) < chasingDistance)
                 ++sum;
         }
+
+        print("sum: " + sum);
 
         return sum;
     }
