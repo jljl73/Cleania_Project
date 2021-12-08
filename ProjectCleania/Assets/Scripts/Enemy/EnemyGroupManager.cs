@@ -20,6 +20,7 @@ public class EnemyGroupManager : MonoBehaviour
     }
     //const float chasingDistance = 10.0f;
     const float chasingDistance = 5.0f;
+    int sum = 0;
 
     private void OnDisable()
     {
@@ -68,12 +69,23 @@ public class EnemyGroupManager : MonoBehaviour
     //    this.target = target;
     //}
 
+    public void SetTarget()
+    {
+        ++sum;
+        //foreach (var e in enemies)
+        //{
+        //    e.GetComponent<Enemy>().SetTarget(target);
+        //}
+        //this.target = target;
+    }
+
     public void ReleaseTarget()
     {
-        print("a");
-        if (CheckCollidedObject() > 0) return;
+        if (--sum > 0) return;
+        //print("a");
+        //if (CheckCollidedObject() > 0) return;
 
-        print("b");
+        //print("b");
         foreach (var e in enemies)
             e.GetComponent<Enemy>().ReleaseTarget();
     }

@@ -42,16 +42,17 @@ public class EnemyChase : MonoBehaviour
         {
             if (enemySpawner != null)
             {
-                if (targetObjAbility != null)
-                    return;
+                //if (targetObjAbility != null)
+                //    return;
 
                 myGroupManager.Target = other.gameObject;
+                myGroupManager?.SetTarget();
                 //if (enemySpawner == null)
                 //    enemy.SetTarget(other.gameObject);
                 //else
                 //    myGroupManager.Target = other.gameObject;
 
-                targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
+                //targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
             }
         }
     }
