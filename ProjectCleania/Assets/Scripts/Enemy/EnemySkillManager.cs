@@ -55,6 +55,13 @@ public class EnemySkillManager : BaseSkillManager
     new void Update()
     {
         base.Update();
+        if (myEnemy.enemyMove.TargetObject?.GetComponent<AbilityStatus>().HP == 0)
+        {
+            foreach (int id in skillDict.Keys)
+            {
+                EnrollAvailableSkill(false, id);
+            }
+        }
     }
 
     public int GetSkillRunWaitingListCount()

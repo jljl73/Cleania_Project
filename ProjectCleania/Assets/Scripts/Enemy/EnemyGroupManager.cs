@@ -19,10 +19,21 @@ public class EnemyGroupManager : MonoBehaviour
         }
     }
     const float chasingDistance = 10.0f;
+    // const float chasingDistance = 5.0f;
+    int sum = 0;
 
     private void OnDisable()
     {
         target = null;
+    }
+
+    void Update()
+    {
+        if (Target?.GetComponent<AbilityStatus>().HP == 0)
+        {
+            sum = 1;
+            ReleaseTarget();
+        }
     }
 
     public void AddMember(GameObject enemy)
@@ -67,10 +78,23 @@ public class EnemyGroupManager : MonoBehaviour
     //    this.target = target;
     //}
 
+    public void SetTarget()
+    {
+        ++sum;
+        //foreach (var e in enemies)
+        //{
+        //    e.GetComponent<Enemy>().SetTarget(target);
+        //}
+        //this.target = target;
+    }
+
     public void ReleaseTarget()
     {
-        if (CheckCollidedObject() > 0) return;
+        if (--sum > 0) return;
+        //print("a");
+        //if (CheckCollidedObject() > 0) return;
 
+        //print("b");
         foreach (var e in enemies)
             e.GetComponent<Enemy>().ReleaseTarget();
     }
@@ -82,9 +106,13 @@ public class EnemyGroupManager : MonoBehaviour
 
         foreach (var e in enemies)
         {
+            print("Target: " + target.name);
+            print("Vector3.Distance: " + Vector3.Distance(target.transform.position, e.transform.position));
             if (Vector3.Distance(target.transform.position, e.transform.position) < chasingDistance)
                 ++sum;
         }
+
+        print("sum: " + sum);
 
         return sum;
     }

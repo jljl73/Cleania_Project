@@ -282,6 +282,7 @@ public class AbilityStatus : MonoBehaviour
         {
             ret.Enemy = true;
             Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin(0.6f);
+            GetComponent<Animator>()?.SetTrigger("Hurt");
         }
 
         if (UserSetting.OnDamage)
