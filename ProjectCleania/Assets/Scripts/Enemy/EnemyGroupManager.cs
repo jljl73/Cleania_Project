@@ -18,13 +18,22 @@ public class EnemyGroupManager : MonoBehaviour
             this.target = value;
         }
     }
-    //const float chasingDistance = 10.0f;
-    const float chasingDistance = 5.0f;
+    const float chasingDistance = 10.0f;
+    // const float chasingDistance = 5.0f;
     int sum = 0;
 
     private void OnDisable()
     {
         target = null;
+    }
+
+    void Update()
+    {
+        if (Target?.GetComponent<AbilityStatus>().HP == 0)
+        {
+            sum = 1;
+            ReleaseTarget();
+        }
     }
 
     public void AddMember(GameObject enemy)

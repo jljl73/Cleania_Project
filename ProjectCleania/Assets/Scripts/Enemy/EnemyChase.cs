@@ -31,10 +31,12 @@ public class EnemyChase : MonoBehaviour
 
     void Start()
     {
-        //CognitiveRange = 7;
-        CognitiveRange = 3;
+        CognitiveRange = 7;
+        // CognitiveRange = 3;
         cognitiveCollider.radius = CognitiveRange;
     }
+
+    
 
     void OnTriggerEnter(Collider other)
     {
@@ -52,7 +54,7 @@ public class EnemyChase : MonoBehaviour
                 //else
                 //    myGroupManager.Target = other.gameObject;
 
-                //targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
+                targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
             }
         }
     }

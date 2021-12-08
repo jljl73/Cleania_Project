@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-public class PlayerController : BaseCharacterController
+public class PlayerController : MonoBehaviour
 {
     AbilityStatus abilityStatus;
     NavMeshAgent navMeshAgent;
     Animator animator;
     Buffable buffable;
     StatusAilment statusAilment;
+    Collider hitBoxCollider;
 
     [SerializeField]
     PlayerSkillController skillController;
@@ -39,6 +40,10 @@ public class PlayerController : BaseCharacterController
         statusAilment = GetComponent<StatusAilment>();
         if (statusAilment == null)
             throw new System.Exception("PlayerController doesnt have StatusAilment");
+
+        hitBoxCollider = GetComponent<Collider>();
+        if (hitBoxCollider == null)
+            throw new System.Exception("PlayerController doesnt have BoxCollider");
     }
 
     void Update()
@@ -246,6 +251,9 @@ public class PlayerController : BaseCharacterController
 
     public void OnSetMovable() => animator.SetBool("Movabl e", true);
 
+    public void OnHitColliderOn() => hitBoxCollider.enabled = true;
+    public void OnHitColliderOff() => hitBoxCollider.enabled = false;
+    public void OnHitColliderOnDelay(float duration) => Invoke("OnHitColliderOn", duration);
     public void OnFullHP() => abilityStatus.FullHP();
     public void OnFullMP() => abilityStatus.FullHP();
     void OnPlayRoll() => movementController.SpeedUp(10);
