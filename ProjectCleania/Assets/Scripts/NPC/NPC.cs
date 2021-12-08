@@ -46,6 +46,8 @@ public class NPC : MonoBehaviour
             prevState = state;
             if (state == -1)
             { questMarker.SetActive(false); return; }
+
+
             questMarker.GetComponent<SpriteRenderer>().sprite = Resources.Load<DataSO>("ScriptableObject/AssetData").sprites[state];
             questMarker.SetActive(true);
         }

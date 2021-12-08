@@ -34,7 +34,12 @@ public class QuestProgressChecker : MonoBehaviour
                 break;
         }
         Quest curQuest = transform.GetChild(i).GetComponent<DialogSelector>().quest;
+
         if (curQuest == null)
+            return -1;
+
+        int index = (int)curQuest.State;
+        if (transform.GetChild(i).childCount < index || transform.GetChild(i).GetChild(index).GetComponent<Dialog>().Quest == null)
             return -1;
         
         return (int)curQuest.State;
