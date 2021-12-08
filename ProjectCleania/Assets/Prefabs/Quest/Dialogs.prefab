@@ -1,64 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &923523558
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 923523559}
-  - component: {fileID: 923523560}
-  m_Layer: 5
-  m_Name: DungeonDialog Default (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &923523559
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923523558}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8682574473610294089}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -125.00002}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &923523560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923523558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quest: {fileID: 0}
-  pages:
-  - content: "\"\uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC624\uC2E0 \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4.\n\uBB34\uC5C7\uC744
-      \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\"\r\n"
-    buttons:
-    - type: 4
-      content: "\uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC785\uC7A5\uD560\uB798\uC694! "
-      value: Dungeon
-    - type: 5
-      content: "\uB2E4\uC74C\uC5D0 \uB2E4\uC2DC \uC62C\uAC8C\uC694. "
-      value: 1
 --- !u!1 &3341654699839975315
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 321c6c85c21dfca4895cfa3dcaa51a1d, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -181,7 +122,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAE30\uBCF8 \uC804\uD22C\uB97C \uBC30\uC6B0\uC790! "
@@ -192,15 +133,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -212,7 +153,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -232,6 +173,64 @@ MonoBehaviour:
     - type: 2
       content: "\uC54C\uACA0\uC5B4! "
       value: 0
+--- !u!1 &5305046668849360723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4918577387024843564}
+  - component: {fileID: 5958404392095343627}
+  m_Layer: 5
+  m_Name: First (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4918577387024843564
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5305046668849360723}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8682574473610294089}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -125.00002}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5958404392095343627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5305046668849360723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 0}
+  pages:
+  - content: "\"\uD760, \uC774\uACF3\uC744 \uC774\uC6A9\uD560 \uB9CC\uD55C \uC790\uACA9\uC744
+      \uC544\uC9C1 \uAC16\uCD94\uC9C0 \uBABB\uD558\uC2E0 \uAC83 \uAC19\uB124\uC694.\n\uC8C4\uC1A1\uD558\uC9C0\uB9CC,
+      \uC880 \uB354 \uC2E4\uB825\uC744 \uC313\uACE0 \uC624\uC2DC\uB294 \uAC8C \uC88B\uC744
+      \uAC70 \uAC19\uC544\uC694.\"\r\n"
+    buttons:
+    - type: 5
+      content: "\uB05D\uB0B4\uAE30 "
+      value: Dungeon
 --- !u!1 &7334535957059897546
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 683e86372b5eca5498c36cae1a28fc08, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -329,7 +328,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC15\uD55C \uC6A9\uC0AC\uC784\uC744 \uC99D\uBA85\uD558\uAE30! "
@@ -340,15 +339,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -360,7 +359,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -447,7 +446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -458,7 +457,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "\uC5EC\uAE34 \uC5B4\uB5A4 \uACF3\uC774\uC57C? "
@@ -472,8 +471,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -485,7 +484,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -540,7 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -548,7 +547,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC0C1\uC810 \uC774\uC6A9\uBC95\uC744 \uC54C\uB824\uC918. "
@@ -559,15 +558,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -579,7 +578,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -591,8 +590,8 @@ MonoBehaviour:
     - type: 0
       content: "\uC0C1\uC810? "
       value: 7
-  - content: "\uB9C8\uC744\uC5D0\uB294 \uBC29\uC5B4\uAD6C\uB098 \uBB34\uAE30 \uC544\uC774\uD15C
-      \uB4F1\uC744 \uC0AC\uACE0 \uD314 \uC218 \uC788\uB294 \uC0C1\uC810\uC774 \uC788\uC5B4~\r\n"
+  - content: "\"\uB9C8\uC744\uC5D0\uB294 \uBC29\uC5B4\uAD6C\uB098 \uBB34\uAE30 \uC544\uC774\uD15C
+      \uB4F1\uC744 \uC0AC\uACE0 \uD314 \uC218 \uC788\uB294 \uC0C1\uC810\uC774 \uC788\uC5B4~\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -963,9 +962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -973,7 +972,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uBB34\uAE30\uB294 \uD56D\uC0C1 \uAE68\uB057\uD558\uAC8C! "
@@ -984,15 +983,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -1004,7 +1003,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -1583,7 +1582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 8d54a171038498b438fe0ed1041ea905, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -1591,7 +1590,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC218\uB828\uC744 \uD558\uACE0 \uC2F6\uB2E4\uBA74
@@ -1603,15 +1602,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -1623,13 +1622,13 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 3
-  - content: "\uC5B4\uB290\uB367\u2026 \uB108\uB3C4 \uB300\uCCAD\uC18C\uC5D0 \uC785\uC7A5\uD560
-      \uC790\uACA9\uC744 \uAC16\uCD94\uC5C8\uAD6C\uB098!\r\n"
+  - content: "\"\uC5B4\uB290\uB367\u2026 \uB108\uB3C4 \uB300\uCCAD\uC18C\uC5D0 \uC785\uC7A5\uD560
+      \uC790\uACA9\uC744 \uAC16\uCD94\uC5C8\uAD6C\uB098!\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\u2026\uCCAD\uC18C? "
@@ -1704,7 +1703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
   pages:
   - content: "\"\uC544\uC9C1 \uB098\uC640 \uB300\uD654\uD558\uAE30\uC5D4 \uB10C \uB108\uBB34
       \uB098\uC57D\uD558\uAD70\u2026\n\uD798\uC744 \uB354 \uC313\uC544\uC11C \uC640\uB77C.\"\r"
@@ -2021,10 +2020,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
   pages:
-  - content: "\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
-      \uC788\uB098?"
+  - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
+      \uC788\uB098?\""
     buttons:
     - type: 4
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB97C \uD574\uC8FC\uC2DC\uC624. "
@@ -2035,7 +2034,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC624. "
       value: 1
-  - content: "\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\n"
+  - content: "\"\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\"\n"
     buttons:
     - type: 0
       content: "\uB2F9\uC2E0\uC740...? "
@@ -2043,20 +2042,20 @@ MonoBehaviour:
     - type: 0
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB294 \uBB34\uC5C7\uC778\uAC00? "
       value: 4
-  - content: "\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
-      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\n"
+  - content: "\"\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
+      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
-      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\n"
+  - content: "\"\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
+      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 2
-  - content: "\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
-      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\n"
+  - content: "\"\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
+      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -2228,10 +2227,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
   pages:
-  - content: "\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
-      \uC788\uB098?"
+  - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
+      \uC788\uB098?\""
     buttons:
     - type: 4
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB97C \uD574\uC8FC\uC2DC\uC624. "
@@ -2242,7 +2241,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC624. "
       value: 1
-  - content: "\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\n"
+  - content: "\"\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\"\n"
     buttons:
     - type: 0
       content: "\uB2F9\uC2E0\uC740...? "
@@ -2250,20 +2249,20 @@ MonoBehaviour:
     - type: 0
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB294 \uBB34\uC5C7\uC778\uAC00? "
       value: 4
-  - content: "\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
-      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\n"
+  - content: "\"\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
+      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
-      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\n"
+  - content: "\"\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
+      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 2
-  - content: "\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
-      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\n"
+  - content: "\"\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
+      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -2510,7 +2509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
   pages:
   - content: "\"\uC548\uB155? \uC88B\uC740 \uD558\uB8E8~\n\uBB34\uC2A8 \uC77C\uC774\uC57C?\"\r"
     buttons:
@@ -2570,7 +2569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 8d54a171038498b438fe0ed1041ea905, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -2578,7 +2577,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC218\uB828\uC744 \uD558\uACE0 \uC2F6\uB2E4\uBA74
@@ -2590,15 +2589,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -2610,19 +2609,19 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 3
-  - content: "\uB300\uCCAD\uC18C \uAD00\uB9AC \uC694\uC815\uC740 \uB9C8\uC744 \uB9E8
-      \uB05D \uC911\uC559\uC5D0 \uC788\uC5B4~\r\n"
+  - content: "\"\uB300\uCCAD\uC18C \uAD00\uB9AC \uC694\uC815\uC740 \uB9C8\uC744 \uB9E8
+      \uB05D \uC911\uC559\uC5D0 \uC788\uC5B4~\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 7
-  - content: "\uCE5C\uC808\uD55C \uC694\uC815\uC774\uB2C8\uAE4C \uB9D0\uC744 \uAC78\uBA74
-      \uC790\uC138\uD558\uAC8C \uC124\uBA85\uD574 \uC904\uAC70\uC57C!\r\n"
+  - content: "\"\uCE5C\uC808\uD55C \uC694\uC815\uC774\uB2C8\uAE4C \uB9D0\uC744 \uAC78\uBA74
+      \uC790\uC138\uD558\uAC8C \uC124\uBA85\uD574 \uC904\uAC70\uC57C!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -2854,7 +2853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 321c6c85c21dfca4895cfa3dcaa51a1d, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -2862,7 +2861,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAE30\uBCF8 \uC804\uD22C\uB97C \uBC30\uC6B0\uC790! "
@@ -2873,15 +2872,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -2893,18 +2892,18 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 3
-  - content: "\uB2E4 \uCC98\uCE58\uD588\uAD6C\uB098! \uC0DD\uAC01\uBCF4\uB2E4 \uB2A6\uC5C8\uB124.\r"
+  - content: "\"\uB2E4 \uCC98\uCE58\uD588\uAD6C\uB098! \uC0DD\uAC01\uBCF4\uB2E4 \uB2A6\uC5C8\uB124.\r\""
     buttons:
     - type: 0
       content: "\uD5C9\uD5C9, \uB6F0\uC5B4\uC640\uC11C \uADF8\uB798. "
       value: 7
-  - content: "\u2026\uB6F0\uC5B4\uC654\uB2E4\uACE0? \uC774\uB7F0 \uB0B4\uAC00 \uC124\uBA85\uC744
-      \uC548\uD574\uC92C\uAD6C\uB098.\r"
+  - content: "\"\u2026\uB6F0\uC5B4\uC654\uB2E4\uACE0? \uC774\uB7F0 \uB0B4\uAC00 \uC124\uBA85\uC744
+      \uC548\uD574\uC92C\uAD6C\uB098.\r\""
     buttons:
     - type: 0
       content: "\uBB54\uB370? "
@@ -3075,7 +3074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 178eec63e57071e46a502ff15f505386, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -3083,7 +3082,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC70\uB300\uD55C \uBA3C\uC9C0 \uB369\uC5B4\uB9AC "
@@ -3094,15 +3093,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3114,19 +3113,19 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 3
-  - content: "\uCC0C\uB4E0 \uB54C \uC232 \uB098\uBB34 \uAF2D\uB300\uAE30\uC5D0\uC11C
+  - content: "\"\uCC0C\uB4E0 \uB54C \uC232 \uB098\uBB34 \uAF2D\uB300\uAE30\uC5D0\uC11C
       \uB354\uB354\uC2A4\uD2F0\uB97C \uBB3C\uB9AC\uCE58\uACE0 '\uD37C\uC2DC\uB9AC\uC544
-      \uC0D8\uBB3C \uC870\uAC01'\uC744 \uAC00\uC838\uC640\uC8FC\uBA74 \uB3FC.\r\n"
+      \uC0D8\uBB3C \uC870\uAC01'\uC744 \uAC00\uC838\uC640\uC8FC\uBA74 \uB3FC.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 7
-  - content: "\u2026\uC870\uC2EC\uD574.\r\n"
+  - content: "\"\u2026\uC870\uC2EC\uD574.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3179,9 +3178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -3192,7 +3191,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC120\uBB3C\uC774 \uC65C \uC5EC\uAE30\uC11C
@@ -3210,8 +3209,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3223,13 +3222,13 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
       value: Market
-  - content: "\uD79D\u2026 \uC81C \uC120\uBB3C\uC740 \uCC0C\uB4E0 \uB54C \uC232 \uB098\uBB34
-      \uD1B5\uB85C\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC788\uC5B4\uC694.\r\n"
+  - content: "\"\uD79D\u2026 \uC81C \uC120\uBB3C\uC740 \uCC0C\uB4E0 \uB54C \uC232
+      \uB098\uBB34 \uD1B5\uB85C\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC788\uC5B4\uC694.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -3338,7 +3337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 11400000, guid: fae6ff86f8e062845a079cf79b58f72e, type: 2}
   pages:
   - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
       \uC788\uB098?\"\r"
@@ -3357,17 +3356,16 @@ MonoBehaviour:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC57D\uD558\uAC8C? \uD639\uC740 \uAC15\uD558\uAC8C! "
       value: 2
-  - content: "\uD5A5\uADE0 \uBD80\uC5EC\uC5D0 \uB300\uD574\uC11C \uC54C\uB824\uB2EC\uB77C\u2026
-      \n\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8. \uC5B4\uB54C,
-      \uC774 \uC704\uB300\uD55C \uD798\uC774 \uB290\uAEF4\uC9C0\uB098?\n\uC774 \uD798\uC740
-      \uD55C \uBC88 \uC4F8 \uB54C\uB9C8\uB2E4 \uBE44\uC6A9\uC744 \uC694\uAD6C\uD558\uB2C8..
-      \uC2E0\uC911\uD558\uAC8C \uC4F0\uAE38 \uBC14\uB77C\uC9C0.\n\n"
+  - content: "\"\uC774 \uC704\uB300\uD55C \uD798\uC744 \uB290\uAEF4\uBCF4\uACE0 \uC654\uB294\uAC00?\r\"\n"
     buttons:
     - type: 0
       content: "...\uC88B\uC740 \uAE30\uC6B4\uC774\uC5C8\uB2E4 "
       value: 3
-  - content: "[\uD018\uC2A4\uD2B8 \uC644\uB8CC \uBCF4\uC0C1]\n\uACBD\uD5D8\uCE58
-      500\n\uD074\uB9B0 1000\n"
+  - content: "\"\uBB50.. \uC544\uB2C8\uC5C8\uB354\uB77C\uB3C4 \uB098\uC911\uC5D0
+      \uD574\uBCF4\uB3C4\uB85D. \uC774 \uD798\uC740 \uD55C \uBC88 \uC4F8 \uB54C\uB9C8\uB2E4
+      \uBE44\uC6A9\uC744 \uC694\uAD6C\uD558\uB2C8.. \uC2E0\uC911\uD558\uAC8C \uC4F0\uAE38
+      \uBC14\uB77C\uC9C0.\"\n\n[\uD018\uC2A4\uD2B8 \uC644\uB8CC \uBCF4\uC0C1]\n\uACBD\uD5D8\uCE58
+      500\n\uD074\uB9B0 1000\r\n"
     buttons:
     - type: 3
       content: "\uB05D\uB0B4\uAE30 "
@@ -3420,9 +3418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -3430,7 +3428,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uBB34\uAE30\uB294 \uD56D\uC0C1 \uAE68\uB057\uD558\uAC8C! "
@@ -3441,15 +3439,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3461,7 +3459,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3522,7 +3520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 11400000, guid: fae6ff86f8e062845a079cf79b58f72e, type: 2}
   pages:
   - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
       \uC788\uB098?\"\r"
@@ -3533,7 +3531,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 2
-  - content: "\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\n"
+  - content: "\"\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC57D\uD558\uAC8C? \uD639\uC740 \uAC15\uD558\uAC8C! "
@@ -3559,8 +3557,8 @@ MonoBehaviour:
     - type: 0
       content: "\uC54C\uACA0\uC18C. "
       value: 5
-  - content: "\uC798 \uC774\uD574\uAC00 \uB418\uC9C0 \uC54A\uB294 \uB2E4\uBA74 \uC9C1\uC811
-      \uD55C \uBC88 \uD574\uBCF4\uB294 \uAC78 \uCD94\uCC9C\uD558\uC9C0.\r"
+  - content: "\"\uC798 \uC774\uD574\uAC00 \uB418\uC9C0 \uC54A\uB294 \uB2E4\uBA74
+      \uC9C1\uC811 \uD55C \uBC88 \uD574\uBCF4\uB294 \uAC78 \uCD94\uCC9C\uD558\uC9C0.\r\""
     buttons:
     - type: 2
       content: "\uB05D\uB0B4\uAE30. "
@@ -3671,7 +3669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 11400000, guid: 7da5e236735b3754788d19d56c423788, type: 2}
   pages:
   - content: "\"\uC548\uB155\uD558\uC138\uC694! \uC138\uD0C1\uC18C\uC5D0 \uC624\uC2E0
       \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4!\n\uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2E0\uAC00\uC694?\"\r\n"
@@ -3685,13 +3683,13 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 1
-  - content: "\uD734\u2026 \uC5B4\uB5A1\uD558\uC9C0\u2026\r\n"
+  - content: "\"\uD734\u2026 \uC5B4\uB5A1\uD558\uC9C0\u2026\r\"\n"
     buttons:
     - type: 0
       content: "\uBB34\uC2A8 \uC77C \uC788\uC5B4? "
       value: 2
-  - content: "\uC544, \uADF8\uAC8C\u2026 \uC218\uB9AC\uD558\uB294 \uB370 \uC4F0\uB294
-      \uC7AC\uB8CC\uAC00 \uC870\uAE08 \uBD80\uC871\uD574\uC11C\uC694\u2026\r\n"
+  - content: "\"\uC544, \uADF8\uAC8C\u2026 \uC218\uB9AC\uD558\uB294 \uB370 \uC4F0\uB294
+      \uC7AC\uB8CC\uAC00 \uC870\uAE08 \uBD80\uC871\uD574\uC11C\uC694\u2026\r\"\n"
     buttons:
     - type: 0
       content: "\uBB34\uC2A8 \uC7AC\uB8CC\uC778\uB370? "
@@ -3767,7 +3765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -3775,7 +3773,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAE30\uBCF8 \uC804\uD22C\uB97C \uBC30\uC6B0\uC790! "
@@ -3786,15 +3784,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3806,7 +3804,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3866,9 +3864,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -3879,7 +3877,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "\uC5EC\uAE34 \uC5B4\uB5A4 \uACF3\uC774\uC57C? "
@@ -3893,8 +3891,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -3906,7 +3904,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -3959,7 +3957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 0}
   pages:
   - content: "\"\uC544\uC9C1 \uC800\uB294 \uB2F9\uC2E0\uACFC \uD560 \uB9D0\uC774
       \uC5C6\uC2B5\uB2C8\uB2E4.\n\uC8C4\uC1A1\uD558\uC9C0\uB9CC \uB2E4\uC74C\uC5D0
@@ -4068,7 +4066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 11400000, guid: 7da5e236735b3754788d19d56c423788, type: 2}
   pages:
   - content: "\"\uC548\uB155\uD558\uC138\uC694! \uC138\uD0C1\uC18C\uC5D0 \uC624\uC2E0
       \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4!\n\uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2E0\uAC00\uC694?\"\r\n"
@@ -4204,7 +4202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 8d54a171038498b438fe0ed1041ea905, type: 2}
   pages:
   - content: "\"\uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC624\uC2E0 \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4.\n\uBB34\uC5C7\uC744
       \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\"\r\n"
@@ -4227,17 +4225,17 @@ MonoBehaviour:
     - type: 0
       content: "\uB300\uCCAD\uC18C\uAC00 \uBB54\uAC00\uC694? "
       value: 4
-  - content: "\uC800\uB294 \uB354 \uAC15\uD574\uC9C0\uAE38 \uC6D0\uD558\uC2DC\uB294
+  - content: "\"\uC800\uB294 \uB354 \uAC15\uD574\uC9C0\uAE38 \uC6D0\uD558\uC2DC\uB294
       \uC6A9\uC0AC\uB2D8\uB4E4\uAED8 \uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC785\uC7A5\uD560
-      \uC218 \uC788\uB3C4\uB85D \uB3C4\uC6C0\uC744 \uB4DC\uB9AC\uACE0 \uC788\uC2B5\uB2C8\uB2E4.\r\n"
+      \uC218 \uC788\uB3C4\uB85D \uB3C4\uC6C0\uC744 \uB4DC\uB9AC\uACE0 \uC788\uC2B5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uC6A9\uC0AC\uB2D8\uAED8\uC11C\uB3C4 \uB354 \uAC15\uD574\uC9C0\uAE38
+  - content: "\"\uC6A9\uC0AC\uB2D8\uAED8\uC11C\uB3C4 \uB354 \uAC15\uD574\uC9C0\uAE38
       \uC6D0\uD558\uC2E0\uB2E4\uBA74, \uC81C\uAC8C \uB9D0\uC744 \uAC78\uC5B4 \uC8FC\uC2E0
       \uB4A4 \uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC785\uC7A5\uD574\uBCF4\uC2DC\uAE38
-      \uBC14\uB78D\uB2C8\uB2E4.\r\n"
+      \uBC14\uB78D\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -4490,8 +4488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
-      \uC788\uB098?"
+  - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
+      \uC788\uB098?\""
     buttons:
     - type: 4
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB97C \uD574\uC8FC\uC2DC\uC624. "
@@ -4502,7 +4500,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC624. "
       value: 1
-  - content: "\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\n"
+  - content: "\"\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\"\n"
     buttons:
     - type: 0
       content: "\uB2F9\uC2E0\uC740...? "
@@ -4510,20 +4508,20 @@ MonoBehaviour:
     - type: 0
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB294 \uBB34\uC5C7\uC778\uAC00? "
       value: 4
-  - content: "\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
-      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\n"
+  - content: "\"\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
+      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
-      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\n"
+  - content: "\"\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
+      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 2
-  - content: "\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
-      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\n"
+  - content: "\"\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
+      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -4591,7 +4589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
   pages:
   - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
       \uC788\uB098?\"\r"
@@ -4783,7 +4781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 683e86372b5eca5498c36cae1a28fc08, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -4791,7 +4789,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC15\uD55C \uC6A9\uC0AC\uC784\uC744 \uC99D\uBA85\uD558\uAE30! "
@@ -4802,15 +4800,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -4822,7 +4820,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -4888,7 +4886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
   pages:
   - content: "\"\uC548\uB155? \uC88B\uC740 \uD558\uB8E8~\n\uBB34\uC2A8 \uC77C\uC774\uC57C?\"\r"
     buttons:
@@ -4901,7 +4899,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 0
-  - content: "\uCC38, \uD639\uC2DC \uC2DC\uAC04 \uAD1C\uCC2E\uC744\uAE4C?\r\n"
+  - content: "\"\uCC38, \uD639\uC2DC \uC2DC\uAC04 \uAD1C\uCC2E\uC744\uAE4C?\r\"\n"
     buttons:
     - type: 0
       content: "\uC65C? "
@@ -4922,12 +4920,12 @@ MonoBehaviour:
     - type: 0
       content: "\uC54C\uACA0\uC5B4. (\uBB50\uAC00 \uB4E4\uC5C8\uAE38\uB798 \uADF8\uB7EC\uC9C0?) "
       value: 4
-  - content: "\uADF8\uB7FC \uC798 \uB2E4\uB140\uC640!\r\n"
+  - content: "\"\uADF8\uB7FC \uC798 \uB2E4\uB140\uC640!\r\"\n"
     buttons:
     - type: 2
       content: "\uB05D\uB0B4\uAE30 "
       value: 4
-  - content: "\uC544\uD558\u2026 \uADF8\uB7FC \uB098\uC911\uC5D0 \uB2E4\uC2DC \uBD80\uD0C1\uD560\uAC8C.\r\n"
+  - content: "\"\uC544\uD558\u2026 \uADF8\uB7FC \uB098\uC911\uC5D0 \uB2E4\uC2DC \uBD80\uD0C1\uD560\uAC8C.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5097,7 +5095,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 923523559}
+  - {fileID: 4918577387024843564}
   m_Father: {fileID: 8682574474603140678}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5167,9 +5165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -5180,7 +5178,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "\uC5EC\uAE34 \uC5B4\uB5A4 \uACF3\uC774\uC57C? "
@@ -5194,8 +5192,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5207,7 +5205,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -5337,7 +5335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -5345,7 +5343,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAE30\uBCF8 \uC804\uD22C\uB97C \uBC30\uC6B0\uC790! "
@@ -5356,15 +5354,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5376,7 +5374,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5443,8 +5441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
-      \uC788\uB098?"
+  - content: "\"\uC5EC\uAE30\uB294\u2026 \uD5A5\uADE0 \uBD80\uC5EC\uC18C\uB2E4. \uC6A9\uAC74\uC774
+      \uC788\uB098?\""
     buttons:
     - type: 4
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB97C \uD574\uC8FC\uC2DC\uC624. "
@@ -5455,7 +5453,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC624. "
       value: 1
-  - content: "\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\n"
+  - content: "\"\uADF8\uB798. \uBB58 \uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC9C0?\r\"\n"
     buttons:
     - type: 0
       content: "\uB2F9\uC2E0\uC740...? "
@@ -5463,20 +5461,20 @@ MonoBehaviour:
     - type: 0
       content: "\uD5A5\uADE0 \uBD80\uC5EC\uB294 \uBB34\uC5C7\uC778\uAC00? "
       value: 4
-  - content: "\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
-      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\n"
+  - content: "\"\uB09C\u2026 \uBB34\uAE30\uC5D0 \uC0C8\uB85C\uC6B4 \uD798\uC744 \uAE43\uB4E4\uAC8C
+      \uD558\uB294 \uB300\uB2E8\uD55C \uC694\uC815\uC774\uC9C0.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
-      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\n"
+  - content: "\"\uADF8 \uD798\uC744 \uACBD\uD5D8\uD574\uBCF4\uACE0 \uC2F6\uB2E4\uBA74\u2026
+      \uD5A5\uADE0 \uBD80\uC5EC\uB97C \uC2DC\uB3C4\uD574\uBD10\uB77C.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 2
-  - content: "\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
-      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\n"
+  - content: "\"\uC774 \uC704\uB300\uD55C \uD798\uC744 \uBAA8\uB974\uB2E4\uB2C8\u2026
+      \uC5B4\uB9AC\uC11D\uC740 \uC694\uC815\uC774\uAD70.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -5546,7 +5544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 178eec63e57071e46a502ff15f505386, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -5554,7 +5552,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC70\uB300\uD55C \uBA3C\uC9C0 \uB369\uC5B4\uB9AC "
@@ -5565,15 +5563,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5585,7 +5583,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5666,9 +5664,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -5679,7 +5677,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC120\uBB3C\uC774 \uC65C \uC5EC\uAE30\uC11C
@@ -5697,8 +5695,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5710,13 +5708,13 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
       value: Market
-  - content: "\uD79D\u2026 \uC81C \uC120\uBB3C\uC740 \uCC0C\uB4E0 \uB54C \uC232 \uB098\uBB34
-      \uD1B5\uB85C\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC788\uC5B4\uC694.\r\n"
+  - content: "\"\uD79D\u2026 \uC81C \uC120\uBB3C\uC740 \uCC0C\uB4E0 \uB54C \uC232
+      \uB098\uBB34 \uD1B5\uB85C\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC788\uC5B4\uC694.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
@@ -5777,7 +5775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -5802,8 +5800,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -5815,7 +5813,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -6033,7 +6031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 11400000, guid: 7da5e236735b3754788d19d56c423788, type: 2}
   pages:
   - content: "\"\uC548\uB155\uD558\uC138\uC694! \uC138\uD0C1\uC18C\uC5D0 \uC624\uC2E0
       \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4!\n\uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2E0\uAC00\uC694?\"\r\n"
@@ -6114,7 +6112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
   pages:
   - content: "\"\uC548\uB155? \uC88B\uC740 \uD558\uB8E8~\n\uBB34\uC2A8 \uC77C\uC774\uC57C?\"\r"
     buttons:
@@ -6128,7 +6126,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 0
-  - content: "\uC74C? \uBB34\uC2A8 \uC77C\uC778\uB370?\r\n"
+  - content: "\"\uC74C? \uBB34\uC2A8 \uC77C\uC778\uB370?\r\"\n"
     buttons:
     - type: 0
       content: "(\uAD6C\uD574\uC628 \uC120\uBB3C\uC744 \uB0B4\uBBFC\uB2E4.) "
@@ -6199,7 +6197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
   pages:
   - content: "\"\uC548\uB155\uD558\uC138\uC694! \uC138\uD0C1\uC18C\uC5D0 \uC624\uC2E0
       \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4!\n\uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2E0\uAC00\uC694?\"\r\n"
@@ -6296,7 +6294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 178eec63e57071e46a502ff15f505386, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -6304,7 +6302,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC70\uB300\uD55C \uBA3C\uC9C0 \uB369\uC5B4\uB9AC "
@@ -6315,15 +6313,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -6335,18 +6333,18 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 3
-  - content: "\uC774\uC81C\u2026 \uB9C8\uC9C0\uB9C9 \uBD80\uD0C1\uC774\uC57C.\r\n"
+  - content: "\"\uC774\uC81C\u2026 \uB9C8\uC9C0\uB9C9 \uBD80\uD0C1\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uBC8C\uC368? "
       value: 7
-  - content: "\uC5F4\uC2EC\uD788 \uC798 \uB530\uB77C\uC640\uC92C\uC73C\uB2C8, \uC774\uC81C
-      \uC774 \uBD80\uD0C1\uC744 \uD574\uB3C4 \uB420 \uAC83 \uAC19\uC544.\r\n"
+  - content: "\"\uC5F4\uC2EC\uD788 \uC798 \uB530\uB77C\uC640\uC92C\uC73C\uB2C8, \uC774\uC81C
+      \uC774 \uBD80\uD0C1\uC744 \uD574\uB3C4 \uB420 \uAC83 \uAC19\uC544.\r\"\n"
     buttons:
     - type: 0
       content: "\u2026\uAFC0\uAEBD. "
@@ -6432,7 +6430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -6443,7 +6441,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "\uC5EC\uAE34 \uC5B4\uB5A4 \uACF3\uC774\uC57C? "
@@ -6457,8 +6455,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -6470,7 +6468,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -6523,7 +6521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
   pages:
   - content: "\"\uC548\uB155? \uC88B\uC740 \uD558\uB8E8~\n\uBB34\uC2A8 \uC77C\uC774\uC57C?\"\r"
     buttons:
@@ -6834,7 +6832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
   pages:
   - content: "\"\uC544\uC9C1 \uB098\uC640 \uB300\uD654\uD558\uAE30\uC5D4 \uB10C \uB108\uBB34
       \uB098\uC57D\uD558\uAD70\u2026\n\uD798\uC744 \uB354 \uC313\uC544\uC11C \uC640\uB77C.\"\r"
@@ -6913,17 +6911,17 @@ MonoBehaviour:
     - type: 0
       content: "\uB300\uCCAD\uC18C\uAC00 \uBB54\uAC00\uC694? "
       value: 4
-  - content: "\uC800\uB294 \uB354 \uAC15\uD574\uC9C0\uAE38 \uC6D0\uD558\uC2DC\uB294
+  - content: "\"\uC800\uB294 \uB354 \uAC15\uD574\uC9C0\uAE38 \uC6D0\uD558\uC2DC\uB294
       \uC6A9\uC0AC\uB2D8\uB4E4\uAED8 \uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC785\uC7A5\uD560
-      \uC218 \uC788\uB3C4\uB85D \uB3C4\uC6C0\uC744 \uB4DC\uB9AC\uACE0 \uC788\uC2B5\uB2C8\uB2E4.\r\n"
+      \uC218 \uC788\uB3C4\uB85D \uB3C4\uC6C0\uC744 \uB4DC\uB9AC\uACE0 \uC788\uC2B5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uC6A9\uC0AC\uB2D8\uAED8\uC11C\uB3C4 \uB354 \uAC15\uD574\uC9C0\uAE38
+  - content: "\"\uC6A9\uC0AC\uB2D8\uAED8\uC11C\uB3C4 \uB354 \uAC15\uD574\uC9C0\uAE38
       \uC6D0\uD558\uC2E0\uB2E4\uBA74, \uC81C\uAC8C \uB9D0\uC744 \uAC78\uC5B4 \uC8FC\uC2E0
       \uB4A4 \uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC785\uC7A5\uD574\uBCF4\uC2DC\uAE38
-      \uBC14\uB78D\uB2C8\uB2E4.\r\n"
+      \uBC14\uB78D\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7149,7 +7147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 8d54a171038498b438fe0ed1041ea905, type: 2}
   pages:
   - content: "\"\uB300\uCCAD\uC18C \uAD6C\uC5ED\uC5D0 \uC624\uC2E0 \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4.\n\uBB34\uC5C7\uC744
       \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\"\r\n"
@@ -7196,8 +7194,8 @@ MonoBehaviour:
     - type: 0
       content: "\uC54C\uACA0\uC5B4\uC694! "
       value: 6
-  - content: "\uADF8\uB7FC \uC2DC\uAC04\uC774 \uB418\uC2E0\uB2E4\uBA74 \uC9C0\uAE08
-      \uD55C \uBC88 \uD574\uBCF4\uC138\uC694!\r\n"
+  - content: "\"\uADF8\uB7FC \uC2DC\uAC04\uC774 \uB418\uC2E0\uB2E4\uBA74 \uC9C0\uAE08
+      \uD55C \uBC88 \uD574\uBCF4\uC138\uC694!\r\"\n"
     buttons:
     - type: 3
       content: "\uB05D\uB0B4\uAE30. "
@@ -7304,7 +7302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 8d54a171038498b438fe0ed1041ea905, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -7312,7 +7310,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC218\uB828\uC744 \uD558\uACE0 \uC2F6\uB2E4\uBA74
@@ -7324,15 +7322,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7349,14 +7347,14 @@ MonoBehaviour:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
       value: 3
-  - content: "\uB300\uCCAD\uC18C \uAD00\uB9AC \uC694\uC815\uC740 \uB9C8\uC744 \uB9E8
-      \uB05D \uC911\uC559\uC5D0 \uC788\uC5B4~\r\n"
+  - content: "\"\uB300\uCCAD\uC18C \uAD00\uB9AC \uC694\uC815\uC740 \uB9C8\uC744 \uB9E8
+      \uB05D \uC911\uC559\uC5D0 \uC788\uC5B4~\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 7
-  - content: "\uCE5C\uC808\uD55C \uC694\uC815\uC774\uB2C8\uAE4C \uB9D0\uC744 \uAC78\uBA74
-      \uC790\uC138\uD558\uAC8C \uC124\uBA85\uD574 \uC904\uAC70\uC57C!\r\n"
+  - content: "\"\uCE5C\uC808\uD55C \uC694\uC815\uC774\uB2C8\uAE4C \uB9D0\uC744 \uAC78\uBA74
+      \uC790\uC138\uD558\uAC8C \uC124\uBA85\uD574 \uC904\uAC70\uC57C!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7596,7 +7594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
   pages:
   - content: "\"\uC557, \uC544\uC9C1 \uC6B0\uB9AC\uAC00 \uB300\uD654\uD558\uAE30\uC5D4
       \uC774\uB978 \uAC83 \uAC19\uAD70\uC694. \uB098\uC911\uC5D0 \uB2E4\uC2DC \uB9D0\uC744
@@ -7703,7 +7701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
   pages:
   - content: "\"\uC548\uB155\uD558\uC138\uC694! \uC138\uD0C1\uC18C\uC5D0 \uC624\uC2E0
       \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4!\n\uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2E0\uAC00\uC694?\"\r\n"
@@ -7725,7 +7723,7 @@ MonoBehaviour:
     - type: 0
       content: "\uD655\uC778\uD588\uC5B4! "
       value: 2
-  - content: "\uC798 \uC804\uB2EC\uD574\uC8FC\uC138\uC694!\r\n"
+  - content: "\"\uC798 \uC804\uB2EC\uD574\uC8FC\uC138\uC694!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7780,7 +7778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -7788,7 +7786,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "\uB108\uB294 \uB204\uAD6C\uC57C? "
@@ -7796,15 +7794,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7816,7 +7814,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7958,7 +7956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -7966,7 +7964,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "\uB108\uB294 \uB204\uAD6C\uC57C? "
@@ -7974,15 +7972,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -7994,7 +7992,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -8233,7 +8231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
   pages:
   - content: "\"\uC548\uB155? \uC88B\uC740 \uD558\uB8E8~\n\uBB34\uC2A8 \uC77C\uC774\uC57C?\"\r"
     buttons:
@@ -8411,9 +8409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -8424,7 +8422,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC10\uC0AC\uD568\uC758 \uD45C\uC2DC "
@@ -8454,7 +8452,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -8535,7 +8533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -8543,7 +8541,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uB450\uACE0 \uC628 \uBB3C\uAC74\uC744 \uCC3E\uC544\uC8FC\uC790 "
@@ -8554,15 +8552,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -8574,7 +8572,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -8717,7 +8715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
   pages:
   - content: "\u2026\uBB50\uC9C0?\r"
     buttons:
@@ -8796,7 +8794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
+  quest: {fileID: 0}
   pages:
   - content: "\"\uC544\uC9C1 \uB098\uC640 \uB300\uD654\uD558\uAE30\uC5D4 \uB10C \uB108\uBB34
       \uB098\uC57D\uD558\uAD70\u2026\n\uD798\uC744 \uB354 \uC313\uC544\uC11C \uC640\uB77C.\"\r"
@@ -8988,7 +8986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 683e86372b5eca5498c36cae1a28fc08, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -8996,7 +8994,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAC15\uD55C \uC6A9\uC0AC\uC784\uC744 \uC99D\uBA85\uD558\uAE30! "
@@ -9007,15 +9005,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9027,7 +9025,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9089,7 +9087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 321c6c85c21dfca4895cfa3dcaa51a1d, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -9097,7 +9095,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uAE30\uBCF8 \uC804\uD22C\uB97C \uBC30\uC6B0\uC790! "
@@ -9108,15 +9106,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9128,7 +9126,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9188,7 +9186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 2f034cba51fea8043a4ee6e6cecb7687, type: 2}
   pages:
   - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
     buttons:
@@ -9390,7 +9388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 7da5e236735b3754788d19d56c423788, type: 2}
+  quest: {fileID: 0}
   pages:
   - content: "\"\uC544\uC9C1 \uC800\uB294 \uB2F9\uC2E0\uACFC \uD560 \uB9D0\uC774
       \uC5C6\uC2B5\uB2C8\uB2E4.\n\uC8C4\uC1A1\uD558\uC9C0\uB9CC \uB2E4\uC74C\uC5D0
@@ -9500,7 +9498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -9508,7 +9506,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uB450\uACE0 \uC628 \uBB3C\uAC74\uC744 \uCC3E\uC544\uC8FC\uC790 "
@@ -9519,15 +9517,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9539,7 +9537,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9623,22 +9621,23 @@ MonoBehaviour:
     - type: 0
       content: "\uC5B4\uB5BB\uAC8C \uD560 \uC218 \uC788\uB294\uB370? "
       value: 2
-  - content: "\uC800\uC5D0\uAC8C \uB9D0\uC744 \uAC78\uC5B4\uC8FC\uC2E0 \uB4A4, '\uC138\uD0C1\uC18C\uB97C
-      \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4.'\uB97C \uD074\uB9AD\uD558\uC2DC\uBA74,
+  - content: "\"\uC800\uC5D0\uAC8C \uB9D0\uC744 \uAC78\uC5B4\uC8FC\uC2E0 \uB4A4,
+      '\uC138\uD0C1\uC18C\uB97C \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4.'\uB97C \uD074\uB9AD\uD558\uC2DC\uBA74,
       \uBB34\uAE30\uB97C \uBC18\uC9DD\uBC18\uC9DD\uD558\uAC8C \uB9CC\uB4E4\uC5B4
-      \uB4DC\uB9B0\uB2F5\uB2C8\uB2E4.\r\n"
+      \uB4DC\uB9B0\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 0
       content: "\uC624\uD638\uB77C. "
       value: 3
-  - content: "\uB108\uBB34 \uB354\uB7EC\uC6CC\uC9C4 \uBB34\uAE30\uB294 \uC4F8 \uC218
-      \uC5C6\uC73C\uB2C8 \uC790\uC8FC \uC138\uCC99\uD574 \uC8FC\uC138\uC694!\r\n"
+  - content: "\"\uB108\uBB34 \uB354\uB7EC\uC6CC\uC9C4 \uBB34\uAE30\uB294 \uC4F8 \uC218
+      \uC5C6\uC73C\uB2C8 \uC790\uC8FC \uC138\uCC99\uD574 \uC8FC\uC138\uC694!\r\"\n"
     buttons:
     - type: 0
       content: "\uC54C\uACA0\uC5B4. "
       value: 4
-  - content: "\uC544\uCC38, \uAE30\uB2A5 \uC774\uC6A9 \uC2DC \uC57D\uAC04\uC758 \uC218\uACE0\uBE44\uB97C
-      \uBC1B\uACE0 \uC788\uC73C\uB2C8 \uCC38\uACE0\uD574\uC8FC\uC138\uC694. \uD5E4\uD5E4.\r\n"
+  - content: "\"\uC544\uCC38, \uAE30\uB2A5 \uC774\uC6A9 \uC2DC \uC57D\uAC04\uC758
+      \uC218\uACE0\uBE44\uB97C \uBC1B\uACE0 \uC788\uC73C\uB2C8 \uCC38\uACE0\uD574\uC8FC\uC138\uC694.
+      \uD5E4\uD5E4.\r\"\n"
     buttons:
     - type: 3
       content: "\uB05D\uB0B4\uAE30 "
@@ -9691,9 +9690,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 6291ed9d53941fa46902da4a42ad3b30, type: 2}
+  quest: {fileID: 0}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -9701,7 +9700,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uB450\uACE0 \uC628 \uBB3C\uAC74\uC744 \uCC3E\uC544\uC8FC\uC790 "
@@ -9712,15 +9711,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9732,7 +9731,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -9857,7 +9856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
+  quest: {fileID: 11400000, guid: feefd6da52bc78048a51411161feae23, type: 2}
   pages:
   - content: "\"\uC548\uB155\uD558\uC138\uC694! \uC138\uD0C1\uC18C\uC5D0 \uC624\uC2E0
       \uAC78 \uD658\uC601\uD569\uB2C8\uB2E4!\n\uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2E0\uAC00\uC694?\"\r\n"
@@ -9932,7 +9931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: e5e5d6b623b30804b906a513e3aa04e1, type: 2}
   pages:
   - content: "\"\uC548\uB155? \uC88B\uC740 \uD558\uB8E8~\n\uBB34\uC2A8 \uC77C\uC774\uC57C?\"\r"
     buttons:
@@ -10007,7 +10006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 11400000, guid: e9ad0ec81b185fe4a98d74e6b97204d3, type: 2}
   pages:
-  - content: "\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\n"
+  - content: "\"\uC548\uB155~ \uBB34\uC2A8 \uC77C\uC774\uC57C?\r\"\n"
     buttons:
     - type: 0
       content: "\uB300\uD654\uD558\uACE0 \uC2F6\uC5B4. "
@@ -10015,7 +10014,7 @@ MonoBehaviour:
     - type: 5
       content: "\uC544\uBB34 \uAC83\uB3C4 \uC544\uB2C8\uC57C. "
       value: 3
-  - content: "\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\n"
+  - content: "\"\uADF8\uB798! \uC88B\uC544~ \uAD81\uAE08\uD55C \uAC70 \uC788\uC5B4?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uBB34\uAE30\uB294 \uD56D\uC0C1 \uAE68\uB057\uD558\uAC8C! "
@@ -10026,15 +10025,15 @@ MonoBehaviour:
     - type: 0
       content: "\uC5EC\uAE30\uC11C \uBB50\uD574? "
       value: 4
-  - content: "\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
+  - content: "\"\uB098\uB294 \uCD08\uBCF4 \uC6A9\uC0AC\uB4E4\uC774 \uBA3C\uC9C0 \uAD34\uBB3C\uC744
       \uBB34\uCC0C\uB97C \uC218 \uC788\uB3C4\uB85D \uD6C8\uB828\uC2DC\uD0A4\uB294
-      \uC694\uC815\uC774\uC57C.\r\n"
+      \uC694\uC815\uC774\uC57C.\r\"\n"
     buttons:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
-      \uBB3C\uC5B4\uBD10!\r\n"
+  - content: "\"\uBAA8\uB974\uB294 \uAC83\uC774 \uC788\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+      \uBB3C\uC5B4\uBD10!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -10046,7 +10045,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C"
       value: 5
-  - content: "\uC798 \uBD80\uD0C1\uD574!\r"
+  - content: "\"\uC798 \uBD80\uD0C1\uD574!\r\""
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -10164,9 +10163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b3495f4db6d5f4094fe979c8132520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: {fileID: 0}
+  quest: {fileID: 11400000, guid: 713e6dea0a57e8844bcaf269bee3fc5f, type: 2}
   pages:
-  - content: "\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\n"
+  - content: "\"\uC548\uB155\uD558\uC138\uC694. \uBB58 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?\r\"\n"
     buttons:
     - type: 4
       content: "\uC0C1\uC810\uC744 \uC774\uC6A9\uD558\uACE0 \uC2F6\uC5B4. "
@@ -10177,7 +10176,7 @@ MonoBehaviour:
     - type: 5
       content: "\uBCC4 \uC77C \uC544\uB2C8\uC57C"
       value: 1
-  - content: "\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\n"
+  - content: "\"\uC800\uC5D0\uAC8C \uAD81\uAE08\uD558\uC2E0 \uAC8C \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "(\uD018\uC2A4\uD2B8) \uC120\uBB3C\uC774 \uC65C \uC5EC\uAE30\uC11C
@@ -10195,8 +10194,8 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 3
-  - content: "\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
-      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\n"
+  - content: "\"\uBB3C\uB860 \uC4F8\uBAA8 \uC788\uB294 \uBB3C\uD488\uC740 \uC81C\uAC00
+      \uAD6C\uB9E4\uD558\uAE30\uB3C4 \uD55C\uB2F5\uB2C8\uB2E4.\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30 "
@@ -10208,7 +10207,7 @@ MonoBehaviour:
     - type: 0
       content: "\uB2E4\uC74C "
       value: 5
-  - content: "\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\n"
+  - content: "\"\uB9CE\uC740 \uC774\uC6A9 \uBD80\uD0C1\uB4DC\uB9BD\uB2C8\uB2E4!\r\"\n"
     buttons:
     - type: 5
       content: "\uB05D\uB0B4\uAE30"
@@ -10227,9 +10226,9 @@ MonoBehaviour:
     - type: 0
       content: "\uC800\uB7F0\u2026 \uC5B4\uCA50\uB2F4. "
       value: 8
-  - content: "\uADF8\uB798\uC11C.. \uD639\uC2DC \uAD1C\uCC2E\uC73C\uC2DC\uB2E4\uBA74
+  - content: "\"\uADF8\uB798\uC11C.. \uD639\uC2DC \uAD1C\uCC2E\uC73C\uC2DC\uB2E4\uBA74
       \uADF8\uAC78 \uCC3E\uC544\uC11C \uD53C\uC8F5\uC5D0\uAC8C \uC804\uB2EC\uD574\uC8FC\uC2E4
-      \uC218 \uC788\uB098\uC694?\r\n"
+      \uC218 \uC788\uB098\uC694?\r\"\n"
     buttons:
     - type: 0
       content: "\uC5B4\u2026 \uADF8\uB798. "

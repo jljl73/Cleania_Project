@@ -46,6 +46,7 @@ public class QuestPanel : MonoBehaviour
         }
 
         sizeDelta = TextPrefabs[0].GetComponent<RectTransform>().sizeDelta;
+        gameObject.SetActive(false);
     }
 
     public void UpdateList()

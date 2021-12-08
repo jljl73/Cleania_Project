@@ -23,14 +23,16 @@ public class Dialog : MonoBehaviour
     }
 
     [SerializeField]
-    Quest quest;
+    Quest quest = null;
+    public Quest Quest { get => quest; }
+
     public Page[] pages;
     Transform PageTransform;
 
     void Start()
     {
         PageTransform = GameManager.Instance.dialogManager.Page;
-        quest = transform.parent.GetComponent<DialogSelector>().quest;
+        //quest = transform.parent.GetComponent<DialogSelector>().quest;
     }
 
 

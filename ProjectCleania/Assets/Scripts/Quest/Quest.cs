@@ -114,6 +114,7 @@ public class Quest : ScriptableObject
     public void Achieve(QuestNeed.TYPE type, int target)
     {
         if (state == STATE.Reward) return;
+        state = STATE.Assign;
 
         for (int i = 0; i < questNeeds.Length; ++i)
         {
