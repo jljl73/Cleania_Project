@@ -9,19 +9,19 @@ public class PlayerSkillVillageReturn : PlayerSkill
 
     float timeCost;
     string villageName;
-    Vector3 returnPosition;
+    Vector3 returnPosition = Vector3.zero;
 
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
     }
 
     protected new void Start()
     {
         base.Start();
+        UpdateSkillData();
     }
 
     public void UpdateSkillData()
@@ -37,15 +37,20 @@ public class PlayerSkillVillageReturn : PlayerSkill
     {
         base.AnimationActivate();
 
-        ReturnToVillage();
 
         return true;
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+        ReturnToVillage();
     }
 
     public void ReturnToVillage()
     {
         GameManager.Instance.ChangeScene(villageName);
-        Player player = FindObjectOfType<Player>();
+        PlayerController player = FindObjectOfType<PlayerController>();
         player.gameObject.transform.position = returnPosition;
     }
 }
