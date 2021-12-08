@@ -40,6 +40,7 @@ public class PlayerController : BaseCharacterController
         if (statusAilment == null)
             throw new System.Exception("PlayerController doesnt have StatusAilment");
     }
+
     void Update()
     {
         currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
@@ -50,7 +51,7 @@ public class PlayerController : BaseCharacterController
             return;
         }
 
-        CheckStatusAliment();
+        CheckStatusAilment();
 
         if (!CheckMovable())
             return;
@@ -66,7 +67,7 @@ public class PlayerController : BaseCharacterController
         else
             return false;
     }
-    void CheckStatusAliment()
+    void CheckStatusAilment()
     {
         if (statusAilment[StatusAilment.BehaviorRestrictionType.Restraint] > 0)
             animator.SetBool("Restraint", true);
@@ -105,7 +106,7 @@ public class PlayerController : BaseCharacterController
         return true;
     }
 
-    bool CheckSkillTriggerAvailable(int id)
+    bool CheckSkillAnimationAvailable(int id)
     {
         bool result = false;
 
@@ -133,7 +134,8 @@ public class PlayerController : BaseCharacterController
             case 1101:
                 break;
             default:
-                if (animator.GetBool("Silenced"))
+                // if (animator.GetBool("Silenced"))
+                if (statusAilment[StatusAilment.BehaviorRestrictionType.Silence] > 0)
                     return false;
                 break;
         }
@@ -169,9 +171,11 @@ public class PlayerController : BaseCharacterController
 
     public bool OrderSkillID(int id)
     {
-        if (!CheckSkillTriggerAvailable(id))
+        // 애니메이션 상태 보고 결정
+        if (!CheckSkillAnimationAvailable(id))
             return false;
 
+        // 스킬 내부 로직 + 쿨타임 + MP 소모
         if (!CheckIfSkillAvailable(id))
             return true;
 

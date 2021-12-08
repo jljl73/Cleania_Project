@@ -96,8 +96,8 @@ public class PlayerMovementController : MovementController
         if (IscharacterRigidBodyOn())
             return false;
 
-        if (!IsMovableState())
-            return false;
+        //if (!IsMovableState())
+        //    return false;
 
         if (isStunned)
         {
@@ -121,12 +121,12 @@ public class PlayerMovementController : MovementController
 
     protected override bool IsMovableState()
     {
-        if (stateMachine.CompareState(StateMachine.enumState.Dead) ||
-            stateMachine.CompareState(StateMachine.enumState.UnmovableAttacking))
-        {
-            ResetNavigation(this.transform.position);
-            return false;
-        }
+        //if (stateMachine.CompareState(StateMachine.enumState.Dead) ||
+        //    stateMachine.CompareState(StateMachine.enumState.UnmovableAttacking))
+        //{
+        //    ResetNavigation(this.transform.position);
+        //    return false;
+        //}
         return true;
     }
 
