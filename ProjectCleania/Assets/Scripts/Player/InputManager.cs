@@ -72,6 +72,7 @@ public class InputManager : MonoBehaviour
             player.OrderSkillStop(1102);
         }
 
+
         // 마우스 <<<<<
 
 
@@ -145,6 +146,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             player.Pulled(true, new Vector3(12.7f, 0f, 8.2f));
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            player.gameObject.GetComponent<StatusAilment>()?.RestrictBehavior(StatusAilment.BehaviorRestrictionType.Silence, 10f);
         }
     }
 

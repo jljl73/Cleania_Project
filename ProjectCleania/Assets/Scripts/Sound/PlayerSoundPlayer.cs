@@ -6,7 +6,7 @@ public class PlayerSoundPlayer : MonoBehaviour, ISoundPlayer
 {
     AudioSource audioSource;
 
-    [Header("�÷��̾�")]
+    [Header("ÇÃ·¹ÀÌ¾î")]
     [SerializeField] AudioClip fairyWingsAudio;
     [SerializeField] AudioClip sweepingAudio;
     [SerializeField] AudioClip cleaningWindAudio;
@@ -74,7 +74,6 @@ public class PlayerSoundPlayer : MonoBehaviour, ISoundPlayer
     {
         audioSource.Stop();
     }
-
 
     public void ChangeVolume(float volume)
     {

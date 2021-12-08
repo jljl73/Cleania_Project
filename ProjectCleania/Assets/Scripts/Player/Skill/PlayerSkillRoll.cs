@@ -10,9 +10,6 @@ public class PlayerSkillRoll : PlayerSkill
     [SerializeField]
     Buffable buffable;
 
-    bool bSkill = false;
-
-    float avoidDistance;
     float avoidSpeedMultiplier;
     public float AvoidSpeedMultiplier { get => avoidSpeedMultiplier; }
 
@@ -21,19 +18,18 @@ public class PlayerSkillRoll : PlayerSkill
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
     }
 
     protected new void Start()
     {
         base.Start();
+        UpdateSkillData();
     }
 
     public void UpdateSkillData()
     {
         base.UpdateSkillData(skillData);
         
-        avoidDistance = skillData.GetAvoidDistance();
         avoidSpeedMultiplier = skillData.GetAvoidSpeedMultiplier();
     }
 
