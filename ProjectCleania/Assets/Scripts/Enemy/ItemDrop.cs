@@ -44,9 +44,13 @@ public class ItemDrop : MonoBehaviour
             //Instantiate(ItemTable.GetRandomItemObj(itemRank), GetDropPosition(transform.position, DropRadius), transform.rotation);
         }
 
-        if(enemyStateMachine.ID == 5001)
-            SavedData.Instance.Item_World.Add(ItemInstance.Instantiate(3666001), GetDropPosition(transform.position, DropRadius));
+        int itemID = 0;
+        if(DropTableData.GetQuestItem(out itemID))
+            SavedData.Instance.Item_World.Add(ItemInstance.Instantiate(itemID), GetDropPosition(transform.position, DropRadius));
+        //if (enemyStateMachine.ID == 5001)
+        //    SavedData.Instance.Item_World.Add(ItemInstance.Instantiate(3666001), GetDropPosition(transform.position, DropRadius));
     }
+
 
     Vector3 GetDropPosition(Vector3 center, float distance)
     {
