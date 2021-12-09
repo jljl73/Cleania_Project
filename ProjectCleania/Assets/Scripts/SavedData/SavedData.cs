@@ -155,7 +155,6 @@ public class SavedData
 
     public void Start()
     {
-        item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
         Load();
         //DontDestroyOnLoad(gameObject);
     }
