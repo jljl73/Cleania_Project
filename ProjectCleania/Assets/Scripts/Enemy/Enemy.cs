@@ -42,17 +42,17 @@ public class Enemy : MonoBehaviour
             throw new System.Exception("Enemy doesnt have enemyStateMachine");
     }
 
-    private void OnEnable()
-    {
-        //StartCoroutine("InvincibleFor", 2f);
-        Revive();
-    }
+    //private void OnEnable()
+    //{
+    //    //StartCoroutine("InvincibleFor", 2f);
+    //    Revive();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ReturnToObjectPool();
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ReturnToObjectPool();
+    //}
 
     private void Start()
     {

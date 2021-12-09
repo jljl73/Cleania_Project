@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Turret : DamagingProperty
 {
-    //[SerializeField]
-    //GameObject projectilePrefab;
+    [SerializeField]
+    GameObject projectilePrefab;
 
     GameObject targetObj;
     float shotInterval;
@@ -17,28 +17,28 @@ public class Turret : DamagingProperty
     float turretDuration;
     float projectileDuration;
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
 
-        isWaitingForShoot = false;
+    //    isWaitingForShoot = false;
 
-        Start();
-    }
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Turret, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Turret, this.gameObject);
+    //}
 
     private void Start()
     {
-        Invoke("DeactivateDelay", turretDuration);
+        // Invoke("DeactivateDelay", turretDuration);
+        Destroy(this.gameObject, turretDuration);
     }
 
-    void DeactivateDelay() => gameObject.SetActive(false);
-
+    // void DeactivateDelay() => gameObject.SetActive(false);
     private void Update()
     {
         if (targetObj == null)
@@ -69,10 +69,11 @@ public class Turret : DamagingProperty
     {
         RotateToTarget();
 
-        TurretProjectile proj = ObjectPool.SpawnFromPool<TurretProjectile>(ObjectPool.enumPoolObject.TurretProjectile, transform.position, transform.rotation);
+        // TurretProjectile proj = ObjectPool.SpawnFromPool<TurretProjectile>(ObjectPool.enumPoolObject.TurretProjectile, transform.position, transform.rotation);
+        GameObject proj = Instantiate(projectilePrefab, transform.position, transform.rotation);
         proj.gameObject.transform.Translate(proj.gameObject.transform.up * 1f);
 
-        proj.SetUp(projectileDuration, projectileSpeed, ownerAbility, damageScale);
+        proj.GetComponent<TurretProjectile>()?.SetUp(projectileDuration, projectileSpeed, ownerAbility, damageScale);
 
         isWaitingForShoot = true;
         yield return new WaitForSeconds(3f);

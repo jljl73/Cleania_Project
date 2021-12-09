@@ -23,23 +23,24 @@ public class CleaningWind : ContactStayDamage
         skillEffectController = GetComponent<SkillEffectController>();
     }
 
-    private void OnEnable()
-    {
-        Invoke("DeactivateDelay", duration);
-        Start();
-    }
+    //private void OnEnable()
+    //{
+    //    Invoke("DeactivateDelay", duration);
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.CleaningWind, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.CleaningWind, this.gameObject);
+    //}
 
     void Start()
     {
         // ¸®»çÀÌÂ¡
         //this.gameObject.transform.localScale = new Vector3(damageRange, damageRange, damageRange);
         skillEffectController.Scale = damageRange * 0.6666f;
+        Destroy(this.gameObject, duration);
     }
 
     void DeactivateDelay() => this.gameObject.SetActive(false);

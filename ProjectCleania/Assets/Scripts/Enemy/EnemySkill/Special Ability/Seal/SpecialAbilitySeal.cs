@@ -16,7 +16,8 @@ public class SpecialAbilitySeal : EnemySkill
     float silenceTime;
     // 침묵 상태 이상
 
-    //public GameObject SealPond;
+    [SerializeField]
+    GameObject sealPond;
 
     SphereCollider triggerCollider;
 
@@ -74,12 +75,12 @@ public class SpecialAbilitySeal : EnemySkill
     {
         for (int i = 1; i <= pondCount; i++)
         {
-            SealPond sealPond = ObjectPool.SpawnFromPool<SealPond>(ObjectPool.enumPoolObject.Seal, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
-            //GameObject initiatedPond = Instantiate(SealPond, transform.position, transform.rotation);
-            //sealPond.gameObject.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-            //SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
-            sealPond.SetUp(OwnerAbilityStatus, damageScale);
-            sealPond.SetUp(duration, silenceTime, radius);
+            // SealPond sealPond = ObjectPool.SpawnFromPool<SealPond>(ObjectPool.enumPoolObject.Seal, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            GameObject initiatedPond = Instantiate(sealPond, transform.position, transform.rotation);
+            sealPond.gameObject.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
+            SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
+            pondDamage.SetUp(OwnerAbilityStatus, damageScale);
+            pondDamage.SetUp(duration, silenceTime, radius);
             //if (pondDamage != null)
             //{
             //    print("Pond not null");

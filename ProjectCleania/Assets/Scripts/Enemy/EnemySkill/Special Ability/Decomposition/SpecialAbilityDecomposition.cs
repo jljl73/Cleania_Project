@@ -19,6 +19,10 @@ public class SpecialAbilityDecomposition : EnemySkill
 
     SphereCollider triggerCollider;
 
+    // Decomposition ÇÁ¸®ÆÕ
+    [SerializeField]
+    GameObject decompositionPrefab;
+
     public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
@@ -72,9 +76,12 @@ public class SpecialAbilityDecomposition : EnemySkill
 
     void MakeMines()
     {
-        //GameObject initiatedObj = Instantiate(DecompositionPrefab, transform.position, transform.rotation);
-        //initiatedObj.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
-        Decomposition decomposition = ObjectPool.SpawnFromPool<Decomposition>(ObjectPool.enumPoolObject.Decomposition, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+        GameObject initiatedObj = Instantiate(decompositionPrefab, transform.position, transform.rotation);
+        initiatedObj.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
+        // Decomposition decomposition = ObjectPool.SpawnFromPool<Decomposition>(ObjectPool.enumPoolObject.Decomposition, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+        Decomposition decomposition = initiatedObj.GetComponent<Decomposition>();
+        if (decomposition == null)
+            return;
         decomposition.SetUp(existTime, speed, explodeWaitTime, explodeDamageRange, stunTime, enemyMove.TargetObject, OwnerAbilityStatus, damageScale);
         decomposition.Resize(objectSize);
     }

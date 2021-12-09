@@ -11,25 +11,8 @@ public class StatusAilment : MonoBehaviour
         ownerAbilityStatus = GetComponent<AbilityStatus>();
     }
 
-    void Update()
-    {
-        //foreach (AbilityStatus abil in continuousDamagetempTimeCalculation.Keys)
-        //{
-        //    continuousDamagetempTimeCalculation[abil] += Time.deltaTime;
-        //    if (continuousDamagetempTimeCalculation[abil] > 1)
-        //    {
-        //        continuousDamagetempTimeCalculation[abil] = 0;
-        //        continuousDamageDuration[abil] -= 1;
-        //        if (continuousDamageDuration[abil] != 0)
-        //            ownerAbilityStatus.AttackedBy(abil, 0.1f);
-        //    }
-        //}
-    }
-
     // 행동 제한형
-    [SerializeField]
     float[] _behaviorRestrictionOptions = { 0, 0, 0, 0 };
-    [SerializeField]
     int[] _behaviorRestrictionOptionsOvelapped = { 0, 0, 0, 0 };
     public enum BehaviorRestrictionType
     {

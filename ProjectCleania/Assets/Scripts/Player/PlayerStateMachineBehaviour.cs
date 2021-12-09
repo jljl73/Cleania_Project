@@ -65,6 +65,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         if (stateInfo.shortNameHash == idToStateHash[1102])
         {
             skill1102TimePassed = 0;
+            GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Dehydration, 0, true);
         }
     }
 

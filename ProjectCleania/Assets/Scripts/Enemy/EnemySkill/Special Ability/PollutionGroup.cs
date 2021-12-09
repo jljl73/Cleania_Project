@@ -7,6 +7,8 @@ public class PollutionGroup : DamagingProperty
     List<Pollution> pollutionList = new List<Pollution>();
 
     [SerializeField]
+    GameObject pollutionPrefab;
+    [SerializeField]
     int abilityCount = 0;
     [SerializeField]
     int prevAbilityCount = 0;
@@ -19,6 +21,12 @@ public class PollutionGroup : DamagingProperty
     float pollutionDuration = 3;
     float damageRate;
     bool abilityActivate = false;
+
+    void Awake()
+    {
+        if (pollutionPrefab == null)
+            throw new System.Exception("PollutionGroup no pollutionPrefab");
+    }
 
     public void AddPollution(Pollution pollution)
     {
@@ -114,7 +122,11 @@ public class PollutionGroup : DamagingProperty
         else
             summonTimePassed = 0;
 
-        Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
+        GameObject pollutionObj = Instantiate(pollutionPrefab, this.transform.position, this.transform.rotation);
+        Pollution pollution = pollutionObj.GetComponent<Pollution>();
+        if (pollution == null)
+            return;
+        //Pollution pollution = ObjectPool.SpawnFromPool<Pollution>(ObjectPool.enumPoolObject.Pollution, this.transform.position, this.transform.rotation);
         pollution.SetUp(this, pollutionDuration, ownerAbility, damageRate);
         pollution.Resize(damageRange);
 

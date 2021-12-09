@@ -17,8 +17,8 @@ public class SpecialAbilityTurret : EnemySkill
     float shotRange;
     float projectileSpeed;
 
-    //[SerializeField]
-    //GameObject turretPrefab;
+    [SerializeField]
+    GameObject turretPrefab;
 
 
     SphereCollider triggerCollider;
@@ -80,9 +80,9 @@ public class SpecialAbilityTurret : EnemySkill
     {
         for (int i = 0; i < count; i++)
         {
-            //GameObject initiatedOrbit = Instantiate(turretPrefab, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
-            Turret turret = ObjectPool.SpawnFromPool<Turret>(ObjectPool.enumPoolObject.Turret, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
-            turret.SetUp(duration, projectileDuration, enemyMove.TargetObject, shotInterval, shotRange, projectileSpeed, OwnerAbilityStatus, damageScale);
+            GameObject initiatedOrbit = Instantiate(turretPrefab, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
+            // Turret turret = ObjectPool.SpawnFromPool<Turret>(ObjectPool.enumPoolObject.Turret, GetRandomPointInCircle(transform.position, creationRadius), transform.rotation);
+            initiatedOrbit.GetComponent<Turret>()?.SetUp(duration, projectileDuration, enemyMove.TargetObject, shotInterval, shotRange, projectileSpeed, OwnerAbilityStatus, damageScale);
 
             // Destroy(this.gameObject, duration);
         }

@@ -9,7 +9,8 @@ public class SpecialAbilityMine : EnemySkill
     float CreationRadius;           // 생성 반경
     float mineCount;
 
-    //public GameObject MinePond;
+    [SerializeField]
+    GameObject minePrefab;
 
     [SerializeField]
     SpecialAbilityMineSO skillData;
@@ -67,7 +68,11 @@ public class SpecialAbilityMine : EnemySkill
     {
         for (int i = 1; i <= mineCount; i++)
         {
-            Mine mine = ObjectPool.SpawnFromPool<Mine>(ObjectPool.enumPoolObject.Mine, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            /// Mine mine = ObjectPool.SpawnFromPool<Mine>(ObjectPool.enumPoolObject.Mine, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            GameObject mineObj = Instantiate(minePrefab, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            if (mineObj == null)
+                return;
+            Mine mine = mineObj.GetComponent<Mine>();
             mine.SetUp(OwnerAbilityStatus, damageScale);
             mine.Resize(triggerRadius);
         }

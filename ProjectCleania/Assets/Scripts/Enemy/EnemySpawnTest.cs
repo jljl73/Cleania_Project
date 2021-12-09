@@ -6,6 +6,19 @@ using UnityEngine.UI;
 
 public class EnemySpawnTest : MonoBehaviour
 {
+    [SerializeField]
+    GameObject wildIntiPrefab;
+    [SerializeField]
+    GameObject dustyPrefab;
+    [SerializeField]
+    GameObject highDustyPrefab;
+    [SerializeField]
+    GameObject summonerDustyPrefab;
+    [SerializeField]
+    GameObject theDustyPrefab;
+
+    GameObject spawnReadyGamePrefab;
+
     enum enumMonsterSpecialSkillType
     {
         Toxicity = 2901,
@@ -69,18 +82,23 @@ public class EnemySpawnTest : MonoBehaviour
         {
             case EnemyStateMachine.MonsterType.Dusty:
                 enumPoolObject = ObjectPool.enumPoolObject.Dusty;
+                spawnReadyGamePrefab = dustyPrefab;
                 break;
             case EnemyStateMachine.MonsterType.WildInti:
                 enumPoolObject = ObjectPool.enumPoolObject.WildInti;
+                spawnReadyGamePrefab = wildIntiPrefab;
                 break;
             case EnemyStateMachine.MonsterType.HighDusty:
                 enumPoolObject = ObjectPool.enumPoolObject.HighDusty;
+                spawnReadyGamePrefab = highDustyPrefab;
                 break;
             case EnemyStateMachine.MonsterType.SummonerDusty:
                 enumPoolObject = ObjectPool.enumPoolObject.SummonerDusty;
+                spawnReadyGamePrefab = summonerDustyPrefab;
                 break;
             case EnemyStateMachine.MonsterType.TheDusty:
                 enumPoolObject = ObjectPool.enumPoolObject.TheDusty;
+                spawnReadyGamePrefab = theDustyPrefab;
                 break;
             default:
                 break;
@@ -88,7 +106,8 @@ public class EnemySpawnTest : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            GameObject monster = ObjectPool.SpawnFromPool<Enemy>(enumPoolObject, GetRandomPointInCircle(this.transform.position, spawnedRadius), transform.rotation).gameObject;
+            //GameObject monster = ObjectPool.SpawnFromPool<Enemy>(enumPoolObject, GetRandomPointInCircle(this.transform.position, spawnedRadius), transform.rotation).gameObject;
+            GameObject monster = Instantiate(spawnReadyGamePrefab, GetRandomPointInCircle(this.transform.position, spawnedRadius), transform.rotation);
 
             // 스포너 설정
             EnemyChase enemyChase = monster.GetComponent<EnemyChase>();
