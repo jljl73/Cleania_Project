@@ -9,6 +9,8 @@ public class ItemThrowPanel : MonoBehaviour
 
     public void OnClickedOK()
     {
+        gameObject.SetActive(false);
+
         if (controller != null)
         {
             ItemInstance item = controller.itemInstance;
@@ -17,7 +19,6 @@ public class ItemThrowPanel : MonoBehaviour
 
             controller = null;
         }
-        gameObject.SetActive(false);
     }
 
     public void OnClickedCancel()

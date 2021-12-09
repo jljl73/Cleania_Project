@@ -8,10 +8,6 @@ public class ItemStorage_World : ItemStorage<GameObject>, iSavedData
     public ItemStorage_World()
     { }
 
-    [System.NonSerialized]
-    public GameObject ItemObjectPrefab;
-    Queue<GameObject> _objectPool = new Queue<GameObject>();
-
     /// <summary>
     /// Default Add function.<para></para>
     /// Drops item under player's feet.
@@ -44,25 +40,9 @@ public class ItemStorage_World : ItemStorage<GameObject>, iSavedData
 
         item.CurrentStorage = this;
 
-        GameObject newObject;
-
-        if(_objectPool.Count > 0)
-        {
-            // use object in pool
-            newObject = _objectPool.Dequeue();
-            newObject.transform.position = position;
-            newObject.transform.rotation = rotation;
-            newObject.SetActive(true);
-        }
-        else
-        {
-            // new object
-            newObject = GameObject.Instantiate(ItemObjectPrefab, position, rotation);
-        }
-
-        ItemObject_v2 container = newObject.GetComponent<ItemObject_v2>();
-        container.Parent = this;
-        container.ItemData = item;
+        //
+        GameObject newObject = ItemObject_v2.New(item, position, rotation).gameObject;
+        //
 
         _items.Add(item, newObject);
 
@@ -106,12 +86,11 @@ public class ItemStorage_World : ItemStorage<GameObject>, iSavedData
             item.CurrentStorage = null;
 
         GameObject removingObject = _items[item];
-        _items.Remove(item);
 
         // back to object pool
-        removingObject.SetActive(false);
-        removingObject.GetComponent<ItemObject_v2>().ItemData = null;
-        _objectPool.Enqueue(removingObject);
+        ItemObject_v2.Delete(removingObject);
+
+        _items.Remove(item);
 
         // Sync
         OnSynchronize(this, SyncOperator.Remove, removingObject);
