@@ -113,9 +113,8 @@ public class TheDustyGroundHit : EnemySkill
                 AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
                 abil.AttackedBy(OwnerAbilityStatus, indirectDamageRate);
 
-                print("슬로우 상태!");
                 Buffable playerBuffable = colliders[i].GetComponent<Buffable>();
-                playerBuffable.AddBuff(1.15f, Ability.Buff.MoveSpeed_Buff, 5);
+                playerBuffable.AddBuff(-0.15f, Ability.Buff.MoveSpeed_Buff, 5);
             }
         }
     }

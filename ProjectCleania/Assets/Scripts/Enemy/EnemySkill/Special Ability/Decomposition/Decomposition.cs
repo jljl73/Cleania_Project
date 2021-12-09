@@ -99,7 +99,7 @@ public class Decomposition : DamagingProperty
         {
             // 2초 기절 부여
             print("2초 기절 부여!");
-            other.gameObject.GetComponent<Player>().OnStunned(true, 2);
+            other.gameObject.GetComponent<PlayerController>()?.Stunned(true, 2);
 
             // 폭발
             if (isExploding) return;

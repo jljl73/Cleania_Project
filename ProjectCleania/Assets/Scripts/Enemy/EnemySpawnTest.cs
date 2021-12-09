@@ -29,7 +29,9 @@ public class EnemySpawnTest : MonoBehaviour
         Seal = 2906,
         Decomposition = 2908,
         HPShare = 2909,
-        Mine = 2910
+        Mine = 2910,
+        Stain = 2907,
+        Turret = 2912
     }
 
     [Header("스폰 범위")]
@@ -118,7 +120,7 @@ public class EnemySpawnTest : MonoBehaviour
             enemyState.Rank = monsterRank;
 
             // 특수 스킬 성정
-            if (enemyState.Rank == EnemyStateMachine.enumRank.Rare)
+            if (enemyState.Rank == EnemyStateMachine.enumRank.Rare || enemyState.Rank == EnemyStateMachine.enumRank.Bose)
             {
                 EnemySkillManager enemySkillManager = monster.GetComponent<EnemySkillManager>();
                 for (int j = 0; j < specialSkills.Count; j++)
@@ -127,7 +129,7 @@ public class EnemySpawnTest : MonoBehaviour
                 }
             }
 
-            // 레벨 성정
+            // 레벨 설정
             Status_ArithmeticProgress levelComponent = monster.GetComponent<Status_ArithmeticProgress>();
             levelComponent.Level = level;
 

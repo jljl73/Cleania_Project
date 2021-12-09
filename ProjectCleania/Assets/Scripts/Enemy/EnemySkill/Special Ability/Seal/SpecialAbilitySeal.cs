@@ -76,8 +76,8 @@ public class SpecialAbilitySeal : EnemySkill
         for (int i = 1; i <= pondCount; i++)
         {
             // SealPond sealPond = ObjectPool.SpawnFromPool<SealPond>(ObjectPool.enumPoolObject.Seal, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
-            GameObject initiatedPond = Instantiate(sealPond, transform.position, transform.rotation);
-            sealPond.gameObject.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
+            GameObject initiatedPond = Instantiate(sealPond, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+            // sealPond.gameObject.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
             SealPond pondDamage = initiatedPond.GetComponent<SealPond>();
             pondDamage.SetUp(OwnerAbilityStatus, damageScale);
             pondDamage.SetUp(duration, silenceTime, radius);

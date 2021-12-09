@@ -40,8 +40,21 @@ public class StatusAilment : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         _behaviorRestrictionOptions[(int)option] -= duration;
+        if (_behaviorRestrictionOptions[(int)option] <= 0)
+            _behaviorRestrictionOptions[(int)option] = 0;
         _behaviorRestrictionOptionsOvelapped[(int)option] -= 1;
+        if (_behaviorRestrictionOptionsOvelapped[(int)option] <= 0)
+            _behaviorRestrictionOptionsOvelapped[(int)option] = 0;
         Debug.Log("behaviorRestriction Off : " + option.ToString() + " : " + _behaviorRestrictionOptions[(int)option]);
+    }
+
+    public void ForceOffRestrictBehavior(BehaviorRestrictionType option)
+    {
+        if (!CheckRestrictBehaviorOvelapped(option))
+            return;
+        _behaviorRestrictionOptions[(int)option] = 0;
+        _behaviorRestrictionOptionsOvelapped[(int)option] = 0;
+        Debug.Log("behaviorRestriction On : " + option.ToString() + " : " + _behaviorRestrictionOptions[(int)option]);
     }
 
     bool CheckRestrictBehaviorOvelapped(BehaviorRestrictionType option)

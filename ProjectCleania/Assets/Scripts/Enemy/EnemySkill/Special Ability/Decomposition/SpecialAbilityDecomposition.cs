@@ -76,8 +76,8 @@ public class SpecialAbilityDecomposition : EnemySkill
 
     void MakeMines()
     {
-        GameObject initiatedObj = Instantiate(decompositionPrefab, transform.position, transform.rotation);
-        initiatedObj.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
+        GameObject initiatedObj = Instantiate(decompositionPrefab, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
+        // initiatedObj.transform.position = GetRandomPointInCircle(transform.position, CreationRadius);
         // Decomposition decomposition = ObjectPool.SpawnFromPool<Decomposition>(ObjectPool.enumPoolObject.Decomposition, GetRandomPointInCircle(transform.position, CreationRadius), transform.rotation);
         Decomposition decomposition = initiatedObj.GetComponent<Decomposition>();
         if (decomposition == null)
