@@ -5,9 +5,20 @@ using UnityEngine;
 public class Buffable : MonoBehaviour
 {
     // ¹öÇÁÇü
-    [SerializeField]
-    float[] _buffOptions = { 1, 1, 1, 1, 1, 1 };
-    int[] _buffOptionsOvelapped = { 0, 0, 0, 0, 0, 0 };
+    float[] _buffOptions;
+    int[] _buffOptionsOvelapped;
+
+    private void Awake()
+    {
+        _buffOptions = new float[(int)Ability.Buff.EnumTotal];
+        _buffOptionsOvelapped = new int[(int)Ability.Buff.EnumTotal];
+
+        for (int i = 0; i < _buffOptions.Length; ++i)
+            _buffOptions[i] = 1;
+        for (int i = 0; i < _buffOptionsOvelapped.Length; ++i)
+            _buffOptionsOvelapped[i] = 0;
+    }
+
 
     public float this[Ability.Buff index]
     {

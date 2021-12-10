@@ -91,7 +91,7 @@ public class SavedData
         else
         {
             Directory.CreateDirectory($"{Application.dataPath}/savedata");
-            File.Create(Path);
+            using (File.Create(Path)) { }
             AfterLoad();
             return false;
         }
@@ -137,6 +137,12 @@ public class SavedData
         //playerPosition = GameManager.Instance.SinglePlayer.transform.position;
 
         PlayerExp = ExpManager.Exp;
+    }
+
+    public void GenerateFile(string name)
+    {
+        Directory.CreateDirectory($"{Application.dataPath}/savedata");
+        using (File.Create($"{Application.dataPath}/savedata/{name}.json")) { }
     }
 
     //public void Awake()
