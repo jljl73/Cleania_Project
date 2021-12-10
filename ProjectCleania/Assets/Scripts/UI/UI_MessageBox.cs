@@ -47,9 +47,7 @@ public class UI_MessageBox : MonoBehaviour
         {
             if (_singleton == null)
             {
-                _singleton = ((GameObject)Instantiate(
-                    Resources.Load("Prefabs/UI_MessageBox"),
-                    GameManager.Instance.MainCanvas.transform))
+                _singleton = ((GameObject)Instantiate(Resources.Load("Prefabs/UI_MessageBox")))
                     .GetComponent<UI_MessageBox>();
 
                 _singleton.gameObject.SetActive(false);
@@ -61,7 +59,18 @@ public class UI_MessageBox : MonoBehaviour
 
     static public void Show(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
     {
+        Instance.InstanceShow(message, buttons);
+    }
+
+    void InstanceShow(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
+    {
+        if (GameManager.Instance.MainCanvas != null)
+            _singleton.gameObject.transform.SetParent(GameManager.Instance.MainCanvas.transform);
+        else
+            _singleton.gameObject.transform.SetParent(FindObjectOfType<Canvas>().transform);
+
         Instance._Setup(message, buttons);
+
     }
 
     public IEnumerator Show_Coroutine(string message, MessageBoxButtons buttons = MessageBoxButtons.OK)
@@ -79,6 +88,7 @@ public class UI_MessageBox : MonoBehaviour
         text.text = message;
         _SetupButtons(buttons);
         transform.SetAsLastSibling();
+        _singleton.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         gameObject.SetActive(true);
     }
 

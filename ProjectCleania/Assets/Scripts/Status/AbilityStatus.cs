@@ -171,6 +171,10 @@ public class AbilityStatus : MonoBehaviour
                     //if (buffs[Ability.Buff.Defense_Buff] != 0)
                     _stats[(int)stat] *= buffs[Ability.Buff.CriticalChance_Buff];
                     break;
+                case Ability.Stat.MaxHP:
+                    //if (buffs[Ability.Buff.Defense_Buff] != 0)
+                    _stats[(int)stat] *= buffs[Ability.Buff.MaxHP_Buff];
+                    break;
 
                 default:
                     break;
