@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-public class PlayerController : BaseCharacterController
+public class PlayerController : MonoBehaviour
 {
     AbilityStatus abilityStatus;
     NavMeshAgent navMeshAgent;
     Animator animator;
     Buffable buffable;
+    StatusAilment statusAilment;
+    Collider hitBoxCollider;
 
     [SerializeField]
     PlayerSkillController skillController;
@@ -34,7 +36,16 @@ public class PlayerController : BaseCharacterController
         buffable = GetComponent<Buffable>();
         if (buffable == null)
             throw new System.Exception("PlayerController doesnt have Buffable");
+
+        statusAilment = GetComponent<StatusAilment>();
+        if (statusAilment == null)
+            throw new System.Exception("PlayerController doesnt have StatusAilment");
+
+        hitBoxCollider = GetComponent<Collider>();
+        if (hitBoxCollider == null)
+            throw new System.Exception("PlayerController doesnt have BoxCollider");
     }
+
     void Update()
     {
         currentStateHash = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
@@ -44,6 +55,8 @@ public class PlayerController : BaseCharacterController
             BecomeDead();
             return;
         }
+
+        CheckStatusAilment();
 
         if (!CheckMovable())
             return;
@@ -59,6 +72,33 @@ public class PlayerController : BaseCharacterController
         else
             return false;
     }
+    void CheckStatusAilment()
+    {
+        if (statusAilment[StatusAilment.BehaviorRestrictionType.Restraint] > 0)
+            animator.SetBool("Restraint", true);
+        else
+            animator.SetBool("Restraint", false);
+
+        if (statusAilment[StatusAilment.BehaviorRestrictionType.Stun] > 0)
+            animator.SetBool("Stunned", true);
+        else
+            animator.SetBool("Stunned", false);
+
+        if (statusAilment[StatusAilment.BehaviorRestrictionType.Silence] > 0)
+        {
+            if (!animator.GetBool("Silenced"))
+                skillController.StopAllSkill();
+            animator.SetBool("Silenced", true);
+        }
+        else
+            animator.SetBool("Silenced", false);
+
+        if (statusAilment[StatusAilment.BehaviorRestrictionType.Dark] > 0)
+            animator.SetBool("Darked", true);
+        else
+            animator.SetBool("Darked", false);
+    }
+
     bool CheckMovable()
     {
         if (Animator.StringToHash("Dead") == currentStateHash || !animator.GetBool("Movable"))
@@ -71,19 +111,41 @@ public class PlayerController : BaseCharacterController
         return true;
     }
 
-    bool CheckSkillTriggerAvailable(int id)
+    bool CheckSkillAnimationAvailable(int id)
     {
+        bool result = false;
+
+        // 예외처리: 죽은 상태
         if (Animator.StringToHash("Dead") == currentStateHash)
         {
             if (id == 1194 || id == 1195)
                 return true;
+            else
+                return false;
         }
 
+        // 아이들 & 달리기 상태만 실행
         if (Animator.StringToHash("Idle") == currentStateHash ||
             Animator.StringToHash("Run") == currentStateHash)
-            return true;
+            result = true;
 
-        return false;
+        // 스킬 트리거 실행됬으면 재실행x
+        if (animator.GetBool("Trigger" + id.ToString()))
+            result = false;
+
+        // 상태별 스킬 실행 유무 결정
+        switch (id)
+        {
+            case 1101:
+                break;
+            default:
+                // if (animator.GetBool("Silenced"))
+                if (statusAilment[StatusAilment.BehaviorRestrictionType.Silence] > 0)
+                    return false;
+                break;
+        }
+        
+        return result;
     }
 
     bool CheckIfSkillAvailable(int id)
@@ -112,51 +174,53 @@ public class PlayerController : BaseCharacterController
         animator.SetBool("Stunned", true);
     }
 
-    public override void SetStatusAilment(StatusAilment.BehaviorRestrictionType option, bool value)
-    {
-        switch (option)
-        {
-            case StatusAilment.BehaviorRestrictionType.Restraint:
-                animator.SetBool("Restraint", value);
-                break;
-            case StatusAilment.BehaviorRestrictionType.Stun:
-                animator.SetBool("Stunned", value);
-                break;
-            case StatusAilment.BehaviorRestrictionType.Silence:
-                animator.SetBool("Silenced", value);
-                break;
-            case StatusAilment.BehaviorRestrictionType.Dark:
-                animator.SetBool("Dark", value);
-                break;
-            default:
-                break;
-        }
-    }
-
-    public override void SetStatusAilment(StatusAilment.ContinuousDamageType option)
-    {
-
-    }
-
     public bool OrderSkillID(int id)
     {
-        if (!CheckSkillTriggerAvailable(id))
+        // 애니메이션 상태 보고 결정
+        if (!CheckSkillAnimationAvailable(id))
             return false;
 
+        // 스킬 내부 로직 + 쿨타임 + MP 소모
         if (!CheckIfSkillAvailable(id))
             return true;
-            
+
         // 스킬 속도 설정
         animator.SetFloat("Skill " + id.ToString() + " multiplier", skillController.GetSkillMultiplier(id));
 
         // 스킬 애니메이션 실행
-        animator.SetBool("Trigger" + id.ToString(), true);
+        if (CheckIfSkillAvailableByInnerLogic(id))
+            animator.SetBool("Trigger" + id.ToString(), true);
 
         // 마우스 방향 쳐다봄
         if (movementController.enabled && CheckMovable())
             movementController.ImmediateLookAtMouse();
 
         return true;
+    }
+
+    bool CheckIfSkillAvailableByInnerLogic(int id)
+    {
+        switch (id)
+        {
+            case 1199:
+                if (!skillController.AnimationActivate(id))
+                {
+                    skillController.ResetSkill(id);
+                    skillController.StopSkill(id);
+                    return false;
+                }
+                else
+                    return true;
+            default:
+                // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
+                if (skillController.AnimationActivate(id))
+                {
+                    skillController.ResetSkill(id);
+                    return true;
+                }
+                else
+                    return false;
+        }
     }
 
     public void OrderSkillStop(int id)
@@ -167,7 +231,9 @@ public class PlayerController : BaseCharacterController
     public void OrderMovementTo(Vector3 mousePosition)
     {
         if (CheckMovable())
+        {
             movementController.Move(mousePosition);
+        }
     }
 
     public void Pushed(Vector3 force)
@@ -187,11 +253,22 @@ public class PlayerController : BaseCharacterController
 
     public void OnSetMovable() => animator.SetBool("Movabl e", true);
 
+    public void OnHitColliderOn() => hitBoxCollider.enabled = true;
+    public void OnHitColliderOff() => hitBoxCollider.enabled = false;
+    public void OnHitColliderOnDelay(float duration) => Invoke("OnHitColliderOn", duration);
     public void OnFullHP() => abilityStatus.FullHP();
     public void OnFullMP() => abilityStatus.FullHP();
     void OnPlayRoll() => movementController.SpeedUp(10);
     void OnEndRoll() => movementController.SpeedUp(6.8f);
     void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
     void CloseDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(false);
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+
+        }
+    }
 
 }

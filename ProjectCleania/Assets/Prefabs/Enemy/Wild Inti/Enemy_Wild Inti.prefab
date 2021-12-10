@@ -410,6 +410,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffOptions:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!114 &4661569931696314050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,7 +487,7 @@ MonoBehaviour:
   - {fileID: 6228019538861586543}
   - {fileID: 7596848039351694337}
   - {fileID: 3745981143536242670}
-  - {fileID: 3364557280188010734}
+  - {fileID: 1691779785332235743}
 --- !u!1 &4728211561530126283
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,10 +527,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4185383677180586502}
     m_Modifications:
+    - target: {fileID: 290943648474935874, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 522478346895563863, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
       objectReference: {fileID: 338930018133428618}
+    - target: {fileID: 522478346895563863, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: DustPond
+      value: 
+      objectReference: {fileID: 2300191780678816601, guid: 40aa3fe6746651443a51dc4a7624b5c1, type: 3}
     - target: {fileID: 522478346895563863, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: animator
       value: 
@@ -588,6 +603,18 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 4661569931696314050}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 338930018133428618}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 4185383675751946794}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: OwnerAbilityStatus
+      value: 
+      objectReference: {fileID: 4661569931696314050}
     - target: {fileID: 2230748614788601728, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
@@ -633,9 +660,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4185383675751946794}
     - target: {fileID: 4039507467257359481, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: buffable
+      value: 
+      objectReference: {fileID: 5104063416063046108}
+    - target: {fileID: 4039507467257359481, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 4661569931696314050}
+    - target: {fileID: 4548649617417419606, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4725779370418996069, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: m_Name
       value: Special Skill
@@ -652,6 +687,10 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 4661569931696314050}
+    - target: {fileID: 5120414109332677753, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: stormWindOrbitPrefab
+      value: 
+      objectReference: {fileID: 403762427136887610, guid: 0dfdce933fdc88f4eb71e9cb2613d455, type: 3}
     - target: {fileID: 6745563650446777336, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
@@ -664,6 +703,10 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 4661569931696314050}
+    - target: {fileID: 6745563650446777336, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: decompositionPrefab
+      value: 
+      objectReference: {fileID: 4847115326797821916, guid: be87fcfef9dec844dbf3ddad31a0e478, type: 3}
     - target: {fileID: 7106185061729146774, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
@@ -773,9 +816,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347dbd1d8b4c48147b924f5356ff2ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3364557280188010734 stripped
+--- !u!114 &1691779785332235743 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2684743127011177337, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
   m_PrefabInstance: {fileID: 861120616489788311}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

@@ -73,9 +73,10 @@ public class BatSkill2 : EnemySkill
         for (int i = 0; i < divisionCount; i++)
         {
 
-            //GameObject bat1 = Instantiate(enemy.gameObject);
-            Enemy batEnemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.WildInti, GetRandPosition(transform.position, SummonRange), transform.rotation);
-            // bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
+            GameObject bat1 = Instantiate(enemy.gameObject);
+            // Enemy batEnemy = ObjectPool.SpawnFromPool<Enemy>(ObjectPool.enumPoolObject.WildInti, GetRandPosition(transform.position, SummonRange), transform.rotation);
+            Enemy batEnemy = bat1.GetComponent<Enemy>();
+            bat1.transform.Translate(bat1.transform.right * bat1.transform.localScale.x);
             batEnemy.transform.position = GetRandPosition(transform.position, SummonRange);
             batEnemy.transform.localScale *= 0.5f;
             batEnemy.GetComponentInChildren<EnemyChase>().EnemySpawner = parentEnemyChase.EnemySpawner;

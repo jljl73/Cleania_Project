@@ -6,22 +6,27 @@ using System.Text;
 
 public class PlayerStateMachineBehaviour : StateMachineBehaviour
 {
+    PlayerController playerController;
     PlayerSkillController playerSkillController;
+    AbilityStatus abilityStatus;
 
-    // 모든 스킬 트리거 & 상태 To Hash
+    // 모든 스킬 파라미터 & 상태 To Hash
     Dictionary<int, int> idToParameterHash = new Dictionary<int, int>();
     Dictionary<int, int> idToStateHash = new Dictionary<int, int>();
 
     // 특정 상태 해시 코드
     readonly int deadStateHash = Animator.StringToHash("Dead");
     readonly int movableHash = Animator.StringToHash("Movable");
+    readonly int stunnedHash = Animator.StringToHash("Stunned");
 
     private void Awake()
     {
         PlayerSkillSO[] playerSkillSOs = Resources.LoadAll<PlayerSkillSO>("ScriptableObject/SkillTable/PlayerSkill");
         UploadIDToHash(playerSkillSOs);
 
+        playerController = FindObjectOfType<PlayerController>();
         playerSkillController = FindObjectOfType<PlayerSkillController>();
+        abilityStatus = playerSkillController.gameObject.GetComponent<AbilityStatus>();
     }
 
     void UploadIDToHash(PlayerSkillSO[] so)
@@ -56,21 +61,42 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
             if (stateInfo.shortNameHash == idToStateHash[id])
             {
                 SetMovableParameter(animator, id);
-                SetCoolTimeInitialize(animator, id);
+                // SetCoolTimeInitialize(animator, id);
+            }
+        }
+
+        //// 스턴 상태
+        //if (stateInfo.shortNameHash == stunnedHash)
+        //    playerController.gameObject.GetComponent<StatusAilment>().RestrictBehavior(StatusAilment.BehaviorRestrictionType.Stun);
+
+        // 스킬 1102 상태
+        if (stateInfo.shortNameHash == idToStateHash[1102])
+        {
+            skill1102TimePassed = 0;
+            GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Dehydration, 0, true);
+        }
+    }
+
+    float skill1102TimePassed = 0;
+
+    // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (stateInfo.shortNameHash == idToStateHash[1102])
+        {
+            skill1102TimePassed += Time.deltaTime;
+            if (skill1102TimePassed > 1)
+            {
+                skill1102TimePassed = 0;
+                abilityStatus.ConsumeMP(playerSkillController.GetMpValue(1102));
             }
         }
     }
 
-    // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // 스킬 나올때 모든 스킬 트리거 & 이펙트 끄기
+        // 스킬 나올때 파라미터 끄기 & 이펙트 끄기
         foreach (int id in idToStateHash.Keys)
         {
             // 현재 애니메이터 상태 == 등록된 스킬 애니메이터 상태
@@ -79,8 +105,8 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 // 움직일 수 있는 상태 설정
                 animator.SetBool(movableHash, true);
 
-                // 모든 스킬 트리거 끈다
-                TurnOffAllSkillTrigger(animator);
+                // 모든 스킬 파라미터 끈다
+                TurnOffAllSkillParameter(animator);
 
                 // 1102 스킬은 나올 때 스킬 Stop
                 if (stateInfo.shortNameHash == idToStateHash[1102])
@@ -88,9 +114,12 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 break;
             }
         }
+
+        //if (stateInfo.shortNameHash == stunnedHash)
+        //    playerController.gameObject.GetComponent<StatusAilment>().ForceOffRestrictBehavior(StatusAilment.BehaviorRestrictionType.Stun);
     }
 
-    void TurnOffAllSkillTrigger(Animator animator)
+    void TurnOffAllSkillParameter(Animator animator)
     {
         foreach (int paramId in idToParameterHash.Keys)
         {
@@ -109,6 +138,7 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         {
             case 1102:
             case 1106:
+            case 1197:
             case 1198:
                 break;
             default:
@@ -118,27 +148,27 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
         }
     }
 
-    void SetCoolTimeInitialize(Animator animator, int id)
-    {
-        switch (id)
-        {
-            case 1199:
-                if (!playerSkillController.AnimationActivate(id))
-                {
-                    playerSkillController.ResetSkill(id);
-                    playerSkillController.StopSkill(id);
-                    animator.SetBool(idToParameterHash[id], false);
-                }
-                break;
-            default:
-                // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
-                if (playerSkillController.AnimationActivate(id))
-                    playerSkillController.ResetSkill(id);
-                else
-                    animator.SetBool(idToParameterHash[id], false);
-                break;
-        }
-    }
+    //void SetCoolTimeInitialize(Animator animator, int id)
+    //{
+    //    switch (id)
+    //    {
+    //        case 1199:
+    //            if (!playerSkillController.AnimationActivate(id))
+    //            {
+    //                playerSkillController.ResetSkill(id);
+    //                playerSkillController.StopSkill(id);
+    //                animator.SetBool(idToParameterHash[id], false);
+    //            }
+    //            break;
+    //        default:
+    //            // 스킬 내부 로직이 애니메이션 실행 가능 상태면, 쿨타임 초기화
+    //            if (playerSkillController.AnimationActivate(id))
+    //                playerSkillController.ResetSkill(id);
+    //            else
+    //                animator.SetBool(idToParameterHash[id], false);
+    //            break;
+    //    }
+    //}
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

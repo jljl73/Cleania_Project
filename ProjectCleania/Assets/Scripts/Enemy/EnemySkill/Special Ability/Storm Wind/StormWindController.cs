@@ -22,24 +22,24 @@ public class StormWindController : MonoBehaviour
 
     bool isSetUp = false;
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
 
-        Start();
-    }
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.StormWindGroup, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.StormWindGroup, this.gameObject);
+    //}
 
     private void Start()
     {
         MakeWinds(rotateCW);
-        Invoke("DeactivateDelay", duration);
-        //Destroy(this.gameObject, duration);
+        // Invoke("DeactivateDelay", duration);
+        Destroy(this.gameObject, duration);
     }
 
     void DeactivateDelay() => this.gameObject.SetActive(false);
@@ -63,10 +63,11 @@ public class StormWindController : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            //GameObject obj = Instantiate(stormWindPrefab, GetRandomPosOnCircleEdge(), transform.rotation, transform);
+            GameObject obj = Instantiate(stormWindPrefab, GetRandomPosOnCircleEdge(), transform.rotation, transform);
             // winds.Add(obj);
 
-            StormWind stormWind = ObjectPool.SpawnFromPool<StormWind>(ObjectPool.enumPoolObject.StormWind, GetRandomPosOnCircleEdge(), transform.rotation, transform);
+            // StormWind stormWind = ObjectPool.SpawnFromPool<StormWind>(ObjectPool.enumPoolObject.StormWind, GetRandomPosOnCircleEdge(), transform.rotation, transform);
+            StormWind stormWind = obj.GetComponent<StormWind>();
 
             if (isCW)
                 stormWind.SetUp(this.gameObject, rotateSpeed);

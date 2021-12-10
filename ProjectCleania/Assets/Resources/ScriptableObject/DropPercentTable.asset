@@ -12,31 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e03b4aaa489c0b4d930081cc0b20a58, type: 3}
   m_Name: DropPercentTable
   m_EditorClassIdentifier: 
-  NormalMonsterFixedDropCnt: 0
-  NormalMonsterAdditionalDrop0Ratio: 0.995
-  NormalMonsterAdditionalDrop1Ratio: 0.005
-  NormalMonsterAdditionalDrop2Ratio: 0
-  NormalMonsterAdditionalDrop3Ratio: 0
-  NormalMonsterDropItemRankRareRatio: 0.24
-  NormalMonsterDropItemRankLegendRatio: 0.01
-  RareMonsterFixedDropCnt: 2
-  RareMonsterAdditionalDrop0Ratio: 0.58
-  RareMonsterAdditionalDrop1Ratio: 0.37
-  RareMonsterAdditionalDrop2Ratio: 0.03
-  RareMonsterAdditionalDrop3Ratio: 0.02
-  RareMonsterDropItemRankRareRatio: 0.75
-  RareMonsterDropItemRankLegendRatio: 0.15
-  BoseMonsterFixedDropCnt: 10
-  BoseMonsterAdditionalDrop0Ratio: 0
-  BoseMonsterAdditionalDrop1Ratio: 0.34
-  BoseMonsterAdditionalDrop2Ratio: 0.33
-  BoseMonsterAdditionalDrop3Ratio: 0.33
-  BoseMonsterDropItemRankRareRatio: 0.76
-  BoseMonsterDropItemRankLegendRatio: 0.22
-  BoxFixedDropCnt: 0
-  BoxAdditionalDrop0Ratio: 0
-  BoxAdditionalDrop1Ratio: 0.8
-  BoxAdditionalDrop2Ratio: 0.15
-  BoxAdditionalDrop3Ratio: 0.05
-  BoxDropItemRankRareRatio: 0.32
-  BoxDropItemRankLegendRatio: 0.07
+  NormalAdditionalProb:
+  - 99.5
+  RareAdditionalProb:
+  - 58
+  - 95
+  - 98
+  BossAdditionalProb:
+  - 0
+  - 34
+  - 67
+  NormalRankProb:
+  - 75
+  - 99
+  RareRankProb:
+  - 10
+  - 85
+  BossRankProb:
+  - 2
+  - 78
+  questItems: []

@@ -19,6 +19,7 @@ public class Buffable : MonoBehaviour
             _buffOptionsOvelapped[i] = 0;
     }
 
+
     public float this[Ability.Buff index]
     {
         get => _buffOptions[(int)index];

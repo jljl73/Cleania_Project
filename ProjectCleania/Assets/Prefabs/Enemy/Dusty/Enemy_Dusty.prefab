@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DropRadius: 1
-  DropTableData: {fileID: 11400000, guid: ed99f7dd47e35d2429322228334f8ffa, type: 2}
+  DropTableData: {fileID: 11400000, guid: 81cb89e3fd132b648a30c769a9558a4b, type: 2}
   myEnemy: {fileID: 3404450377915123936}
 --- !u!114 &6336659258544409568
 MonoBehaviour:
@@ -478,6 +478,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffOptions:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!114 &6824819401899668243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +555,7 @@ MonoBehaviour:
   - {fileID: 8815310216034336357}
   - {fileID: 4996029244833165835}
   - {fileID: 2289092132978969060}
-  - {fileID: 182769822329722596}
+  - {fileID: 4270102846121860053}
 --- !u!1001 &2867468639822669213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -556,6 +563,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7717416709810612296}
     m_Modifications:
+    - target: {fileID: 290943648474935874, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 498540009608197735, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -628,6 +639,18 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 6824819401899668243}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 3404450377915123936}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 7717416709024651364}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: OwnerAbilityStatus
+      value: 
+      objectReference: {fileID: 6824819401899668243}
     - target: {fileID: 2230748614788601728, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
@@ -677,10 +700,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7717416709024651364}
     - target: {fileID: 4039507467257359481, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: buffable
+      value: 
+      objectReference: {fileID: 448718444018776358}
+    - target: {fileID: 4039507467257359481, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 6824819401899668243}
     - target: {fileID: 4450265005075775347, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548649617417419606, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -853,9 +884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32edfb9e29e0ec489bf2505f4cc400b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &182769822329722596 stripped
+--- !u!114 &4270102846121860053 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2684743127011177337, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
   m_PrefabInstance: {fileID: 2867468639822669213}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

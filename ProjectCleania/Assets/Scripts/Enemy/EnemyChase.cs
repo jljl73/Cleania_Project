@@ -32,8 +32,11 @@ public class EnemyChase : MonoBehaviour
     void Start()
     {
         CognitiveRange = 7;
+        // CognitiveRange = 3;
         cognitiveCollider.radius = CognitiveRange;
     }
+
+    
 
     void OnTriggerEnter(Collider other)
     {
@@ -41,22 +44,31 @@ public class EnemyChase : MonoBehaviour
         {
             if (enemySpawner != null)
             {
-                if (targetObjAbility != null)
-                    return;
+                //if (targetObjAbility != null)
+                //    return;
 
-                if (enemySpawner == null)
-                    enemy.SetTarget(other.gameObject);
-                else
-                    myGroupManager.Target = other.gameObject;
+                myGroupManager.Target = other.gameObject;
+                myGroupManager?.SetTarget();
+                //if (enemySpawner == null)
+                //    enemy.SetTarget(other.gameObject);
+                //else
+                //    myGroupManager.Target = other.gameObject;
 
                 targetObjAbility = other.gameObject.GetComponent<AbilityStatus>();
             }
         }
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            myGroupManager?.ReleaseTarget();
+    }
+
     void OnDestroy()
     {
-        if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(gameObject);
+        // if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(gameObject);
+        if (enemySpawner != null) myGroupManager?.DeleteMember(gameObject);
     }
 
     

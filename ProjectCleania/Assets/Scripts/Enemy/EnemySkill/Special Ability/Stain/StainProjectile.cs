@@ -33,25 +33,27 @@ public class StainProjectile : DamagingProperty
 
     }
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
 
-        ResetSetting();
-        Start();
-    }
+    //    ResetSetting();
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Stain, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Stain, this.gameObject);
+    //}
     private void Start()
     {
         projectileBodyController.Scale = damageRange * 1.2f;
         hitCollider.radius = damageRange;
 
         bombEffectController.Scale = damageRange * 0.5f;
+
+        ResetSetting();
 
         Invoke("StopAtTop", stopStartTime);
     }

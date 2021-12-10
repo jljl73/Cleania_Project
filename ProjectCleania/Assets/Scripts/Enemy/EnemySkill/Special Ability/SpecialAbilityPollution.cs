@@ -10,8 +10,8 @@ public class SpecialAbilityPollution : EnemySkill
 
     //bool abilityActivate = false;
 
-    //[SerializeField]
-    //GameObject pollutionPrefab;
+    // [SerializeField]
+    // GameObject pollutionPrefab;
 
     [SerializeField]
     SpecialAbilityPollutionSO skillData;

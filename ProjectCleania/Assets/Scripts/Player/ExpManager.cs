@@ -11,7 +11,7 @@ public class ExpManager
 
     static public void Initailize(int Exp)
     {
-        string path = "Assets/Resources/Exptable.txt";
+        string path = $"{Application.dataPath}/savedata/ExpTable.txt";
         StreamReader reader = new StreamReader(path);
 
         while (!reader.EndOfStream)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1965368546215450101}
   - component: {fileID: 1015618545377616066}
   - component: {fileID: 6473396977671173629}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemySkill Decomposition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4830e7277b74a47459dc2f93d2608bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -52,6 +57,7 @@ MonoBehaviour:
   effectController: []
   enemy: {fileID: 0}
   skillData: {fileID: 11400000, guid: 84a7398506230b64281030d0fcb66418, type: 2}
+  decompositionPrefab: {fileID: 4847115326797821916, guid: be87fcfef9dec844dbf3ddad31a0e478, type: 3}
 --- !u!135 &6473396977671173629
 SphereCollider:
   m_ObjectHideFlags: 0

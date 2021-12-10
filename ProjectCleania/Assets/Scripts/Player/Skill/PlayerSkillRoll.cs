@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PlayerSkillRoll : PlayerSkill
 {
+    bool rolling = false;
+
     [SerializeField]
     PlayerSkillRollSO skillData;
 
     [SerializeField]
     Buffable buffable;
 
-    bool bSkill = false;
-
-    float avoidDistance;
     float avoidSpeedMultiplier;
     public float AvoidSpeedMultiplier { get => avoidSpeedMultiplier; }
 
@@ -21,33 +20,41 @@ public class PlayerSkillRoll : PlayerSkill
     private new void Awake()
     {
         base.Awake();
-        UpdateSkillData();
     }
 
     protected new void Start()
     {
         base.Start();
+        UpdateSkillData();
     }
 
     public void UpdateSkillData()
     {
         base.UpdateSkillData(skillData);
         
-        avoidDistance = skillData.GetAvoidDistance();
         avoidSpeedMultiplier = skillData.GetAvoidSpeedMultiplier();
     }
 
     public override void Activate()
     {
         base.Activate();
-        buffable.ForceAddBuff(avoidSpeedMultiplier, Ability.Buff.MoveSpeed_Buff);
+
+        if (rolling == false)
+        {
+            buffable.ForceAddBuff(avoidSpeedMultiplier, Ability.Buff.MoveSpeed_Buff);
+            rolling = true;
+        }
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
-        effectController[0].PlaySkillEffect();
 
-        buffable.ForceOffBuff(avoidSpeedMultiplier, Ability.Buff.MoveSpeed_Buff);
+        if (rolling == true)
+        {
+            effectController[0].PlaySkillEffect();
+            buffable.ForceOffBuff(avoidSpeedMultiplier, Ability.Buff.MoveSpeed_Buff);
+            rolling = false;
+        }
     }
 }

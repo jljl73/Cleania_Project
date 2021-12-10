@@ -102,7 +102,15 @@ public abstract class Skill : MonoBehaviour
             OnSkillDeactivateEvents[idx].Invoke();
     }
 
-    public virtual void StopSkill() {}
+    public virtual void StopSkill()
+    {
+        Deactivate();
+        for (int j = 0; j < effectController.Count; j++)
+        {
+            StopEffects(j);
+        }
+        DeactivateSound(-1);
+    }
 
     public List<SkillEffectController> effectController;
 

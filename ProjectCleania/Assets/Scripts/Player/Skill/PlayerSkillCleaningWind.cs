@@ -7,7 +7,8 @@ public class PlayerSkillCleaningWind : PlayerSkill
     [SerializeField]
     PlayerSkillCleaningWindSO skillData;
 
-    GameObject newProjectile;
+    [SerializeField]
+    GameObject cleaningWindPrefab;
 
     float gatherEnergySize = 1f;
     float GetGatherEnergySize() { return gatherEnergySize; }
@@ -107,7 +108,9 @@ public class PlayerSkillCleaningWind : PlayerSkill
             Quaternion tempYAngle = yAngle;
             tempYAngle *= Quaternion.Euler(0f, -90.0f + (180.0f / (count + 1)) * i, 0f);
 
-            CleaningWind cleaningWind = ObjectPool.SpawnFromPool<CleaningWind>(ObjectPool.enumPoolObject.CleaningWind, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            // CleaningWind cleaningWind = ObjectPool.SpawnFromPool<CleaningWind>(ObjectPool.enumPoolObject.CleaningWind, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            GameObject cleaningWindObj = Instantiate(cleaningWindPrefab, transform.position + Vector3.up * projectilePositionY, tempYAngle);
+            CleaningWind cleaningWind = cleaningWindObj.GetComponent<CleaningWind>();
             cleaningWind.SetUp(maxHitPerSameObject, projectileSpeed, duration, OwnerAbilityStatus, projectileDamageScale);
             cleaningWind.Resize(projectileSize);
         }

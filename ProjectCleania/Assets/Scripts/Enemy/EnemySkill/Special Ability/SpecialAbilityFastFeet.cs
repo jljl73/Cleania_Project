@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class SpecialAbilityFastFeet : EnemySkill
 {
-    float speedIncreaseRate = 10;
+    [SerializeField]
+    Buffable buffable;
 
     [SerializeField]
     SpecialAbilityFastFeetSO skillData;
+
+    float speedIncreaseRate = 10;
 
     public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
@@ -27,7 +30,10 @@ public class SpecialAbilityFastFeet : EnemySkill
     public void UpdateSkillData()
     {
         if (skillData == null)
-            throw new System.Exception("SpecialAbilityIngrainedDirt no skillData");
+            throw new System.Exception("SpecialAbilityFastFeet no skillData");
+
+        if (buffable == null)
+            throw new System.Exception("SpecialAbilityFastFeet no buffable");
 
         base.UpdateSkillData(skillData);
 
@@ -36,9 +42,9 @@ public class SpecialAbilityFastFeet : EnemySkill
 
     public override bool AnimationActivate()
     {
-        // 체력 증가
-        print("공속 & 이속 증가!");
-        //enemy.buff
+        // "공속 & 이속 증가!"
+        buffable.ForceAddBuff(speedIncreaseRate, Ability.Buff.AttackSpeed_Buff);
+        buffable.ForceAddBuff(speedIncreaseRate, Ability.Buff.MoveSpeed_Buff);
 
         return true;
     }

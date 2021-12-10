@@ -4,29 +4,11 @@ using UnityEngine;
 
 public class StatusAilment : MonoBehaviour
 {
-    [SerializeField]
-    BaseCharacterController baseCharacterController;
     AbilityStatus ownerAbilityStatus;
 
     void Awake()
     {
-        baseCharacterController = GetComponent<BaseCharacterController>();
         ownerAbilityStatus = GetComponent<AbilityStatus>();
-    }
-
-    void Update()
-    {
-        //foreach (AbilityStatus abil in continuousDamagetempTimeCalculation.Keys)
-        //{
-        //    continuousDamagetempTimeCalculation[abil] += Time.deltaTime;
-        //    if (continuousDamagetempTimeCalculation[abil] > 1)
-        //    {
-        //        continuousDamagetempTimeCalculation[abil] = 0;
-        //        continuousDamageDuration[abil] -= 1;
-        //        if (continuousDamageDuration[abil] != 0)
-        //            ownerAbilityStatus.AttackedBy(abil, 0.1f);
-        //    }
-        //}
     }
 
     // 행동 제한형
@@ -47,10 +29,8 @@ public class StatusAilment : MonoBehaviour
 
     public void RestrictBehavior(BehaviorRestrictionType option, float duration)
     {
-        if (CheckRestrictBehaviorOvelapped(option))
+        if (!CheckRestrictBehaviorOvelapped(option))
             return;
-
-        baseCharacterController.SetStatusAilment(option, true);
         _behaviorRestrictionOptions[(int)option] += duration;
         _behaviorRestrictionOptionsOvelapped[(int)option] += 1;
         StartCoroutine(OffRestrictBehavior(option, duration));
@@ -59,10 +39,22 @@ public class StatusAilment : MonoBehaviour
     IEnumerator OffRestrictBehavior(BehaviorRestrictionType option, float duration)
     {
         yield return new WaitForSeconds(duration);
-        baseCharacterController.SetStatusAilment(option, false);
         _behaviorRestrictionOptions[(int)option] -= duration;
+        if (_behaviorRestrictionOptions[(int)option] <= 0)
+            _behaviorRestrictionOptions[(int)option] = 0;
         _behaviorRestrictionOptionsOvelapped[(int)option] -= 1;
+        if (_behaviorRestrictionOptionsOvelapped[(int)option] <= 0)
+            _behaviorRestrictionOptionsOvelapped[(int)option] = 0;
         Debug.Log("behaviorRestriction Off : " + option.ToString() + " : " + _behaviorRestrictionOptions[(int)option]);
+    }
+
+    public void ForceOffRestrictBehavior(BehaviorRestrictionType option)
+    {
+        if (!CheckRestrictBehaviorOvelapped(option))
+            return;
+        _behaviorRestrictionOptions[(int)option] = 0;
+        _behaviorRestrictionOptionsOvelapped[(int)option] = 0;
+        Debug.Log("behaviorRestriction On : " + option.ToString() + " : " + _behaviorRestrictionOptions[(int)option]);
     }
 
     bool CheckRestrictBehaviorOvelapped(BehaviorRestrictionType option)
