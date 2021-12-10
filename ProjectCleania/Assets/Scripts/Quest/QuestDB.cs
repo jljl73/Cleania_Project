@@ -98,8 +98,4 @@ public class QuestDB : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        
-    }
 }

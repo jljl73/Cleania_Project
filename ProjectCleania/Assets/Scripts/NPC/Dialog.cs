@@ -38,8 +38,6 @@ public class Dialog : MonoBehaviour
 
     public void ChangePage(int index)
     {
-        Debug.Log(PageTransform);
-        Debug.Log(pages[index]);
         PageTransform.GetChild(0).GetComponent<TextMeshProUGUI>().text = pages[index].content;
 
         int b = 0;
@@ -47,14 +45,22 @@ public class Dialog : MonoBehaviour
         for (; b < length; ++b)
         {
             DialogButton button = PageTransform.GetChild(1).GetChild(length - b - 1).GetComponent<DialogButton>();
-            button.Initialize(pages[index].buttons[b].type, quest, pages[index].buttons[b].value, this);
-            button.GetComponentInChildren<TextMeshProUGUI>().text = pages[index].buttons[b].content;
-            button.gameObject.SetActive(true);
+            SetButtonFunc(button, index, b);
+            //button.Initialize(pages[index].buttons[b].type, quest, pages[index].buttons[b].value, this);
+            //button.GetComponentInChildren<TextMeshProUGUI>().text = pages[index].buttons[b].content;
+            //button.gameObject.SetActive(true);
         }
 
         for(; b < PageTransform.GetChild(1).childCount; ++b)
         {
             PageTransform.GetChild(1).GetChild(b).gameObject.SetActive(false);
         }
+    }
+
+    void SetButtonFunc(DialogButton button, int index, int b)
+    {
+        button.Initialize(pages[index].buttons[b].type, quest, pages[index].buttons[b].value, this);
+        button.GetComponentInChildren<TextMeshProUGUI>().text = pages[index].buttons[b].content;
+        button.gameObject.SetActive(true);
     }
 }

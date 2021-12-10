@@ -64,6 +64,7 @@ public class InputManager : MonoBehaviour
 
         // 마우스 <<<<<
 
+        if (GameManager.Instance.isChatting) return;
 
         // 키보드 >>>>>
         if (Input.GetKeyDown(KeyCode.Alpha1))
