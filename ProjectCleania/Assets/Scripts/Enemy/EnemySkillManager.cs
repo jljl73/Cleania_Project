@@ -167,10 +167,10 @@ public class EnemySkillManager : BaseSkillManager
     {
         enemyStateMachine.Transition(EnemyStateMachine.enumRank.Rare);
 
+
         // 패시브 속성이면 적용, 추가X
         Skill skill = enemySkillStorage.GetSpecialSkillFromList(id);
         if (skill == null) return;
-
         if (skill.IsPassiveSkill)
         {
             skill.AnimationActivate();

@@ -674,15 +674,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7363935556358920286, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.79602736
+      value: 0.7960274
       objectReference: {fileID: 0}
     - target: {fileID: 7363935556358920286, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.43078008
+      value: 0.43078017
       objectReference: {fileID: 0}
     - target: {fileID: 7363935556358920286, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.37392682
+      value: -0.37392676
       objectReference: {fileID: 0}
     - target: {fileID: 7363935556358920286, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
       propertyPath: m_LocalRotation.z
@@ -708,18 +708,6 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 563002474}
-    - target: {fileID: 7363935556358920287, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
-      propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7777778
-      objectReference: {fileID: 0}
-    - target: {fileID: 7363935556367946939, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
-      propertyPath: m_FollowOffset.x
-      value: 8.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7363935556367946939, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
-      propertyPath: m_FollowOffset.z
-      value: -7.3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94da070852cb88449b29656c1d91dce8, type: 3}
 --- !u!114 &337435279 stripped
@@ -3030,8 +3018,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1785614761744820748, guid: f22146ddc5b92a34ba58f7922e160698, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22146ddc5b92a34ba58f7922e160698, type: 3}
 --- !u!1001 &1853222968
 PrefabInstance:
@@ -3110,6 +3097,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1853437369, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
+      propertyPath: m_fogOfWarPlane
+      value: 
+      objectReference: {fileID: 749622410}
     - target: {fileID: 6231748196070978227, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3128,15 +3119,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6231748196070978227, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.79602736
+      value: 0.7960274
       objectReference: {fileID: 0}
     - target: {fileID: 6231748196070978227, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.43078008
+      value: 0.43078017
       objectReference: {fileID: 0}
     - target: {fileID: 6231748196070978227, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.37392682
+      value: -0.37392676
       objectReference: {fileID: 0}
     - target: {fileID: 6231748196070978227, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
       propertyPath: m_LocalRotation.z
@@ -3162,36 +3153,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6231748196070978383, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 62702cc3811484b4ab07800f4c167e44, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
---- !u!1 &1853437368 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6231748196070978382, guid: a4397c57aaff1d340afad382a9d92878, type: 3}
-  m_PrefabInstance: {fileID: 1853437367}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1853437369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853437368}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf41254e9caaba34fb77bc9e2e03762d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_fogOfWarPlane: {fileID: 749622410}
-  m_player: {fileID: 0}
-  m_fogLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  material: {fileID: 2100000, guid: 571016a90f5803e4e8725460e2eb32c1, type: 2}
-  m_radius: 40
 --- !u!1001 &1885930335
 PrefabInstance:
   m_ObjectHideFlags: 0

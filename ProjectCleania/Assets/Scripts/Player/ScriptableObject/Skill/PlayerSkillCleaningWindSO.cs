@@ -76,8 +76,8 @@ public class PlayerSkillCleaningWindSO : PlayerSkillSO
 
     [Header("회오리 크기")]
     [SerializeField]
-    int ProjectileSize = 1;
-    public int GetProjectileSize() { return ProjectileSize; }
+    float ProjectileSize = 1;
+    public float GetProjectileSize() { return ProjectileSize; }
 
     [Header("초당 회오리 데미지 비율 (ex. 2.0 = 200% 데미지 적용)")]
     [SerializeField]

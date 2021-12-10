@@ -15,8 +15,8 @@ public class SpecialAbilityStormWind : EnemySkill
     float rotationSpeed; // m/s
     float damageSize;
 
-    //[SerializeField]
-    //GameObject stormWindOrbitPrefab;
+    [SerializeField]
+    GameObject stormWindOrbitPrefab;
 
     SphereCollider triggerCollider;
 
@@ -28,8 +28,8 @@ public class SpecialAbilityStormWind : EnemySkill
     {
         base.Awake();
         triggerCollider = GetComponent<SphereCollider>();
-        //if (stormWindOrbitPrefab == null)
-        //    throw new System.Exception("SpecialAbilityStormWind doesnt have stormWindOrbitPrefab");
+        if (stormWindOrbitPrefab == null)
+            throw new System.Exception("SpecialAbilityStormWind doesnt have stormWindOrbitPrefab");
     }
 
     private new void Start()
@@ -75,9 +75,9 @@ public class SpecialAbilityStormWind : EnemySkill
         print("Made orbit!");
         for (int i = 1; i <= orbitCount; i++)
         {
-            //GameObject initiatedOrbit = Instantiate(stormWindOrbitPrefab, transform.position, transform.rotation);
-            //StormWindController orbitController = initiatedOrbit.GetComponent<StormWindController>();
-            StormWindController orbitController = ObjectPool.SpawnFromPool<StormWindController>(ObjectPool.enumPoolObject.StormWindGroup, transform.position, transform.rotation);
+            GameObject initiatedOrbit = Instantiate(stormWindOrbitPrefab, transform.position, transform.rotation);
+            StormWindController orbitController = initiatedOrbit.GetComponent<StormWindController>();
+            // StormWindController orbitController = ObjectPool.SpawnFromPool<StormWindController>(ObjectPool.enumPoolObject.StormWindGroup, transform.position, transform.rotation);
             orbitController.SetUp(i % 2 == 1, i * orbitOffset, rotationSpeed, i, duration, OwnerAbilityStatus, damageScale, damageSize);
             //Destroy(this.gameObject, duration);
         }

@@ -10,18 +10,18 @@ public class StormWind : ContactStayDamage
     [SerializeField]
     SkillEffectController effectController;
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
 
-        Start();
-    }
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.StormWind, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.StormWind, this.gameObject);
+    //}
 
     private void Start()
     {

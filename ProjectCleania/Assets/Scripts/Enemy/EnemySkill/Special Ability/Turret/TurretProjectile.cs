@@ -7,21 +7,22 @@ public class TurretProjectile : DamagingProperty
     float moveSpeed;
     float destroyTime = 8;
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
-        Start();
-    }
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.TurretProjectile, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.TurretProjectile, this.gameObject);
+    //}
 
     private void Start()
     {
-        Invoke("DeactivateDelay", destroyTime);
+        // Invoke("DeactivateDelay", destroyTime);
+        Destroy(this.gameObject, destroyTime);
     }
 
     void DeactivateDelay() => gameObject.SetActive(false);

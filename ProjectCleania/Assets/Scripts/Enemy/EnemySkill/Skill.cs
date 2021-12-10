@@ -109,6 +109,7 @@ public abstract class Skill : MonoBehaviour
         {
             StopEffects(j);
         }
+        DeactivateSound(-1);
     }
 
     public List<SkillEffectController> effectController;

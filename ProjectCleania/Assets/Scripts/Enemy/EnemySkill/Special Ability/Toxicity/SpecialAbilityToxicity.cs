@@ -14,7 +14,7 @@ public class SpecialAbilityToxicity : EnemySkill
     float generationTimeInterval;
     float pondCount;
 
-    //public GameObject DustPond;
+    public GameObject DustPond;
 
     SphereCollider triggerCollider;
 
@@ -26,8 +26,8 @@ public class SpecialAbilityToxicity : EnemySkill
         base.Awake();
 
         triggerCollider = GetComponent<SphereCollider>();
-        //if (DustPond == null)
-        //    throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
+        if (DustPond == null)
+            throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
     }
 
     private new void Start()
@@ -76,8 +76,8 @@ public class SpecialAbilityToxicity : EnemySkill
         for (int i = 1; i <= pondCount; i++)
         {
             Vector3 spawnedPos = tempPosition + (tempForward * distanceInterval * i + tempUp * 0.2f);
-            ToxicityPond toxicityPond = ObjectPool.SpawnFromPool<ToxicityPond>(ObjectPool.enumPoolObject.Toxicity, spawnedPos, tempQuaternion);
-
+            // ToxicityPond toxicityPond = ObjectPool.SpawnFromPool<ToxicityPond>(ObjectPool.enumPoolObject.Toxicity, spawnedPos, tempQuaternion);
+            ToxicityPond toxicityPond = Instantiate(DustPond, spawnedPos, tempQuaternion).GetComponent<ToxicityPond>();
             if (enemy.abilityStatus == null)
                 print("enemy.abilityStatus is null");
             else

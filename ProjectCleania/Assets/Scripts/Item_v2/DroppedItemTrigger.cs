@@ -41,7 +41,7 @@ public class DroppedItemTrigger : MonoBehaviour
 
         if (SavedData.Instance.Item_Inventory.Add(itemData))
         {
-            container.Parent.Remove(itemData);
+            //container.ItemData.CurrentStorage?.Remove(itemData);
             droppedItems.Remove(item);
         }
     }

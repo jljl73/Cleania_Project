@@ -17,6 +17,9 @@ public class TheDustyGroundHit : EnemySkill
 
     SphereCollider triggerCollider;
 
+    [SerializeField]
+    GameObject groundHitEffect;
+
     public override bool IsPassiveSkill { get { return skillData.GetIsPassiveSkill(); } }
     public override int ID { get { return skillData.ID; } protected set { id = value; } }
 
@@ -63,9 +66,10 @@ public class TheDustyGroundHit : EnemySkill
     public override void PlayEffects()
     {
         base.PlayEffects();
-        ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit,
-                                            GetWorldTriggerPosition(triggerPosition),
-                                            transform.rotation);
+        //ObjectPool.SpawnFromPool<GroundHit>(ObjectPool.enumPoolObject.GroundHit,
+        //                                    GetWorldTriggerPosition(triggerPosition),
+        //                                    transform.rotation);
+        Instantiate(groundHitEffect, GetWorldTriggerPosition(triggerPosition), transform.rotation);
     }
 
     public override void Activate()
@@ -109,9 +113,8 @@ public class TheDustyGroundHit : EnemySkill
                 AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
                 abil.AttackedBy(OwnerAbilityStatus, indirectDamageRate);
 
-                print("슬로우 상태!");
                 Buffable playerBuffable = colliders[i].GetComponent<Buffable>();
-                playerBuffable.AddBuff(1.15f, Ability.Buff.MoveSpeed_Buff, 5);
+                playerBuffable.AddBuff(-0.15f, Ability.Buff.MoveSpeed_Buff, 5);
             }
         }
     }

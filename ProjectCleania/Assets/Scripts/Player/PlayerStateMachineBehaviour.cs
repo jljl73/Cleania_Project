@@ -6,6 +6,7 @@ using System.Text;
 
 public class PlayerStateMachineBehaviour : StateMachineBehaviour
 {
+    PlayerController playerController;
     PlayerSkillController playerSkillController;
     AbilityStatus abilityStatus;
 
@@ -16,12 +17,14 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
     // 특정 상태 해시 코드
     readonly int deadStateHash = Animator.StringToHash("Dead");
     readonly int movableHash = Animator.StringToHash("Movable");
+    readonly int stunnedHash = Animator.StringToHash("Stunned");
 
     private void Awake()
     {
         PlayerSkillSO[] playerSkillSOs = Resources.LoadAll<PlayerSkillSO>("ScriptableObject/SkillTable/PlayerSkill");
         UploadIDToHash(playerSkillSOs);
 
+        playerController = FindObjectOfType<PlayerController>();
         playerSkillController = FindObjectOfType<PlayerSkillController>();
         abilityStatus = playerSkillController.gameObject.GetComponent<AbilityStatus>();
     }
@@ -62,9 +65,15 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
             }
         }
 
+        //// 스턴 상태
+        //if (stateInfo.shortNameHash == stunnedHash)
+        //    playerController.gameObject.GetComponent<StatusAilment>().RestrictBehavior(StatusAilment.BehaviorRestrictionType.Stun);
+
+        // 스킬 1102 상태
         if (stateInfo.shortNameHash == idToStateHash[1102])
         {
             skill1102TimePassed = 0;
+            GameManager.Instance.playerSoundPlayer.PlaySound(PlayerSoundPlayer.TYPE.Dehydration, 0, true);
         }
     }
 
@@ -105,6 +114,9 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 break;
             }
         }
+
+        //if (stateInfo.shortNameHash == stunnedHash)
+        //    playerController.gameObject.GetComponent<StatusAilment>().ForceOffRestrictBehavior(StatusAilment.BehaviorRestrictionType.Stun);
     }
 
     void TurnOffAllSkillParameter(Animator animator)

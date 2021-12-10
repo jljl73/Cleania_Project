@@ -5,6 +5,7 @@ using UnityEngine;
 public class Buffable : MonoBehaviour
 {
     // ¹öÇÁÇü
+    [SerializeField]
     float[] _buffOptions = { 1, 1, 1, 1, 1, 1 };
     int[] _buffOptionsOvelapped = { 0, 0, 0, 0, 0, 0 };
 
