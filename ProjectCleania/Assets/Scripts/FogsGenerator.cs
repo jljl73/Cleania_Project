@@ -14,12 +14,12 @@ public class FogsGenerator : MonoBehaviour
 
     void CreateMesh()
     {
-        CombineInstance[] combine = new CombineInstance[529];
+        CombineInstance[] combine = new CombineInstance[441];
 
         int ct = 0;
-        for(int i = 0; i < 23; ++i)
+        for(int i = -10; i < 11; ++i)
         {
-            for (int j = 0; j < 23; ++j)
+            for (int j = -10; j < 11; ++j)
             {
                 combine[ct].mesh = meshFilter.sharedMesh;
                 meshFilter.transform.position = new Vector3(i * 10f, 5f, j * 10f);

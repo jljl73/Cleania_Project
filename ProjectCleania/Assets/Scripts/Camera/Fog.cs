@@ -18,6 +18,7 @@ public class Fog : MonoBehaviour
 
     //float width = 400.0f;
     //float height = 400.0f;
+    WaitForSeconds wait = new WaitForSeconds(0.5f);
 
     void Start()
     {
@@ -25,29 +26,35 @@ public class Fog : MonoBehaviour
         Initialize();
         if (m_player == null)
             Debug.Log("Player is null");
+
+        StartCoroutine(Clear());
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator Clear()
     {
-        Vector3 orthogonal = m_player.position;
-        orthogonal.y = 100;
-
-        Ray r = new Ray(orthogonal, Vector3.down);
-        RaycastHit hit;
-        if(Physics.Raycast(r, out hit, 1000, m_fogLayer, QueryTriggerInteraction.Collide))
+        while (true)
         {
-            for (int i = 0; i < m_vertices.Length; ++i)
+            Vector3 orthogonal = m_player.position;
+            orthogonal.y = 100;
+            Ray r = new Ray(orthogonal, Vector3.down);
+            RaycastHit hit;
+            if (Physics.Raycast(r, out hit, 100, m_fogLayer, QueryTriggerInteraction.Collide))
             {
-                Vector3 v = m_fogOfWarPlane.transform.TransformPoint(m_vertices[i]);
-                float dist = Vector3.SqrMagnitude(v - hit.point);
-                if (dist < m_radiusSqr)
+                for (int i = 0; i < m_vertices.Length; ++i)
                 {
-                    float alpha = Mathf.Min(m_colors[i].a, dist / m_radiusSqr);
-                    m_colors[i].a = alpha;
+                    Vector3 v = m_fogOfWarPlane.transform.TransformPoint(m_vertices[i]);
+                    float dist = Vector3.SqrMagnitude(v - hit.point);
+                    if (dist < m_radiusSqr)
+                    {
+                        float alpha = Mathf.Min(m_colors[i].a, dist / m_radiusSqr);
+                        m_colors[i].a = alpha;
+
+                    }
                 }
+                UpdateColor();
             }
-            UpdateColor();
+            yield return wait;
         }
     }
 
@@ -58,7 +65,10 @@ public class Fog : MonoBehaviour
         m_vertices = m_mesh.vertices;
         m_colors = new Color[m_vertices.Length];
         for (int i = 0; i < m_colors.Length; ++i)
+        {
             m_colors[i] = Color.black;
+            Debug.Log(m_vertices[i]);
+        }
         UpdateColor();
     }
 
