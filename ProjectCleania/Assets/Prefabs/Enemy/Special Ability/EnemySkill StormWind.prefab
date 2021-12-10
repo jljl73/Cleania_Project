@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2236232360474413266}
   - component: {fileID: 4482824647410427757}
   - component: {fileID: 4050534446895857941}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemySkill StormWind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b835bfa94cae1fe4bb3fb8bcf0c4983a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -52,6 +57,7 @@ MonoBehaviour:
   effectController: []
   enemy: {fileID: 0}
   skillData: {fileID: 11400000, guid: aff40449fddc69746b953c3f55f5d681, type: 2}
+  stormWindOrbitPrefab: {fileID: 403762427136887610, guid: 0dfdce933fdc88f4eb71e9cb2613d455, type: 3}
 --- !u!135 &4050534446895857941
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -12,18 +12,37 @@ public class Pollution : ContactStayDamage
     bool enrolledAbility = false;
     float duration;
 
-    private void OnEnable()
-    {
-        if (!isSetUp)
-            return;
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp)
+    //        return;
 
-        pollutionGroup.AddPollution(this);
-        Invoke("DeactivateDelay", duration);
-    }
+    //    pollutionGroup.AddPollution(this);
+    //    Invoke("DeactivateDelay", duration);
+    //}
+
+    //private void OnDisable()
+    //{
+    //    if (isSetUp)
+    //    {
+    //        pollutionGroup.PopPollution(this);
+    //        if (enrolledAbility)
+    //        {
+    //            pollutionGroup.PopAbility();
+    //            enrolledAbility = false;
+    //        }
+    //        Reset();
+    //    }
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Pollution, this.gameObject);
+    //    CancelInvoke();
+    //}
 
     void Start()
     {
+        pollutionGroup.AddPollution(this);
         effectController.Scale = damageRange * 0.3333f;
+
+        Destroy(this.gameObject, duration);
     }
 
     void DeactivateDelay() => this.gameObject.SetActive(false);
@@ -34,7 +53,7 @@ public class Pollution : ContactStayDamage
         this.duration = duration;
         base.SetUp(abil, damageScale);
 
-        OnEnable();
+        //OnEnable();
     }
 
     void Reset()
@@ -45,21 +64,7 @@ public class Pollution : ContactStayDamage
         isSetUp = false;
     }
 
-    private void OnDisable()
-    {
-        if (isSetUp)
-        {
-            pollutionGroup.PopPollution(this);
-            if (enrolledAbility)
-            {
-                pollutionGroup.PopAbility();
-                enrolledAbility = false;
-            }
-            Reset();
-        }
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Pollution, this.gameObject);
-        CancelInvoke();
-    }
+    
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -89,6 +94,16 @@ public class Pollution : ContactStayDamage
                 pollutionGroup.PopAbility();
                 enrolledAbility = false;
             }
+        }
+    }
+
+    void OnDestroy()
+    {
+        pollutionGroup.PopPollution(this);
+        if (enrolledAbility)
+        {
+            pollutionGroup.PopAbility();
+            enrolledAbility = false;
         }
     }
 }

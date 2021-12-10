@@ -14,7 +14,8 @@ public class SpecialAbilityStain : EnemySkill
     float destroyAttackRange;
     float destroyAttackScale;
 
-    public GameObject StainProjectilePrefab;
+    [SerializeField]
+    GameObject stainProjectilePrefab;
 
     [SerializeField]
     SpecialAbilityStainSO skillData;
@@ -28,8 +29,8 @@ public class SpecialAbilityStain : EnemySkill
         base.Awake();
         triggerCollider = GetComponent<SphereCollider>();
 
-        if (StainProjectilePrefab == null)
-            throw new System.Exception("SpecialAbilityToxicity doesnt have DustPond");
+        if (stainProjectilePrefab == null)
+            throw new System.Exception("SpecialAbilityToxicity doesnt have stainProjectilePrefab");
     }
 
     private new void Start()
@@ -99,12 +100,12 @@ public class SpecialAbilityStain : EnemySkill
 
     void Shot()
     {
-        //GameObject obj = Instantiate(StainProjectilePrefab, this.transform.position, Quaternion.identity);
-        StainProjectile stainProj = ObjectPool.SpawnFromPool<StainProjectile>(ObjectPool.enumPoolObject.Stain, this.transform.position, Quaternion.identity);
-        //if (obj == null) return;
+        GameObject obj = Instantiate(stainProjectilePrefab, this.transform.position, Quaternion.identity);
+        // StainProjectile stainProj = ObjectPool.SpawnFromPool<StainProjectile>(ObjectPool.enumPoolObject.Stain, this.transform.position, Quaternion.identity);
+        if (obj == null) return;
 
-        //StainProjectile stainProj = obj.GetComponent<StainProjectile>();
-        //if (stainProj == null) return;
+        StainProjectile stainProj = obj.GetComponent<StainProjectile>();
+        if (stainProj == null) return;
 
         Rigidbody rigidbody = stainProj.gameObject.GetComponent<Rigidbody>(); ;
         if (rigidbody != null)

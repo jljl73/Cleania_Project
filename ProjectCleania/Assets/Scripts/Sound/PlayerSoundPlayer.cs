@@ -30,8 +30,9 @@ public class PlayerSoundPlayer : MonoBehaviour, ISoundPlayer
         FairyWings, Sweeping, CleaningWind, RefreshingLeapForward, Dusting, Dehydration, Katharsis, Die, LevelUp, DrinkPotion, HPRestore
     };
 
-    public void PlaySound(TYPE type, int idx = 0)
+    public void PlaySound(TYPE type, int idx = 0, bool isLoop = false)
     {
+        audioSource.loop = isLoop;
         switch (type)
         {
             case TYPE.FairyWings:
@@ -72,6 +73,7 @@ public class PlayerSoundPlayer : MonoBehaviour, ISoundPlayer
     }
     public void StopSound()
     {
+        audioSource.loop = false;
         audioSource.Stop();
     }
 

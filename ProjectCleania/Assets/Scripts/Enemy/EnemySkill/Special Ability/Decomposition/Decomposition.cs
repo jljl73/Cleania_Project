@@ -26,17 +26,17 @@ public class Decomposition : DamagingProperty
             throw new System.Exception("Decomposition doesnt have nav");
     }
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
-        Start();
-    }
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Decomposition, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Decomposition, this.gameObject);
+    //}
 
     private void Start()
     {
@@ -89,8 +89,8 @@ public class Decomposition : DamagingProperty
             }
         }
 
-        //Destroy(gameObject);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+        // gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -99,7 +99,7 @@ public class Decomposition : DamagingProperty
         {
             // 2초 기절 부여
             print("2초 기절 부여!");
-            other.gameObject.GetComponent<Player>().OnStunned(true, 2);
+            other.gameObject.GetComponent<PlayerController>()?.Stunned(true, 2);
 
             // 폭발
             if (isExploding) return;

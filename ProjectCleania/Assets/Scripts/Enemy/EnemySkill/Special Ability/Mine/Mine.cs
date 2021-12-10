@@ -22,28 +22,29 @@ public class Mine : DamagingProperty
         Invoke("EnableCollider", ColliderEnableTime);
     }
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
 
-        bombEffectController.StopSKillEffect();
-        bombObjectController.PlaySkillEffect();
-        EnableCollider(true);
+    //    bombEffectController.StopSKillEffect();
+    //    bombObjectController.PlaySkillEffect();
+    //    EnableCollider(true);
 
-        Start();
-    }
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Mine, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Mine, this.gameObject);
+    //}
 
     private void Start()
     {
         bombObjectController.Scale = damageRange * 1.42857f;
         bombEffectController.Scale = damageRange;
         triggerCollider.radius = damageRange;
+        // Destroy(this.gameObject, 15f);
     }
 
     void DeactivateDelay() => this.gameObject.SetActive(false);
@@ -63,8 +64,8 @@ public class Mine : DamagingProperty
 
             EnableCollider(false);
 
-            Invoke("DeactivateDelay", 2f);
-            //Destroy(this.gameObject, 2f);
+            // Invoke("DeactivateDelay", 2f);
+            Destroy(this.gameObject, 2f);
         }
     }
 

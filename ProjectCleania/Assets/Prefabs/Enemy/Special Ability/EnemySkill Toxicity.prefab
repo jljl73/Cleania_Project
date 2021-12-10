@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8775878236486078488}
   - component: {fileID: 1526100045014199942}
   - component: {fileID: 3267233374532455040}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemySkill Toxicity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b0574a06ce4444ebfccc75de75a7a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -52,6 +57,7 @@ MonoBehaviour:
   effectController: []
   enemy: {fileID: 0}
   skillData: {fileID: 11400000, guid: 71f8f8f2a15766a419f4c132e6137b5b, type: 2}
+  DustPond: {fileID: 2300191780678816601, guid: 40aa3fe6746651443a51dc4a7624b5c1, type: 3}
 --- !u!135 &3267233374532455040
 SphereCollider:
   m_ObjectHideFlags: 0

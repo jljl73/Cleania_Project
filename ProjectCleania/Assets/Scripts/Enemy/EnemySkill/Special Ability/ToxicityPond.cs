@@ -9,24 +9,25 @@ public class ToxicityPond : ToxicityDamage
 
     float duration;
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
-        Start();
-    }
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Toxicity, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Toxicity, this.gameObject);
+    //}
 
     private void Start()
     {
         effectController.Scale = damageRange;
         GiveDamageOnRange(damageRange);
 
-        Invoke("DeactivateDelay", duration);
+        // Invoke("DeactivateDelay", duration);
+        Destroy(this.gameObject, duration);
     }
 
     void DeactivateDelay() => this.gameObject.SetActive(false);

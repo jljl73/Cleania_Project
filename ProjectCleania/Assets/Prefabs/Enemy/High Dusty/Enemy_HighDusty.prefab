@@ -248,6 +248,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffOptions:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!114 &9203879108659677650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +395,7 @@ MonoBehaviour:
   - {fileID: 947242965861065869}
   - {fileID: 3613711790376331491}
   - {fileID: 7545623603507729164}
+  - {fileID: 5490308443644461373}
 --- !u!1 &7032589034596418916
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +508,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4276550117953472930}
     m_Modifications:
+    - target: {fileID: 290943648474935874, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 522478346895563863, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
@@ -568,6 +580,18 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 9203879108659677650}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1372266458}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 4972137587626881284}
+    - target: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: OwnerAbilityStatus
+      value: 
+      objectReference: {fileID: 9203879108659677650}
     - target: {fileID: 2684743127011177337, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: enemy
       value: 
@@ -589,9 +613,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4972137587626881284}
     - target: {fileID: 4039507467257359481, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: buffable
+      value: 
+      objectReference: {fileID: 4471736117988799545}
+    - target: {fileID: 4039507467257359481, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 9203879108659677650}
+    - target: {fileID: 4548649617417419606, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4725779370418996069, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
       propertyPath: m_Name
       value: Special Skill
@@ -726,6 +758,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 347dbd1d8b4c48147b924f5356ff2ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5490308443644461373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2056236703534399048, guid: e28dafdf21654e345b90837d8ec18e87, type: 3}
+  m_PrefabInstance: {fileID: 5816475970370551669}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc9cd6026adc6341b4a931b14ef8824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7766239778120666469

@@ -20,17 +20,17 @@ public class SealPond : DamagingProperty
             throw new System.Exception("SealPond doesnt have Collider");
     }
 
-    private void OnEnable()
-    {
-        if (!isSetUp) return;
-        Start();
-    }
+    //private void OnEnable()
+    //{
+    //    if (!isSetUp) return;
+    //    Start();
+    //}
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-        ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Seal, this.gameObject);
-    }
+    //private void OnDisable()
+    //{
+    //    CancelInvoke();
+    //    ObjectPool.ReturnObject(ObjectPool.enumPoolObject.Seal, this.gameObject);
+    //}
 
     void Start()
     {
@@ -38,6 +38,7 @@ public class SealPond : DamagingProperty
         if (!isSealPondSetUp) return;
 
         Invoke("DoSilenceAttack", duration);
+        Destroy(this.gameObject, duration + 0.5f);
     }
 
     void DoSilenceAttack()
@@ -49,8 +50,12 @@ public class SealPond : DamagingProperty
             {
                 AbilityStatus abil = colliders[i].GetComponent<AbilityStatus>();
                 if (abil == null) return;
+                
+                // µ¥¹ÌÁö
                 abil.AttackedBy(ownerAbility, damageScale);
-                print("Ä§¹¬ ¾îÅÃ!");
+
+                // Ä§¹¬
+                colliders[i].GetComponent<StatusAilment>()?.RestrictBehavior(StatusAilment.BehaviorRestrictionType.Silence, 7);
             }
         }
 

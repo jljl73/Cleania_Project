@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7571631419405149510}
   - component: {fileID: 1684044866688083137}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemySkill Fast Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,8 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347dbd1d8b4c48147b924f5356ff2ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
+  OnEnemyTriggerZone:
+    m_PersistentCalls:
+      m_Calls: []
   animator: {fileID: 0}
   OwnerAbilityStatus: {fileID: 0}
   effectController: []
   enemy: {fileID: 0}
+  buffable: {fileID: 0}
   skillData: {fileID: 11400000, guid: 3406b7a365586b24293623d3d784722c, type: 2}

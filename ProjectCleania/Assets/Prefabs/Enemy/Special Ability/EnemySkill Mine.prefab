@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4910881096861543856}
   - component: {fileID: 7494007460444052011}
   - component: {fileID: 4903161584614789528}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemySkill Mine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79732c85e2445544681c5c16c6216116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -51,6 +56,7 @@ MonoBehaviour:
   OwnerAbilityStatus: {fileID: 0}
   effectController: []
   enemy: {fileID: 0}
+  minePrefab: {fileID: 7390694090417859158, guid: 981d5d179731b8645ad90f6842f54317, type: 3}
   skillData: {fileID: 11400000, guid: 16ebaecfe01489348867229e79303899, type: 2}
 --- !u!135 &4903161584614789528
 SphereCollider:

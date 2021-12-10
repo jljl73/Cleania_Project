@@ -166,6 +166,7 @@ MonoBehaviour:
   effectController: []
   enemy: {fileID: 7698646001147554570}
   skillData: {fileID: 11400000, guid: d75c69b4280a8a14cad164503b04d311, type: 2}
+  groundHitEffect: {fileID: 6826890961866961752, guid: 0af7ccade2f2dd74e90b2f1a018f0833, type: 3}
 --- !u!135 &1673976881
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1429,6 +1430,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490bcef82d002745af894204f05fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffOptions:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!114 &5011066178981936413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2938,6 +2946,10 @@ PrefabInstance:
       propertyPath: OwnerAbilityStatus
       value: 
       objectReference: {fileID: 6305365895392000946}
+    - target: {fileID: 1285310792857643023, guid: 0323dae8d1a7d654cb8b3cc376e4bc0b, type: 3}
+      propertyPath: stainProjectilePrefab
+      value: 
+      objectReference: {fileID: 8230123336037000848, guid: 412cc08393b3b734aae9b7386a23f187, type: 3}
     - target: {fileID: 1855695928872847773, guid: 0323dae8d1a7d654cb8b3cc376e4bc0b, type: 3}
       propertyPath: m_Name
       value: EnemySkill Stain
@@ -2987,6 +2999,10 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 6206510397852173089}
+    - target: {fileID: 648252112291900542, guid: 1d62181ff2295024aa37a59bfeb4a821, type: 3}
+      propertyPath: turretPrefab
+      value: 
+      objectReference: {fileID: 1422128474858723307, guid: a649cdb7a70063c449c31374adaa44b0, type: 3}
     - target: {fileID: 648252112291900542, guid: 1d62181ff2295024aa37a59bfeb4a821, type: 3}
       propertyPath: OwnerAbilityStatus
       value: 

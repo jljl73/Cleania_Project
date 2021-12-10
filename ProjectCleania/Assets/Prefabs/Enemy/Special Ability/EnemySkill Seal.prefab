@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6713472131699740222}
   - component: {fileID: 3148105654196402770}
   - component: {fileID: 1437702921497204722}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EnemySkill Seal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf68a374b9a56e24195b27bcedaf1970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaySkill:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillActivateEvents: []
+  OnSkillDeactivateEvents: []
   OnEnemyTriggerZone:
     m_PersistentCalls:
       m_Calls: []
@@ -52,6 +57,7 @@ MonoBehaviour:
   effectController: []
   enemy: {fileID: 0}
   skillData: {fileID: 11400000, guid: c53e4d994c3c7eb4b914f0c228e5b51c, type: 2}
+  sealPond: {fileID: 4267116547748194425, guid: b7e234e0ac568c84f810add62324d6d9, type: 3}
 --- !u!135 &1437702921497204722
 SphereCollider:
   m_ObjectHideFlags: 0
