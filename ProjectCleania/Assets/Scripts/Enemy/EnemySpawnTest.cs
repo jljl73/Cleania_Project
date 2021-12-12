@@ -112,7 +112,7 @@ public class EnemySpawnTest : MonoBehaviour
             GameObject monster = Instantiate(spawnReadyGamePrefab, GetRandomPointInCircle(this.transform.position, spawnedRadius), transform.rotation);
 
             // 스포너 설정
-            EnemyChase enemyChase = monster.GetComponent<EnemyChase>();
+            EnemyChase enemyChase = monster.GetComponentInChildren<EnemyChase>();
             enemyChase.EnemySpawner = this.gameObject;
 
             // 등급 설정
