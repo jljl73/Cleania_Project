@@ -265,6 +265,8 @@ public class PlayerController : MonoBehaviour
     void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
     void CloseDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(false);
 
+    //void OnUsedPortal() => 
+
     public void OnResetNavigation() => movementController.ResetNavigation(this.transform.position);
     void OnTriggerEnter(Collider other)
     {

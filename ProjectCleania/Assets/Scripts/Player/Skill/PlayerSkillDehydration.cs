@@ -36,6 +36,7 @@ public class PlayerSkillDehydration : PlayerSkill
         base.Start();
 
         effectController[0].Scale = damageRange * 0.5f;
+        effectController[0].Scale = damageRange * 5 / 6f;
     }
 
     public void UpdateSkillData()
