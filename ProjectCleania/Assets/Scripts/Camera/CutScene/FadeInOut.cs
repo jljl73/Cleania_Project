@@ -14,6 +14,7 @@ public class FadeInOut : MonoBehaviour
         sprite = GetComponent<Image>().sprite;
     }
 
+    
     public void FadeOut()
     {
         StartCoroutine(IFadeOut());
@@ -30,6 +31,9 @@ public class FadeInOut : MonoBehaviour
             yield return wait;
         }
         GetComponent<Image>().color = new Color(color.r, color.g, color.b, 1.0f);
+
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine(IFadeIn());
     }
 
     public void FadeIn()
