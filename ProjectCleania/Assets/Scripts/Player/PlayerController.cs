@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
 public class PlayerController : MonoBehaviour
 {
     AbilityStatus abilityStatus;
@@ -263,6 +265,7 @@ public class PlayerController : MonoBehaviour
     void ShowDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(true);
     void CloseDiePanel() => GameManager.Instance.uiManager.ShowDiePanel(false);
 
+    public void OnResetNavigation() => movementController.ResetNavigation(this.transform.position);
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))

@@ -12,9 +12,11 @@ public class EnemyChase : MonoBehaviour
         { 
             enemySpawner = value;
             myGroupManager = enemySpawner.GetComponent<EnemyGroupManager>();
-            myGroupManager.AddMember(gameObject);
+            myGroupManager.AddMember(enemy.gameObject);
         }
     }
+
+    [SerializeField]
     Enemy enemy;
     EnemyGroupManager myGroupManager;
     AbilityStatus targetObjAbility;
@@ -25,7 +27,9 @@ public class EnemyChase : MonoBehaviour
 
     void Awake()
     {
-        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+            throw new System.Exception("EnemyChase doesnt have Enemy");
+
         cognitiveCollider = GetComponent<SphereCollider>();
     }
 
@@ -46,7 +50,7 @@ public class EnemyChase : MonoBehaviour
             {
                 //if (targetObjAbility != null)
                 //    return;
-
+                
                 myGroupManager.Target = other.gameObject;
                 myGroupManager?.SetTarget();
                 //if (enemySpawner == null)

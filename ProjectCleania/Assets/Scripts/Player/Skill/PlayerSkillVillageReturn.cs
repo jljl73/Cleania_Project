@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSkillVillageReturn : PlayerSkill
 {
@@ -49,7 +50,8 @@ public class PlayerSkillVillageReturn : PlayerSkill
 
     public void ReturnToVillage()
     {
-        GameManager.Instance.ChangeScene(villageName);
+        if (SceneManager.GetActiveScene().name != villageName)
+            GameManager.Instance.ChangeScene(villageName);
         PlayerController player = FindObjectOfType<PlayerController>();
         player.gameObject.transform.position = returnPosition;
     }

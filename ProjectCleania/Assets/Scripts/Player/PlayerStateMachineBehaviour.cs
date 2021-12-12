@@ -108,9 +108,10 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 // 모든 스킬 파라미터 끈다
                 TurnOffAllSkillParameter(animator);
 
-                // 1102 스킬은 나올 때 스킬 Stop
-                if (stateInfo.shortNameHash == idToStateHash[1102])
-                    playerSkillController.StopSkill(1102);
+                // 해당 아이디 상태면 스킬 스탑
+                CheckSkillStop(stateInfo, 1102);
+                CheckSkillStop(stateInfo, 1197);
+
                 break;
             }
         }
@@ -146,6 +147,13 @@ public class PlayerStateMachineBehaviour : StateMachineBehaviour
                 animator.SetBool(movableHash, false);
                 break;
         }
+    }
+
+    void CheckSkillStop(AnimatorStateInfo stateInfo, int id)
+    {
+        //  스킬id은 나올 때 스킬 Stop
+        if (stateInfo.shortNameHash == idToStateHash[id])
+            playerSkillController.StopSkill(id);
     }
 
     //void SetCoolTimeInitialize(Animator animator, int id)

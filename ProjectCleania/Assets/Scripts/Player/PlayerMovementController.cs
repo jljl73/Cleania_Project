@@ -160,7 +160,7 @@ public class PlayerMovementController : MovementController
     //    TargetPose = transform.position;
     //}
 
-    void ResetNavigation(Vector3 newPose)
+    public void ResetNavigation(Vector3 newPose)
     {
         TargetPose = newPose;
         navMeshAgent.SetDestination(newPose);
