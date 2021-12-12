@@ -91,7 +91,7 @@ public class SavedData
         else
         {
             Directory.CreateDirectory($"{Application.dataPath}/savedata");
-            File.Create(Path);
+            using (File.Create(Path)) { }
             AfterLoad();
             return false;
         }
@@ -139,6 +139,12 @@ public class SavedData
         PlayerExp = ExpManager.Exp;
     }
 
+    public void GenerateFile(string name)
+    {
+        Directory.CreateDirectory($"{Application.dataPath}/savedata");
+        using (File.Create($"{Application.dataPath}/savedata/{name}.json")) { }
+    }
+
     //public void Awake()
     //{
     //    if(_singleton != null)
@@ -155,7 +161,6 @@ public class SavedData
 
     public void Start()
     {
-        item_World.ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
         Load();
         //DontDestroyOnLoad(gameObject);
     }

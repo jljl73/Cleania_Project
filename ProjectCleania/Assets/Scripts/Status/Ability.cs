@@ -234,6 +234,7 @@ public class Ability
         Defense_Buff,                   // 버프 - 방어력
         Accuracy_Buff,                  // 버프 - 적중률
         CriticalChance_Buff,            // 버프 - 크리티컬 확률
+        //MaxHP_Buff,                     // 버프 - 최대 체력
 
         EnumTotal
     }

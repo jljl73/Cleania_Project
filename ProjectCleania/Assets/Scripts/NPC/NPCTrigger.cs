@@ -89,4 +89,5 @@ public class NPCTrigger : MonoBehaviour
             other.GetComponent<NPC>().ShowName(false);
         }
     }
+
 }

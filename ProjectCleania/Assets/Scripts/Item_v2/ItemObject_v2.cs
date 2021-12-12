@@ -2,9 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ItemObject_v2 : MonoBehaviour 
 {
+    #region ObjectPool
+
+    static GameObject ItemObjectPrefab;
+    static List<GameObject> _objectPool = new List<GameObject>();
+
+    static public ItemObject_v2 New(ItemInstance item, Vector3 position, Quaternion rotation)
+    {
+        GameObject newObject;
+
+        if (_objectPool.Count > 0)
+        {
+            // use object in pool
+            newObject = _objectPool[0]; _objectPool.RemoveAt(0);    //dequeue
+            SceneManager.MoveGameObjectToScene(newObject, SceneManager.GetActiveScene());
+        }
+        else
+        {
+            if(ItemObjectPrefab == null)
+                ItemObjectPrefab = Resources.Load<GameObject>("Prefabs/ItemObject");
+
+            // new object
+            newObject = GameObject.Instantiate(ItemObjectPrefab);
+        }
+
+        newObject.SetActive(true);
+        newObject.transform.position = position;
+        newObject.transform.rotation = rotation;
+
+        ItemObject_v2 container = newObject.GetComponent<ItemObject_v2>();
+        container.ItemData = item;
+
+        return container;
+    }
+
+    static public void Delete(GameObject removingObject)
+    {
+        // back to object pool
+        _objectPool.Add(removingObject);
+
+        removingObject.SetActive(false);
+        DontDestroyOnLoad(removingObject);
+
+        removingObject.GetComponent<ItemObject_v2>().ItemData = null;
+    }
+
+    #endregion
+
     private ItemInstance itemData;
     public ItemInstance ItemData
     {
@@ -14,9 +62,12 @@ public class ItemObject_v2 : MonoBehaviour
             _SetItem(value);
         }
     }
-    [System.NonSerialized]
-    public ItemStorage_World Parent;
 
+    private void OnDestroy()
+    {
+        itemData?.CurrentStorage.Remove(itemData);
+        _objectPool.Remove(gameObject);
+    }
 
     void _SetItem(ItemInstance item)
     {
