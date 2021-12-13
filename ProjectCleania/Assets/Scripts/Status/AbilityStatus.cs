@@ -299,6 +299,59 @@ public class AbilityStatus : MonoBehaviour
         return ret;
     }
 
+    virtual public Ability.AffectResult AttackedBy_Atk(float oppositeAtk, float skillScale)      // returns reduced HP value
+    {
+        Ability.AffectResult ret = new Ability.AffectResult();
+        const float defaultOppositeAccuracy = 1.0f;
+        const float defaultOppositeCriticalChance = 0.1f;
+        const float defaultOppositeCriticalScale = 2.0f;
+        const float defaultOppositeIncreaseDamage = 1.0f;
+
+        if (defaultOppositeAccuracy - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))
+        {
+            ret.Dodged = true;
+            return ret;
+        }
+
+        ret.Value = oppositeAtk * skillScale;
+
+        if (Random.Range(0.0f, 1.0f) < defaultOppositeCriticalChance)
+        {
+            ret.Value *= defaultOppositeCriticalScale;
+            ret.Critical = true;
+        }
+
+        ret.Value *= 1 + (defaultOppositeIncreaseDamage - this[Ability.Stat.ReduceDamage]);
+
+        ret.Value *= 1 - this[Ability.Stat.Defense] / (3000 + this[Ability.Stat.Defense]);     // defense adjust
+
+        //
+
+        if (ret.Value < 0)
+            ret.Heal = true;
+
+        if (_HP > ret.Value)
+            _HP -= ret.Value;
+        else
+            _HP = 0;
+
+        if (transform.CompareTag("Player"))
+        {
+            ret.Enemy = true;
+            Camera.main.GetComponent<CinemachineVirtualCameraManager>().CameraShakeBegin(0.6f);
+            GetComponent<Animator>()?.SetTrigger("Hurt");
+        }
+
+        if (UserSetting.OnDamage)
+        {
+            GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
+            damage.GetComponent<TextDamage>().SetDamageText(ret);
+            Instantiate(damage, transform.position, transform.rotation);
+        }
+
+        return ret;
+    }
+
     public bool ConsumeMP(float usingMP)
     {
         if (_MP >= usingMP)
@@ -317,6 +370,29 @@ public class AbilityStatus : MonoBehaviour
             return true;
         }
         else return false;
+    }
+
+    public Ability.AffectResult Heal(float ammount)
+    {
+        Ability.AffectResult ret = new Ability.AffectResult();
+
+        ret.Value = ammount;
+
+        if (this[Ability.Stat.MaxHP] < _HP + ammount)
+            FullHP();
+        else
+            _HP += ammount;
+
+        ret.Heal = true;
+
+        if (UserSetting.OnDamage)
+        {
+            GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
+            damage.GetComponent<TextDamage>().SetDamageText(ret);
+            Instantiate(damage, transform.position, transform.rotation);
+        }
+
+        return ret;
     }
 
     public float GetStat(Ability.Stat stat)
