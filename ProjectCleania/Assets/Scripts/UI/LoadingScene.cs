@@ -43,6 +43,7 @@ public class LoadingScene : MonoBehaviour
 
         if (nextSceneName != "CharacterSelect" && nextSceneName != "TitleScene")
             SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
+
     }
 
 

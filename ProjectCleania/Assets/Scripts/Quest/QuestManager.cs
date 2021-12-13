@@ -33,6 +33,9 @@ public class QuestManager : MonoBehaviour
     int prevIndex = -1;
 
     UnityEvent UpdateQuest = new UnityEvent();
+    public GameObject Effect;
+
+
 
     public void AddListener_Update(UnityAction action)
     {
@@ -92,6 +95,8 @@ public class QuestManager : MonoBehaviour
             quest.GetReward();
             UpdateQuest.Invoke();
             GameManager.Instance.soundPlayer.PlaySound(SoundPlayer.TYPE.QuestReward);
+
+            Instantiate(Effect, GameManager.Instance.player.transform);
         }
 
         // 보상받기

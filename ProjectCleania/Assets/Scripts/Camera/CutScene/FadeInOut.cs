@@ -13,7 +13,6 @@ public class FadeInOut : MonoBehaviour
     {
         sprite = GetComponent<Image>().sprite;
     }
-
     
     public void FadeOut()
     {
