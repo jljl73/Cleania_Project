@@ -70,6 +70,11 @@ public class ItemObject_v2 : MonoBehaviour
     [SerializeField]
     GameObject modelEtc;
 
+    private void Update()
+    {
+        legendaryEffect.transform.rotation = Quaternion.identity;
+    }
+
     private void OnDestroy()
     {
         itemData?.CurrentStorage.Remove(itemData);
