@@ -38,8 +38,9 @@ public class GameManager : MonoBehaviour
     public string nextSceneName;
 
     public InputManager inputManager;
-
     public InputField IF_Chat;
+    public bool CutScenePlayed;
+
     public bool isChatting
     {
         get
