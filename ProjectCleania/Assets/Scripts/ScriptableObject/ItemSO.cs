@@ -136,9 +136,9 @@ public class ItemSO : ScriptableObject
     { get => droppable; }
 
     [SerializeField]
-    bool forPlayer = true;
-    public bool ForPlayer
-    { get => forPlayer; }
+    bool randomDrop = true;
+    public bool RandomDrop
+    { get => randomDrop; }
 
 
     [SerializeField]
@@ -175,7 +175,7 @@ public class ItemSO : ScriptableObject
             ItemSO[] all = Resources.LoadAll<ItemSO>("ScriptableObject/ItemTable");
 
             foreach (ItemSO i in all)
-                if(i.forPlayer == true)
+                if(i.randomDrop == true)
                 _dictionary[i.ID] = i;
 
             _loadedAll = true;
@@ -240,7 +240,7 @@ public class ItemSO : ScriptableObject
 
                 foreach(var kv in _dictionary)
                 {
-                    if (kv.Value.rank == enumRank.Legendary && kv.Value.forPlayer == true)
+                    if (kv.Value.rank == enumRank.Legendary && kv.Value.randomDrop == true)
                         legendaries.Add(kv.Value);
                 }
 
