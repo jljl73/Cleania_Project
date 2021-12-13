@@ -49,10 +49,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public UI_BalanceStatus_v1 cheatWindow;
+
     SavedData savedData = new SavedData();
     public SavedData SavedData
     { get => savedData; }
-
 
 
     void Awake()

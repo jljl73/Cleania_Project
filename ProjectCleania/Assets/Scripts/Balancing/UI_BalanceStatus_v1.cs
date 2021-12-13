@@ -8,6 +8,11 @@ using System.Text;
 public class UI_BalanceStatus_v1 : MonoBehaviour
 {
     [SerializeField]
+    bool show = false;
+
+    [Header("do not touch below")]
+
+    [SerializeField]
     TMP_InputField inputPlayerLevel;
     [SerializeField]
     Button buttonFullHPMP;
@@ -32,12 +37,22 @@ public class UI_BalanceStatus_v1 : MonoBehaviour
     Status playerStatus;
     ItemStorage_LocalGrid inventory;
 
+    private void Awake()
+    {
+        GameManager.Instance.cheatWindow = this;   
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         playerAbility = GameManager.Instance.PlayerAbility;
         playerStatus = GameManager.Instance.PlayerStatus;
         inventory = SavedData.Instance.Item_Inventory;
+
+        if (show)
+            gameObject.SetActive(true);
+        else
+            gameObject.SetActive(false);
     }
 
     private void Update()
@@ -51,6 +66,12 @@ public class UI_BalanceStatus_v1 : MonoBehaviour
         toughness.Append(toughnessHead);
         toughness.Append(playerAbility.Toughness());
         Toughness.text = toughness.ToString();
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance.cheatWindow == this)
+            GameManager.Instance.cheatWindow = null;
     }
 
     public void OnPlayerLevelChanged()
@@ -116,6 +137,9 @@ public class UI_BalanceStatus_v1 : MonoBehaviour
                 newEquipment = ItemInstance_Equipment.Instantiate(1304001, level);
                 inventory.Add((ItemInstance)newEquipment);
                 newEquipment = ItemInstance_Equipment.Instantiate(1305001, level);
+                break;
+            case 7: // insane weapon
+                newEquipment = ItemInstance_Equipment.Instantiate(1101299, 50);
                 break;
             default:
                 return;
