@@ -63,6 +63,13 @@ public class ItemObject_v2 : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    GameObject legendaryEffect;
+    [SerializeField]
+    GameObject modelEquipment;
+    [SerializeField]
+    GameObject modelEtc;
+
     private void OnDestroy()
     {
         itemData?.CurrentStorage.Remove(itemData);
@@ -75,20 +82,33 @@ public class ItemObject_v2 : MonoBehaviour
 
         if (item != null)
         {
-            if (transform.childCount > 0)
-                foreach (Transform child in transform)
-                    GameObject.Destroy(child.gameObject);
+            //if (transform.childCount > 0)
+            //    foreach (Transform child in transform)
+            //        GameObject.Destroy(child.gameObject);
+            modelEquipment.SetActive(false);
+            modelEtc.SetActive(false);
+
+            if (item.SO.Rank == ItemSO.enumRank.Legendary)
+                legendaryEffect.SetActive(true);
+            else
+                legendaryEffect.SetActive(false);
 
             switch (item.SO.MainCategory)
             {
+                //case ItemSO.enumMainCategory.Equipment:
+                //    if (item.SO.SubCategory == ItemSO.enumSubCategory.MainWeapon)
+                //        GameObject.Instantiate(Resources.Load<GameObject>("External/Cleaning Clutter/Models/dustpan_01"), transform);
+                //    else
+                //        GameObject.Instantiate(Resources.Load<GameObject>("External/Cleaning Clutter/Models/bucket_01"), transform);
+                //    break;
+                //case ItemSO.enumMainCategory.Etc:
+                //    GameObject.Instantiate(Resources.Load<GameObject>("External/Cleaning Clutter/Models/trash_bags_01"), transform);
+                //    break;
                 case ItemSO.enumMainCategory.Equipment:
-                    if (item.SO.SubCategory == ItemSO.enumSubCategory.MainWeapon)
-                        GameObject.Instantiate(Resources.Load<GameObject>("External/Cleaning Clutter/Models/dustpan_01"), transform);
-                    else
-                        GameObject.Instantiate(Resources.Load<GameObject>("External/Cleaning Clutter/Models/bucket_01"), transform);
+                    modelEquipment.SetActive(true);
                     break;
                 case ItemSO.enumMainCategory.Etc:
-                    GameObject.Instantiate(Resources.Load<GameObject>("External/Cleaning Clutter/Models/trash_bags_01"), transform);
+                    modelEtc.SetActive(true);
                     break;
             }
         }

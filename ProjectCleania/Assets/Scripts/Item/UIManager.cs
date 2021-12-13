@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         GameManager.Instance.uiManager = this;
+        InventoryPanel.SetActive(true);
+        StoragePanel.SetActive(true);
     }
 
     void Update()

@@ -77,6 +77,10 @@ public class ChatManager : MonoBehaviour
     public void OnSubmitChat()
     {
         if (inputField.text == "") return;
+
+        // equipment cheat
+        SpecialCommand();
+
         messages.Add(new MSG(3, "\n[player]" + inputField.text));
         UpdateChat();
         inputField.text = "";
@@ -113,6 +117,13 @@ public class ChatManager : MonoBehaviour
         }
 
         chatText.text = sb.ToString();
+    }
+
+    void SpecialCommand()
+    {
+        if (inputField.text.CompareTo("showcheat") == 0)
+            if (GameManager.Instance.cheatWindow != null)
+                GameManager.Instance.cheatWindow.gameObject.SetActive(!GameManager.Instance.cheatWindow.gameObject.activeSelf);
     }
 
 }
