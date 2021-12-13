@@ -94,13 +94,16 @@ public class UI_ItemController : MonoBehaviour,
                 switch (item.SO.Rank)
                 {
                     case ItemSO.enumRank.Common:
-                        backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_green_item_slot");
+                        //backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_green_item_slot");
+                        backgroundImage.sprite = Resources.Load<Sprite>("1_merchant_green_item_slot");
                         break;
                     case ItemSO.enumRank.Rare:
-                        backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_blue_item_slot");
+                        //backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_blue_item_slot");
+                        backgroundImage.sprite = Resources.Load<Sprite>("1_merchant_blue_item_slot");
                         break;
                     case ItemSO.enumRank.Legendary:
-                        backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_orange_item_slot");
+                        //backgroundImage.sprite = Resources.Load<Sprite>("External/My Production Line/Cleric Version 2/PNGs/3 Merchant and Player Inventory/Player Inventory/1_merchant_orange_item_slot");
+                        backgroundImage.sprite = Resources.Load<Sprite>("1_merchant_orange_item_slot");
                         break;
                 }
         else
