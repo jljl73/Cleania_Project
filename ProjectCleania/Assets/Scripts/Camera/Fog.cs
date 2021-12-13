@@ -67,7 +67,6 @@ public class Fog : MonoBehaviour
         for (int i = 0; i < m_colors.Length; ++i)
         {
             m_colors[i] = Color.black;
-            Debug.Log(m_vertices[i]);
         }
         UpdateColor();
     }
