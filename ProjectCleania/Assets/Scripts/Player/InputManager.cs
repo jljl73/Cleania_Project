@@ -142,6 +142,12 @@ public class InputManager : MonoBehaviour
         {
             player.gameObject.GetComponent<StatusAilment>()?.RestrictBehavior(StatusAilment.BehaviorRestrictionType.Silence, 10f);
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            print("Key A");
+            player.gameObject.GetComponent<StatusAilment>()?.DamageContinuously(10);
+        }
     }
 
 }
