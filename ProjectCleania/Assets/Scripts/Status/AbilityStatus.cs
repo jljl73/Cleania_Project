@@ -270,7 +270,7 @@ public class AbilityStatus : MonoBehaviour
 
         ret.Value *= 1 + (attacker[Ability.Stat.IncreaseDamage] - this[Ability.Stat.ReduceDamage]);
 
-        ret.Value *= 1 - this[Ability.Stat.Defense] / (300 + this[Ability.Stat.Defense]);     // defense adjust
+        ret.Value *= 1 - this[Ability.Stat.Defense] / (3000 + this[Ability.Stat.Defense]);     // defense adjust
 
         //
 
