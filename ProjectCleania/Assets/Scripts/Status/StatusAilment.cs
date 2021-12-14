@@ -178,6 +178,7 @@ public class StatusAilment : MonoBehaviour
             {
                 oneSecPassCheckList[i] = 0;
                 // ownerAbilityStatus.AttackedBy()
+                ownerAbilityStatus.AttackedBy_Atk(continuousDamageRateList[i], 0.1f);
             }
         }
     }

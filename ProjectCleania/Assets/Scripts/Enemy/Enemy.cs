@@ -124,11 +124,15 @@ public class Enemy : MonoBehaviour
         SetTarget(null);
 
         ExpManager.Acquire(100);
-        // 네비게이션 Off
-        navMeshAgent.enabled = false;
+
+        // enemyChase off
+        enemyChase.enabled = false;
 
         // enemyMove off
         enemyMove.enabled = false;
+
+        // 네비게이션 Off
+        navMeshAgent.enabled = false;
 
         // 충돌체 끄기
         ActivateColliders(false);
@@ -152,6 +156,9 @@ public class Enemy : MonoBehaviour
     public void Revive()
     {
         abilityStatus.FullHP();
+
+        // enemyChase off
+        enemyChase.enabled = true;
 
         // enemyMove On
         enemyMove.enabled = true;

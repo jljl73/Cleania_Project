@@ -70,6 +70,17 @@ public class EnemyChase : MonoBehaviour
             myGroupManager?.ReleaseTarget();
     }
 
+    void OnDisable()
+    {
+        // if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(gameObject);
+        if (enemySpawner != null)
+        {
+            myGroupManager?.ReleaseTarget();
+            myGroupManager?.DeleteMember(enemy.gameObject);
+            enemySpawner = null;
+        }
+    }
+
     void OnDestroy()
     {
         // if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(gameObject);
@@ -77,6 +88,7 @@ public class EnemyChase : MonoBehaviour
         {
             myGroupManager?.ReleaseTarget();
             myGroupManager?.DeleteMember(enemy.gameObject);
+            enemySpawner = null;
         }
     }
 }

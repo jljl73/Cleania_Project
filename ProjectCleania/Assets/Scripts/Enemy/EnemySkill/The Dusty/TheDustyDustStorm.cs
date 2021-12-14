@@ -154,6 +154,8 @@ public class TheDustyDustStorm : EnemySkill
         }
     }
 
+    float timePassed = 0;
+
     void DoBreatheOutAttack()
     {
         Collider[] colliders = Physics.OverlapCapsule(GetWorldTriggerPosition(new Vector3(0, 1, 2.75f)),
@@ -163,9 +165,15 @@ public class TheDustyDustStorm : EnemySkill
         {
             if (colliders[i].CompareTag("Player"))
             {
+                timePassed += Time.deltaTime;
+                if (timePassed > 1)
+                    timePassed = 0;
+                else
+                    break;
                 PlayerController player = colliders[i].GetComponent<PlayerController>();
                 Vector3 hitVector = Vector3.Normalize(colliders[i].transform.position - this.transform.position) * stormForce;
                 player.Pushed(hitVector);
+                player.gameObject.GetComponent<AbilityStatus>()?.AttackedBy(OwnerAbilityStatus, stormDamageRate);
             }
         }
     }
