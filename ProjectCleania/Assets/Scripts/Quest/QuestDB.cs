@@ -75,15 +75,16 @@ public class QuestDB : MonoBehaviour
             questsDatas.Add(new QuestData(quests[i]));
 
         string json = JsonUtility.ToJson(questsDatas, true);
-        File.WriteAllText($"{Application.dataPath}/savedata/Quest_{characterName}.json", json);
+        File.WriteAllText($"{Application.dataPath}/Quest/Quest_{characterName}.json", json);
     }
 
     public void Load(List<Quest> quests)
     {
         questsDatas.Clear();
-        string path = $"{Application.dataPath}/savedata/Quest_{characterName}.json";
+        string path = $"{Application.dataPath}/Quest/Quest_{characterName}.json";
         if (!File.Exists(path))
         {
+            Directory.CreateDirectory($"{Application.dataPath}/Quest");
             for (int i = 0; i < quests.Count; ++i)
                 quests[i].Reset();
             return;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StatusData", menuName = "Scriptable Object/Status")]
+[CreateAssetMenu(fileName = "StatusData", menuName = "Scriptable Object/Status (ArithmeticProgress)")]
 public class StatusSO_ArithmeticProgress : ScriptableObject
 {
     public float Strength = 24;

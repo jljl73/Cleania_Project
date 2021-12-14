@@ -38,8 +38,9 @@ public class GameManager : MonoBehaviour
     public string nextSceneName;
 
     public InputManager inputManager;
-
     public InputField IF_Chat;
+    public bool CutScenePlayed;
+
     public bool isChatting
     {
         get
@@ -49,10 +50,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public UI_BalanceStatus_v1 cheatWindow;
+
     SavedData savedData = new SavedData();
     public SavedData SavedData
     { get => savedData; }
-
 
 
     void Awake()

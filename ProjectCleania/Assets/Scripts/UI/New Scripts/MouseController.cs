@@ -110,7 +110,7 @@ public class MouseController : MonoBehaviour
             else if (raycastHit.collider.CompareTag("DroppedItem"))
                 SetDroppedItemTag(raycastHit.collider);
 
-            Debug.Log(raycastHit.collider.name);
+            //Debug.Log(raycastHit.collider.name);
         }
     }
 
