@@ -31,6 +31,12 @@ public class UI_CombatGUI : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float[] Skills_CoolPercent;
 
+    [SerializeField]
+    float potionCoolTime = 10.0f;
+    float potionCoolDown = 0.0f;
+    public float PotionCoolDown
+    { get => potionCoolDown; private set => potionCoolDown = value; }
+
     void Start()
     {
         player = GameManager.Instance.SinglePlayer;
@@ -77,6 +83,21 @@ public class UI_CombatGUI : MonoBehaviour
         }
         XP_Bar.fillAmount = ExpManager.Percent;
         Level.text = ExpManager.Level.ToString();
+
+        if (potionCoolDown > 0.0f)
+            potionCoolDown -= Time.deltaTime;
+    }
+
+    public bool UsePotion()
+    {
+        if (potionCoolDown > 0.0f)
+            return false;
+        else
+        {
+            playerStatus.Heal(playerStatus[Ability.Stat.MaxHP] / 5);
+            potionCoolDown = potionCoolTime;
+            return true;
+        }
     }
 
     void UpdateSkillCoolTime()
