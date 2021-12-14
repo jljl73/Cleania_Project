@@ -106,8 +106,9 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            GameManager.Instance.uiManager.HUD.UsePotion();
             // player.PlaySkill(1196);
-            player.OrderSkillID(1196);
+            // player.OrderSkillID(1196);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
