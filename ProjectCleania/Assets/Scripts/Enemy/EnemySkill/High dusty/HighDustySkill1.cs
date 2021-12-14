@@ -45,6 +45,7 @@ public class HighDustySkill1 : EnemySkill
         damageScale = skillData.GetDamageRate();
         projectileSize = skillData.GetProjectileSize();
         pondSize = skillData.GetPondSize();
+        pondDamageScale = skillData.GetPondDamageRate();
     }
 
     public override bool AnimationActivate()
