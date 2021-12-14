@@ -10,6 +10,7 @@ public class HighDustySkill1 : EnemySkill
     int skillCount = 0;
     
     float damageScale = 10;
+    float pondDamageScale = 0.5f;
     float projectileSize;
     float pondSize;
 
@@ -57,7 +58,7 @@ public class HighDustySkill1 : EnemySkill
     override public void Activate()
     {
         GameObject ball = Instantiate(DustBall, transform.position, transform.rotation);
-        ball.GetComponent<HighDusty_DustBall>().SetUp(projectileSize, pondSize, OwnerAbilityStatus, damageScale);
+        ball.GetComponent<HighDusty_DustBall>().SetUp(projectileSize, pondSize, OwnerAbilityStatus, damageScale, pondDamageScale);
         ball.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up / 2) * 200.0f);
 
         if (++skillCount == 3)

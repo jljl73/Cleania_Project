@@ -75,7 +75,7 @@ public class PlayerSkillDehydration : PlayerSkill
             else
                 timePassed = 0f;
 
-            other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale * Time.deltaTime);
+            other.GetComponent<Enemy>().abilityStatus.AttackedBy(OwnerAbilityStatus, skillScale);
         }
     }
 }

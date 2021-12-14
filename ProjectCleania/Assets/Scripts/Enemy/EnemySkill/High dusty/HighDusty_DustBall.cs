@@ -24,8 +24,11 @@ public class HighDusty_DustBall : DamagingProperty
 
     float projectileSize;
     float pondSize;
+    float pondDamageScale;
 
     float timePassed = 0;
+
+
 
     private void Start()
     {
@@ -35,11 +38,11 @@ public class HighDusty_DustBall : DamagingProperty
         pondEffect.Scale = pondSize * 0.3333f;
     }
 
-    public void SetUp(float projectileSize, float pondSize, AbilityStatus abil, float damageScale)
+    public void SetUp(float projectileSize, float pondSize, AbilityStatus abil, float damageScale, float pondDamageScale)
     {
         this.projectileSize = projectileSize;
         this.pondSize = pondSize;
-
+        this.pondDamageScale = pondDamageScale;
         base.SetUp(abil, damageScale);
     }
 
@@ -106,7 +109,7 @@ public class HighDusty_DustBall : DamagingProperty
                 else
                     timePassed = 0f;
 
-                playerAbility.AttackedBy(ownerAbility, damageScale);
+                playerAbility.AttackedBy(ownerAbility, pondDamageScale);
             }
         }
     }
