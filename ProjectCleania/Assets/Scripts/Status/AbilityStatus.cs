@@ -44,6 +44,9 @@ public class AbilityStatus : MonoBehaviour
     {
         FullHP();
         FullMP();
+
+        Invoke("FullHP", 0.15f);
+        Invoke("FullMP", 0.15f);
     }
 
     private void Update()
