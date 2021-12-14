@@ -21,6 +21,12 @@ public class PlayerSkillController : SkillController
     {
         skillDict[1199].AnimationActivate();
     }
+
+    protected override void SkillEventConnect()
+    {
+        //skillDict[1106].OnSkillActivateEvents[0].AddListener()
+    }
+
     //protected override void SkillEventConnect()
     //{
     //    // 1106 = 상쾌한 도약

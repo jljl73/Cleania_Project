@@ -174,6 +174,8 @@ public abstract class SkillController : MonoBehaviour
         return skillIfAvailableDict[id] && skillDict[id].IsAvailable();
     }
 
+    protected abstract void SkillEventConnect();
+
     //public AbilityStatus abilityStatus;
     //public Animator animator;
 
@@ -322,7 +324,6 @@ public abstract class SkillController : MonoBehaviour
     //    }
     //}
 
-    //protected abstract void SkillEventConnect();
 
     //public virtual bool PlaySkill(int id)
     //{
