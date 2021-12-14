@@ -122,7 +122,7 @@ public class Ability
             case Ability.Enhance.NegMul_Percent:
                 return $"{ GetKorean(stat)} {value * 100}% 만큼 감소";
             case Ability.Enhance.PosMul_Percent:
-                return $"{ GetKorean(stat)} {value * 100 + 100}% 만큼 증가";
+                return $"{ GetKorean(stat)} {value * 100}% 만큼 증가";
             case Ability.Enhance.Addition_Percent:
                 return $"{ GetKorean(stat)} {(value < 0 ? "-" : "+")}{value * 100}%";
             case Ability.Enhance.Addition:

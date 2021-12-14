@@ -70,7 +70,7 @@ public class UI_BalanceStatus_v1 : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.Instance.cheatWindow == this)
+        if (GameManager.Exists() && GameManager.Instance.cheatWindow == this)
             GameManager.Instance.cheatWindow = null;
     }
 
@@ -140,6 +140,8 @@ public class UI_BalanceStatus_v1 : MonoBehaviour
                 break;
             case 7: // insane weapon
                 newEquipment = ItemInstance_Equipment.Instantiate(1101299, 50);
+                inventory.Add((ItemInstance)newEquipment);
+                newEquipment = ItemInstance_Equipment.Instantiate(1305299, 50);
                 break;
             default:
                 return;

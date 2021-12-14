@@ -51,7 +51,6 @@ public class CharacterSelect : MonoBehaviour
             CharacterNamePanel.text = SavedData.Instance.CharacterName;
         else
             CharacterNamePanel.text = "-";
-
     }   
 
     public void UpdateNamesInPanels()
@@ -203,15 +202,15 @@ public class CharacterSelect : MonoBehaviour
             return false;
         }
 
-        if (File.Exists(folderPath + newCharacterName.text + ".json"))
-        {
-            UI_MessageBox.Show("해당 이름은 이미 존재합니다.");
-            return false;
-        }
-
         if (newCharacterName.text.CompareTo("debug") == 0)
         {
             UI_MessageBox.Show("사용할 수 없는 이름입니다.");
+            return false;
+        }
+
+        if (File.Exists(folderPath + newCharacterName.text + ".json"))
+        {
+            UI_MessageBox.Show("해당 이름은 이미 존재합니다.");
             return false;
         }
 

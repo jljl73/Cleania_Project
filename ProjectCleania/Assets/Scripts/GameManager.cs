@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static bool Exists()
+    {
+        return _instance != null ? true : false;
+    }
+
     public GameObject SinglePlayer;
     public AbilityStatus PlayerAbility;
     public Status PlayerStatus;
@@ -66,6 +71,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SavedData.Start();
+    }
+
+    private void OnDestroy()
+    {
+        if (_instance == this)
+            _instance = null;
     }
 
     private void OnApplicationQuit()
