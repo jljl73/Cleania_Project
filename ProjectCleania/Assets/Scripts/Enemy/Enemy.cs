@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public EnemySkillManager skillManager;
     public EnemyMovement enemyMove;
     public EnemyStateMachine enemyStateMachine;
+    public EnemyChase enemyChase;
 
     public delegate void DelegateVoid();
     public event DelegateVoid OnDead;
@@ -40,6 +41,9 @@ public class Enemy : MonoBehaviour
 
         if (enemyStateMachine == null)
             throw new System.Exception("Enemy doesnt have enemyStateMachine");
+
+        if (enemyChase == null)
+            throw new System.Exception("Enemy doesnt have enemyChase");
     }
 
     //private void OnEnable()
@@ -122,7 +126,9 @@ public class Enemy : MonoBehaviour
         ExpManager.Acquire(100);
         // 네비게이션 Off
         navMeshAgent.enabled = false;
-        print("navMeshAgent.enabled: " + navMeshAgent.enabled);
+
+        // enemyMove off
+        enemyMove.enabled = false;
 
         // 충돌체 끄기
         ActivateColliders(false);
@@ -137,8 +143,8 @@ public class Enemy : MonoBehaviour
         Invoke("DeactivateSkin", 3.0f);
 
         // 10초 후에 파괴
-        Invoke("DeactivateDelay", 10.0f);
-        // Destroy(gameObject, 10.0f);
+        // Invoke("DeactivateDelay", 10.0f);
+        Destroy(gameObject, 10.0f);
     }
 
     void DeactivateDelay() => this.gameObject.SetActive(false);
@@ -146,6 +152,9 @@ public class Enemy : MonoBehaviour
     public void Revive()
     {
         abilityStatus.FullHP();
+
+        // enemyMove On
+        enemyMove.enabled = true;
 
         // 네비게이션 On
         navMeshAgent.enabled = true;

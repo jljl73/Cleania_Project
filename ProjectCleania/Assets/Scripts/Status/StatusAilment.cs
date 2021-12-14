@@ -80,75 +80,105 @@ public class StatusAilment : MonoBehaviour
 
 
 
-
-
-
-
-    Dictionary<AbilityStatus, float> continuousDamageDuration = new Dictionary<AbilityStatus, float>();
-    Dictionary<AbilityStatus, float> continuousDamagetempTimeCalculation = new Dictionary<AbilityStatus, float>();
-    int[] _continuousDamageOptionsOvelapped = { 0, 0, 0, 0 };
-    public enum ContinuousDamageType
+    void Update()
     {
-        Addiction
+        // 시간 지남 계산
+        CalculateTimePassed();
+
+        // Ability status에 1초마다 데미지 주기
+        ContinuousDamage();
     }
-    public void DamageContinuously(ContinuousDamageType option, float duration, AbilityStatus attackerAbil)
+
+
+    // 지속 피해형
+    [SerializeField]
+    List<float> continuousDamageDurationLeftList = new List<float>();
+    [SerializeField]
+    List<float> oneSecPassCheckList = new List<float>();
+    [SerializeField]
+    List<float> continuousDamageDurationTotalList = new List<float>();
+    [SerializeField]
+    List<float> continuousDamageRateList = new List<float>();
+    int continuousDamageOptionsOverlapped = 0;
+
+    const float CONTINUOUS_DAMAGE_DURATION = 8f;
+
+    public void DamageContinuously(AbilityStatus attackerAbil)
     {
-        if (CheckContinuousDamageOvelapped(option))
+        if (CheckContinuousDamageOvelapped())
             return;
 
-        AddAbilityStatus(option, duration, attackerAbil);
-        ownerAbilityStatus.AttackedBy(attackerAbil, 0.1f);
-        _continuousDamageOptionsOvelapped[(int)option] += 1;
-        StartCoroutine(OffContinuousDamage(option, duration, attackerAbil));
-        Debug.Log("DamageContinuously On : " + option.ToString() + " : " + _continuousDamageOptionsOvelapped[(int)option]);
+        AddDamageRate(CONTINUOUS_DAMAGE_DURATION, attackerAbil.GetStat(Ability.Stat.Attack));
+        continuousDamageOptionsOverlapped += 1;
+        // Debug.Log("DamageContinuously On current Overlapped: " + continuousDamageOptionsOverlapped);
     }
 
-    IEnumerator OffContinuousDamage(ContinuousDamageType option, float duration, AbilityStatus abil)
+    public void DamageContinuously(float damageRate)
     {
-        yield return new WaitForSeconds(duration);
-        RemoveAbilityStatus(option, abil);
-        _continuousDamageOptionsOvelapped[(int)option] -= 1;
-        Debug.Log("DamageContinuously Off : " + option.ToString() + " : " + _continuousDamageOptionsOvelapped[(int)option]);
+        if (CheckContinuousDamageOvelapped())
+            return;
+
+        AddDamageRate(CONTINUOUS_DAMAGE_DURATION, damageRate);
+        continuousDamageOptionsOverlapped += 1;
+        // Debug.Log("DamageContinuously On current Overlapped: " + continuousDamageOptionsOverlapped);
     }
 
-    void AddAbilityStatus(ContinuousDamageType option, float duration, AbilityStatus attackerAbil)
+    void AddDamageRate(float duration, float damageRate)
     {
-        switch (option)
-        {
-            case ContinuousDamageType.Addiction:
-                continuousDamageDuration.Add(attackerAbil, duration);
-                continuousDamagetempTimeCalculation.Add(attackerAbil, 0);
-                break;
-            default:
-                break;
-        }
+        continuousDamageDurationLeftList.Add(duration);
+        continuousDamageDurationTotalList.Add(duration);
+        continuousDamageRateList.Add(damageRate);
+
+        // 시작하자마자 데미지 주기 위해 1 설정
+        oneSecPassCheckList.Add(1);
     }
 
-    void RemoveAbilityStatus(ContinuousDamageType option, AbilityStatus attackerAbil)
+    void RemoveDamageRate(int idx)
     {
-        switch (option)
-        {
-            case ContinuousDamageType.Addiction:
-                continuousDamageDuration.Remove(attackerAbil);
-                continuousDamagetempTimeCalculation.Remove(attackerAbil);
-                break;
-            default:
-                break;
-        }
+        continuousDamageDurationLeftList.RemoveAt(idx);
+        continuousDamageDurationTotalList.RemoveAt(idx);
+        continuousDamageRateList.RemoveAt(idx);
+        oneSecPassCheckList.RemoveAt(idx);
+        continuousDamageOptionsOverlapped -= 1;
+        // Debug.Log("DamageContinuously Off current Overlapped: " + continuousDamageOptionsOverlapped);
     }
 
-    bool CheckContinuousDamageOvelapped(ContinuousDamageType option)
+    bool CheckContinuousDamageOvelapped()
     {
-        bool result = true;
-        switch (option)
-        {
-            case ContinuousDamageType.Addiction:
-                if (_continuousDamageOptionsOvelapped[(int)option] >= 10)
-                    result = false;
-                break;
-            default:
-                break;
-        }
+        bool result = false;
+
+        if (continuousDamageOptionsOverlapped >= 10)
+            result = true;
+
         return result;
+    }
+
+    void CalculateTimePassed()
+    {
+        // 시간 지남 계산
+        for (int i = 0; i < continuousDamageDurationLeftList.Count; i++)
+        {
+            continuousDamageDurationLeftList[i] -= Time.deltaTime;
+            oneSecPassCheckList[i] += Time.deltaTime;
+
+            // 시간 다 지나면 삭제
+            if (continuousDamageDurationLeftList[i] <= 0f)
+            {
+                RemoveDamageRate(i);
+            }
+        }
+    }
+
+    void ContinuousDamage()
+    {
+        // Ability status에 1초마다 데미지 주기
+        for (int i = 0; i < continuousDamageRateList.Count; i++)
+        {
+            if (oneSecPassCheckList[i] > 1f)
+            {
+                oneSecPassCheckList[i] = 0;
+                // ownerAbilityStatus.AttackedBy()
+            }
+        }
     }
 }

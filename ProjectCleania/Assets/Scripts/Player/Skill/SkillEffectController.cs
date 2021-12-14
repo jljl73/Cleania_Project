@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SkillEffectController : ParticleBase
 {
+    [SerializeField]
+    int iD;
+
+    public int Id { get => iD; set { iD = value; } }
+
     public void PlaySkillEffect()
     {
         PlayEffect();

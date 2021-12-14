@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyGroupManager : MonoBehaviour
 {
+    [SerializeField]
     List<GameObject> enemies = new List<GameObject>();
     GameObject target;
     public GameObject Target

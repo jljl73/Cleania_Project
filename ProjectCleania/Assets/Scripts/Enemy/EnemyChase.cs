@@ -25,6 +25,9 @@ public class EnemyChase : MonoBehaviour
 
     SphereCollider cognitiveCollider;
 
+    public void ActivateChase() => cognitiveCollider.enabled = true;
+    public void DeactivateChase() => cognitiveCollider.enabled = false;
+
     void Awake()
     {
         if (enemy == null)
@@ -39,8 +42,6 @@ public class EnemyChase : MonoBehaviour
         // CognitiveRange = 3;
         cognitiveCollider.radius = CognitiveRange;
     }
-
-    
 
     void OnTriggerEnter(Collider other)
     {
@@ -72,8 +73,10 @@ public class EnemyChase : MonoBehaviour
     void OnDestroy()
     {
         // if(enemySpawner != null) enemySpawner.GetComponent<EnemyGroupManager>().DeleteMember(gameObject);
-        if (enemySpawner != null) myGroupManager?.DeleteMember(gameObject);
+        if (enemySpawner != null)
+        {
+            myGroupManager?.ReleaseTarget();
+            myGroupManager?.DeleteMember(enemy.gameObject);
+        }
     }
-
-    
 }

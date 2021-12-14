@@ -50,6 +50,9 @@ public class EnemySkillManager : BaseSkillManager
 
         // 스킬 내 이벤트 연결
         SkillEventConnect();
+
+        // 초기화
+        skillRunWaitingList.Clear();
     }
 
     new void Update()
