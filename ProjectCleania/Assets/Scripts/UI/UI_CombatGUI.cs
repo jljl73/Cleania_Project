@@ -36,6 +36,8 @@ public class UI_CombatGUI : MonoBehaviour
     float potionCoolDown = 0.0f;
     public float PotionCoolDown
     { get => potionCoolDown; private set => potionCoolDown = value; }
+    [SerializeField]
+    Image potionImage;
 
     void Start()
     {
@@ -86,11 +88,13 @@ public class UI_CombatGUI : MonoBehaviour
 
         if (potionCoolDown > 0.0f)
             potionCoolDown -= Time.deltaTime;
+
+        potionImage.fillAmount = (potionCoolTime - potionCoolDown) / potionCoolTime;
     }
 
     public bool UsePotion()
     {
-        if (potionCoolDown > 0.0f)
+        if (potionCoolDown > 0.0f || playerStatus == null)
             return false;
         else
         {

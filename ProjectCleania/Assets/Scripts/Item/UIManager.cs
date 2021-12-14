@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     bool isActiveItemPanel;
 
+    public UI_CombatGUI HUD;
     public Canvas canvas_;
     public Canvas GetCanvas { get { return canvas_; } }
 
