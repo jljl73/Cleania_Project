@@ -24,6 +24,8 @@ public class EnemyGroup : MonoBehaviour
     int SpecialSkillCount = 3;
     List<int> SpecialSkillIDs = new List<int>();
 
+    [SerializeField]
+    int MonsterLevel = 1;
     GameObject newMonster;
 
     bool isFirst = false;
@@ -59,6 +61,7 @@ public class EnemyGroup : MonoBehaviour
                 //}
                 newMonster = Instantiate(monsters[i].newMonster, pos, Quaternion.Euler(0, Random.Range(0, 360.0f), 0), transform);
                 newMonster.GetComponentInChildren<EnemyChase>().EnemySpawner = gameObject;
+                newMonster.GetComponent<Status>().Level = MonsterLevel;
 
                 if (monsters[i].isRare)
                 {

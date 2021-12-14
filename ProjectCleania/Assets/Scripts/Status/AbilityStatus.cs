@@ -45,15 +45,7 @@ public class AbilityStatus : MonoBehaviour
         FullHP();
         FullMP();
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            FullHP(); FullMP();
-        }
-    }
-
+    
 
     /// <summary>
     /// Orders <para></para>

@@ -8,10 +8,12 @@ public class CutScene : MonoBehaviour
 {
     void Start()
     {
-        if (GameManager.Instance.CutScenePlayed)
-            gameObject.SetActive(false);
-        else
-            GameManager.Instance.CutScenePlayed = true;
+        
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            GetComponent<PlayableDirector>().time = GetComponent<PlayableDirector>().duration;
+    }
 }
