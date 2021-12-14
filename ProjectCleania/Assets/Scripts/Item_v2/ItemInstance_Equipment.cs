@@ -234,7 +234,8 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
         foreach(var key_value in _statics)
         {
-            string_list.Add($"{key_value.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value)}");
+            //string_list.Add($"{key_value.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value)}");
+            string_list.Add(Ability.GetKoreanInfo(key_value.Key, _ScaleAdjust(key_value)));
         }
 
         return string_list;
@@ -246,27 +247,28 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
 
         foreach (var key_value in _dynamics)
         {
-            switch (key_value.Key.Value)
-            {
-                case Ability.Enhance.Absolute:
-                    string_list.Add($"{ key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value)}");
-                    break;
-                case Ability.Enhance.Chance_Percent:
-                    string_list.Add($"More Chance of { key_value.Key.Key.ToString()} {_ScaleAdjust(key_value)*100}%");
-                    break;
-                case Ability.Enhance.NegMul_Percent:
-                    string_list.Add($"Reduce { key_value.Key.Key.ToString()} by {_ScaleAdjust(key_value) * 100}%");
-                    break;
-                case Ability.Enhance.PosMul_Percent:
-                    string_list.Add($"Increase { key_value.Key.Key.ToString()} by {_ScaleAdjust(key_value) * 100 + 100}%");
-                    break;
-                case Ability.Enhance.Addition_Percent:
-                    string_list.Add($"{ key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value) * 100}%");
-                    break;
-                case Ability.Enhance.Addition:
-                    string_list.Add($"Additional { key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value)}");
-                    break;
-            }
+            //switch (key_value.Key.Value)
+            //{
+            //    case Ability.Enhance.Absolute:
+            //        string_list.Add($"{ key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value)}");
+            //        break;
+            //    case Ability.Enhance.Chance_Percent:
+            //        string_list.Add($"More Chance of { key_value.Key.Key.ToString()} {_ScaleAdjust(key_value)*100}%");
+            //        break;
+            //    case Ability.Enhance.NegMul_Percent:
+            //        string_list.Add($"Reduce { key_value.Key.Key.ToString()} by {_ScaleAdjust(key_value) * 100}%");
+            //        break;
+            //    case Ability.Enhance.PosMul_Percent:
+            //        string_list.Add($"Increase { key_value.Key.Key.ToString()} by {_ScaleAdjust(key_value) * 100 + 100}%");
+            //        break;
+            //    case Ability.Enhance.Addition_Percent:
+            //        string_list.Add($"{ key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value) * 100}%");
+            //        break;
+            //    case Ability.Enhance.Addition:
+            //        string_list.Add($"Additional { key_value.Key.Key.ToString()} {(key_value.Value < 0 ? "-" : "+")}{_ScaleAdjust(key_value)}");
+            //        break;
+            //}
+            string_list.Add(Ability.GetKoreanInfo(key_value.Key.Key, key_value.Key.Value, _ScaleAdjust(key_value)));
         }
 
         return string_list;
@@ -309,7 +311,7 @@ public class ItemInstance_Equipment : ItemInstance, iSavedData
             case Ability.Stat.CriticalChance:
             case Ability.Stat.AttackSpeed:
             case Ability.Stat.MoveSpeed:
-                return value;
+                return Mathf.Ceil(value * 100) / 100;
 
             case Ability.Stat.Accuracy:
             case Ability.Stat.CriticalScale:

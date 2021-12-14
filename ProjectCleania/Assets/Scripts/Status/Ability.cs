@@ -42,6 +42,121 @@ public class Ability
         EnumTotal
     }
 
+    public static string GetKorean(Ability.Stat stat)
+    {
+        switch (stat)
+        {
+            case Stat.Accuracy:
+                return "명중률";
+            case Stat.Attack:
+                return "공격력";
+            case Stat.AttackSpeed:
+                return "공격속도";
+            case Stat.CriticalChance:
+                return "치명타확률";
+            case Stat.CriticalScale:
+                return "치명타배수";
+            case Stat.Defense:
+                return "방어력";
+            case Stat.Dodge:
+                return "회피율";
+            case Stat.IncreaseDamage:
+                return "주는피해량증가";
+            case Stat.MaxHP:
+                return "최대생명력";
+            case Stat.MaxMP:
+                return "최대자원";
+            case Stat.MoveSpeed:
+                return "이동속도";
+            case Stat.ReduceDamage:
+                return "받는피해량감소";
+            case Stat.SkillCooldown:
+                return "스킬쿨타임";
+            case Stat.Strength:
+                return "힘";
+            case Stat.Tenacity:
+                return "강인함";
+            case Stat.Vitality:
+                return "체력";
+            default:
+                return "-";
+        }
+    }
+
+    public static string GetKoreanInfo(Ability.Stat stat, float value)
+    {
+        switch(stat)
+        {
+            case Stat.Accuracy:
+            case Stat.AttackSpeed:
+            case Stat.CriticalChance:
+            case Stat.CriticalScale:
+            case Stat.Dodge:
+            case Stat.IncreaseDamage:
+            case Stat.MoveSpeed:
+            case Stat.ReduceDamage:
+            case Stat.SkillCooldown:
+            case Stat.Tenacity:
+                return $"{GetKorean(stat)} {value * 100}%";
+            case Stat.Attack:
+            case Stat.Defense:
+            case Stat.MaxHP:
+            case Stat.MaxMP:
+            case Stat.Strength:
+            case Stat.Vitality:
+                return $"{GetKorean(stat)} {value}";
+
+            default:
+                return "-";
+        }
+    }
+
+    public static string GetKoreanInfo(Ability.Stat stat, Ability.Enhance how, float value)
+    {
+        switch (how)
+        {
+            case Ability.Enhance.Absolute:
+                return $"기초 { GetKorean(stat)} {(value < 0 ? "-" : "+")}{value}";
+            case Ability.Enhance.Chance_Percent:
+                return $"{ GetKorean(stat)} {value * 100}% 적용";
+            case Ability.Enhance.NegMul_Percent:
+                return $"{ GetKorean(stat)} {value * 100}% 만큼 감소";
+            case Ability.Enhance.PosMul_Percent:
+                return $"{ GetKorean(stat)} {value * 100 + 100}% 만큼 증가";
+            case Ability.Enhance.Addition_Percent:
+                return $"{ GetKorean(stat)} {(value < 0 ? "-" : "+")}{value * 100}%";
+            case Ability.Enhance.Addition:
+                switch (stat)
+                {
+                    case Ability.Stat.CriticalChance:
+                    case Ability.Stat.AttackSpeed:
+                    case Ability.Stat.MoveSpeed:
+                    case Ability.Stat.Accuracy:
+                    case Ability.Stat.CriticalScale:
+                    case Ability.Stat.Dodge:
+                    case Ability.Stat.IncreaseDamage:
+                    case Ability.Stat.ReduceDamage:
+                    case Ability.Stat.SkillCooldown:
+                    case Ability.Stat.Tenacity:
+                        return $"추가 { GetKorean(stat)} {(value < 0 ? "-" : "+")}{value * 100}%";
+                    case Ability.Stat.Attack:
+                    case Ability.Stat.Defense:
+                    case Ability.Stat.MaxHP:
+                    case Ability.Stat.MaxMP:
+                    case Ability.Stat.Strength:
+                    case Ability.Stat.Vitality:
+                        return $"추가 { GetKorean(stat)} {(value < 0 ? "-" : "+")}{value}";
+
+                    default:
+                        return "";
+                }
+
+            default:
+                return "";
+        }
+    }
+
+
     [System.Serializable]
     public struct StaticOption
     {
