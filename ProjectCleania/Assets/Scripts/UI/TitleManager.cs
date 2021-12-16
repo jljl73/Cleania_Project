@@ -9,6 +9,7 @@ public class TitleManager : MonoBehaviour
     {
         UserSetting.Load();
         UserSetting.LoadVolume();
+        Screen.SetResolution(1920, 1080, true);
     }
 
     public void OnClickedStart()

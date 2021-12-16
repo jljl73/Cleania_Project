@@ -32,7 +32,7 @@ public class DropTable : ScriptableObject
                     result += 3;
                 break;
 
-            case EnemyStateMachine.enumRank.Bose:
+            case EnemyStateMachine.enumRank.Boss:
                 result = 10;
                 if (percentage > 0.66)
                     result += 1;

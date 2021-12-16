@@ -120,7 +120,7 @@ public class EnemySpawnTest : MonoBehaviour
             enemyState.Rank = monsterRank;
 
             // 특수 스킬 성정
-            if (enemyState.Rank == EnemyStateMachine.enumRank.Rare || enemyState.Rank == EnemyStateMachine.enumRank.Bose)
+            if (enemyState.Rank == EnemyStateMachine.enumRank.Rare || enemyState.Rank == EnemyStateMachine.enumRank.Boss)
             {
                 EnemySkillManager enemySkillManager = monster.GetComponent<EnemySkillManager>();
                 for (int j = 0; j < specialSkills.Count; j++)
@@ -205,7 +205,7 @@ public class EnemySpawnTest : MonoBehaviour
                 monsterRank = EnemyStateMachine.enumRank.Rare;
                 break;
             case 2:
-                monsterRank = EnemyStateMachine.enumRank.Bose;
+                monsterRank = EnemyStateMachine.enumRank.Boss;
                 break;
             default:
                 break;

@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.uiManager = this;
         InventoryPanel.SetActive(true);
         StoragePanel.SetActive(true);
+        QuestPanel.SetActive(true);
     }
 
     void Update()

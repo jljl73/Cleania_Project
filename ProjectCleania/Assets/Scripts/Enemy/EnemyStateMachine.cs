@@ -21,7 +21,7 @@ public class EnemyStateMachine : StateMachine
     {
         Normal = 0,
         Rare = 1000,
-        Bose
+        Boss
     }
 
     [SerializeField]
@@ -33,7 +33,10 @@ public class EnemyStateMachine : StateMachine
         get
         {
             string temp = "";
-            temp += ((int)monsterType + rank).ToString();
+            if(rank == enumRank.Rare)
+                temp = ((int)monsterType + rank).ToString();
+            else
+                temp = ((int)monsterType).ToString();
             return int.Parse(temp);
 
         }

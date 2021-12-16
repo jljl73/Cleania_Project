@@ -252,6 +252,14 @@ public class AbilityStatus : MonoBehaviour
         if (attacker[Ability.Stat.Accuracy] - this[Ability.Stat.Dodge] < Random.Range(0.0f, 1.0f))
         {
             ret.Dodged = true;
+
+            if (UserSetting.OnDamage)
+            {
+                GameObject damage = Resources.Load("Prefabs/TextDamage") as GameObject;
+                damage.GetComponent<TextDamage>().SetDamageText(ret);
+                Instantiate(damage, transform.position, transform.rotation);
+            }
+
             return ret;
         }
 

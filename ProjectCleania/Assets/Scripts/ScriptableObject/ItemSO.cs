@@ -175,7 +175,6 @@ public class ItemSO : ScriptableObject
             ItemSO[] all = Resources.LoadAll<ItemSO>("ScriptableObject/ItemTable");
 
             foreach (ItemSO i in all)
-                if(i.randomDrop == true)
                 _dictionary[i.ID] = i;
 
             _loadedAll = true;

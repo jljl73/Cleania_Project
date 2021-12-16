@@ -36,6 +36,13 @@ public class TextDamage : MonoBehaviour
             sb.Append("ºø³ª°¨!");
             sb.Append("</color>");
         }
+        else if(result.Heal)
+        {
+            GetComponent<TextMeshPro>().fontSize = 8f;
+            sb.Append("<color=#00FF00>");
+            sb.Append(string.Format("{0:N0}", result.Value));
+            sb.Append("</color>");
+        }
         else if (result.Critical && UserSetting.OnCriticalDamage)
         {
             GetComponent<TextMeshPro>().fontSize = 10f;
